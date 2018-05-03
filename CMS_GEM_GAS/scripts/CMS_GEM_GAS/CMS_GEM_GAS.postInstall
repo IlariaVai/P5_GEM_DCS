@@ -1,0 +1,53 @@
+#uses "CMSfwInstallUtils/CMSfwInstallUtils.ctl"
+#uses "fwInstallationUtils.ctl"
+#uses "CMSfwAlertSystem/CMSfwAlertSystemUtil.ctl"
+#uses "CMS_GEM_GAS/CMS_GEMfwGeneral.ctl"
+#uses "CMSfwFsmXml/CMSfwFsmXml.ctl"
+#uses "fwFsm.ctl"
+#uses "fwFsmTreeDisplay.ctl"
+
+
+
+main(){
+  
+  dyn_string exc;
+
+  
+
+ fwInstallationUtils_loadConfigurations("CMS_GEM_GAS",exc);
+ fwInstallationUtils_appendManagers("CMS_GEM_GAS", exc);
+
+  
+//  fwFsmTree_stopTree();
+//  fwFsmTree_generateAll();
+//  fwFsmTree_refreshTree();
+//  fwFsm_restartAllDomains();
+
+ installFSM();
+
+ DebugN("FSM installed");
+ 
+ CMS_GEMfwGeneralInstallation_createSMSnotification("gem_not3");
+
+ DebugN("Notifications installed");
+
+ DebugN("CMS_GEM_GAS has been installed", exc);
+
+ fwInstallationUtils_endPostInstall("CMS_GEM_GAS");
+  
+}
+
+void installFSM() {
+
+  fwFsmTree_stopTree();
+
+  string path = CMSfwFsmXml_findPath("/data/CMS_GEM_GAS/Gas_FSM_Updated.xml");
+  CMSfwFsmXml_import(path,false);
+
+  CMS_GEMfwHardwareGas_generateTree();
+
+  fwFsmTree_generateAll();
+  fwFsmTree_refreshTree();
+  fwFsm_restartAllDomains();
+
+}

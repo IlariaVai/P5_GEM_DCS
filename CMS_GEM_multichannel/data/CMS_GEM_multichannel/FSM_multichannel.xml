@@ -1,0 +1,779 @@
+<?xml version="1.0" encoding="us-ascii"?> 
+<elements> 
+<deviceTypes>
+	<type>
+		<typeName>FwCaenChannelA1515FsmDevice</typeName>
+		<panel>FwCaenChannelA1515|FwCaenChannelA1515FsmDevice.pnl</panel>
+		<states_dpe>
+			<state_dpe>float readBackSettings.i0</state_dpe>
+			<state_dpe>bool actual.Trip</state_dpe>
+			<state_dpe>int actual.status</state_dpe>
+			<state_dpe>float readBackSettings.v0</state_dpe>
+			<state_dpe>bool CAEN/GEM_CAEN_HV.Commands.Kill</state_dpe>
+		</states_dpe>
+		<actions_dpe>
+			<action_dpe>bool settings.onOff</action_dpe>
+			<action_dpe>float settings.i0</action_dpe>
+			<action_dpe>float settings.v0</action_dpe>
+		</actions_dpe>
+		<init_script>FwCaenChannelA1515FsmDevice_initialize(string domain, string device)
+{
+}
+</init_script>
+		<state_script>FwCaenChannelA1515FsmDevice_valueChanged( string domain, string device,
+      float readBackSettings_dot_i0,
+      bool actual_dot_Trip,
+      int actual_dot_status, float readBackSettings_dot_v0, bool command_killCrate, string &amp;fwState )
+{
+//======================= Define settings channel by channel =======================
+//working point of the layers in unit of equivalent divider voltage
+float HvDivEquiv_G01L1, HvDivEquiv_G01L2;
+HvDivEquiv_G01L1 = 3105.38;
+HvDivEquiv_G01L2 = 3138.26;
+
+float Vset_ON, Vset_ON_BEAM, Vset_STANDBY;
+float i0, i0_STANDBY;
+float R_div = 1125+560+438+550+875+525+625;
+
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel000&quot;) &gt;= 0) //Gemini01 L1 G3bot
+  {
+  Vset_ON = HvDivEquiv_G01L1*625/R_div;
+  //Vset_STANDBY = Vset_ON-10;
+  Vset_STANDBY = 310;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel001&quot;) &gt;= 0) //Gemini01 L1 G3top
+  {
+  Vset_ON = HvDivEquiv_G01L1*525/R_div;
+  Vset_STANDBY = 0;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel002&quot;) &gt;= 0) //Gemini01 L1 G2bot
+  {
+  Vset_ON = HvDivEquiv_G01L1*875/R_div;
+  //Vset_STANDBY = Vset_ON-10;
+  Vset_STANDBY = 575;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel003&quot;) &gt;= 0) //Gemini01 L1 G2top
+  {
+  Vset_ON = HvDivEquiv_G01L1*550/R_div;
+  Vset_STANDBY = 0;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel004&quot;) &gt;= 0) //Gemini01 L1 G1bot
+  {
+  Vset_ON = HvDivEquiv_G01L1*438/R_div;
+  //Vset_STANDBY = Vset_ON-10;
+  Vset_STANDBY = 285;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel005&quot;) &gt;= 0) //Gemini01 L1 G1top
+  {
+  Vset_ON = HvDivEquiv_G01L1*560/R_div;
+  Vset_STANDBY = 0;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel006&quot;) &gt;= 0) //Gemini01 L1 Drift
+  {
+  Vset_ON = HvDivEquiv_G01L1*1125/R_div;
+  //Vset_STANDBY = Vset_ON-10;
+  Vset_STANDBY = 740;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel007&quot;) &gt;= 0) //Gemini01 L2 G3bot
+  {
+  Vset_ON = HvDivEquiv_G01L2*625/R_div;
+  //Vset_STANDBY = Vset_ON-10;
+  Vset_STANDBY = 310;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel008&quot;) &gt;= 0) //Gemini01 L2 G3top
+  {
+  Vset_ON = HvDivEquiv_G01L2*525/R_div;
+  Vset_STANDBY = 0;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel009&quot;) &gt;= 0) //Gemini01 L2 G2bot
+  {
+  Vset_ON = HvDivEquiv_G01L2*875/R_div;
+  //Vset_STANDBY = Vset_ON-10;
+  Vset_STANDBY = 575;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel010&quot;) &gt;= 0) //Gemini01 L2 G2top
+  {
+  Vset_ON = HvDivEquiv_G01L2*550/R_div;
+  Vset_STANDBY = 0;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel011&quot;) &gt;= 0) //Gemini01 L2 G1bot
+  {
+  Vset_ON = HvDivEquiv_G01L2*438/R_div;
+  //Vset_STANDBY = Vset_ON-10;
+  Vset_STANDBY = 285;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel012&quot;) &gt;= 0) //Gemini01 L2 G1top
+  {
+  Vset_ON = HvDivEquiv_G01L2*560/R_div;
+  Vset_STANDBY = 0;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel013&quot;) &gt;= 0) //Gemini01 L2 Drift
+  {
+  Vset_ON = HvDivEquiv_G01L2*1125/R_div;
+  //Vset_STANDBY = Vset_ON-10;
+  Vset_STANDBY = 740;
+  }
+
+i0 = 10;
+i0_STANDBY = 2;
+
+//get the beamMode (cosmics / physics) and set i0 accordingly
+  dyn_bool runMode;  
+  bool cosmics, physics, standby;
+  dyn_string dpStatus = makeDynString(&quot;GL1.GEMCAEN.Beam.Physics&quot;,&quot;GL1.GEMCAEN.Beam.Cosmic&quot;,&quot;GL1.GEMCAEN.Beam.StandBy&quot;);
+  
+  dpGet(dpStatus, runMode);
+  physics = runMode[1];
+  cosmics = runMode[2];
+  standby = runMode[3];
+  
+  if (physics) i0 = 10;
+  if (cosmics) i0 = 2;
+  //if (standby) this.text(&quot;STANDBY mode&quot;);
+
+
+
+DebugTN(&quot;Vset_ON=&quot;,Vset_ON,&quot;Vset_STANDBY&quot;,Vset_STANDBY);
+DebugTN(&quot;Device: &quot;, device);
+
+  
+//================================== STATES DEFINITION ======================================  
+  
+/*	if (command_killCrate == 1)
+	{
+		fwState = &quot;KILLED&quot;;
+	}
+	else*/ if (getBit(actual_dot_status, 9) || getBit(actual_dot_status, 6) )
+	{
+		fwState = &quot;TRIPPED&quot;;
+	}
+	else if (actual_dot_status &gt;= 64)
+	{
+		fwState = &quot;ERROR&quot;;
+	}
+	else if (getBit(actual_dot_status, 3) || getBit(actual_dot_status, 4) || getBit(actual_dot_status, 5))
+	{
+		fwState = &quot;WARNING&quot;;
+	}
+	else if (getBit(actual_dot_status, 1))
+	{
+		fwState = &quot;RAMPING_UP&quot;;
+	}
+	else if (getBit(actual_dot_status, 2))
+	{
+		fwState = &quot;RAMPING_DOWN&quot;;
+	}
+//	else if ( getBit(actual_dot_status, 0) &amp;&amp; readBackSettings_dot_i0 &gt;= i0_STANDBY &amp;&amp; fabs(readBackSettings_dot_v0-Vset_STANDBY)&lt;1 ) //TO BE CHANGED CHANNEL BY CHANNEL FOR MC
+ else if ( getBit(actual_dot_status, 0) &amp;&amp; readBackSettings_dot_i0 &gt;= 2 &amp;&amp; readBackSettings_dot_i0 &lt;= 50 &amp;&amp; fabs(readBackSettings_dot_v0-Vset_STANDBY)&lt;1 ) //TO BE CHANGED CHANNEL BY CHANNEL FOR MC
+	{
+		fwState = &quot;STANDBY&quot;;
+	}
+//	else if (getBit(actual_dot_status, 0) &amp;&amp; readBackSettings_dot_i0 &gt;= i0 &amp;&amp; fabs(readBackSettings_dot_v0-Vset_ON)&lt;1 ) //TO BE UPDATED WHEN CONFDB WILL BE READY TO READ I0 VALUES
+	else if (getBit(actual_dot_status, 0) &amp;&amp; readBackSettings_dot_i0 &gt;= 2 &amp;&amp; readBackSettings_dot_i0 &lt;= 50 &amp;&amp; fabs(readBackSettings_dot_v0-Vset_ON)&lt;1 ) //TO BE UPDATED WHEN CONFDB WILL BE READY TO READ I0 VALUES
+	{
+		fwState = &quot;ON&quot;;
+	}
+	else if ( !getBit(actual_dot_status, 0) )
+	{
+		fwState = &quot;OFF&quot;;
+	}
+  else
+	{
+		fwState = &quot;ERROR&quot;;
+	}
+}
+
+</state_script>
+		<action_script>#uses &quot;CMSfwDetectorProtection/CMSfwDetectorProtection.ctl&quot;
+
+FwCaenChannelA1515FsmDevice_doCommand(string domain, string device, string command)
+{
+
+//======================= Define settings channel by channel =======================
+//working point of the layers in unit of equivalent divider voltage
+float HvDivEquiv_G01L1, HvDivEquiv_G01L2;
+HvDivEquiv_G01L1 = 3105.38;
+HvDivEquiv_G01L2 = 3138.26;
+
+float Vset_ON, Vset_ON_BEAM, Vset_STANDBY;
+float i0, i0_STANDBY;
+float R_div = 1125+560+438+550+875+525+625;
+
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel000&quot;) &gt;= 0) //Gemini01 L1 G3bot
+  {
+  Vset_ON = HvDivEquiv_G01L1*625/R_div;
+  //Vset_STANDBY = Vset_ON-10;
+  Vset_STANDBY = 310;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel001&quot;) &gt;= 0) //Gemini01 L1 G3top
+  {
+  Vset_ON = HvDivEquiv_G01L1*525/R_div;
+  Vset_STANDBY = 0;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel002&quot;) &gt;= 0) //Gemini01 L1 G2bot
+  {
+  Vset_ON = HvDivEquiv_G01L1*875/R_div;
+  //Vset_STANDBY = Vset_ON-10;
+  Vset_STANDBY = 575;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel003&quot;) &gt;= 0) //Gemini01 L1 G2top
+  {
+  Vset_ON = HvDivEquiv_G01L1*550/R_div;
+  Vset_STANDBY = 0;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel004&quot;) &gt;= 0) //Gemini01 L1 G1bot
+  {
+  Vset_ON = HvDivEquiv_G01L1*438/R_div;
+  //Vset_STANDBY = Vset_ON-10;
+  Vset_STANDBY = 285;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel005&quot;) &gt;= 0) //Gemini01 L1 G1top
+  {
+  Vset_ON = HvDivEquiv_G01L1*560/R_div;
+  Vset_STANDBY = 0;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel006&quot;) &gt;= 0) //Gemini01 L1 Drift
+  {
+  Vset_ON = HvDivEquiv_G01L1*1125/R_div;
+  //Vset_STANDBY = Vset_ON-10;
+  Vset_STANDBY = 740;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel007&quot;) &gt;= 0) //Gemini01 L2 G3bot
+  {
+  Vset_ON = HvDivEquiv_G01L2*625/R_div;
+  //Vset_STANDBY = Vset_ON-10;
+  Vset_STANDBY = 310;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel008&quot;) &gt;= 0) //Gemini01 L2 G3top
+  {
+  Vset_ON = HvDivEquiv_G01L2*525/R_div;
+  Vset_STANDBY = 0;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel009&quot;) &gt;= 0) //Gemini01 L2 G2bot
+  {
+  Vset_ON = HvDivEquiv_G01L2*875/R_div;
+  //Vset_STANDBY = Vset_ON-10;
+  Vset_STANDBY = 575;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel010&quot;) &gt;= 0) //Gemini01 L2 G2top
+  {
+  Vset_ON = HvDivEquiv_G01L2*550/R_div;
+  Vset_STANDBY = 0;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel011&quot;) &gt;= 0) //Gemini01 L2 G1bot
+  {
+  Vset_ON = HvDivEquiv_G01L2*438/R_div;
+  //Vset_STANDBY = Vset_ON-10;
+  Vset_STANDBY = 285;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel012&quot;) &gt;= 0) //Gemini01 L2 G1top
+  {
+  Vset_ON = HvDivEquiv_G01L2*560/R_div;
+  Vset_STANDBY = 0;
+  }
+if (strpos(device, &quot;GEM_CAEN_HV/board12/channel013&quot;) &gt;= 0) //Gemini01 L2 Drift
+  {
+  Vset_ON = HvDivEquiv_G01L2*1125/R_div;
+  //Vset_STANDBY = Vset_ON-10;
+  Vset_STANDBY = 740;
+  }
+
+i0 = 10;
+i0_STANDBY = 2;
+
+//get the beamMode (cosmics / physics) and set i0 accordingly
+  dyn_bool runMode;  
+  bool cosmics, physics, standby;
+  dyn_string dpStatus = makeDynString(&quot;GL1.GEMCAEN.Beam.Physics&quot;,&quot;GL1.GEMCAEN.Beam.Cosmic&quot;,&quot;GL1.GEMCAEN.Beam.StandBy&quot;);
+  
+  dpGet(dpStatus, runMode);
+  physics = runMode[1];
+  cosmics = runMode[2];
+  standby = runMode[3];
+  
+  if (physics) i0 = 10;
+  if (cosmics) i0 = 2;
+  //if (standby) this.text(&quot;STANDBY mode&quot;);
+
+
+
+DebugTN(&quot;Vset_ON=&quot;,Vset_ON,&quot;Vset_STANDBY&quot;,Vset_STANDBY);
+DebugTN(&quot;Device: &quot;, device);
+
+//=========================== Commands Definition ==================================
+	if (command == &quot;SWITCH_OFF&quot;)
+	{
+    bool go = setI0andWait(device+&quot;.settings.i0&quot;,50,20);
+    if (go) {  go = setOnOffandWait(device+&quot;.settings.onOff&quot;,0,70);  }
+    if (go) {  setI0andWait(device+&quot;.settings.i0&quot;,2,20);  }
+	}
+	if (command == &quot;GO_TO_STANDBY&quot;)
+	{
+    bool go = setI0andWait(device+&quot;.settings.i0&quot;,50,20);
+ 		if (go) {  go = setV0andWait(device+&quot;.settings.v0&quot;,Vset_STANDBY,70);  }
+    if (go) {  go = setOnOffandWait(device+&quot;.settings.onOff&quot;,1,70);  }
+    if (go) {  setI0andWait(device+&quot;.settings.i0&quot;,i0_STANDBY,20);  }
+	}
+	if (command == &quot;SWITCH_ON&quot;)
+	{
+    //from here: verify if the detector protection that requires standby has been fired 
+    dyn_mixed object;
+    string conditionName = &quot;MC_gotostandby_G1top&quot;;
+    dyn_string exceptionInfo;
+    string dp = &quot;cms_gem_dcs_1:CMSfwDetectorProtection/Configuration/LHC_Conditions_Require_MC_STANDBY&quot;;
+    bool conditionFired = FALSE;
+
+    CMSfwDetectorProtection_loadFromDp(object, dp, exceptionInfo);
+    int conditionIndex = CMSfwDetectorProtection_getConditionIndex(object, conditionName);
+    dpGet(object[CMSfwDetectorProtection_INPUTDPES][conditionIndex], conditionFired);
+    //here: end of verification of detector protection
+
+    if(!conditionFired)
+    {
+      bool go = setI0andWait(device+&quot;.settings.i0&quot;,50,20);
+    		if (go) {  go = setV0andWait(device+&quot;.settings.v0&quot;,Vset_ON,70);  }
+      if (go) {  go = setOnOffandWait(device+&quot;.settings.onOff&quot;,1,70);  }
+      if (go) {  setI0andWait(device+&quot;.settings.i0&quot;,i0,20);  }
+    }
+	}
+/*	if (command == &quot;SWITCH_ON_BEAM&quot;)
+	{
+    bool go = setI0andWait(device+&quot;.settings.i0&quot;,50,20);
+ 		if (go) {  go = setV0andWait(device+&quot;.settings.v0&quot;,Vset_ON_BEAM,70);  }
+    if (go) {  go = setOnOffandWait(device+&quot;.settings.onOff&quot;,1,70);  }
+    if (go) {  setI0andWait(device+&quot;.settings.i0&quot;,i0,20);  }
+	}*/
+}
+
+//================================== FUNCTIONS =======================================
+// These functions change the settings for I0, V0, onOff and wait for
+// the readBackSettings to be appropriately changed within a timeOut (in seconds).
+// The value return is TRUE if the readbacksetting has updated,
+// FALSE if it hasn't.
+
+bool setI0andWait(string dpSetting, float newI0, int timeOut) //timeOut in seconds
+{
+  string dpReadBack = dpSetting;
+  strreplace(dpReadBack, &quot;.settings.i0&quot;, &quot;.readBackSettings.i0&quot;);
+  //DebugTN(&quot;dpSetting&quot;,dpSetting,&quot;dpReadBack&quot;,dpReadBack);
+  dpSet(dpSetting,newI0);
+  float newReadBack;
+  bool readbackOK = 0;
+  int tStart = period(getCurrentTime()); //current time in seconds since 1.1.1970
+  int tNow;
+  int tElapsed=0;
+  while(!readbackOK &amp;&amp; tElapsed&lt;timeOut) //wait for 30 sec maximum
+    {
+    dpGet(dpReadBack,newReadBack);
+    if (newReadBack == newI0) {readbackOK=1;}
+    tNow = period(getCurrentTime());
+    tElapsed = tNow-tStart;
+    }
+  //DebugTN(&quot;newReadBack&quot;, newReadBack, &quot;tElapsed&quot;, tElapsed);
+  
+  if(!readbackOK) {DebugTN(&quot;Timed Out: new I0 not applied to &quot;,dpReadBack);}
+  
+return readbackOK;
+}
+
+bool setV0andWait(string dpSetting, float newV0, int timeOut) //timeOut in seconds
+{
+  string dpReadBack = dpSetting;
+  strreplace(dpReadBack, &quot;.settings.v0&quot;, &quot;.readBackSettings.v0&quot;);
+  //DebugTN(&quot;dpSetting&quot;,dpSetting,&quot;dpReadBack&quot;,dpReadBack);
+  dpSet(dpSetting,newV0);
+  float newReadBack;
+  bool readbackOK = 0;
+  int tStart = period(getCurrentTime()); //current time in seconds since 1.1.1970
+  int tNow;
+  int tElapsed=0;
+  while(!readbackOK &amp;&amp; tElapsed&lt;timeOut) //wait for 30 sec maximum
+    {
+    dpGet(dpReadBack,newReadBack);
+    if ( fabs(newReadBack-newV0)&lt;1 ) {readbackOK=1;}
+    tNow = period(getCurrentTime());
+    tElapsed = tNow-tStart;
+    }
+  //DebugTN(&quot;newReadBack&quot;, newReadBack, &quot;tElapsed&quot;, tElapsed);
+  
+  if(!readbackOK) {DebugTN(&quot;Timed Out: new V0 not applied to &quot;,dpReadBack);}
+  
+return readbackOK;
+}
+
+bool setOnOffandWait(string dpSetting, bool newSet, int timeOut) //timeOut in seconds
+{
+  string dpReadBack = dpSetting;
+  strreplace(dpReadBack, &quot;.settings.onOff&quot;, &quot;.actual.status&quot;);
+  //  strreplace(dpReadBack, &quot;.settings.onOff&quot;, &quot;.actual.isOn&quot;);
+  //DebugTN(&quot;dpSetting&quot;,dpSetting,&quot;dpReadBack&quot;,dpReadBack);
+  dpSet(dpSetting,newSet);
+  int newStatus;
+  bool newReadBack, newRup, newRdown;
+  bool readbackOK = 0;
+  int tStart = period(getCurrentTime()); //current time in seconds since 1.1.1970
+  int tNow;
+  int tElapsed=0;
+  while(!readbackOK &amp;&amp; tElapsed&lt;timeOut) //wait for 30 sec maximum
+    {
+    dpGet(dpReadBack,newStatus);
+    newReadBack = getBit(newStatus, 0);
+    newRup = getBit(newStatus, 1);
+    newRdown = getBit(newStatus, 2);
+    if ( (newReadBack == newSet) &amp;&amp; !newRup &amp;&amp; !newRdown ) {readbackOK=1;}
+    tNow = period(getCurrentTime());
+    tElapsed = tNow-tStart;
+    }
+  //DebugTN(&quot;newReadBack&quot;, newReadBack, &quot;tElapsed&quot;, tElapsed);
+  
+  if(!readbackOK) {DebugTN(&quot;Timed Out: could not switch on &quot;,dpReadBack);}
+  
+return readbackOK;
+}</action_script>
+		<states>
+			<state id="TRIPPED" color="FwStateAttention3">
+				<action id="SWITCH_OFF"  params="" visible="1"></action>
+			</state>
+			<state id="ERROR" color="FwStateAttention3">
+				<action id="SWITCH_OFF"  params="" visible="1"></action>
+				<action id="GO_TO_STANDBY"  params="" visible="1"></action>
+			</state>
+			<state id="WARNING" color="FwStateAttention2">
+				<action id="SWITCH_OFF"  params="" visible="1"></action>
+				<action id="GO_TO_STANDBY"  params="" visible="1"></action>
+			</state>
+			<state id="RAMPING_UP" color="FwStateAttention1">
+				<action id="SWITCH_OFF"  params="" visible="1"></action>
+				<action id="GO_TO_STANDBY"  params="" visible="1"></action>
+			</state>
+			<state id="RAMPING_DOWN" color="FwStateAttention1">
+				<action id="SWITCH_OFF"  params="" visible="1"></action>
+				<action id="GO_TO_STANDBY"  params="" visible="1"></action>
+			</state>
+			<state id="STANDBY" color="FwStateOKNotPhysics">
+				<action id="SWITCH_OFF"  params="" visible="1"></action>
+				<action id="SWITCH_ON"  params="" visible="1"></action>
+				<action id="GO_TO_STANDBY"  params="" visible="1"></action>
+			</state>
+			<state id="ON" color="FwStateOKPhysics">
+				<action id="SWITCH_OFF"  params="" visible="1"></action>
+				<action id="GO_TO_STANDBY"  params="" visible="1"></action>
+				<action id="SWITCH_ON"  params="" visible="1"></action>
+			</state>
+			<state id="OFF" color="FwStateOKNotPhysics">
+				<action id="GO_TO_STANDBY"  params="" visible="1"></action>
+				<action id="SWITCH_OFF"  params="" visible="1"></action>
+			</state>
+		</states>
+	</type>
+	<type>
+		<typeName>GEMCaenConfigurator</typeName>
+		<panel>GEMCaenConfigurator.pnl</panel>
+		<states_dpe>
+			<state_dpe>int inValue</state_dpe>
+		</states_dpe>
+		<actions_dpe>
+			<action_dpe>int outValue</action_dpe>
+		</actions_dpe>
+		<init_script>GEMCaenConfigurator_initialize(string domain, string device)
+{
+}
+</init_script>
+		<state_script>GEMCaenConfigurator_valueChanged( string domain, string device,
+      int inValue, string &amp;fwState )
+{
+	if (inValue == 1)
+	{
+		fwState = &quot;WAITING&quot;;
+	}
+	else if (inValue == 0)
+	{
+		fwState = &quot;APPLYING&quot;;
+	}
+	else 
+	{
+		fwState = &quot;ERROR&quot;;
+	}
+}
+
+</state_script>
+		<action_script>#uses &quot;CMSfwDetectorProtection/CMSfwDetectorProtection.ctl&quot;
+
+GEMCaenConfigurator_doCommand(string domain, string device, string command)
+{
+	if (command == &quot;SWITCH_ON&quot;)
+	{
+
+    //from here: verify if the detector protection that requires standby has been fired 
+    dyn_mixed object;
+    string conditionName = &quot;MC_gotostandby_G1top&quot;;
+    dyn_string exceptionInfo;
+    string dp = &quot;cms_gem_dcs_1:CMSfwDetectorProtection/Configuration/LHC_Conditions_Require_MC_STANDBY&quot;;
+    bool conditionFired = FALSE;
+
+    CMSfwDetectorProtection_loadFromDp(object, dp, exceptionInfo);
+    int conditionIndex = CMSfwDetectorProtection_getConditionIndex(object, conditionName);
+    dpGet(object[CMSfwDetectorProtection_INPUTDPES][conditionIndex], conditionFired);
+    //here: end of verification of detector protection
+
+    if(!conditionFired)   
+    {   
+  		dpSet(device+&quot;.outValue&quot;,1);
+    }
+	}
+	if (command == &quot;SWITCH_OFF&quot;)
+	{
+		dpSet(device+&quot;.outValue&quot;,0);
+	}
+	if (command == &quot;GO_TO_STANDBY&quot;)
+	{
+		dpSet(device+&quot;.outValue&quot;,2);
+	}
+}
+
+</action_script>
+		<states>
+			<state id="WAITING" color="FwStateOKNotPhysics">
+				<action id="SWITCH_ON"  params="" visible="0"></action>
+				<action id="SWITCH_OFF"  params="" visible="0"></action>
+				<action id="GO_TO_STANDBY"  params="" visible="0"></action>
+			</state>
+			<state id="APPLYING" color="FwStateAttention1">
+				<action id="SWITCH_ON"  params="" visible="0"></action>
+				<action id="SWITCH_OFF"  params="" visible="0"></action>
+				<action id="GO_TO_STANDBY"  params="" visible="0"></action>
+			</state>
+		</states>
+	</type>
+</deviceTypes>
+<logicalUnitTypes>
+	<type>
+		<typeName>GeminiMcNode</typeName>
+		<panel>GeminiMcNode.pnl</panel>
+		<states>
+			<state id="KILLED" color="FwStateAttention3">
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and ( $ANY$FwCHILDREN in_state TRIPPED ) ) move_to TRIPPED</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and ( $ANY$FwCHILDREN in_state ERROR ) ) move_to ERROR</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and ( $ANY$FwCHILDREN in_state WARNING ) ) move_to WARNING</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and ( $ANY$FwCHILDREN in_state RAMPING_UP ) ) move_to RAMPING_UP</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) ) move_to RAMPING_DOWN</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and not ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) and ( $ANY$FwCHILDREN in_state OFF ) ) move_to OFF</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and not ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) and not ( $ANY$FwCHILDREN in_state OFF ) and ( $ANY$FwCHILDREN in_state STANDBY ) ) move_to STANDBY</when>
+				<when>when ( $ALL$FwCHILDREN in_state ON ) move_to ON</when>
+				<action id="SWITCH_OFF"  params="" visible="1">do SWITCH_OFF $ALL$FwCHILDREN</action>
+			</state>
+			<state id="TRIPPED" color="FwStateAttention3">
+				<when>when ( $ANY$FwCHILDREN in_state KILLED )  move_to KILLED</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and ( $ANY$FwCHILDREN in_state ERROR ) ) move_to ERROR</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and ( $ANY$FwCHILDREN in_state WARNING ) ) move_to WARNING</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and ( $ANY$FwCHILDREN in_state RAMPING_UP ) ) move_to RAMPING_UP</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) ) move_to RAMPING_DOWN</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and not ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) and ( $ANY$FwCHILDREN in_state OFF ) ) move_to OFF</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and not ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) and not ( $ANY$FwCHILDREN in_state OFF ) and ( $ANY$FwCHILDREN in_state STANDBY ) ) move_to STANDBY</when>
+				<when>when ( $ALL$FwCHILDREN in_state ON ) move_to ON</when>
+				<action id="SWITCH_OFF"  params="" visible="1">do SWITCH_OFF $ALL$FwCHILDREN</action>
+			</state>
+			<state id="ERROR" color="FwStateAttention3">
+				<when>when ( $ANY$FwCHILDREN in_state KILLED )  move_to KILLED</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and ( $ANY$FwCHILDREN in_state TRIPPED ) ) move_to TRIPPED</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and ( $ANY$FwCHILDREN in_state WARNING ) ) move_to WARNING</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and ( $ANY$FwCHILDREN in_state RAMPING_UP ) ) move_to RAMPING_UP</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) ) move_to RAMPING_DOWN</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and not ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) and ( $ANY$FwCHILDREN in_state OFF ) ) move_to OFF</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and not ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) and not ( $ANY$FwCHILDREN in_state OFF ) and ( $ANY$FwCHILDREN in_state STANDBY ) ) move_to STANDBY</when>
+				<when>when ( $ALL$FwCHILDREN in_state ON ) move_to ON</when>
+				<action id="SWITCH_OFF"  params="" visible="1">do SWITCH_OFF $ALL$FwCHILDREN</action>
+				<action id="GO_TO_STANDBY"  params="" visible="1">do GO_TO_STANDBY $ALL$FwCHILDREN</action>
+			</state>
+			<state id="WARNING" color="FwStateAttention2">
+				<when>when ( $ANY$FwCHILDREN in_state KILLED )  move_to KILLED</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and ( $ANY$FwCHILDREN in_state TRIPPED ) ) move_to TRIPPED</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and ( $ANY$FwCHILDREN in_state ERROR ) ) move_to ERROR</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and ( $ANY$FwCHILDREN in_state RAMPING_UP ) ) move_to RAMPING_UP</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) ) move_to RAMPING_DOWN</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and not ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) and ( $ANY$FwCHILDREN in_state OFF ) ) move_to OFF</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and not ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) and not ( $ANY$FwCHILDREN in_state OFF ) and ( $ANY$FwCHILDREN in_state STANDBY ) ) move_to STANDBY</when>
+				<when>when ( $ALL$FwCHILDREN in_state ON ) move_to ON</when>
+				<action id="SWITCH_OFF"  params="" visible="1">do SWITCH_OFF $ALL$FwCHILDREN</action>
+				<action id="GO_TO_STANDBY"  params="" visible="1">do GO_TO_STANDBY $ALL$FwCHILDREN</action>
+			</state>
+			<state id="RAMPING_UP" color="FwStateAttention1">
+				<when>when ( $ANY$FwCHILDREN in_state KILLED )  move_to KILLED</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and ( $ANY$FwCHILDREN in_state TRIPPED ) ) move_to TRIPPED</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and ( $ANY$FwCHILDREN in_state ERROR ) ) move_to ERROR</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and ( $ANY$FwCHILDREN in_state WARNING ) ) move_to WARNING</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) ) move_to RAMPING_DOWN</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and not ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) and ( $ANY$FwCHILDREN in_state OFF ) ) move_to OFF</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and not ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) and not ( $ANY$FwCHILDREN in_state OFF ) and ( $ANY$FwCHILDREN in_state STANDBY ) ) move_to STANDBY</when>
+				<when>when ( $ALL$FwCHILDREN in_state ON ) move_to ON</when>
+				<action id="SWITCH_OFF"  params="" visible="1">do SWITCH_OFF $ALL$FwCHILDREN</action>
+				<action id="GO_TO_STANDBY"  params="" visible="1">do GO_TO_STANDBY $ALL$FwCHILDREN</action>
+			</state>
+			<state id="RAMPING_DOWN" color="FwStateAttention1">
+				<when>when ( $ANY$FwCHILDREN in_state KILLED )  move_to KILLED</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and ( $ANY$FwCHILDREN in_state TRIPPED ) ) move_to TRIPPED</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and ( $ANY$FwCHILDREN in_state ERROR ) ) move_to ERROR</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and ( $ANY$FwCHILDREN in_state WARNING ) ) move_to WARNING</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and ( $ANY$FwCHILDREN in_state RAMPING_UP ) ) move_to RAMPING_UP</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and not ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) and ( $ANY$FwCHILDREN in_state OFF ) ) move_to OFF</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and not ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) and not ( $ANY$FwCHILDREN in_state OFF ) and ( $ANY$FwCHILDREN in_state STANDBY ) ) move_to STANDBY</when>
+				<when>when ( $ALL$FwCHILDREN in_state ON ) move_to ON</when>
+				<action id="SWITCH_OFF"  params="" visible="1">do SWITCH_OFF $ALL$FwCHILDREN</action>
+				<action id="GO_TO_STANDBY"  params="" visible="1">do GO_TO_STANDBY $ALL$FwCHILDREN</action>
+			</state>
+			<state id="STANDBY" color="FwStateOKNotPhysics">
+				<when>when ( $ANY$FwCHILDREN in_state KILLED )  move_to KILLED</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and ( $ANY$FwCHILDREN in_state TRIPPED ) ) move_to TRIPPED</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and ( $ANY$FwCHILDREN in_state ERROR ) ) move_to ERROR</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and ( $ANY$FwCHILDREN in_state WARNING ) ) move_to WARNING</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and ( $ANY$FwCHILDREN in_state RAMPING_UP ) ) move_to RAMPING_UP</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) ) move_to RAMPING_DOWN</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and not ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) and ( $ANY$FwCHILDREN in_state OFF ) ) move_to OFF</when>
+				<when>when ( $ALL$FwCHILDREN in_state ON ) move_to ON</when>
+				<action id="SWITCH_ON"  params="" visible="1">do SWITCH_ON $ALL$FwCHILDREN</action>
+				<action id="SWITCH_OFF"  params="" visible="1">do SWITCH_OFF $ALL$FwCHILDREN</action>
+				<action id="GO_TO_STANDBY"  params="" visible="1">do GO_TO_STANDBY $ALL$FwCHILDREN</action>
+			</state>
+			<state id="ON" color="FwStateOKPhysics">
+				<when>when ( $ANY$FwCHILDREN in_state KILLED )  move_to KILLED</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and ( $ANY$FwCHILDREN in_state TRIPPED ) ) move_to TRIPPED</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and ( $ANY$FwCHILDREN in_state ERROR ) ) move_to ERROR</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and ( $ANY$FwCHILDREN in_state WARNING ) ) move_to WARNING</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and ( $ANY$FwCHILDREN in_state RAMPING_UP ) ) move_to RAMPING_UP</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) ) move_to RAMPING_DOWN</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and not ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) and ( $ANY$FwCHILDREN in_state OFF ) ) move_to OFF</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and not ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) and not ( $ANY$FwCHILDREN in_state OFF ) and ( $ANY$FwCHILDREN in_state STANDBY ) ) move_to STANDBY</when>
+				<action id="SWITCH_OFF"  params="" visible="1">do SWITCH_OFF $ALL$FwCHILDREN</action>
+				<action id="GO_TO_STANDBY"  params="" visible="1">do GO_TO_STANDBY $ALL$FwCHILDREN</action>
+				<action id="SWITCH_ON"  params="" visible="1">do SWITCH_ON $ALL$FwCHILDREN</action>
+			</state>
+			<state id="OFF" color="FwStateOKNotPhysics">
+				<when>when ( $ANY$FwCHILDREN in_state KILLED )  move_to KILLED</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and ( $ANY$FwCHILDREN in_state TRIPPED ) ) move_to TRIPPED</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and ( $ANY$FwCHILDREN in_state ERROR ) ) move_to ERROR</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and ( $ANY$FwCHILDREN in_state WARNING ) ) move_to WARNING</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and ( $ANY$FwCHILDREN in_state RAMPING_UP ) ) move_to RAMPING_UP</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) ) move_to RAMPING_DOWN</when>
+				<when>when ( not ( $ANY$FwCHILDREN in_state KILLED ) and not ( $ANY$FwCHILDREN in_state TRIPPED ) and not ( $ANY$FwCHILDREN in_state ERROR ) and not ( $ANY$FwCHILDREN in_state WARNING ) and not ( $ANY$FwCHILDREN in_state RAMPING_UP ) and not ( $ANY$FwCHILDREN in_state RAMPING_DOWN ) and not ( $ANY$FwCHILDREN in_state OFF ) and ( $ANY$FwCHILDREN in_state STANDBY ) ) move_to STANDBY</when>
+				<when>when ( $ALL$FwCHILDREN in_state ON ) move_to ON</when>
+				<action id="GO_TO_STANDBY"  params="" visible="1">do GO_TO_STANDBY $ALL$FwCHILDREN</action>
+				<action id="SWITCH_OFF"  params="" visible="1">do SWITCH_OFF $ALL$FwCHILDREN</action>
+			</state>
+		</states>
+	</type>
+	<type>
+		<typeName>LayerMcNode_Configurator</typeName>
+		<panel>LayerMcNode_Configurator.pnl</panel>
+		<states>
+			<state id="KILLED" color="FwStateAttention3">
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) ) move_to TRIPPED</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) ) move_to ERROR</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) ) move_to WARNING</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) ) move_to RAMPING_UP</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) ) move_to RAMPING_DOWN</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state OFF ) ) move_to OFF</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state OFF ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state STANDBY ) ) move_to STANDBY</when>
+				<when>when ( $ALL$FwCaenChannelA1515FsmDevice in_state ON ) move_to ON</when>
+				<action id="SWITCH_OFF"  params="" visible="1">do SWITCH_OFF $ALL$GEMCaenConfigurator</action>
+			</state>
+			<state id="TRIPPED" color="FwStateAttention3">
+				<when>when ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED )  move_to KILLED</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) ) move_to ERROR</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) ) move_to WARNING</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) ) move_to RAMPING_UP</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) ) move_to RAMPING_DOWN</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state OFF ) ) move_to OFF</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state OFF ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state STANDBY ) ) move_to STANDBY</when>
+				<when>when ( $ALL$FwCaenChannelA1515FsmDevice in_state ON ) move_to ON</when>
+				<action id="SWITCH_OFF"  params="" visible="1">do SWITCH_OFF $ALL$GEMCaenConfigurator</action>
+			</state>
+			<state id="ERROR" color="FwStateAttention3">
+				<when>when ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED )  move_to KILLED</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) ) move_to TRIPPED</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) ) move_to WARNING</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) ) move_to RAMPING_UP</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) ) move_to RAMPING_DOWN</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state OFF ) ) move_to OFF</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state OFF ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state STANDBY ) ) move_to STANDBY</when>
+				<when>when ( $ALL$FwCaenChannelA1515FsmDevice in_state ON ) move_to ON</when>
+				<action id="SWITCH_OFF"  params="" visible="1">do SWITCH_OFF $ALL$GEMCaenConfigurator</action>
+				<action id="GO_TO_STANDBY"  params="" visible="1">do GO_TO_STANDBY $ALL$GEMCaenConfigurator</action>
+			</state>
+			<state id="WARNING" color="FwStateAttention2">
+				<when>when ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED )  move_to KILLED</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) ) move_to TRIPPED</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) ) move_to ERROR</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) ) move_to RAMPING_UP</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) ) move_to RAMPING_DOWN</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state OFF ) ) move_to OFF</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state OFF ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state STANDBY ) ) move_to STANDBY</when>
+				<when>when ( $ALL$FwCaenChannelA1515FsmDevice in_state ON ) move_to ON</when>
+				<action id="SWITCH_OFF"  params="" visible="1">do SWITCH_OFF $ALL$GEMCaenConfigurator</action>
+				<action id="GO_TO_STANDBY"  params="" visible="1">do GO_TO_STANDBY $ALL$GEMCaenConfigurator</action>
+			</state>
+			<state id="RAMPING_UP" color="FwStateAttention1">
+				<when>when ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED )  move_to KILLED</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) ) move_to TRIPPED</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) ) move_to ERROR</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) ) move_to WARNING</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) ) move_to RAMPING_DOWN</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state OFF ) ) move_to OFF</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state OFF ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state STANDBY ) ) move_to STANDBY</when>
+				<when>when ( $ALL$FwCaenChannelA1515FsmDevice in_state ON ) move_to ON</when>
+				<action id="SWITCH_OFF"  params="" visible="1">do SWITCH_OFF $ALL$GEMCaenConfigurator</action>
+				<action id="GO_TO_STANDBY"  params="" visible="1">do GO_TO_STANDBY $ALL$GEMCaenConfigurator</action>
+			</state>
+			<state id="RAMPING_DOWN" color="FwStateAttention1">
+				<when>when ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED )  move_to KILLED</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) ) move_to TRIPPED</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) ) move_to ERROR</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) ) move_to WARNING</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) ) move_to RAMPING_UP</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state OFF ) ) move_to OFF</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state OFF ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state STANDBY ) ) move_to STANDBY</when>
+				<when>when ( $ALL$FwCaenChannelA1515FsmDevice in_state ON ) move_to ON</when>
+				<action id="SWITCH_OFF"  params="" visible="1">do SWITCH_OFF $ALL$GEMCaenConfigurator</action>
+				<action id="GO_TO_STANDBY"  params="" visible="1">do GO_TO_STANDBY $ALL$GEMCaenConfigurator</action>
+			</state>
+			<state id="STANDBY" color="FwStateOKNotPhysics">
+				<when>when ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED )  move_to KILLED</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) ) move_to TRIPPED</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) ) move_to ERROR</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) ) move_to WARNING</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) ) move_to RAMPING_UP</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) ) move_to RAMPING_DOWN</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state OFF ) ) move_to OFF</when>
+				<when>when ( $ALL$FwCaenChannelA1515FsmDevice in_state ON ) move_to ON</when>
+				<action id="SWITCH_ON"  params="" visible="1">do SWITCH_ON $ALL$GEMCaenConfigurator</action>
+				<action id="SWITCH_OFF"  params="" visible="1">do SWITCH_OFF $ALL$GEMCaenConfigurator</action>
+				<action id="GO_TO_STANDBY"  params="" visible="1">do GO_TO_STANDBY $ALL$GEMCaenConfigurator</action>
+			</state>
+			<state id="ON" color="FwStateOKPhysics">
+				<when>when ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED )  move_to KILLED</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) ) move_to TRIPPED</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) ) move_to ERROR</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) ) move_to WARNING</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) ) move_to RAMPING_UP</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) ) move_to RAMPING_DOWN</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state OFF ) ) move_to OFF</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state OFF ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state STANDBY ) ) move_to STANDBY</when>
+				<action id="SWITCH_OFF"  params="" visible="1">do SWITCH_OFF $ALL$GEMCaenConfigurator</action>
+				<action id="GO_TO_STANDBY"  params="" visible="1">do GO_TO_STANDBY $ALL$GEMCaenConfigurator</action>
+				<action id="SWITCH_ON"  params="" visible="1">do SWITCH_ON $ALL$GEMCaenConfigurator</action>
+			</state>
+			<state id="OFF" color="FwStateOKNotPhysics">
+				<when>when ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED )  move_to KILLED</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) ) move_to TRIPPED</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) ) move_to ERROR</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) ) move_to WARNING</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) ) move_to RAMPING_UP</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) ) move_to RAMPING_DOWN</when>
+				<when>when ( not ( $ANY$FwCaenChannelA1515FsmDevice in_state KILLED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state TRIPPED ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state ERROR ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state WARNING ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_UP ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state RAMPING_DOWN ) and not ( $ANY$FwCaenChannelA1515FsmDevice in_state OFF ) and ( $ANY$FwCaenChannelA1515FsmDevice in_state STANDBY ) ) move_to STANDBY</when>
+				<when>when ( $ALL$FwCaenChannelA1515FsmDevice in_state ON ) move_to ON</when>
+				<action id="GO_TO_STANDBY"  params="" visible="1">do GO_TO_STANDBY $ALL$GEMCaenConfigurator</action>
+				<action id="SWITCH_OFF"  params="" visible="1">do SWITCH_OFF $ALL$GEMCaenConfigurator</action>
+			</state>
+		</states>
+	</type>
+</logicalUnitTypes>
+</elements> 

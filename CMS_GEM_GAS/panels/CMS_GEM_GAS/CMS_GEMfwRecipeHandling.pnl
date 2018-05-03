@@ -1,0 +1,1428 @@
+V 11
+2
+LANG:1 0 
+LANG:10001 0 
+PANEL,-1 -1 999 902 N "_3DFace" 0
+"main()
+{
+  
+  dyn_string exceptionInfo;
+  fwAccessControl_setupPanel( \"ApplyPanelAccessControl\", exceptionInfo);
+ 
+}
+
+void ApplyPanelAccessControl(string s1, string s2)
+{
+bool hasMonitor, hasModify, hasControl, hasDebug;
+
+dyn_string exceptionInfo;
+
+//revoke all previous rights:
+DisableAllInPanel();
+
+//check privileges:
+fwAccessControl_isGranted( \"CMS_GEM:Monitor\", hasMonitor, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Modify\", hasModify, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Control\", hasControl, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Debug\", hasDebug, exceptionInfo);
+
+if (dynlen(exceptionInfo)) { fwExceptionHandling_display(exceptionInfo); return;}
+
+//enable/disable panel functionality:
+if (hasModify) {
+   BUTTON_saveTo_ConfDB.enabled = TRUE;
+   Button_OpenRecipeList.enabled = TRUE;
+   Button_LoadRecipe.enabled = TRUE;
+   }
+else if (hasControl){
+   BUTTON_saveTo_ConfDB.enabled = FALSE;
+   Button_OpenRecipeList.enabled = TRUE;
+   Button_LoadRecipe.enabled = TRUE;
+  }
+}
+
+void DisableAllInPanel()
+{
+   BUTTON_saveTo_ConfDB.enabled = FALSE;
+   Button_OpenRecipeList.enabled = FALSE;
+   Button_LoadRecipe.enabled = FALSE;
+  
+//disable all widgets in a panel...
+}
+
+
+ 
+ " 0
+ E E E E 1 -1 -1 0  40 24
+""0  1
+E E 3
+"CBRef" "1"
+"EClose" E
+"dpi" "96"
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:1 0 
+13 2
+"BUTTON_saveTo_ConfDB"
+""
+1 50 400 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+2 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:1 35 MS Shell Dlg 2,-1,16,5,50,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  48 379 272 433
+
+T 
+2
+LANG:1 21 Save Recipe to ConfDB
+LANG:10001 22 Save to ConfDB - CACHE
+"int main(mapping event)
+{
+  
+  dyn_string exceptionInfo;
+  bool answ;
+  fwGeneral_openMessagePanel(\"Do you really want to save this recipe?\", answ , exceptionInfo, \"Confirm\", false );
+  DebugTN(\"answer\",answ);
+  
+  if (answ)
+  {
+    applyChanges();
+  }  
+}
+
+int applyChanges()
+{
+   dyn_string exceptionInfo;
+   bool ok;
+   
+   //initialize default confDB
+   fwConfigurationDB_initialize(\"\",exceptionInfo);
+     if (dynlen(exceptionInfo)) {fwExceptionHandling_display(exceptionInfo); return 1;}
+   
+   //check if init was successful
+   fwConfigurationDB_checkInit(exceptionInfo);
+     if (dynlen(exceptionInfo)) {fwExceptionHandling_display(exceptionInfo); return 1;}
+     if (!dynlen(exceptionInfo)) DebugTN(\"ConfDB initialization successful\");
+
+   //select the recipe kind (HV, LV, MC or gas)
+   string RecipeKind = COMBO_RecipeKind.text;    
+     DebugTN(\"RecipeKind: \", RecipeKind);
+
+   //get custom recipe name  
+   dyn_string customRecipeName;
+     if (TEXT_recipeName.text == \"\") {
+       DebugTN(\"You are not adding a custom name, are you sure?\"); 
+       fwGeneral_openMessagePanel(\"You are not adding a custom name, are you sure?\", ok, exceptionInfo, \"OK\", FALSE);
+         if(ok == TRUE)
+           {
+           DebugTN(\"Ok\");    
+           }   
+         else{    
+           DebugTN(\"Aborted\");    
+           return -1;
+           }
+     }
+     else {
+       customRecipeName = makeDynString(\"_\"+TEXT_recipeName.text);
+     }
+     DebugTN(\"customRecipeName: \", customRecipeName);
+     
+   //get recipe version
+   dyn_string newRecipeVersion;
+     if (TEXT_recipeVersion.text == \"\") {
+       DebugTN(\"You are not adding a recipe comment, are you sure?\"); 
+       fwGeneral_openMessagePanel(\"You are not adding a recipe comment, are you sure?\", ok, exceptionInfo, \"OK\", FALSE);
+        if(ok == TRUE)
+           {
+           DebugTN(\"Ok\");    
+           }   
+         else{    
+           DebugTN(\"Aborted\");    
+           return -1;
+           }
+     }
+   else newRecipeVersion = TEXT_recipeVersion.text;
+     DebugTN(newRecipeVersion);
+   
+   string RecipeUse_raw, RecipeUse, RecipeType;
+   string DataTaking_raw, DataTaking;
+   string State_raw, State; 
+   string Elements; 
+   string rootNode;   
+   dyn_string deviceList;
+   dyn_dyn_mixed recipeObject; // recipe data will go here
+   dyn_string newRecipeName;
+   
+   //case HV recipe   
+   if(RecipeKind == \"HV settings\"){
+     DataTaking_raw = COMBO_DataTaking.text;
+     if(DataTaking_raw == \"Cosmics\"){
+       DataTaking = \"Cos\";
+     }
+     else if(DataTaking_raw == \"Physics\"){
+       DataTaking = \"Phy\";
+     }
+       
+     State_raw = COMBO_State.text;    //for HV STANDBY need to create Iset and Vset recipes
+     if(State_raw == \"STANDBY\"){
+       Elements = COMBO_Elements.text;
+       State = \"STB_\";
+     } 
+     else{
+       Elements = \"\";
+       State = State_raw;       
+     }
+      
+     deviceList = makeDynString(\"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board02/channel000\",
+                \"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board02/channel001\",
+                \"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board02/channel002\",
+                \"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board02/channel003\",
+                \"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board02/channel004\",
+                \"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board02/channel005\",
+                \"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board04/channel000\",
+                \"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board04/channel001\"
+                );     
+     
+      DebugTN(deviceList);
+     
+//     string hierarchyType=fwDevice_HARDWARE;   
+      string hierarchyType=\"\";
+     
+      RecipeUse_raw = COMBO_RecipeUse.text;   //for HV STANDBY need to create Iset and Vset recipes, if no element is selected, both Iset and Vset are stored
+      if(RecipeUse_raw == \"FSM\"){
+         RecipeUse = \"FSM\";
+        
+         if(Elements == \"Vset\"){
+           RecipeType = \"rcType_V\";        
+         }     
+         else if(Elements == \"Iset\"){
+           RecipeType = \"rcType_I\";        
+         }
+         else{
+           RecipeType = \"rcType_IV\";        
+         }
+     
+         newRecipeName = makeDynString(\"rec_\" + DataTaking + RecipeUse+ \"HV_\" + State + Elements + customRecipeName);
+          DebugTN(\"rewRecipeName: \", newRecipeName);
+     
+//      rootNode= \"CAEN/GEM_CAEN_HV\";
+//      fwConfigurationDB_getHierarchyFromPVSS(rootNode, fwDevice_HARDWARE, deviceList, exceptionInfo);
+//        if (dynlen(exceptionInfo)) {fwExceptionHandling_display(exceptionInfo); return 1;}
+         
+       
+         fwConfigurationDB_extractRecipe(deviceList, hierarchyType, recipeObject, exceptionInfo, RecipeType);
+           if (dynlen(exceptionInfo)) {fwExceptionHandling_display(exceptionInfo); return 1;}    
+             DebugTN(\"recipeObject: \", recipeObject);
+       }
+       else if(RecipeUse_raw == \"Development\"){
+          RecipeUse = \"DEV\";     
+
+          RecipeType = \"\";   
+        
+          newRecipeName = makeDynString(\"rec_\" + DataTaking + RecipeUse + \"HV_\" + State + customRecipeName);   //for the DEV recipes, all the elements are stored: RecipeType is default
+            DebugTN(\"rewRecipeName: \", newRecipeName);
+        
+          fwConfigurationDB_extractRecipe(deviceList, hierarchyType, recipeObject, exceptionInfo, RecipeType);
+            if (dynlen(exceptionInfo)) {fwExceptionHandling_display(exceptionInfo); return 1;}    
+             DebugTN(\"recipeObject: \", recipeObject);
+       }
+       
+       fwConfigurationDB_editRecipe(recipeObject);
+         DebugTN(\"Edit done\");
+   
+       fwConfigurationDB_saveRecipeToDB(recipeObject, hierarchyType, newRecipeName, exceptionInfo, newRecipeVersion, false);
+     
+     
+         if(dynlen(exceptionInfo)){
+           fwExceptionHandling_display(exceptionInfo); 
+           fwGeneral_openMessagePanel(\"Error in saving recipe!\", ok, exceptionInfo, \"OK\", TRUE);
+           return 1;
+         } 
+         else{
+         DebugTN(\"Save done\");
+         fwGeneral_openMessagePanel(\"Recipe saved!\", ok, exceptionInfo, \"OK\", TRUE);
+         }
+   }  
+   //case LV recipe 
+   else if(RecipeKind == \"LV settings\"){
+     DataTaking_raw = COMBO_DataTaking.text;
+     if(DataTaking_raw == \"Cosmics\"){
+       DataTaking = \"Cos\";
+     }
+     else if(DataTaking_raw == \"Physics\"){
+       DataTaking = \"Phy\";
+     }
+     State_raw = COMBO_State.text;
+     State = State_raw;
+     
+     RecipeUse_raw = COMBO_RecipeUse.text;  
+      if(RecipeUse_raw == \"FSM\"){
+         RecipeUse = \"FSM\";
+         RecipeType = \"rcType_IV\";        
+         
+      
+         }
+
+     else if(RecipeUse_raw == \"Development\"){
+          RecipeUse = \"DEV\";     
+
+          RecipeType = \"\";   
+        
+        } 
+     
+  newRecipeName = makeDynString(\"rec\" + DataTaking + RecipeUse + \"LV_\" + State + customRecipeName);
+     DebugTN(\"rewRecipeName: \", newRecipeName);
+          
+     
+     rootNode= \"CAEN/GEM_CAEN_LV\";
+     fwConfigurationDB_getHierarchyFromPVSS(rootNode, fwDevice_HARDWARE, deviceList, exceptionInfo);
+       if (dynlen(exceptionInfo)) {fwExceptionHandling_display(exceptionInfo); return 1;}
+         DebugTN(deviceList);
+
+     
+     string hierarchyType=fwDevice_HARDWARE;   
+       fwConfigurationDB_extractRecipe(deviceList, hierarchyType, recipeObject, exceptionInfo, RecipeType);
+         if (dynlen(exceptionInfo)) {fwExceptionHandling_display(exceptionInfo); return 1;}    
+           DebugTN(\"recipeObject: \", recipeObject);
+        
+     
+       fwConfigurationDB_editRecipe(recipeObject);
+         DebugTN(\"Edit done\");
+    
+       fwConfigurationDB_saveRecipeToDB(recipeObject, hierarchyType, newRecipeName, exceptionInfo, newRecipeVersion, false); 
+         if(dynlen(exceptionInfo)){
+           fwExceptionHandling_display(exceptionInfo); 
+           fwGeneral_openMessagePanel(\"Error in saving recipe!\", ok, exceptionInfo, \"OK\", TRUE);
+           return 1;
+         } 
+         else{
+         DebugTN(\"Save done\");
+         fwGeneral_openMessagePanel(\"Recipe saved!\", ok, exceptionInfo, \"OK\", TRUE);
+         }
+ 
+   } 
+   //case Gas recipe  
+   else if(RecipeKind == \"Gas Alarm settings\"){
+     deviceList = makeDynString(\"cms_gem_dcs_1:Error_Ar_Pressure\",
+                                \"cms_gem_dcs_1:Error_Ar_Ratio\",
+                                \"cms_gem_dcs_1:Error_CF4_Pressure\",
+                                \"cms_gem_dcs_1:Error_CF4_Ratio\",
+                                \"cms_gem_dcs_1:Error_Channel\",
+                                \"cms_gem_dcs_1:Error_CO2_Pressure\",
+                                \"cms_gem_dcs_1:Error_CO2_Ratio\",
+                                \"cms_gem_dcs_1:Error_InFlow\",
+                                \"cms_gem_dcs_1:Error_InOutFlow\",
+                                \"cms_gem_dcs_1:Error_Main_Flow\",
+                                \"cms_gem_dcs_1:Error_Output_Pressure\",
+                                \"cms_gem_dcs_1:Error_PT6122\",
+                                \"cms_gem_dcs_1:Error_PT6124\",
+                                \"cms_gem_dcs_1:Error_Regulator\",
+                                \"cms_gem_dcs_1:Error_Total_Flow\",
+                                \"cms_gem_dcs_1:Warning_Ar_Pressure\",
+                                \"cms_gem_dcs_1:Warning_Ar_Ratio\",
+                                \"cms_gem_dcs_1:Warning_CF4_Pressure\",
+                                \"cms_gem_dcs_1:Warning_CF4_Ratio\",
+                                \"cms_gem_dcs_1:Warning_Channel\",
+                                \"cms_gem_dcs_1:Warning_CO2_Pressure\",
+                                \"cms_gem_dcs_1:Warning_CO2_Ratio\",
+                                \"cms_gem_dcs_1:Warning_InFlow\",
+                                \"cms_gem_dcs_1:Warning_InOutFlow\",
+                                \"cms_gem_dcs_1:Warning_Main_Flow\",
+                                \"cms_gem_dcs_1:Warning_Output_Pressure\",
+                                \"cms_gem_dcs_1:Warning_PT6122\",
+                                \"cms_gem_dcs_1:Warning_PT6124\",
+                                \"cms_gem_dcs_1:Warning_Regulator\",
+                                \"cms_gem_dcs_1:Warning_Total_Flow\");  
+    
+     newRecipeName = makeDynString(\"rec_DEVGAS_\" + customRecipeName); 
+     DebugTN(\"rewRecipeName: \", newRecipeName);
+     
+     
+     fwConfigurationDB_extractRecipe(deviceList, \"\", recipeObject, exceptionInfo);
+       if (dynlen(exceptionInfo)) {fwExceptionHandling_display(exceptionInfo); return 1;}    
+         DebugTN(\"recipeObject: \", recipeObject);
+   
+     fwConfigurationDB_editRecipe(recipeObject);
+       DebugTN(\"Edit done\");
+    
+     fwConfigurationDB_saveRecipeToDB(recipeObject, \"\", newRecipeName, exceptionInfo, newRecipeVersion, false); 
+         if(dynlen(exceptionInfo)){
+           fwExceptionHandling_display(exceptionInfo); 
+           fwGeneral_openMessagePanel(\"Error in saving recipe!\", ok, exceptionInfo, \"OK\", TRUE);
+           return 1;
+         } 
+         else{
+         DebugTN(\"Save done\");
+         fwGeneral_openMessagePanel(\"Recipe saved!\", ok, exceptionInfo, \"OK\", TRUE);
+         }
+    }
+  
+    
+   else if(RecipeKind == \"Multichannel settings\"){
+     
+     DataTaking_raw = COMBO_DataTaking.text;
+     if(DataTaking_raw == \"Cosmics\"){
+       DataTaking = \"Cos\";
+     }
+     else if(DataTaking_raw == \"Physics\"){
+       DataTaking = \"Phy\";
+     }
+       
+     State_raw = COMBO_State.text;
+     if(State_raw == \"STANDBY\"){
+       Elements = COMBO_Elements.text;
+       State = \"STB_\";
+     } 
+     else{
+       Elements = \"\";
+       State = State_raw;       
+     }
+     
+     deviceList = makeDynString(\"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board12/channel000\",
+                                \"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board12/channel001\",
+                                \"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board12/channel002\",
+                                \"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board12/channel003\",
+                                \"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board12/channel004\",
+                                \"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board12/channel005\",
+                                \"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board12/channel006\",
+                                \"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board12/channel007\",
+                                \"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board12/channel008\",
+                                \"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board12/channel009\",
+                                \"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board12/channel010\",
+                                \"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board12/channel011\",
+                                \"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board12/channel012\",
+                                \"cms_gem_dcs_1:CAEN/GEM_CAEN_HV/board12/channel013\");     
+     
+            DebugTN(deviceList);
+     
+//     string hierarchyType=fwDevice_HARDWARE;   
+      string hierarchyType=\"\";
+     
+      RecipeUse_raw = COMBO_RecipeUse.text;  
+      if(RecipeUse_raw == \"FSM\"){
+         RecipeUse = \"FSM\";
+        
+         if(Elements == \"Vset\"){
+           RecipeType = \"rcType_V\";        
+         }     
+         else if(Elements == \"Iset\"){
+           RecipeType = \"rcType_I\";        
+         }
+         else{
+           RecipeType = \"rcType_IV\";        
+         }
+     
+         newRecipeName = makeDynString(\"rec_\" + DataTaking + RecipeUse+ \"MC_\" + State + Elements + customRecipeName);
+          DebugTN(\"rewRecipeName: \", newRecipeName);
+     
+//      rootNode= \"CAEN/GEM_CAEN_HV\";
+//      fwConfigurationDB_getHierarchyFromPVSS(rootNode, fwDevice_HARDWARE, deviceList, exceptionInfo);
+//        if (dynlen(exceptionInfo)) {fwExceptionHandling_display(exceptionInfo); return 1;}
+         
+       
+         fwConfigurationDB_extractRecipe(deviceList, hierarchyType, recipeObject, exceptionInfo, RecipeType);
+           if (dynlen(exceptionInfo)) {fwExceptionHandling_display(exceptionInfo); return 1;}    
+             DebugTN(\"recipeObject: \", recipeObject);
+       }
+       else if(RecipeUse_raw == \"Development\"){
+          RecipeUse = \"DEV\";     
+
+          RecipeType = \"\";   
+        
+          newRecipeName = makeDynString(\"rec_\" + DataTaking + RecipeUse + \"MC_\" + State + customRecipeName);
+            DebugTN(\"rewRecipeName: \", newRecipeName);
+        
+          fwConfigurationDB_extractRecipe(deviceList, hierarchyType, recipeObject, exceptionInfo, RecipeType);
+            if (dynlen(exceptionInfo)) {fwExceptionHandling_display(exceptionInfo); return 1;}    
+             DebugTN(\"recipeObject: \", recipeObject);
+       }
+       
+       fwConfigurationDB_editRecipe(recipeObject);
+         DebugTN(\"Edit done\");
+   
+       fwConfigurationDB_saveRecipeToDB(recipeObject, hierarchyType, newRecipeName, exceptionInfo, newRecipeVersion, false);
+     
+     
+         if(dynlen(exceptionInfo)){
+           fwExceptionHandling_display(exceptionInfo); 
+           fwGeneral_openMessagePanel(\"Error in saving recipe!\", ok, exceptionInfo, \"OK\", TRUE);
+           return 1;
+         } 
+         else{
+         DebugTN(\"Save done\");
+         fwGeneral_openMessagePanel(\"Recipe saved!\", ok, exceptionInfo, \"OK\", TRUE);
+         }
+
+       }
+   
+ }" 0
+ E E E
+14 12
+"TEXT_recipeName"
+""
+1 48 313.0875 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+12 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+1
+LANG:1 35 MS Shell Dlg 2,-1,19,5,50,0,0,0,0,0
+0  46 297 320 342
+3 "0s" 0 0 0 0 0 -1  E E E
+22 13
+"COMBO_RecipeKind"
+""
+1 50 110 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+13 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+1
+LANG:1 35 MS Shell Dlg 2,-1,16,5,50,0,0,0,0,0
+0  48 101 272 145
+4
+1
+LANG:1 11 HV settings
+
+0
+1
+LANG:1 11 LV settings
+
+0
+1
+LANG:1 21 Multichannel settings
+
+0
+1
+LANG:1 18 Gas Alarm settings
+
+0
+
+"main()
+{
+  string recipeKind;
+  recipeKind = COMBO_RecipeKind.text;
+  
+  COMBO_DataTaking.deleteAllItems;
+  COMBO_State.deleteAllItems;
+  
+  if(recipeKind == \"HV settings\"){
+  
+    COMBO_RecipeUse.enabled(TRUE);
+
+    COMBO_DataTaking.enabled(TRUE);
+    COMBO_DataTaking.appendItem(\"COSMICS\");
+    COMBO_DataTaking.appendItem(\"PHYSICS\");
+    
+    COMBO_State.enabled(TRUE);
+    COMBO_State.appendItem(\"ON\");
+    COMBO_State.appendItem(\"OFF\");
+    COMBO_State.appendItem(\"STANDBY\");
+  } 
+ 
+  else if(recipeKind == \"Multichannel settings\"){
+
+    COMBO_RecipeUse.enabled(TRUE);
+  
+    COMBO_DataTaking.enabled(TRUE);
+    COMBO_DataTaking.appendItem(\"COSMICS\");
+    COMBO_DataTaking.appendItem(\"PHYSICS\");
+    
+    COMBO_State.enabled(TRUE);
+    COMBO_State.appendItem(\"ON\");
+    COMBO_State.appendItem(\"OFF\");
+    COMBO_State.appendItem(\"STANDBY\");
+  }  
+
+  
+  else if(recipeKind == \"LV settings\"){
+
+    COMBO_RecipeUse.enabled(TRUE);
+    COMBO_Elements.enabled(FALSE);
+       
+    COMBO_DataTaking.enabled(TRUE);
+    COMBO_DataTaking.appendItem(\"COSMICS\");
+    COMBO_DataTaking.appendItem(\"PHYSICS\");
+    
+    COMBO_State.enabled(TRUE);
+    COMBO_State.appendItem(\"ON\");
+    COMBO_State.appendItem(\"OFF\");
+  }
+  else{
+    COMBO_DataTaking.enabled(FALSE);
+    COMBO_State.enabled(FALSE);
+    COMBO_RecipeUse.enabled(FALSE);
+    COMBO_Elements.enabled(FALSE);
+    
+  }
+  
+}
+
+
+
+
+
+" 0
+
+"main()
+{
+  string recipeKind;
+  recipeKind = COMBO_RecipeKind.text;
+  
+  COMBO_DataTaking.deleteAllItems;
+  COMBO_State.deleteAllItems;
+  
+  if(recipeKind == \"HV settings\"){
+
+    COMBO_RecipeUse.enabled(TRUE);
+    
+    COMBO_DataTaking.enabled(TRUE);
+    COMBO_DataTaking.appendItem(\"COSMICS\");
+    COMBO_DataTaking.appendItem(\"PHYSICS\");
+    
+    COMBO_State.enabled(TRUE);
+    COMBO_State.appendItem(\"ON\");
+    COMBO_State.appendItem(\"OFF\");
+    COMBO_State.appendItem(\"STANDBY\");
+  }  
+  
+  else if(recipeKind == \"Multichannel settings\"){
+
+    COMBO_RecipeUse.enabled(TRUE);
+  
+    COMBO_DataTaking.enabled(TRUE);
+    COMBO_DataTaking.appendItem(\"COSMICS\");
+    COMBO_DataTaking.appendItem(\"PHYSICS\");
+    
+    COMBO_State.enabled(TRUE);
+    COMBO_State.appendItem(\"ON\");
+    COMBO_State.appendItem(\"OFF\");
+    COMBO_State.appendItem(\"STANDBY\");
+  }  
+
+  else if(recipeKind == \"LV settings\"){
+
+    COMBO_RecipeUse.enabled(TRUE);
+    COMBO_Elements.enabled(FALSE);
+        
+    COMBO_DataTaking.enabled(TRUE);
+    COMBO_DataTaking.appendItem(\"COSMICS\");
+    COMBO_DataTaking.appendItem(\"PHYSICS\");
+    
+    COMBO_State.enabled(TRUE);
+    COMBO_State.appendItem(\"ON\");
+    COMBO_State.appendItem(\"OFF\");
+  }
+  else{
+    COMBO_DataTaking.enabled(FALSE);
+    COMBO_State.enabled(FALSE);
+    COMBO_RecipeUse.enabled(FALSE);
+    COMBO_Elements.enabled(FALSE);
+  }
+  
+}" 0
+
+E
+ 1 0
+2 14
+"PRIMITIVE_TEXT3"
+""
+1 50 268.12 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+14 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 50 268.12 260 318.12
+0 2 2 "0s" 0 0 0 64 0 0  50 268.12 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 22 Custom Name (optional)
+14 15
+"TEXT_recipeVersion"
+""
+1 360 308 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+15 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+1
+LANG:1 35 MS Shell Dlg 2,-1,19,5,50,0,0,0,0,0
+0  358 297 642 338
+3 "0s" 0 0 0 0 0 -1  E E E
+13 18
+"Button_LoadRecipe"
+""
+1 50 800 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+18 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+1
+LANG:1 35 MS Shell Dlg 2,-1,16,5,50,0,0,0,0,0
+0  48 786 272 840
+
+T 
+1
+LANG:1 19 Load Recipe from DB
+"int main(mapping event)
+{
+  
+dyn_string exceptionInfo;
+  bool answ;
+  fwGeneral_openMessagePanel(\"Do you really want to load this recipe?\", answ , exceptionInfo, \"Confirm\", false );
+  DebugTN(\"answer\",answ);
+  
+  if (answ)
+  {
+    applyChanges();
+  }  
+}
+
+void applyChanges()
+{
+   dyn_string exceptionInfo;
+   
+   //initialize default confDB
+   fwConfigurationDB_initialize(\"\",exceptionInfo);
+     if (dynlen(exceptionInfo)) {fwExceptionHandling_display(exceptionInfo); return 1;}
+   
+   //check if init was successful
+   fwConfigurationDB_checkInit(exceptionInfo);
+     if (dynlen(exceptionInfo)) {fwExceptionHandling_display(exceptionInfo); return 1;}
+     if (!dynlen(exceptionInfo)) DebugTN(\"ConfDB initialization successful\");
+  
+   //select recipe(s) to be applied
+
+   string selectedRecipe;
+   bool ok;
+   
+     if(TEXT_SelectedRecipe.text == \"\"){
+       DebugTN(\"Please specify a recipe\"); 
+       fwGeneral_openMessagePanel(\"Please specify a recipe!\", ok, exceptionInfo, \"OK\", TRUE);
+       return 1;
+     }
+     else{
+       selectedRecipe = TEXT_SelectedRecipe.text;
+     }
+  
+   dyn_dyn_mixed recipeObject;
+   dyn_string exceptionInfo;
+   
+     fwConfigurationDB_loadRecipeFromDB(selectedRecipe, \"\", \"\", recipeObject,exceptionInfo);
+       //DebugTN(recipeObject);
+
+       if (dynlen(exceptionInfo)){
+          fwExceptionHandling_display(exceptionInfo); 
+          DebugTN(\"Problem in loading recipe!\");
+          fwGeneral_openMessagePanel(\"Problem in loading recipe!\", ok, exceptionInfo, \"OK\", TRUE);
+          return 1;
+        }
+       else{
+          DebugTN(\"Recipe loaded\");
+          fwConfigurationDB_applyRecipe(recipeObject, \"\", exceptionInfo,FALSE);
+            if(dynlen(exceptionInfo)){
+              fwExceptionHandling_display(exceptionInfo); 
+              DebugTN(\"Problem in applying recipe!\");
+              fwGeneral_openMessagePanel(\"Problem in applying recipe!\", ok, exceptionInfo, \"OK\", TRUE);
+              return 1;
+            }
+            else{
+              DebugTN(\"Recipe applied\");
+              fwGeneral_openMessagePanel(\"Recipe applied!\", ok, exceptionInfo, \"OK\", TRUE);
+            }
+        }
+   
+   
+}
+
+ //DebugTN(recipeObject);
+
+    //look at recipe in read-only mode   
+    //fwConfigurationDB_editRecipe(recipeObject, TRUE, \"\");
+   
+   //apply recipe stored in recipeObject
+  
+" 0
+ E E E
+30 19
+"FRAME1"
+""
+1 240 -1 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+19 0 0 0 0 0
+E E E
+1
+1
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 0 1 0 1 E 1.509090909090909 0 1.619926199261993 -332.1818181818181 22.61992619926199 0 E 240 -1 791 271
+1
+LANG:1 35 MS Shell Dlg 2,-1,19,5,50,0,0,0,0,0
+0 1
+LANG:1 11 Save Recipe
+2 21
+"PRIMITIVE_TEXT5"
+""
+1 50 76 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+21 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 50 76 400 236
+0 2 2 "0s" 0 0 0 64 0 0  50 76 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 11 Recipe Type
+13 22
+"Button_OpenRecipeList"
+""
+1 50 556 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+22 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+1
+LANG:1 35 MS Shell Dlg 2,-1,16,5,50,0,0,0,0,0
+0  48 542 272 596
+
+T 
+1
+LANG:1 17 Open Recipes List
+"int main(mapping event)
+{
+   dyn_string exceptionInfo;
+   bool ok;
+   
+   //initialize default confDB
+   fwConfigurationDB_initialize(\"\",exceptionInfo);
+   if (dynlen(exceptionInfo)) {fwExceptionHandling_display(exceptionInfo); return 1;}
+   
+   //check if init was successful
+   fwConfigurationDB_checkInit(exceptionInfo);
+   if (dynlen(exceptionInfo)) {fwExceptionHandling_display(exceptionInfo); return 1;}
+   
+   if (!dynlen(exceptionInfo)) DebugTN(\"ConfDB initialization successful\");
+
+   //retrieve list from DB
+   dyn_string selection;
+      
+   dyn_string recipeList;
+   fwConfigurationDB_getRecipesInDB ( recipeList,exceptionInfo );
+   if (dynlen(exceptionInfo)) {
+     fwExceptionHandling_display(exceptionInfo); 
+     return 1; 
+     fwGeneral_openMessagePanel(\"Recipe List not available!\", ok, exceptionInfo, \"OK\", TRUE);
+     }
+   if (!dynlen(exceptionInfo)) {
+      fwGeneral_selectFromList(recipeList, selection,exceptionInfo,false,\"Select Recipe\");   
+   }
+   //DebugTN(recipeList);
+   DebugTN(\"Selection: \", selection);
+   
+   displaySelection(selection);
+ }
+ 
+displaySelection(dyn_string selection)
+{
+   //displays selected recipe properites
+  
+   dyn_int recipeVersionNumbers;
+   dyn_time recipeVersionTime;
+   dyn_string recipeVersionUser;
+   dyn_string recipeVersionComments;
+   dyn_string exceptionInfo;
+  
+   TEXT_SelectedRecipe.text(selection);
+   fwConfigurationDB_getRecipeHistory(selection, recipeVersionNumbers, recipeVersionTime,recipeVersionUser, recipeVersionComments,exceptionInfo);
+   
+   DebugTN(\"recipeVersionNumbers: \",recipeVersionNumbers,
+           \"recipeVersionTime: \", recipeVersionTime,
+           \"recipeVersionUser: \",recipeVersionUser,
+           \"recipeVersionComments: \", recipeVersionComments);
+   
+   TABLE_SelectedRecipe.appendLine(\"Information\",\"Version Number\",\"Value\",recipeVersionNumbers);
+   TABLE_SelectedRecipe.appendLine(\"Information\",\"Time\",\"Value\",recipeVersionTime);
+   TABLE_SelectedRecipe.appendLine(\"Information\",\"User\",\"Value\",recipeVersionUser);
+   TABLE_SelectedRecipe.appendLine(\"Information\",\"Comments\",\"Value\",recipeVersionComments);
+   
+   
+}" 0
+ E E E
+30 23
+"FRAME2"
+""
+1 30 349 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+23 0 0 0 0 0
+E E E
+1
+1
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 0 1 0 1 E 1 0 1.155763239875389 0 95.63862928348908 0 E 30 349 861 671
+1
+LANG:1 35 MS Shell Dlg 2,-1,19,5,50,0,0,0,0,0
+0 1
+LANG:1 11 Load Recipe
+14 24
+"TEXT_SelectedRecipe"
+""
+1 50 652 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+24 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+1
+LANG:1 35 MS Shell Dlg 2,-1,19,5,50,0,0,0,0,0
+0  48 638 322 692
+3 "0s" 0 0 0 0 0 -1  E E E
+2 26
+"PRIMITIVE_TEXT6"
+""
+1 50 610 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+26 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 50 610 360 710
+0 2 2 "0s" 0 0 0 64 0 0  50 610 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 20 Selected Recipe Name
+2 27
+"PRIMITIVE_TEXT7"
+""
+1 342 610 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+27 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 342 610 652 710
+0 2 2 "0s" 0 0 0 64 0 0  342 610 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 27 Selected Recipe Description
+25 29
+"TABLE_SelectedRecipe"
+""
+1 340.0000000000001 640 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+29 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  338 638 792 772
+EE 1 0 1 2 0 "Information" 21 1 0 "s" 1
+LANG:1 9 Parameter
+E
+1
+LANG:1 0 
+
+220 "Value" 21 1 0 "s" 1
+LANG:1 5 Value
+E
+1
+LANG:1 0 
+
+220 
+20 20 10 0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 0 1 1 1 7
+1 0
+13 30
+"close_button"
+""
+1 872 843 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+30 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  870 836 974 870
+
+T 
+1
+LANG:1 5 Close
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_panelOff();
+}
+
+EP_panelOff()
+{
+  PanelOff();
+}
+
+// SimpleCtrlScript {EP_panelOff}
+// Function {PanelOff}
+// Panel {}
+// Module {}
+// SimpleCtrlScriptEnd {EP_panelOff}
+" 0
+ E E E
+22 31
+"COMBO_DataTaking"
+""
+1 50 211.12 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+31 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+1
+LANG:1 35 MS Shell Dlg 2,-1,16,5,50,0,0,0,0,0
+0  48 197 272 241
+2
+1
+LANG:1 7 Cosmics
+
+0
+1
+LANG:1 7 Physics
+
+0
+
+E
+E
+E
+ 1 0
+22 32
+"COMBO_State"
+""
+1 292 211.12 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+32 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+1
+LANG:1 35 MS Shell Dlg 2,-1,16,5,50,0,0,0,0,0
+0  290 197 514 241
+3
+1
+LANG:1 2 ON
+
+0
+1
+LANG:1 3 OFF
+
+0
+1
+LANG:1 7 STANDBY
+
+0
+
+"main()
+{
+  string dataTakingKind;
+  dataTakingKind = COMBO_State.text;
+  COMBO_Elements.deleteAllItems;
+  COMBO_Elements.enabled(FALSE);  
+  
+  
+  if(dataTakingKind == \"STANDBY\"){
+    
+    COMBO_Elements.enabled(TRUE);
+    COMBO_Elements.appendItem(\"Iset\");  
+    COMBO_Elements.appendItem(\"Vset\");
+  }
+  
+  else{
+
+    COMBO_Elements.enabled(FALSE);  
+  }
+}" 0
+
+"main()
+{
+  string dataTakingKind;
+  dataTakingKind = COMBO_State.text;
+  COMBO_Elements.deleteAllItems;
+
+  
+  if(dataTakingKind == \"STANDBY\"){
+    
+    COMBO_Elements.enabled(TRUE);
+    COMBO_Elements.appendItem(\"Iset\");  
+    COMBO_Elements.appendItem(\"Vset\");
+  }
+  
+  else{
+
+    COMBO_Elements.enabled(FALSE);  
+  }
+}" 0
+
+E
+ 1 0
+2 34
+"PRIMITIVE_TEXT8"
+""
+1 50 174.12 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+34 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 50 174.12 330 264.12
+0 2 2 "0s" 0 0 0 64 0 0  50 174.12 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 11 Data Taking
+2 35
+"PRIMITIVE_TEXT9"
+""
+1 292 174.12 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+35 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 292 174.12 512 254.12
+0 2 2 "0s" 0 0 0 64 0 0  292 174.12 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 5 State
+2 36
+"PRIMITIVE_TEXT10"
+""
+1 272 203.12 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+36 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 272 203.12 322 253.12
+0 2 2 "0s" 0 0 0 64 0 0  272 203.12 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,19,5,50,0,0,0,0,0
+0 1
+LANG:1 1 +
+2 37
+"PRIMITIVE_TEXT11"
+""
+1 516 204.12 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+37 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 516 204.12 566 254.12
+0 2 2 "0s" 0 0 0 64 0 0  516 204.12 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,19,5,50,0,0,0,0,0
+0 1
+LANG:1 1 +
+2 38
+"PRIMITIVE_TEXT12"
+""
+1 362 268.24 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+38 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 362 268.24 572 318.24
+0 2 2 "0s" 0 0 0 64 0 0  362 268.24 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 30 Version description (optional)
+22 39
+"COMBO_RecipeUse"
+""
+1 290 110 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+39 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+1
+LANG:1 35 MS Shell Dlg 2,-1,16,5,50,0,0,0,0,0
+0  288 101 512 145
+2
+1
+LANG:1 3 FSM
+
+0
+1
+LANG:1 11 Development
+
+0
+
+"main()
+{
+  string recipeUse;
+  recipeUse = COMBO_RecipeUse.text;
+  
+  if(recipeUse == \"Development\"){
+  
+    COMBO_Elements.enabled(FALSE);
+  }
+  else{
+    
+    COMBO_Elements.enabled(TRUE);
+  
+  }
+}    
+" 0
+
+"main()
+{
+  string recipeUse;
+  recipeUse = COMBO_RecipeUse.text;
+  
+  if(recipeUse == \"Development\"){
+  
+    COMBO_Elements.enabled(FALSE);
+  }
+  else{
+    COMBO_Elements.enabled(TRUE);
+  
+  }
+}    
+" 0
+
+E
+ 1 0
+2 40
+"PRIMITIVE_TEXT13"
+""
+1 292 76 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+40 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 292 76 642 236
+0 2 2 "0s" 0 0 0 64 0 0  292 76 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 15 FSM/Development
+22 41
+"COMBO_Elements"
+""
+1 534 210.06 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+41 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+1
+LANG:1 35 MS Shell Dlg 2,-1,16,5,50,0,0,0,0,0
+0  532 196 756 240
+2
+1
+LANG:1 4 Vset
+
+0
+1
+LANG:1 4 Iset
+
+0
+
+E
+E
+E
+ 1 0
+2 42
+"PRIMITIVE_TEXT14"
+""
+1 534 174.06 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+42 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 534 174.06 754 254.06
+0 2 2 "0s" 0 0 0 64 0 0  534 174.06 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 15 Recipe elements
+0
+LAYER, 1 
+1
+LANG:1 0 
+0
+LAYER, 2 
+1
+LANG:1 0 
+0
+LAYER, 3 
+1
+LANG:1 0 
+0
+LAYER, 4 
+1
+LANG:1 0 
+0
+LAYER, 5 
+1
+LANG:1 0 
+0
+LAYER, 6 
+1
+LANG:1 0 
+0
+LAYER, 7 
+1
+LANG:1 0 
+0
+0

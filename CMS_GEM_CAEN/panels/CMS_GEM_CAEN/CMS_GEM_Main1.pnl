@@ -1,0 +1,1227 @@
+V 14
+2
+LANG:10001 0 
+LANG:1 0 
+PANEL,-1 -1 1731 894 N "_3DFace" 0
+"main()
+{
+  HVBoardAddress1=\"CAEN/GEM_CAEN_HV/board02/\";
+  HVBoardAddress2=\"CAEN/GEM_CAEN_HV/board04/\";
+  LVBoardAddress1=\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard01/\";
+  LVBoardAddress2=\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard05/\";
+  LVBoardAddress3=\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard09/\";
+  LVBoardAddress4=\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard013/\";
+  LVBoardAddress5=\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard017/\";
+  string sys;  
+  //*************************************
+  //ChangeBM(BeamMode.number); 
+  //BeamMode.number=0; 
+  AlcLV.text=\"CLR LV Alarm\";
+  AlcHV.text=\"CLR HV Alarm\";
+  txtramp.text=\"RAMPING\";
+  MainTab.registerHeader(4,\"Experts\");
+  MainTab.registerHeader(5,\"LHC Info\");
+  MainTab.registerHeader(6,\"Magnet Info\");
+  MainTab.registerHeader(7,\"DSS  Info\");
+  MainTab.registerHeader(8,\"Temperature\");
+  MainTab.registerHeader(9,\"FSM Config\");
+  dyn_string exceptionInfo;
+  //fwCU_connectState(\"ActiveRcp\",\"GEM_HV\");
+  fwAccessControl_setupPanel(\"ApplyPanelAccessControl\", exceptionInfo);
+  sys=getSystemName();
+  dpConnect(\"SetBeamStateP\",sys+\"GL1.GEMCAEN.Beam.Physics\");
+  dpConnect(\"SetBeamStateC\",sys+\"GL1.GEMCAEN.Beam.Cosmic\");
+  dpConnect(\"DetProtMsg\",sys+\"GL1.GEMProt.Active\");
+  dpConnect(\"RcpMsg\",sys+\"GL1.GEMCAEN.RcpError\",sys+\"GL1.GEMCAEN.Beam.RcpMode\",sys+\"GL1.GEMCAEN.Beam.BeamMode\");
+  
+}
+//System1:CAEN/GEM_CAEN_HV/board02/channel000.settings.onOff
+//System1:CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard01/channel000.
+
+ActiveRcp(string node, string st)
+{
+  DebugN(\"Node=\"+node+\",\"+\"State=\"+st);
+}" 0
+ E E E E 1 -1 -1 0  0 0
+""0  1
+E "#uses \"CMS_GEM_CAEN/GEM_Rad.ctl\"
+#uses \"CMS_GEM_CAEN/GEMFSM.ctl\"
+string HVBoardAddress1,HVBoardAddress2;
+string LVBoardAddress1,LVBoardAddress2,LVBoardAddress3,LVBoardAddress4,LVBoardAddress5;
+string LVAddress,LVAddressVFT,LVAddressOHT1,LVAddressOHT2;
+string LVAddressVFB,LVAddressOHB1,LVAddressOHB2;
+void ApplyPanelAccessControl(string s1, string s2)
+{
+bool hasDebug, hasControl,hasMonitor,hasVisualize,hasModify;
+dyn_string exceptionInfo,domain;
+// revoke all previous rights:
+DisableAllInPanel();
+// check privileges:
+domain=\"CMS_GEM\";
+//domain=\"Gem\";
+fwAccessControl_isGranted( domain+\":Control\", hasControl, exceptionInfo);
+fwAccessControl_isGranted( domain+\":Debug\", hasDebug, exceptionInfo);
+fwAccessControl_isGranted( domain+\":Monitor\",hasMonitor, exceptionInfo);
+//fwAccessControl_isGranted( domain+\":Visualize\",hasVisualize, exceptionInfo);
+fwAccessControl_isGranted( domain+\":Modify\",hasModify, exceptionInfo);
+if (dynlen(exceptionInfo)) { fwExceptionHandling_display(exceptionInfo); return;}
+// enable/disable panel functionality:
+//if (hasControl) AlcLV.enabled = true;
+//if (hasDebug) AlcHV.enabled = true;
+if (hasControl)
+ {
+  //btKill.enabled = TRUE;
+ // Alarms
+  pbAlarms.enabled=TRUE;
+  AlcHV.enabled=TRUE;
+  AlcLV.enabled=TRUE;
+  
+  //ON
+  hvon.enabled=TRUE;
+  lvon.enabled=TRUE;
+  hvoff.enabled=TRUE;
+  lvoff.enabled=TRUE;
+  gebon.enabled=TRUE;
+  geboff.enabled=TRUE;
+  maoon.enabled=TRUE;
+  maooff.enabled=TRUE;
+  BtRcp.enabled=TRUE; 
+  BeamMode.enabled=TRUE;
+  
+ }
+if (hasDebug)
+ {
+  btKill.enabled = TRUE;
+// Alarms
+  pbAlarms.enabled=TRUE;
+  AlcHV.enabled=TRUE;
+  AlcLV.enabled=TRUE;
+  
+//ON
+  hvon.enabled=TRUE;
+  lvon.enabled=TRUE;
+  hvoff.enabled=TRUE;
+  lvoff.enabled=TRUE;
+  gebon.enabled=TRUE;
+  geboff.enabled=TRUE;
+  maoon.enabled=TRUE;
+  maooff.enabled=TRUE;
+  MainTab.registerVisible(4,TRUE);
+  MainTab.registerVisible(9,TRUE);
+  BtRcp.enabled=TRUE;
+  BeamMode.enabled=TRUE;
+  
+ }
+if (hasMonitor)
+ {
+  //btKill.enabled = TRUE;
+// Alarms
+  pbAlarms.enabled=TRUE;
+  AlcHV.enabled=TRUE;
+  AlcLV.enabled=TRUE;
+  
+//ON
+  hvon.enabled=TRUE;
+  lvon.enabled=TRUE;
+  hvoff.enabled=TRUE;
+  lvoff.enabled=TRUE;
+  gebon.enabled=TRUE;
+  geboff.enabled=TRUE;
+  maoon.enabled=TRUE;
+  maooff.enabled=TRUE;
+  BtRcp.enabled=TRUE;
+  BeamMode.enabled=TRUE; 
+  
+  
+  
+ }
+
+if (hasVisualize)
+ {
+  
+  
+ }
+if (hasModify)
+ {
+  btKill.enabled = TRUE;
+// Alarms
+  pbAlarms.enabled=TRUE;
+  AlcHV.enabled=TRUE;
+  AlcLV.enabled=TRUE;
+  
+//ON
+  hvon.enabled=TRUE;
+  lvon.enabled=TRUE;
+  hvoff.enabled=TRUE;
+  lvoff.enabled=TRUE;
+  gebon.enabled=TRUE;
+  geboff.enabled=TRUE;
+  maoon.enabled=TRUE;
+  maooff.enabled=TRUE;
+  MainTab.registerVisible(4,TRUE);
+  MainTab.registerVisible(9,TRUE);
+  BtRcp.enabled=TRUE; 
+  BeamMode.enabled=TRUE;
+  
+ }
+}
+void DisableAllInPanel()
+{
+// disable all widgets in a panel...
+  btKill.enabled = FALSE;
+// Alarms
+  pbAlarms.enabled=FALSE;
+  AlcHV.enabled=FALSE;
+  AlcLV.enabled=FALSE;
+ //
+  BtRcp.enabled=FALSE; 
+  BeamMode.enabled=FALSE;
+//ON
+  hvon.enabled=FALSE;
+  lvon.enabled=FALSE;
+  hvoff.enabled=FALSE;
+  lvoff.enabled=FALSE;
+  
+  //HVsts.enabled=FALSE;
+  //LVsts.enabled=FALSE;
+  gebon.enabled=FALSE;
+  geboff.enabled=FALSE;
+  maoon.enabled=FALSE;
+  maooff.enabled=FALSE;
+  MainTab.registerVisible(4,false);
+  MainTab.registerVisible(9,false);
+  
+}
+
+SetBeamStateP(string dp1, bool state)
+{
+  if(state)
+  { 
+    BeamMode.number=1;
+  }
+}
+SetBeamStateC(string dp1, bool state)
+{
+  if(state)
+  { 
+    BeamMode.number=0;
+  }
+}
+DetProtMsg(string dp1, bool state)
+{
+  
+  if(state)
+    {
+     m1Msg.foreCol=\"STD_value_not_ok\";
+     m1Msg.text=\"Detector Protection: ON\";
+     BeamMode.enabled=false;
+    }
+  else
+    {
+     m1Msg.foreCol=\"FwStateOKPhysics\";
+     m1Msg.text=\"Detector Protection: OFF\";
+     BeamMode.enabled=true;
+    }
+}
+RcpMsg(string dp1, bool state)
+{
+ uint BMode,RcpMode;
+
+ string bmode,rcpmode;
+ string sys=getSystemName(); 
+ dpGet(sys+\"GL1.GEMCAEN.Beam.BeamMode\",BMode); 
+   if(BMode==0)
+    bmode=\"COSMIC\";
+  else
+    bmode=\"Physics\";
+ dpGet(sys+\"GL1.GEMCAEN.Beam.RcpMode\",RcpMode); 
+ if(RcpMode==2)
+   rcpmode=\"StandBy\";
+ else
+   rcpmode=\"\";
+  if(state)
+  {
+   m2Msg.foreCol=\"STD_value_not_ok\";
+   m2Msg.text=\"Recipe Error: \"+rcpmode+\" \"+bmode;
+  }
+  else
+   {
+     m2Msg.foreCol=\"FwStateOKPhysics\";
+     m2Msg.text=\"Recipe OK: \"+rcpmode+\" \"+bmode;
+   }
+}
+" 0
+ 3
+"CBRef" "1"
+"EClose" "main()
+{
+  RadMonClose();
+  PanelOff();
+}" 0
+
+"dpi" "96"
+0 0 0
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:10001 0 
+28 19
+"MainTab"
+""
+1 160.9999999999999 71.5 E E E 1 E 1 E N "_3DText" E N "_3DFace" E E
+ E E
+3 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  158.9999999999997 69.5 1705 794.5
+E10 "gstatus" 2
+LANG:10001 6 Status
+LANG:1 6 Status
+1 "CMS_GEM_CAEN/CMS_GEM_Overview.pnl" 1
+LANG:10001 0 
+0
+
+"cmain" 2
+LANG:10001 4 CAEN
+LANG:1 4 CAEN
+1 "CMS_GEM_CAEN/CMS_GEM_CAENCH.pnl" 1
+LANG:10001 0 
+0
+
+"cnmc" 2
+LANG:10001 18 CAEN Multi Channel
+LANG:1 18 CAEN Multi Channel
+1 "CMS_GEM_multichannel/CMS_GEM_multichannel_SuperchamberOverview.pnl" 1
+LANG:10001 0 
+0
+
+"pgas" 2
+LANG:10001 3 GAS
+LANG:1 3 GAS
+1 "CMS_GEM_GAS/CMS_GEMfwMainGas.pnl" 1
+LANG:10001 0 
+0
+
+"caentabs" 2
+LANG:10001 11 CAEN Status
+LANG:1 3 GAS
+1 "CMS_GEM_CAEN/GEM_CAEN_Status.pnl" 1
+LANG:10001 0 
+0
+
+"lhcinfo" 2
+LANG:10001 3 LHC
+LANG:1 3 GAS
+1 "CMS_GEM_GAS/CMS_GEMfw_LHCInfo.pnl" 1
+LANG:10001 0 
+0
+
+"magnetinfo" 2
+LANG:10001 6 Magnet
+LANG:1 3 GAS
+1 "CMS_GEM_GAS/CMS_GEMfw_MagnetInfo.pnl" 1
+LANG:10001 0 
+0
+
+"dssinfo" 2
+LANG:10001 3 DSS
+LANG:1 3 GAS
+1 "CMS_GEM_GAS/CMS_GEMfwDSSInfo.pnl" 1
+LANG:10001 0 
+0
+
+"tempinfo" 2
+LANG:10001 11 Temperature
+LANG:1 3 GAS
+1 "CMS_GEM_GAS/CMS_GEMfwTemperature.pnl" 1
+LANG:10001 0 
+0
+
+"config" 2
+LANG:10001 10 FSM Config
+LANG:1 3 GAS
+1 "CMS_GEM_CAEN/GEM_Config.pnl" 1
+LANG:10001 0 
+0
+
+
+6 30
+"RECTANGLE1"
+""
+1 330 782 E E E 1 E 1 E N {0,0,0} E N "FwStateOKNotPhysics" E E
+ E E
+14 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 3 2 1 E 1 0 1 202.2920422542663 14.99999999999999 1 E 330 782 409 821
+2 31
+"PRIMITIVE_TEXT1"
+""
+1 448 782 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+15 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E 0.5050512611653347 0 0.7621293001558661 391.039179774527 209.8161031723456 0 E 448 782 533 817
+0 2 2 "0s" 0 0 0 64 0 0  448 782 1
+2
+LANG:10001 34 MS Sans Serif,-1,17,5,50,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,17,5,50,0,0,0,0,0
+0 2
+LANG:10001 3 OFF
+LANG:1 3 OFF
+6 32
+"RECTANGLE2"
+""
+1 330 782 E E E 1 E 1 E N {0,0,0} E N "FwStateOKPhysics" E E
+ E E
+16 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 3 2 1 E 0.858695652173913 0 1.054054054054054 395.4224770368751 -27.2702702702702 1 E 330 782 422 819
+2 33
+"PRIMITIVE_TEXT2"
+""
+1 448 782 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+17 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E 0.3703010281722431 0 0.7621293001558661 597.6710589757311 208.8772605882252 0 E 448 782 533 817
+0 2 2 "0s" 0 0 0 64 0 0  448 782 1
+2
+LANG:10001 34 MS Sans Serif,-1,17,5,50,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,17,5,50,0,0,0,0,0
+0 2
+LANG:10001 2 ON
+LANG:1 2 ON
+6 34
+"RECTANGLE3"
+""
+1 330 782 E E E 1 E 1 E N {0,0,0} E N "FwStateAttention3" E E
+ E E
+18 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 3 2 1 E 0.858695652173913 0 1.054054054054054 754.9224770368751 -24.4949469284112 1 E 330 782 422 819
+2 35
+"PRIMITIVE_TEXT3"
+""
+1 448 782 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+19 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E 0.9867651703012311 0 0.7621293001558661 681.2445880392148 210.8406095381735 0 E 448 782 533 817
+0 2 2 "0s" 0 0 0 64 0 0  448 782 1
+2
+LANG:10001 34 MS Sans Serif,-1,17,5,50,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,17,5,50,0,0,0,0,0
+0 2
+LANG:10001 6  ALARM
+LANG:1 6  ALARM
+6 40
+"RECTANGLE4"
+""
+1 330 782 E E E 1 E 1 E N {0,0,0} E N "FwStateAttention1" E E
+ E E
+24 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 3 2 1 E 0.858695652173913 0 1.054054054054054 555.9125438304899 -25.38868094145266 1 E 330 782 422 819
+2 41
+"txtramp"
+""
+1 448 782 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+25 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E 0.9867651703012311 0 0.7621293001558661 482.2346548328296 212.6220052221444 0 E 448 782 533 817
+0 2 2 "0s" 0 0 0 64 0 0  448 782 1
+2
+LANG:10001 34 MS Sans Serif,-1,17,5,50,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,17,5,50,0,0,0,0,0
+0 2
+LANG:10001 7  RAMPIG
+LANG:1 6  ALARM
+13 42
+"hvon"
+""
+1 30 326.2500000000001 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+26 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  28 269.0000000000001 131 312.0000000000001
+
+T 
+1
+LANG:10001 5 HV ON
+"main(mapping event)
+{
+  string sys;
+ dyn_string hvchannels;
+ sys=getSystemName();
+ hvchannels=dpNames(sys+\"CAEN*HV*.settings.onOff\",\"FwCaenChannel\");
+ //DebugN(dynlen(hvchannels));
+ for(int ch=1; ch<= dynlen(hvchannels); ch++)
+  {  
+   if(dpSetWait(hvchannels[ch],1)==-1)
+   {
+    DebugN(\"Error Switching ON for \"+ hvchannels[ch]);
+   }
+  }
+}" 0
+ E E E
+13 44
+"lvon"
+""
+1 24.125 374.75 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+28 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  26 412.75 129 455.75
+
+T 
+1
+LANG:10001 5 LV ON
+"main(mapping event)
+{
+  string sys;
+ dyn_string lvchannels,powerConSt,powerCon;
+ bool pcst;
+ sys=getSystemName();
+ lvchannels=dpNames(sys+\"CAEN*LV*easyBoard*.settings.onOff\",\"FwCaenChannel\");
+ powerConSt=dpNames(sys+\"CAEN*LV*powerConverter*.actual.isOn\",\"FwCaenChannel\");
+ powerCon=dpNames(sys+\"CAEN*LV*powerConverter*.settings.onOff\",\"FwCaenChannel\");
+ //DebugN(lvchannels);
+ //DebugN(\"PC=\"+powerConSt);
+ //DebugN(powerCon);
+ dpGet(powerConSt[1],pcst);
+ if(!pcst)
+ {
+  dpSetWait(powerCon[1],1);
+  delay(1);
+ }
+ for(int ch=1; ch<= (dynlen(lvchannels)-6); ch++)
+  {  
+   if(dpSetWait(lvchannels[ch],1)==-1)
+   {
+    DebugN(\"Error Switching ON for \"+ lvchannels[ch]);
+   }
+  }
+}" 0
+ E E E
+13 49
+"btKill"
+""
+1 1543.902328012546 30.24770272914759 E E E 1 E 1 E N "_ButtonText" E N "STD_tendency_rising" E E
+ E E
+33 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:10001 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+0  1542 6 1686 71
+
+T 
+2
+LANG:10001 4 KILL
+LANG:1 4 KILL
+"main(mapping event)
+{
+  dpSetWait(\"CAEN/GEM_CAEN_HV.Commands.Kill\",1);
+  dpSetWait(\"CAEN/GEM_CAEN_LV.Commands.Kill\",1);
+}" 0
+ E E E
+13 50
+"pbAlarms"
+""
+1 23.99999999999997 97.77416841612018 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+34 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:10001 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+0  22 81 125 124
+
+T 
+2
+LANG:10001 6 Alarms
+LANG:1 6 Alarms
+"main(mapping event)
+{
+  ChildPanelOn(\"/fwAlarmHandling/fwAlarmHandlingScreen\", \"GEMM CAEN Alarms\",makeDynString(\"\"),0,0);
+}" 0
+ E E E
+13 51
+"AlcLV"
+""
+1 23.99999999999997 149.5483368322404 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+35 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:10001 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+0  22 132 125 175
+
+T 
+2
+LANG:10001 13 CLR LV Alarms
+LANG:1 6 Alarms
+"main(mapping event)
+{
+  dpSetWait(\"CAEN/GEM_CAEN_LV.Commands.ClearAlarm\",1);
+  
+}" 0
+ E E E
+13 52
+"AlcHV"
+""
+1 23.99999999999997 199.7741684161202 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+36 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:10001 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+0  22 183 125 226
+
+T 
+2
+LANG:10001 13 CLR HV Alarms
+LANG:1 6 Alarms
+"main(mapping event)
+{
+  dpSetWait(\"CAEN/GEM_CAEN_HV.Commands.ClearAlarm\",1);
+}" 0
+ E E E
+30 53
+"FRAME1"
+""
+1 12 302 E E E 1 E 1 E N "FwStateOKNotPhysics" E N {0,0,0} E E
+ E E
+37 0 0 0 0 0
+E E E
+1
+1
+LANG:10001 0 
+
+3
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E 1 0 1 4 -56.00000000000001 0 E 12 302 145 437
+1
+LANG:10001 35 MS Shell Dlg 2,-1,19,5,50,0,0,0,0,0
+0 1
+LANG:10001 2 HV
+30 55
+"FRAME3"
+""
+1 16 98 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+39 0 0 0 0 0
+E E E
+1
+1
+LANG:10001 0 
+
+3
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E 1.1 0 1 -5.60000000000003 -32 0 E 16 98 137 265
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:10001 0 
+30 57
+"FRAME4"
+""
+1 16 582 E E E 1 E 1 E N "FwStateOKNotPhysics" E N {0,0,0} E E
+ E E
+41 0 0 0 0 0
+E E E
+1
+1
+LANG:10001 0 
+
+3
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E 1.03125 0 1.736842105263158 -4.5 -620.8421052631583 0 E 16 582 145 773
+1
+LANG:10001 35 MS Shell Dlg 2,-1,19,5,50,0,0,0,0,0
+0 1
+LANG:10001 2 LV
+13 61
+"BtRcp"
+""
+1 661.2416044979811 0.7741684161202329 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+42 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  439.2416044979811 16.77416841612023 542.2416044979811 64.77416841612023
+
+T 
+1
+LANG:10001 18 Save/ Load Recipe 
+"main(mapping event)
+{
+  ChildPanelOn(\"/CMS_GEM_GAS/CMS_GEMfwRecipeHandling\", \"GEM RECIPES\",makeDynString(\"\"),0,0);
+}" 0
+ E E E
+19 62
+"BeamMode"
+""
+1 335 25.77416841612024 E E E 1 E 1 E N "_3DText" E N "_3DFace" E E
+ E E
+43 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  333 23.77416841612024 406 57.77416841612023
+2
+T 
+1
+LANG:10001 6 Cosmic
+
+1 
+1
+LANG:10001 0 
+E E
+0 0 0 0 0
+T 
+1
+LANG:10001 7 Physics
+
+0 
+1
+LANG:10001 0 
+E E
+0 0 0 0 0
+1
+"main()
+{
+   //fwAccessControl_setupPanel(\"ApplyPanelAccessControl\", exceptionInfo);
+}" 0
+ "main(int button)
+{
+ string state,sys;  
+  fwCU_getState(\"GEM_HV\",state);
+  sys=getSystemName();
+ if(state==\"ON\")
+  {
+    int bmode;   
+    dpGet(sys+\"GL1.GEMCAEN.Beam.BeamMode\",bmode);
+    this.number=bmode;
+  }
+ else 
+ {
+  dpSet(sys+\"GL1.GEMCAEN.Beam.BeamMode\",button);
+  if(button==0)
+  {
+    dpSet(sys+\"GL1.GEMCAEN.Beam.Cosmic\",1);
+    dpSet(sys+\"GL1.GEMCAEN.Beam.Physics\",0);
+  }
+  else
+   {
+    dpSet(sys+\"GL1.GEMCAEN.Beam.Cosmic\",0);
+    dpSet(sys+\"GL1.GEMCAEN.Beam.Physics\",1);
+   }
+    
+  dpSet(sys+\"GL1.GEMCAEN.Beam.RcpMode\",1);
+  ChangeBMHV(); 
+  ChangeBMLV(); 
+ }
+  
+}" 0
+
+30 64
+"FRAME6"
+""
+1 240 4 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+45 0 0 0 0 0
+E E E
+1
+1
+LANG:10001 0 
+
+3
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E 1 0 1 54 5.774168416120237 0 E 240 4 371 61
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:10001 9 Beam Mode
+13 65
+"gebon"
+""
+1 24.125 403 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+46 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  26 518 129 561
+
+T 
+1
+LANG:10001 6 GEB ON
+"main(mapping event)
+{
+  string sys;
+  dyn_string lvchannels,powerConSt,powerCon;
+  bool pcst;
+ sys=getSystemName();
+ lvchannels=dpNames(sys+\"CAEN*LV*easyBoard*.settings.onOff\",\"FwCaenChannel\");
+ powerConSt=dpNames(sys+\"CAEN*LV*powerConverter*.actual.isOn\",\"FwCaenChannel\");
+ powerCon=dpNames(sys+\"CAEN*LV*powerConverter*.settings.onOff\",\"FwCaenChannel\");
+ 
+ dpGet(powerConSt[1],pcst);
+ if(!pcst)
+ {
+  dpSetWait(powerCon[1],1);
+  delay(1);
+ }
+for(int ch=1; ch<= (dynlen(lvchannels)-6); ch=ch+3)
+  {  
+   if(dpSetWait(lvchannels[ch],1)==-1)
+   {
+    DebugN(\"Error Switching ON for \"+ lvchannels[ch]);
+   }
+  }
+}" 0
+ E E E
+13 66
+"maoon"
+""
+1 28 624.8815893288175 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+47 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+0  26 623 129 666
+
+T 
+2
+LANG:10001 6 MAO ON
+LANG:1 3 MAO
+"main(mapping event)
+{
+  string sys;
+  dyn_string powerConSt,powerCon;
+  bool pcst;
+  
+  powerConSt=dpNames(sys+\"CAEN*LV*powerConverter*.actual.isOn\",\"FwCaenChannel\");
+  powerCon=dpNames(sys+\"CAEN*LV*powerConverter*.settings.onOff\",\"FwCaenChannel\");
+ 
+  dpGet(powerConSt[1],pcst);
+  if(!pcst)
+  {
+   dpSetWait(powerCon[1],1);
+  }
+}
+
+    //CAEN/GEM_CAEN_LV*powerConverter22/GEM_BC1" 0
+ E E "main()
+{
+  maoon.text=\"MAO ON\";
+}" 0
+
+13 67
+"maooff"
+""
+1 28 613 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+48 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+0  26 668.1184106711825 129 711.1184106711825
+
+T 
+2
+LANG:10001 7 MAO OFF
+LANG:1 3 MAO
+"main(mapping event)
+{
+  string sys;
+  dyn_string powerConSt,powerCon;
+  bool pcst;
+  
+  powerConSt=dpNames(sys+\"CAEN*LV*powerConverter*.actual.isOn\",\"FwCaenChannel\");
+  powerCon=dpNames(sys+\"CAEN*LV*powerConverter*.settings.onOff\",\"FwCaenChannel\");
+ 
+  dpGet(powerConSt[1],pcst);
+  if(pcst)
+  {
+   dpSetWait(powerCon[1],0);
+  }
+}
+
+    //CAEN/GEM_CAEN_LV*powerConverter22/GEM_BC1" 0
+ E E "main()
+{
+  maooff.text=\"MAO OFF\";
+}" 0
+
+13 68
+"lvoff"
+""
+1 24.125 347.7500000000001 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+49 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  26 457.7500000000001 129 500.7500000000001
+
+T 
+1
+LANG:10001 6 LV OFF
+"main(mapping event)
+{
+  string sys;
+ dyn_string lvchannels,powerConSt,powerCon;
+ bool pcst;
+ sys=getSystemName();
+ lvchannels=dpNames(sys+\"CAEN*LV*easyBoard*.settings.onOff\",\"FwCaenChannel\");
+ //powerConSt=dpNames(sys+\"CAEN*LV*powerConverter*.actual.isOn\",\"FwCaenChannel\");
+ // powerCon=dpNames(sys+\"CAEN*LV*powerConverter*.settings.onOff\",\"FwCaenChannel\");
+
+ for(int ch=1; ch<=(dynlen(lvchannels)-6); ch++)
+  {  
+   if(dpSetWait(lvchannels[ch],0)==-1)
+   {
+    DebugN(\"Error Switching OFF for \"+ lvchannels[ch]);
+   }
+  }
+}" 0
+ E E E
+13 69
+"hvoff"
+""
+1 26 319.5000000000001 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+50 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  28 324.2500000000001 131 367.2500000000001
+
+T 
+1
+LANG:10001 6 HV OFF
+"main(mapping event)
+{
+  string sys;
+ dyn_string hvchannels;
+ bool ChSts;
+ sys=getSystemName();
+ hvchannels=dpNames(sys+\"CAEN*HV*.settings.onOff\",\"FwCaenChannel\");
+ for(int ch=1; ch<= dynlen(hvchannels); ch++)
+  {  
+   dpGet(hvchannels[ch],ChSts);
+   if(dpSetWait(hvchannels[ch],0)==-1)
+   {
+    Debug(\"Channel error\");
+   }
+  }
+
+}" 0
+ E E E
+13 70
+"geboff"
+""
+1 24.125 399 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+51 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  26 563 129 606
+
+T 
+1
+LANG:10001 7 GEB OFF
+"main(mapping event)
+{
+ string sys;
+ dyn_string lvchannels;
+ sys=getSystemName();
+ lvchannels=dpNames(sys+\"CAEN*LV*easyBoard*.settings.onOff\",\"FwCaenChannel\");
+  
+ for(int ch=1; ch<=(dynlen(lvchannels)-6); ch=ch+3)
+  {  
+    if(dpSetWait(lvchannels[ch],0)==-1)
+    {
+     DebugN(\"Error Switching OFF for \"+ lvchannels[ch]);
+    }
+  }
+}" 0
+ E E E
+2 74
+"m1Msg"
+""
+1 580 10 E E E 1 E 1 E N {231,19,51} E N "_Window" E E
+ E E
+55 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 1 2 1 E 0.4128876861135633 0 0.5925925925925926 333.1429596806268 2.074074074074074 0 E 580 10 1330 60
+0 2 2 "0s" 0 0 0 64 0 0  580 10 1
+1
+LANG:10001 35 MS Shell Dlg 2,-1,21,5,75,0,1,0,0,0
+0 1
+LANG:10001 21 Detector Protection: 
+2 75
+"m2Msg"
+""
+1 580 10 E E E 1 E 1 E N {231,19,51} E N "_Window" E E
+ E E
+56 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 1 2 1 E 0.4942701414539859 0 0.5925925925925926 680.2265007619325 3.259259259259261 0 E 580 10 1330 60
+0 2 2 "0s" 0 0 0 64 0 0  580 10 1
+1
+LANG:10001 35 MS Shell Dlg 2,-1,21,5,75,0,1,0,0,0
+0 1
+LANG:10001 9 Recipe : 
+0
+LAYER, 1 
+1
+LANG:10001 0 
+0
+LAYER, 2 
+1
+LANG:10001 0 
+0
+LAYER, 3 
+1
+LANG:10001 0 
+0
+LAYER, 4 
+1
+LANG:10001 0 
+0
+LAYER, 5 
+1
+LANG:10001 0 
+0
+LAYER, 6 
+1
+LANG:10001 0 
+0
+LAYER, 7 
+1
+LANG:10001 0 
+0
+1 0 "SHAPE_GROUP0" -1
+1 0 
+35 
+
+"layoutAlignment" "AlignNone"
+"" ""
+0

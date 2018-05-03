@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<component_configuration>
+  <stop_drivers>
+    <manager>
+      <driver>WCCOAdip</driver>
+      <num>23</num>
+    </manager>
+  </stop_drivers>
+  <stop_drivers>
+    <manager>
+      <driver>WCCOAdip</driver>
+      <num>24</num>
+    </manager>
+  </stop_drivers>
+  <stop_drivers>
+    <manager>
+      <driver>RDB Archive Manager</driver>
+      <num>99</num>
+    </manager>
+  </stop_drivers>
+  <append_managers>
+    <manager>
+      <type>WCCOAdip</type>
+      <num>23</num>
+      <options>-dns dipnsgpn1,dipnsgpn2 -dip_dp_config DIPConfig_GEM</options>
+      <mode>always</mode>
+      <restart>2</restart>
+      <counter>2</counter>
+      <sec_kill>30</sec_kill>
+      <isDriver>false</isDriver>
+      <restartManager>false</restartManager>
+    </manager>
+    <manager>
+      <type>WCCOAdip</type>
+      <num>24</num>
+      <options>-dns dipnsgpn1,dipnsgpn2 -dip_dp_config DIPConfig_Monitoring</options>
+      <mode>always</mode>
+      <restart>2</restart>
+      <counter>2</counter>
+      <sec_kill>30</sec_kill>
+      <isDriver>false</isDriver>
+      <restartManager>false</restartManager>
+    </manager>
+  </append_managers>
+  <target>
+    <system_name>cms_gem_dcs_1:</system_name>
+    <configuration>
+      <tag>gem_gas_dp_V003</tag>
+      <hardware>true</hardware>
+      <logical>false</logical>
+      <pattern>*</pattern>
+      <force_reinstall>true</force_reinstall>
+    </configuration>
+    <configuration>
+      <tag>gem_gas_trend_V002</tag>
+      <hardware>true</hardware>
+      <logical>false</logical>
+      <pattern>*</pattern>
+      <force_reinstall>true</force_reinstall>
+    </configuration>
+    <configuration>
+      <tag>gem_operation_dp_V003</tag>
+      <hardware>true</hardware>
+      <logical>false</logical>
+      <pattern>*</pattern>
+      <force_reinstall>true</force_reinstall>
+    </configuration>
+  </target>
+</component_configuration>

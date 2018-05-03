@@ -1,0 +1,17 @@
+# ascii dump of database
+
+# DpType
+TypeName
+Alarm_Limits.Alarm_Limits	1#1
+	Max_Flow	22#4
+	Min_Flow	22#5
+DipSubscriptionsInt.DipSubscriptionsInt	1#1
+	Value	21#2
+DipSubscriptionsFloat.DipSubscriptionsFloat	1#1
+	Value	22#2
+DipSubscriptionsBool.DipSubscriptionsBool	1#1
+	Value	23#2
+Difference.Difference	1#1
+	Value	22#2
+Boolean.Boolean	1#1
+	Value	23#2

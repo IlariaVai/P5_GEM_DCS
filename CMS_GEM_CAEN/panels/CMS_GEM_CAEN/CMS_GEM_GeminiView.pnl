@@ -1,0 +1,1114 @@
+V 14
+1
+LANG:10001 0 
+PANEL,-1 -1 1318 655 N "_3DFace" 4
+"$SC_HV_Address1"
+"$SC_HV_Address2"
+"$SC_LV_Address"
+"$SC_Number"
+"main()
+{
+string LVBase;  
+  SCNumber=$SC_Number;
+  HVAddressT=$SC_HV_Address1;
+  HVAddressB=$SC_HV_Address2;
+  LVAddress=$SC_LV_Address;
+  LVBase=LVAddress;
+  strreplace(LVBase,\"channel000\",\"\");
+  LVAddressVFT=LVBase+\"channel000\";
+  LVAddressOHT1=LVBase+\"channel001\";
+  LVAddressOHT2=LVBase+\"channel002\";
+  LVAddressVFB=LVBase+\"channel003\";
+  LVAddressOHB1=LVBase+\"channel004\";
+  LVAddressOHB2=LVBase+\"channel005\";
+  dyn_string addrT=makeDynString(HVAddressT,LVAddressVFT,LVAddressOHT1,LVAddressOHT2);
+  dyn_string addrB=makeDynString(HVAddressB,LVAddressVFB,LVAddressOHB1,LVAddressOHB2);
+  if(SCNumber==\"01\")
+  {
+    hvt1.enabled=0;
+    hvt2.enabled=0;
+    hvb1.enabled=0;
+    hvb2.enabled=0;
+    
+  }
+  StsUp(addrT,1);
+  //dpConnectUserData(\"StsUp\",1,addrT);
+  StsUp(addrB,2);
+}" 0
+ E E E E 1 -1 -1 0  153 35.3333330154419
+""0  1
+E "string SCNumber,HVAddressT,HVAddressB;
+string LVAddress,LVAddressVFT,LVAddressOHT1,LVAddressOHT2;
+string LVAddressVFB,LVAddressOHB1,LVAddressOHB2;
+
+StsUp(dyn_string Aldp,int Ln)
+ {
+  string AlStatus1,AlStatus2,AlStatus3,AlStatus4,Altime1,Altime2,Altime3,Altime4,Al_Msg,Al_Time,Al_Dp;
+  
+  dpGet(Aldp[1]+\".actual.status:_online.._value\",AlStatus1);
+  dpGet(Aldp[2]+\".actual.status:_online.._value\",AlStatus2);
+  dpGet(Aldp[3]+\".actual.status:_online.._value\",AlStatus3);
+  dpGet(Aldp[4]+\".actual.status:_online.._value\",AlStatus4);
+  //System1:CAEN/System904/board04/channel003.actual.status
+  //strreplace(Aldp,\"status:_online.._value\",\"status:_online.._\"); 
+  //DebugN(\"Alarm=\"+Aldp);
+  //DebugN(\"Alarm=\"+Aldp,AlStatus);
+  
+  dpGet(Aldp[1]+\".actual.status:_online.._stime\",Altime1);
+  dpGet(Aldp[2]+\".actual.status:_online.._stime\",Altime2);
+  dpGet(Aldp[3]+\".actual.status:_online.._stime\",Altime3);
+  dpGet(Aldp[4]+\".actual.status:_online.._stime\",Altime4);
+  //DebugN(\"Alarm Time=\"+Altime1);
+  Al_Msg=\"Al_MsgL\"+Ln;
+  Al_Time=\"Al_TimeL\"+Ln;
+  setValue(Al_Msg,\"color\", \"FwStateAttention3\");  
+  AlSlect(Al_Msg,Al_Time,AlStatus1,Altime1);
+  Al_Msg=\"Al_MsgL\"+Ln+\"1\";
+  Al_Time=\"Al_TimeL\"+Ln+\"1\";
+  AlSlect(Al_Msg,Al_Time,AlStatus2,Altime2);
+  Al_Msg=\"Al_MsgL\"+Ln+\"2\";
+  Al_Time=\"Al_TimeL\"+Ln+\"2\";
+  AlSlect(Al_Msg,Al_Time,AlStatus3,Altime3);
+  Al_Msg=\"Al_MsgL\"+Ln+\"3\";
+  Al_Time=\"Al_TimeL\"+Ln+\"3\";
+  AlSlect(Al_Msg,Al_Time,AlStatus4,Altime4);
+  
+}
+AlSlect(string Al_Msg,string Al_Time,int Status, string Altime)
+{
+   switch(Status)
+   {
+      
+     case 0:                
+       setValue(Al_Msg,\"color\", \"FwStateOKNotPhysics\"); 
+       setValue(Al_Msg,\"text\", \"Channel Off\");     
+       break;     
+     case 1:
+       setValue(Al_Msg,\"color\", \"FwStateOKPhysics\"); 
+       setValue(Al_Msg,\"text\", \"Channel ON\");     
+       break;     
+     case 3:
+       setValue(\"Al_Msg\",\"color\", \"FwStateAttention1\"); 
+       setValue(\"Al_Msg\",\"text\", \"Ramping Up\");      
+       break;
+      case 5:
+       setValue(Al_Msg,\"color\", \"FwStateAttention1\"); 
+       setValue(Al_Msg,\"text\", \"Ramping Down\");      
+       break;
+      case 8:
+      case 9:                
+        Al_Msg.text=\"Over Current\";
+       setValue(Al_Msg,\"color\", \"FwStateAttention1\"); 
+       setValue(Al_Msg,\"text\", \"Over Current\");      
+       break;
+      case 17:                
+        Al_Msg.text=\"Over Voltage\";
+       setValue(Al_Msg,\"color\", \"FwStateAttention1\"); 
+       setValue(Al_Msg,\"text\", \"Over Voltage\");      
+       break;
+      case 33:                
+       setValue(Al_Msg,\"color\", \"FwStateAttention1\"); 
+       setValue(Al_Msg,\"text\", \"Under Voltage\");      
+       break;
+      case 65:                
+       setValue(Al_Msg,\"color\", \"FwStateAttention1\"); 
+       setValue(Al_Msg,\"text\", \"Other Conditions\");      
+       break;
+       case 512:                
+       setValue(Al_Msg,\"color\", \"FwStateAttention1\"); 
+       setValue(Al_Msg,\"text\", \"Channel Trip\");      
+       break;
+     }
+    setValue(Al_Time,\"text\",Altime);  
+    //Al_Dp.text=Aldp;
+
+}  
+    
+   " 0
+ 3
+"CBRef" "1"
+"EClose" E
+"dpi" "96"
+0 0 0
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:10001 0 
+1 192 0 "" 36
+0
+30 50
+"FRAME1"
+""
+1 360 44 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+0 0 0 0 0 0
+E E E
+1
+1
+LANG:10001 0 
+
+3
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E 2.176136363636365 0 1.008741258741259 -450.9090909090915 -5.384615384615364 0 E 360 44 801 331
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:10001 7 LAYER 1
+13 53
+"hvt1"
+""
+1 339.5 81.5 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+3 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  337.5 65.5 431.5 109.5
+
+T 
+1
+LANG:10001 5 HV ON
+"main(mapping event)
+{
+  dpSet(HVAddressT+\".settings.onOff\",1);
+}" 0
+ E E E
+13 54
+"PUSH_BUTTON3"
+""
+1 339.5 142.5 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+4 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  337.5 126.5 431.5 170.5
+
+T 
+1
+LANG:10001 7 VFAT ON
+"main(mapping event)
+{
+  dpSet(LVAddressVFT+\".settings.onOff\",1);
+}" 0
+ E E E
+13 55
+"PUSH_BUTTON4"
+""
+1 339.5 201.5 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+5 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  337.5 185.5 431.5 229.5
+
+T 
+1
+LANG:10001 7 OH2V ON
+"main(mapping event)
+{
+  dpSet(LVAddressOHT1+\".settings.onOff\",1);
+}" 0
+ E E E
+13 56
+"PUSH_BUTTON5"
+""
+1 339.5 262.5 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+6 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  337.5 246.5 431.5 290.5
+
+T 
+1
+LANG:10001 7 OH4V ON
+"main(mapping event)
+{
+  dpSet(LVAddressOHT2+\".settings.onOff\",1);
+}" 0
+ E E E
+13 57
+"hvt2"
+""
+1 463.5 81.5 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+7 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  461.5 65.5 555.5 109.5
+
+T 
+1
+LANG:10001 6 HV OFF
+"main(mapping event)
+{
+  dpSet(HVAddressT+\".settings.onOff\",0);
+}" 0
+ E E E
+13 58
+"PUSH_BUTTON7"
+""
+1 463.5 142.5 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+8 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  461.5 126.5 555.5 170.5
+
+T 
+1
+LANG:10001 8 VFAT OFF
+"main(mapping event)
+{
+  dpSet(LVAddressVFT+\".settings.onOff\",0);
+}" 0
+ E E E
+13 59
+"PUSH_BUTTON8"
+""
+1 463.5 201.5 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+9 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  461.5 185.5 555.5 229.5
+
+T 
+1
+LANG:10001 8 OH2V OFF
+"main(mapping event)
+{
+  dpSet(LVAddressOHT1+\".settings.onOff\",0);
+}" 0
+ E E E
+13 60
+"PUSH_BUTTON9"
+""
+1 463.5 262.5 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+10 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  461.5 246.5 555.5 290.5
+
+T 
+1
+LANG:10001 8 OH2V OFF
+"main(mapping event)
+{
+  dpSet(LVAddressOHT2+\".settings.onOff\",0);
+}" 0
+ E E E
+30 110
+"FRAME2"
+""
+1 360 44 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+11 0 0 0 0 0
+E E E
+1
+1
+LANG:10001 0 
+
+3
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E 2.176136363636364 0 1.008791208791208 -450.9090909090914 292.5989010989013 0 E 360 44 801 331
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:10001 7 LAYER 2
+13 111
+"hvb1"
+""
+1 339.5 379.5000000000001 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+12 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  337.5 363.5000000000001 431.5 407.5000000000001
+
+T 
+1
+LANG:10001 5 HV ON
+"main(mapping event)
+{
+  dpSet(HVAddressB+\".settings.onOff\",1);
+}" 0
+ E E E
+13 112
+"PUSH_BUTTON11"
+""
+1 339.5 440.5000000000001 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+13 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  337.5 424.5000000000001 431.5 468.5000000000001
+
+T 
+1
+LANG:10001 7 VFAT ON
+"main(mapping event)
+{
+  dpSet(LVAddressVFB+\".settings.onOff\",1);
+}" 0
+ E E E
+13 113
+"PUSH_BUTTON12"
+""
+1 339.5 499.5000000000001 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+14 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  337.5 483.5000000000001 431.5 527.5000000000001
+
+T 
+1
+LANG:10001 7 OH2V ON
+"main(mapping event)
+{
+  dpSet(LVAddressOHB1+\".settings.onOff\",1);
+}" 0
+ E E E
+13 114
+"PUSH_BUTTON13"
+""
+1 339.5 560.5000000000001 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+15 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  337.5 544.5000000000001 431.5 588.5000000000001
+
+T 
+1
+LANG:10001 7 OH4V ON
+"main(mapping event)
+{
+  dpSet(LVAddressOHB2+\".settings.onOff\",1);
+}" 0
+ E E E
+13 115
+"hvb2"
+""
+1 463.5 379.5000000000001 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+16 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  461.5 363.5000000000001 555.5 407.5000000000001
+
+T 
+1
+LANG:10001 6 HV OFF
+"main(mapping event)
+{
+  dpSet(HVAddressB+\".settings.onOff\",0);
+}" 0
+ E E E
+13 116
+"PUSH_BUTTON15"
+""
+1 463.5 440.5000000000001 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+17 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  461.5 424.5000000000001 555.5 468.5000000000001
+
+T 
+1
+LANG:10001 8 VFAT OFF
+"main(mapping event)
+{
+  dpSet(LVAddressVFB+\".settings.onOff\",0);
+}" 0
+ E E E
+13 117
+"PUSH_BUTTON16"
+""
+1 463.5 499.5000000000001 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+18 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  461.5 483.5000000000001 555.5 527.5
+
+T 
+1
+LANG:10001 8 OH2V OFF
+"main(mapping event)
+{
+  dpSet(LVAddressOHB1+\".settings.onOff\",0);
+}" 0
+ E E E
+13 118
+"PUSH_BUTTON17"
+""
+1 463.5 560.5000000000001 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+19 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  461.5 544.5000000000001 555.5 588.5000000000001
+
+T 
+1
+LANG:10001 8 OH2V OFF
+"main(mapping event)
+{
+  dpSet(LVAddressOHB2+\".settings.onOff\",0);
+}" 0
+ E E E
+2 119
+"PRIMITIVE_TEXT1"
+""
+1 600 51.75 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+20 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 600 51.75 676 83.75
+0 2 2 "0s" 0 0 0 65 0 0  600 51.75 1
+2
+LANG:10001 26 Arial,-1,16,5,75,0,0,0,0,0
+LANG:1 26 Arial,-1,16,5,75,0,0,0,0,0
+0 2
+LANG:10001 7 STATUS:
+LANG:1 7 STATUS:
+2 120
+"PRIMITIVE_TEXT2"
+""
+1 1069.5 49.75 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+21 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 1069.5 49.75 1133.5 85.75
+0 2 2 "0s" 0 0 0 65 0 0  1069.5 49.75 1
+2
+LANG:10001 26 Arial,-1,16,5,75,0,0,0,0,0
+LANG:1 26 Arial,-1,16,5,75,0,0,0,0,0
+0 2
+LANG:10001 5 Time:
+LANG:1 5 Time:
+2 121
+"Al_MsgL1"
+""
+1 583 80 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+22 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 583 80 998 116
+0 2 2 "0s" 0 0 0 64 0 0  583 80 1
+2
+LANG:10001 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+0 2
+LANG:10001 10 AL Message
+LANG:1 10 AL Message
+2 122
+"Al_TimeL1"
+""
+1 922.5000000000002 76.5 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+23 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E 0.6732062607554136 0 1 403.5222360976925 0 0 E 922.5000000000002 76.5 1287.5 119.5
+0 2 2 "0s" 0 0 0 64 0 0  922.5000000000002 76.5 1
+2
+LANG:10001 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+0 2
+LANG:10001 7 Al Time
+LANG:1 7 Al Time
+2 123
+"PRIMITIVE_TEXT24"
+""
+1 599.5 346.0000000000002 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+24 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 599.5 346.0000000000002 675.5 378.0000000000002
+0 2 2 "0s" 0 0 0 65 0 0  599.5 346.0000000000002 1
+2
+LANG:10001 26 Arial,-1,16,5,75,0,0,0,0,0
+LANG:1 26 Arial,-1,16,5,75,0,0,0,0,0
+0 2
+LANG:10001 7 STATUS:
+LANG:1 7 STATUS:
+2 124
+"PRIMITIVE_TEXT25"
+""
+1 1069.5 348 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+25 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 1069.5 348 1133.5 384
+0 2 2 "0s" 0 0 0 65 0 0  1069.5 348 1
+2
+LANG:10001 26 Arial,-1,16,5,75,0,0,0,0,0
+LANG:1 26 Arial,-1,16,5,75,0,0,0,0,0
+0 2
+LANG:10001 5 Time:
+LANG:1 5 Time:
+2 125
+"Al_MsgL2"
+""
+1 583.2444528761674 374.7500000000002 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+26 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 583.2444528761674 374.7500000000002 998 410.7500000000002
+0 2 2 "0s" 0 0 0 64 0 0  583.2444528761674 374.7500000000002 1
+2
+LANG:10001 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+0 2
+LANG:10001 10 AL Message
+LANG:1 10 AL Message
+2 126
+"Al_TimeL2"
+""
+1 1024.5 368.0000000000001 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+27 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 1024.5 368.0000000000001 1270 411.0000000000001
+0 2 2 "0s" 0 0 0 64 0 0  1024.5 368.0000000000001 1
+2
+LANG:10001 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+0 2
+LANG:10001 7 Al Time
+LANG:1 7 Al Time
+2 180
+"Al_MsgL21"
+""
+1 583.2444528761674 432.0000000000001 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+32 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 583.2444528761674 432.0000000000001 998 468.0000000000001
+0 2 2 "0s" 0 0 0 64 0 0  583.2444528761674 432.0000000000001 1
+2
+LANG:10001 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+0 2
+LANG:10001 10 AL Message
+LANG:1 10 AL Message
+2 181
+"Al_TimeL21"
+""
+1 1024.5 425.2500000000001 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+33 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 1024.5 425.2500000000001 1270 468.2500000000001
+0 2 2 "0s" 0 0 0 64 0 0  1024.5 425.2500000000001 1
+2
+LANG:10001 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+0 2
+LANG:10001 7 Al Time
+LANG:1 7 Al Time
+2 182
+"Al_MsgL22"
+""
+1 583.2444528761674 485.7500000000001 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+34 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 583.2444528761674 485.7500000000001 998 521.7500000000001
+0 2 2 "0s" 0 0 0 64 0 0  583.2444528761674 485.7500000000001 1
+2
+LANG:10001 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+0 2
+LANG:10001 10 AL Message
+LANG:1 10 AL Message
+2 183
+"Al_TimeL22"
+""
+1 1024.5 479 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+35 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 1024.5 479 1270 522.0000000000001
+0 2 2 "0s" 0 0 0 64 0 0  1024.5 479 1
+2
+LANG:10001 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+0 2
+LANG:10001 7 Al Time
+LANG:1 7 Al Time
+2 184
+"Al_MsgL23"
+""
+1 583.2444528761674 546.75 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+36 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 583.2444528761674 546.75 998 582.75
+0 2 2 "0s" 0 0 0 64 0 0  583.2444528761674 546.75 1
+2
+LANG:10001 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+0 2
+LANG:10001 10 AL Message
+LANG:1 10 AL Message
+2 185
+"Al_TimeL23"
+""
+1 1024.5 540 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+37 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 1024.5 540 1270 583
+0 2 2 "0s" 0 0 0 64 0 0  1024.5 540 1
+2
+LANG:10001 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+0 2
+LANG:10001 7 Al Time
+LANG:1 7 Al Time
+2 186
+"Al_MsgL11"
+""
+1 583 130.5 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+38 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 583 130.5 998 166.5
+0 2 2 "0s" 0 0 0 64 0 0  583 130.5 1
+2
+LANG:10001 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+0 2
+LANG:10001 10 AL Message
+LANG:1 10 AL Message
+2 187
+"Al_TimeL11"
+""
+1 922.5000000000002 76.5 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+39 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E 0.6732062607554136 0 1 403.5222360976925 50.5 0 E 922.5000000000002 76.5 1287.5 119.5
+0 2 2 "0s" 0 0 0 64 0 0  922.5000000000002 76.5 1
+2
+LANG:10001 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+0 2
+LANG:10001 7 Al Time
+LANG:1 7 Al Time
+2 188
+"Al_MsgL12"
+""
+1 583 192.75 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+40 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 583 192.75 998 228.75
+0 2 2 "0s" 0 0 0 64 0 0  583 192.75 1
+2
+LANG:10001 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+0 2
+LANG:10001 10 AL Message
+LANG:1 10 AL Message
+2 189
+"Al_TimeL12"
+""
+1 922.5000000000002 76.5 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+41 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E 0.6732062607554136 0 1 403.5222360976925 112.75 0 E 922.5000000000002 76.5 1287.5 119.5
+0 2 2 "0s" 0 0 0 64 0 0  922.5000000000002 76.5 1
+2
+LANG:10001 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+0 2
+LANG:10001 7 Al Time
+LANG:1 7 Al Time
+2 190
+"Al_MsgL13"
+""
+1 583 253.75 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+42 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 583 253.75 998 289.75
+0 2 2 "0s" 0 0 0 64 0 0  583 253.75 1
+2
+LANG:10001 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+0 2
+LANG:10001 10 AL Message
+LANG:1 10 AL Message
+2 191
+"Al_TimeL13"
+""
+1 922.5000000000002 76.5 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+43 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E 0.6732062607554136 0 1 403.5222360976925 173.75 0 E 922.5000000000002 76.5 1287.5 119.5
+0 2 2 "0s" 0 0 0 64 0 0  922.5000000000002 76.5 1
+2
+LANG:10001 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+LANG:1 34 MS Sans Serif,-1,20,5,75,0,0,0,0,0
+0 2
+LANG:10001 7 Al Time
+LANG:1 7 Al Time
+0
+LAYER, 1 
+1
+LANG:10001 0 
+0
+LAYER, 2 
+1
+LANG:10001 0 
+0
+LAYER, 3 
+1
+LANG:10001 0 
+0
+LAYER, 4 
+1
+LANG:10001 0 
+0
+LAYER, 5 
+1
+LANG:10001 0 
+0
+LAYER, 6 
+1
+LANG:10001 0 
+0
+LAYER, 7 
+1
+LANG:10001 0 
+0
+3 0 "PANEL_REF0" -1
+"layoutAlignment" "AlignNone"
+"" ""
+"CMS_GEM_CAEN/GEM_Slice.pnl" 153 35.3333330154419 T 0 1 0 1 -133 -25.3333330154419
+4
+"$SC_HV_Address1""$SC_HV_Address1"
+"$SC_HV_Address2""$SC_HV_Address2"
+"$SC_LV_Address""$SC_LV_Address"
+"$SC_Number""$SC_Number"
+0

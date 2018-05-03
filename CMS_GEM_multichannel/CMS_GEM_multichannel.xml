@@ -1,0 +1,44 @@
+<component>
+	<name>CMS_GEM_multichannel</name>
+	<version>2.3.3</version>
+	<date>02/05/2018</date>
+
+	<required>fwCaen=8.0.0</required>
+	<required>fwCore=8.0.6</required>
+	<required>fwTrending=8.0.0</required>
+	<required>fwXML=8.0.0</required>
+	<required>fwAccessControl=8.0.1</required>
+	<required>fwRDBArchiving=1.1.4</required>
+	<required>fwConfigurationDB=8.0.0</required>
+	<required>fwInstallationUtils=2.1</required>
+	<required>CMSfwClass=1.4.1</required>
+	<required>CMSfwInstallUtils=2.2.3</required>
+	<required>CMSfwDetectorProtection=1.5.8</required>
+	<required>majority_treeCache=1.2.17</required>
+	<required>CMSfwRedundancy=1.1.5</required>
+
+	<file>./panels/CMS_GEM_multichannel/CMS_GEM_multichannel_ChangeSettings.pnl</file>
+	<file>./panels/CMS_GEM_multichannel/CMS_GEM_multichannel_monitor.pnl</file>
+	<file>./panels/CMS_GEM_multichannel/CMS_GEM_multichannel_showTrends.pnl</file>
+	<file>./panels/CMS_GEM_multichannel/CMS_GEM_multichannel_SuperChamberOverview.pnl</file>
+	<file>./panels/CMS_GEM_multichannel/CMS_GEM_multichannel_trendpageBoard.pnl</file>
+	<file>./panels/CMS_GEM_multichannel/CMS_GEM_multichannel_trendpageCommon_Bot.pnl</file>
+	<file>./panels/CMS_GEM_multichannel/CMS_GEM_multichannel_trendpageCommon_Top.pnl</file>
+	<file>./panels/CMS_GEM_multichannel/CMS_GEM_multichannel_trendpageMore_Bot.pnl</file>
+	<file>./panels/CMS_GEM_multichannel/CMS_GEM_multichannel_trendpageMore_Top.pnl</file>
+	<file>./panels/CMS_GEM_multichannel/message_closeSettings.pnl</file>
+	<file>./panels/CMS_GEM_multichannel/Monitor1.pnl</file>
+	<file>./panels/CMS_GEM_multichannel/Settings1.pnl</file>
+	<file>./panels/CMS_GEM_multichannel/Settings2.pnl</file>
+	<file>./panels/CMS_GEM_multichannel/CMS_GEM_multichannel_showGEMLinks.pnl</file>
+
+	<dplist>./dplist/CMS_GEM_multichannel/dplistDpTypeMcScOverview.dpl</dplist>
+	<dplist>./dplist/CMS_GEM_multichannel/GEMCaenConfigurator/DPT_GEMCaenConfigurator.dpl</dplist>
+	<dplist>./dplist/CMS_GEM_multichannel/dplistAliasesCaenChannels.dpl</dplist>
+	<dplist>./dplist/CMS_GEM_multichannel/dplistAliasesCaenBoard.dpl</dplist>
+	
+	<postInstall>./scripts/CMS_GEM_multichannel/CMS_GEM_multichannel.postinstall</postInstall>
+	<file>./CMS_GEM_multichannel.xml</file>
+	<file>./data/CMS_GEM_multichannel/FSM_multichannel.xml</file>
+	<file>./scripts/CMS_GEM_multichannel/GEMCaenConfigurator/GEMCaenConfigurator.ctl</file>
+</component>

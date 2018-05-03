@@ -1,0 +1,8 @@
+# ascii dump of database
+
+# DpType
+TypeName
+McScOverview.McScOverview	1#1
+	actual	1#2
+		status	21#4
+		VmonSum	22#21

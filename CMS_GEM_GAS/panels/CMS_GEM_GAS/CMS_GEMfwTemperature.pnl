@@ -1,0 +1,1530 @@
+V 12
+1
+LANG:1 0 
+PANEL,-1 -1 917 644 N "_3DFace" 0
+"main()
+{
+  dyn_string exceptionInfo;
+  fwAccessControl_setupPanel( \"ApplyPanelAccessControl\", exceptionInfo);
+
+}
+
+void ApplyPanelAccessControl(string s1, string s2)
+{
+bool hasMonitor, hasModify, hasControl, hasDebug;
+
+dyn_string exceptionInfo;
+
+// revoke all previous rights:
+DisableAllInPanel();
+
+// check privileges:
+fwAccessControl_isGranted( \"CMS_GEM:Monitor\", hasMonitor, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Modify\", hasModify, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Control\", hasControl, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Debug\", hasDebug, exceptionInfo);
+
+if (dynlen(exceptionInfo)) { fwExceptionHandling_display(exceptionInfo); return;}
+
+// enable/disable panel functionality:
+if (hasModify) {
+   PUSH_dipconfig.enabled = TRUE;
+  }
+else if (hasControl){
+   PUSH_dipconfig.enabled = FALSE;
+  }
+}
+
+void DisableAllInPanel()
+{
+   PUSH_dipconfig.enabled = FALSE;
+  
+// disable all widgets in a panel...
+}
+
+" 0
+ E E E E 1 -1 -1 0  940 491
+""0  1
+E E 2
+"CBRef" "1"
+"EClose" E
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:1 0 
+13 1
+"PUSH_Close"
+""
+1 784 587 E E E 1 E 0 E N "_ButtonText" E N "_Button" E E
+ E E
+1 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  782 571 896 615
+
+T 
+1
+LANG:1 5 Close
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_panelOff();
+}
+
+EP_panelOff()
+{
+  PanelOff();
+}
+
+// SimpleCtrlScript {EP_panelOff}
+// Function {PanelOff}
+// Panel {}
+// Module {}
+// SimpleCtrlScriptEnd {EP_panelOff}
+" 0
+ E E E
+2 3
+"PRIMITIVE_TEXT9"
+""
+1 20 20 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+3 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 20 20 480 70
+0 2 2 "0s" 0 0 0 64 0 0  20 20 1
+1
+LANG:1 35 MS Shell Dlg 2,16,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 20 GEMINI01 Temperature
+4 7
+"LINE2"
+""
+1 150 120 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+7 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 3 1 2 1 E  150 120 150 230
+4 9
+"LINE4"
+""
+1 730 30 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+9 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 3 1 2 1 E  730 30 730 320
+4 10
+"LINE5"
+""
+1 150 120 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+10 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 3 1 2 1 E  150 120 730 30
+4 11
+"LINE6"
+""
+1 150 230 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+11 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 3 1 2 1 E  150 230 730 320
+4 12
+"LINE7"
+""
+1 150 420 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+12 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 3 1 2 1 E  150 420 150 530
+4 13
+"LINE8"
+""
+1 730 330 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+13 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 3 1 2 1 E  730 330 730 620
+4 14
+"LINE9"
+""
+1 150 420 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+14 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 3 1 2 1 E  150 420 730 330
+4 15
+"LINE10"
+""
+1 150 530 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+15 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 3 1 2 1 E  150 530 730 620
+2 16
+"PRIMITIVE_TEXT10"
+""
+1 53 160 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+16 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 53 160 313 300
+0 2 2 "0s" 0 0 0 64 0 0  53 160 1
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 6 Layer1
+2 17
+"PRIMITIVE_TEXT11"
+""
+1 53 461 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+17 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 53 461 313 601
+0 2 2 "0s" 0 0 0 64 0 0  53 461 1
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 6 Layer2
+14 18
+"TEXT_FIELD1"
+""
+1 590 204 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+18 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  588 188 692 232
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"GE11_S001_T1.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"GE11_S001_T1.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+    string value;
+    value = strformat(\"\\\\left{%6.2}\",6,fNewValue); 
+    
+    this.text(value);
+  
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {GE11_S001_T1.value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 19
+"TEXT_FIELD2"
+""
+1 408 204 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+19 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  406 188 510 232
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"GE11_S001_T2.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"GE11_S001_T2.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+    string value;
+    value = strformat(\"\\\\left{%6.2}\",6,fNewValue); 
+    
+    this.text(value);
+  
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {GE11_S001_T2.value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 20
+"TEXT_FIELD3"
+""
+1 215 204 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+20 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  213 188 317 232
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"GE11_S001_T3.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"GE11_S001_T3.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+    string value;
+    value = strformat(\"\\\\left{%6.2}\",6,fNewValue); 
+    
+    this.text(value);
+  
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {GE11_S001_T3.value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 21
+"TEXT_FIELD4"
+""
+1 215 132 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+21 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  213 116 317 160
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"GE11_S001_T4.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"GE11_S001_T4.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+    string value;
+    value = strformat(\"\\\\left{%6.2}\",6,fNewValue); 
+    
+    this.text(value);
+  
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {GE11_S001_T4.value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+
+" 0
+ E
+14 22
+"TEXT_FIELD5"
+""
+1 408 132 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+22 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  406 116 510 160
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"GE11_S001_T5.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"GE11_S001_T5.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+    string value;
+    value = strformat(\"\\\\left{%6.2}\",6,fNewValue); 
+    
+    this.text(value);
+  
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {GE11_S001_T5.value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 23
+"TEXT_FIELD6"
+""
+1 590 132 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+23 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  588 116 692 160
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"GE11_S001_T6.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"GE11_S001_T6.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+    string value;
+    value = strformat(\"\\\\left{%6.2}\",6,fNewValue); 
+    
+    this.text(value);
+  
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {GE11_S001_T6.value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 24
+"TEXT_FIELD7"
+""
+1 590 505 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+24 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  588 489 692 533
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"GE11_S002_T1.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"GE11_S002_T1.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+    string value;
+    value = strformat(\"\\\\left{%6.2}\",6,fNewValue); 
+    
+    this.text(value);
+  
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {GE11_S002_T1.value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 25
+"TEXT_FIELD8"
+""
+1 408 505 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+25 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  406 489 510 533
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"GE11_S002_T2.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"GE11_S002_T2.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+    string value;
+    value = strformat(\"\\\\left{%6.2}\",6,fNewValue); 
+    
+    this.text(value);
+  
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {GE11_S002_T2.value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 26
+"TEXT_FIELD9"
+""
+1 215 505 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+26 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  213 489 317 533
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"GE11_S002_T3.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"GE11_S002_T3.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+    string value;
+    value = strformat(\"\\\\left{%6.2}\",6,fNewValue); 
+    
+    this.text(value);
+  
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {GE11_S002_T3.value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 27
+"TEXT_FIELD10"
+""
+1 215 433 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+27 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  213 417 317 461
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"GE11_S002_T4.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"GE11_S002_T4.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+    string value;
+    value = strformat(\"\\\\left{%6.2}\",6,fNewValue); 
+    
+    this.text(value);
+  
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {GE11_S002_T4.value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 28
+"TEXT_FIELD11"
+""
+1 408 433 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+28 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  406 417 510 461
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"GE11_S002_T5.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"GE11_S002_T5.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+    string value;
+    value = strformat(\"\\\\left{%6.2}\",6,fNewValue); 
+    
+    this.text(value);
+  
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {GE11_S002_T5.value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 29
+"TEXT_FIELD12"
+""
+1 590 433 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+29 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  588 417 692 461
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"GE11_S002_T6.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"GE11_S002_T6.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+    string value;
+    value = strformat(\"\\\\left{%6.2}\",6,fNewValue); 
+    
+    this.text(value);
+  
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {GE11_S002_T6.value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+2 30
+"PRIMITIVE_TEXT12"
+""
+1 569 499 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+30 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 569 499 749 579
+0 2 2 "0s" 0 0 0 64 0 0  569 499 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 1 1
+2 31
+"PRIMITIVE_TEXT13"
+""
+1 569 197 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+31 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 569 197 749 277
+0 2 2 "0s" 0 0 0 64 0 0  569 197 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 1 1
+2 32
+"PRIMITIVE_TEXT14"
+""
+1 569 128 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+32 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 569 128 749 208
+0 2 2 "0s" 0 0 0 64 0 0  569 128 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 1 6
+2 33
+"PRIMITIVE_TEXT15"
+""
+1 385 128 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+33 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 385 128 565 208
+0 2 2 "0s" 0 0 0 64 0 0  385 128 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 1 5
+2 34
+"PRIMITIVE_TEXT16"
+""
+1 385 197 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+34 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 385 197 565 277
+0 2 2 "0s" 0 0 0 64 0 0  385 197 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 1 2
+2 35
+"PRIMITIVE_TEXT17"
+""
+1 195 197 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+35 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 195 197 375 277
+0 2 2 "0s" 0 0 0 64 0 0  195 197 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 1 3
+2 36
+"PRIMITIVE_TEXT18"
+""
+1 195 128 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+36 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 195 128 375 208
+0 2 2 "0s" 0 0 0 64 0 0  195 128 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 1 4
+2 37
+"PRIMITIVE_TEXT19"
+""
+1 385 429 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+37 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 385 429 565 509
+0 2 2 "0s" 0 0 0 64 0 0  385 429 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 1 5
+2 38
+"PRIMITIVE_TEXT20"
+""
+1 385 499 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+38 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 385 499 565 579
+0 2 2 "0s" 0 0 0 64 0 0  385 499 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 1 2
+2 39
+"PRIMITIVE_TEXT21"
+""
+1 195 499 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+39 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 195 499 375 579
+0 2 2 "0s" 0 0 0 64 0 0  195 499 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 1 3
+2 40
+"PRIMITIVE_TEXT22"
+""
+1 195 429 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+40 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 195 429 375 509
+0 2 2 "0s" 0 0 0 64 0 0  195 429 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 1 4
+2 41
+"PRIMITIVE_TEXT23"
+""
+1 569 429 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+41 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 569 429 749 509
+0 2 2 "0s" 0 0 0 64 0 0  569 429 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 1 6
+2 43
+"PRIMITIVE_TEXT25"
+""
+1 317 128 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+43 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 317 128 407 188
+0 2 2 "0s" 0 0 0 64 0 0  317 128 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 2 °C
+2 44
+"PRIMITIVE_TEXT26"
+""
+1 317 197 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+44 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 317 197 407 257
+0 2 2 "0s" 0 0 0 64 0 0  317 197 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 2 °C
+2 45
+"PRIMITIVE_TEXT27"
+""
+1 510 197 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+45 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 510 197 600 257
+0 2 2 "0s" 0 0 0 64 0 0  510 197 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 2 °C
+2 46
+"PRIMITIVE_TEXT28"
+""
+1 510 128 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+46 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 510 128 600 188
+0 2 2 "0s" 0 0 0 64 0 0  510 128 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 2 °C
+2 47
+"PRIMITIVE_TEXT29"
+""
+1 692 128 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+47 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 692 128 782 188
+0 2 2 "0s" 0 0 0 64 0 0  692 128 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 2 °C
+2 48
+"PRIMITIVE_TEXT30"
+""
+1 692 197 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+48 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 692 197 782 257
+0 2 2 "0s" 0 0 0 64 0 0  692 197 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 2 °C
+2 49
+"PRIMITIVE_TEXT31"
+""
+1 692 429 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+49 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 692 429 782 489
+0 2 2 "0s" 0 0 0 64 0 0  692 429 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 2 °C
+2 50
+"PRIMITIVE_TEXT32"
+""
+1 692 499 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+50 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 692 499 782 559
+0 2 2 "0s" 0 0 0 64 0 0  692 499 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 2 °C
+2 51
+"PRIMITIVE_TEXT33"
+""
+1 510 499 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+51 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 510 499 600 559
+0 2 2 "0s" 0 0 0 64 0 0  510 499 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 2 °C
+2 52
+"PRIMITIVE_TEXT34"
+""
+1 510 429 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+52 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 510 429 600 489
+0 2 2 "0s" 0 0 0 64 0 0  510 429 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 2 °C
+2 53
+"PRIMITIVE_TEXT35"
+""
+1 317 429 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+53 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 317 429 407 489
+0 2 2 "0s" 0 0 0 64 0 0  317 429 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 2 °C
+2 54
+"PRIMITIVE_TEXT36"
+""
+1 317 499 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+54 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 317 499 407 559
+0 2 2 "0s" 0 0 0 64 0 0  317 499 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 2 °C
+13 55
+"PUSH_temperaturetrends"
+""
+1 780 60 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+55 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  778 44 892 88
+
+T 
+1
+LANG:1 10 See Trends
+"// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"CMS_GEM_GAS/CMS_GEMfwTemperatureTrends.pnl\",
+      \"\",
+      makeDynString(\"\"));
+}
+
+// SimpleCtrlScript {EP_childPanelOn}
+// Function {ChildPanelOnCentral}
+// File {CMS_GEMfwTemperatureTrends.pnl}
+// Panel {}
+// Parent {}
+// Module {}
+// OffsetX {0}
+// OffsetY {0}
+// SimpleCtrlScriptEnd {EP_childPanelOn}
+" 0
+ E E E
+13 56
+"PUSH_dipconfig"
+""
+1 780 370.5 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+56 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  778 353 892 398
+
+T 
+1
+LANG:1 10 DIP Config
+"// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"CMS_GEM_GAS/CMS_GEMfwDIPConfig.pnl\",
+      \"\",
+      makeDynString(\"\"));
+}
+
+// SimpleCtrlScript {EP_childPanelOn}
+// Function {ChildPanelOnCentral}
+// File {CMS_GEMfwDIPConfig.pnl}
+// Panel {}
+// Parent {}
+// Module {}
+// OffsetX {0}
+// OffsetY {0}
+// SimpleCtrlScriptEnd {EP_childPanelOn}
+" 0
+ E E E
+0
+LAYER, 1 
+1
+LANG:1 0 
+0
+LAYER, 2 
+1
+LANG:1 0 
+0
+LAYER, 3 
+1
+LANG:1 0 
+0
+LAYER, 4 
+1
+LANG:1 0 
+0
+LAYER, 5 
+1
+LANG:1 0 
+0
+LAYER, 6 
+1
+LANG:1 0 
+0
+LAYER, 7 
+1
+LANG:1 0 
+0
+0

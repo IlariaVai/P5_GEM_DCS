@@ -1,0 +1,106 @@
+V 14
+2
+LANG:10001 0 
+LANG:1 0 
+PANEL,-1 -1 1920 1200 N "STD_grey_light" 0
+E E E E E 1 -1 -1 0  0 0
+""0  1
+E E 3
+"CBRef" "1"
+"EClose" E
+"dpi" "96"
+0 0 0
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:10001 0 
+28 0
+"CentralDCSFsmTab"
+""
+1 0.9999999999996589 0.5 E E E 1 E 1 E N "_3DText" E N "STD_grey_light" E E
+ "main()
+{
+  int answer;
+  if(this.registerCount>1)
+    popupMenu(makeDynString(\"PUSH_BUTTON\",\"Close current tab\",1,1,
+                            \"PUSH_BUTTON\",\"Close other tabs\",2,1),answer);  
+  else
+    return;
+  
+  if(answer == 1)  {    
+   closeTab(this.activeRegister());
+   
+ }
+  else if (answer == 2) {
+    int count = this.registerCount;
+    int myTab= this.activeRegister;
+    for (int i=count-1; i>= 1; i--) { // start to close from the end
+        if (i != myTab) closeTab(i);
+    }
+  }
+}
+
+// temporary fix not to have to restart the panel
+void closeTab(int tabIndex) {
+  if (! isFunctionDefined(\"fwFSMUserCMS_closeTab\") ) {
+        this.deleteRegister(tabIndex);
+  } else {
+   fwFSMUserCMS_closeTab(tabIndex);       
+  }
+  
+}" 0
+ E
+1 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  -1.5 -1.5 1921.5 1201.5
+"main()
+{
+  fwFsmUserCMS_prepareTab(0);
+}
+" 0
+1 "#1" 2
+LANG:10001 2 #1
+LANG:1 2 #1
+0
+
+0
+LAYER, 1 
+1
+LANG:10001 0 
+0
+LAYER, 2 
+1
+LANG:10001 0 
+0
+LAYER, 3 
+1
+LANG:10001 0 
+0
+LAYER, 4 
+1
+LANG:10001 0 
+0
+LAYER, 5 
+1
+LANG:10001 0 
+0
+LAYER, 6 
+1
+LANG:10001 0 
+0
+LAYER, 7 
+1
+LANG:10001 0 
+0
+0

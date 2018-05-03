@@ -1,0 +1,13 @@
+# ascii dump of database
+
+# Datapoint/DpId
+DpName	TypeName	ID
+GEM_ProtM	Boolean	2859802
+GEM_ProtI	Boolean	2859963
+GEM_ProtStb	Boolean	2859983
+
+# DpValue
+Manager/User	ElementName	TypeName	_original.._value	_original.._status64	_original.._stime
+UI (1)/0	GEM_ProtM.Value	Boolean	0	0x8300000000100101	20.09.2017 10:03:02.964
+UI (1)/0	GEM_ProtI.Value	Boolean	0	0x8300000000000101	20.09.2017 10:03:02.964
+UI (1)/0	GEM_ProtStb.Value	Boolean	0	0x8300000000000101	20.09.2017 10:03:02.964

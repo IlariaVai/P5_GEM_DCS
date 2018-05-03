@@ -1,0 +1,990 @@
+V 12
+1
+LANG:1 0 
+PANEL,-1 -1 971 657 N "_3DFace" 0
+"main()
+{
+  dyn_string exceptionInfo;
+  fwAccessControl_setupPanel( \"ApplyPanelAccessControl\", exceptionInfo);
+
+}
+
+void ApplyPanelAccessControl(string s1, string s2)
+{
+bool hasMonitor, hasModify, hasControl, hasDebug;
+
+dyn_string exceptionInfo;
+
+//revoke all previous rights:
+DisableAllInPanel();
+
+//check privileges:
+fwAccessControl_isGranted( \"CMS_GEM:Monitor\", hasMonitor, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Modify\", hasModify, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Control\", hasControl, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Debug\", hasDebug, exceptionInfo);
+
+if (dynlen(exceptionInfo)) { fwExceptionHandling_display(exceptionInfo); return;}
+
+//enable/disable panel functionality:
+if (hasModify) {
+   PUSH_dipconfig.enabled = TRUE;
+  }
+else if (hasControl){
+   PUSH_dipconfig.enabled = FALSE;
+  }
+}
+
+void DisableAllInPanel()
+{
+   PUSH_dipconfig.enabled = FALSE;
+  
+//disable all widgets in a panel...
+}
+
+" 0
+ E E E E 1 -1 -1 0  20 50
+""0  1
+E E 2
+"CBRef" "1"
+"EClose" E
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:1 0 
+2 0
+"PRIMITIVE_TEXT1"
+""
+1 20 100 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+0 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 20 100 460 190
+0 2 2 "0s" 0 0 0 64 0 0  20 100 1
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 12 Machine Mode
+14 1
+"TEXT_MachineMode"
+""
+1 200 104 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+1 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  198 88 422 132
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"MachineMode.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"MachineMode.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, string sNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, sNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {MachineMode.value}
+// DPConfig {:_online.._value}
+// DPType {string}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+2 2
+"PRIMITIVE_TEXT2"
+""
+1 20 172 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+2 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 20 172 460 262
+0 2 2 "0s" 0 0 0 64 0 0  20 172 1
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 9 Beam Mode
+14 3
+"TEXT_BeamMode"
+""
+1 200 178 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+3 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  198 162 422 206
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"BeamMode.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"BeamMode.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, string sNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, sNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {BeamMode.value}
+// DPConfig {:_online.._value}
+// DPType {string}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+2 4
+"PRIMITIVE_TEXT3"
+""
+1 20 250 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+4 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 20 250 460 340
+0 2 2 "0s" 0 0 0 64 0 0  20 250 1
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 14 Handshake Mode
+2 6
+"PRIMITIVE_TEXT4"
+""
+1 547 92 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+6 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 547 92 987 182
+0 2 2 "0s" 0 0 0 64 0 0  547 92 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 11 Fill number
+2 7
+"PRIMITIVE_TEXT5"
+""
+1 547 137 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+7 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 547 137 987 227
+0 2 2 "0s" 0 0 0 64 0 0  547 137 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 6 Energy
+2 8
+"PRIMITIVE_TEXT6"
+""
+1 547 184 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+8 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 547 184 987 274
+0 2 2 "0s" 0 0 0 64 0 0  547 184 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 15 Inst luminosity
+2 9
+"PRIMITIVE_TEXT7"
+""
+1 547 229 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+9 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 547 229 987 319
+0 2 2 "0s" 0 0 0 64 0 0  547 229 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 14 Collision Rate
+14 10
+"TEXT_FillNumber"
+""
+1 690 99.09999999999999 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+10 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  688 88 912 118
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"FillNumber.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"FillNumber.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, string sNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, sNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {FillNumber.value}
+// DPConfig {:_online.._value}
+// DPType {string}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 11
+"TEXT_Energy"
+""
+1 690 144 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+11 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  688 133 912 163
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Energy.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Energy.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+ 
+  //DebugTN(fNewValue);
+  float calibrated_value;
+     calibrated_value = fNewValue * 0.000120; //In TeV 
+     
+  //DebugTN(calibrated_value);   
+     
+  this.text(calibrated_value);
+  
+  //setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Energy.value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 12
+"TEXT_InstLumi"
+""
+1 690 189 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+12 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  688 178 912 208
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Lumi_TotInst.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Lumi_TotInst.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Lumi_TotInst.value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 13
+"TEXT_CollRate"
+""
+1 690 234 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+13 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  688 223 912 253
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"CollRate.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"CollRate.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {CollRate.value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 14
+"TEXT_IntLumi"
+""
+1 690 279.2 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+14 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  688 268 912 298
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"IntLumi_Delivered.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"IntLumi_Delivered.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {IntLumi_Delivered.value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+2 15
+"PRIMITIVE_TEXT8"
+""
+1 547 270 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+15 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 547 270 987 360
+0 2 2 "0s" 0 0 0 64 0 0  547 270 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 14 Int luminosity
+1 549 1 "9" 81
+0
+1 550 1 "10" 330
+0
+1 551 1 "10" 332
+0
+1 552 1 "10" 333
+0
+1 553 1 "10" 335
+0
+1 554 1 "10" 347
+0
+1 555 1 "10" 360
+0
+1 556 1 "10" 363
+0
+1 557 1 "10" 362
+0
+1 558 1 "10" 364
+0
+1 559 1 "10" 365
+0
+1 562 1 "10" 366
+0
+1 563 1 "10" 367
+0
+1 572 1 "5" 39
+0
+1 573 1 "5" 34
+0
+1 583 1 "5" 44
+0
+1 508 1 "9" 73
+0
+1 509 1 "9" 74
+0
+1 510 1 "9" 75
+0
+1 511 1 "9" 76
+0
+1 512 1 "9" 77
+0
+1 513 1 "9" 78
+0
+1 514 1 "9" 79
+0
+1 515 1 "9" 56
+0
+1 516 1 "9" 57
+0
+1 517 1 "9" 58
+0
+1 518 1 "9" 59
+0
+1 519 1 "9" 60
+0
+1 520 1 "9" 61
+0
+1 521 1 "9" 62
+0
+1 522 1 "9" 63
+0
+1 523 1 "9" 35
+0
+1 524 1 "9" 36
+0
+1 525 1 "9" 38
+0
+1 526 1 "9" 39
+0
+1 527 1 "9" 40
+0
+1 528 1 "9" 41
+0
+1 529 1 "9" 42
+0
+1 530 1 "9" 43
+0
+1 531 1 "9" 16
+0
+1 532 1 "9" 17
+0
+1 533 1 "9" 18
+0
+1 534 1 "9" 19
+0
+1 535 1 "9" 20
+0
+1 536 1 "9" 21
+0
+1 537 1 "9" 22
+0
+1 538 1 "9" 23
+0
+1 539 1 "9" 24
+0
+1 540 1 "9" 25
+0
+1 541 1 "9" 71
+0
+1 542 1 "9" 12
+0
+1 543 1 "9" 11
+0
+1 544 1 "9" 13
+0
+1 545 1 "9" 14
+0
+1 546 1 "9" 9
+0
+1 547 1 "9" 15
+0
+1 548 1 "9.0" 0
+0
+1 560 1 "10" 3
+0
+1 561 1 "10" 359
+0
+1 564 1 "10" 369
+0
+1 565 1 "5" 46
+0
+1 566 1 "5" 29
+0
+1 567 1 "5" 30
+0
+1 568 1 "5" 31
+0
+1 569 1 "5" 32
+0
+1 570 1 "5" 22
+0
+1 571 1 "5" 23
+0
+1 574 1 "5" 40
+0
+1 575 1 "5" 38
+0
+1 576 1 "5" 35
+0
+1 577 1 "5" 36
+0
+1 578 1 "5" 37
+0
+1 579 1 "5" 24
+0
+1 580 1 "5" 25
+0
+1 581 1 "5" 27
+0
+1 582 1 "5" 41
+0
+1 584 1 "5" 45
+0
+1 585 1 "5.0" 2
+0
+1 586 1 "5.0" 3
+0
+1 587 1 "" 77
+0
+25 264
+"TABLE1"
+""
+1 200 238 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+20 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  198 236 422 330
+"main()
+{
+  dyn_string modes, states, exceptionInfo, dpName;
+  
+    modes = makeDynString(\"ADJUST\",
+                          \"BEAM DUMP\",
+                          \"INJECTION\");
+  
+  
+    states = makeDynString(\"cms_gem_dcs_1:LHC_ADJUST\",
+                           \"cms_gem_dcs_1:LHC_BEAMDUMP\",
+                           \"cms_gem_dcs_1:LHC_INJECTION\");
+  
+    //DebugTN(\"Numero modi = \", dynlen(modes));  
+  
+  
+  for(int i=1; i<= 3; i++)  {
+    fwDevice_getName(states[i], dpName[i], exceptionInfo);
+    
+    //DebugTN(\"dpName[i] = \", dpName[i]);
+  
+  }
+  this.appendLines(dynlen(modes),\"name\", dpName, \"mode\", modes);
+  
+  for(int i=1; i<= 3; i++)
+  {
+    dpConnect(\"showState\", dpName[i]+\".value\");
+  }  
+  
+}
+
+showState(dyn_string values, dyn_anytype states, dyn_string names)
+{
+    //DebugTN(\"stati = \", states); 
+  
+  dyn_string exceptionInfo;
+  fwDevice_getName(dpSubStr(values[1], DPSUB_DP), names, exceptionInfo);
+
+    //DebugTN(\"nomi = \", names); 
+  
+  this.updateLine(1, \"name\", names, \"state\", states); 
+  
+}" 0
+E 1 0 1 3 0 "name" 11 0 0 "s" 1
+LANG:1 4 name
+E
+1
+LANG:1 0 
+
+100 "mode" 11 1 0 "s" 1
+LANG:1 4 Mode
+E
+1
+LANG:1 0 
+
+100 "state" 11 1 0 "s" 1
+LANG:1 5 State
+E
+1
+LANG:1 0 
+
+100 
+13 13 10 0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0 0 1 1 1 7
+1 0
+2 345
+"PRIMITIVE_TEXT9"
+""
+1 20 20 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+21 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 20 20 480 70
+0 2 2 "0s" 0 0 0 64 0 0  20 20 1
+1
+LANG:1 35 MS Shell Dlg 2,16,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 10 LHC Status
+13 426
+"PUSH_Close"
+""
+1 800 583 E E E 1 E 0 E N "_ButtonText" E N "_Button" E E
+ E E
+22 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  798 567 912 611
+
+T 
+1
+LANG:1 5 Close
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_panelOff();
+}
+
+EP_panelOff()
+{
+  PanelOff();
+}
+
+// SimpleCtrlScript {EP_panelOff}
+// Function {PanelOff}
+// Panel {}
+// Module {}
+// SimpleCtrlScriptEnd {EP_panelOff}
+" 0
+ E E E
+13 507
+"PUSH_dipconfig"
+""
+1 800 370 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+23 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  798 352 912 397
+
+T 
+1
+LANG:1 10 DIP Config
+"// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"CMS_GEM_GAS/CMS_GEMfwDIPConfig.pnl\",
+      \"\",
+      makeDynString(\"\"));
+}
+
+// SimpleCtrlScript {EP_childPanelOn}
+// Function {ChildPanelOnCentral}
+// File {CMS_GEMfwDIPConfig.pnl}
+// Panel {}
+// Parent {}
+// Module {}
+// OffsetX {0}
+// OffsetY {0}
+// SimpleCtrlScriptEnd {EP_childPanelOn}
+" 0
+ E E E
+0
+LAYER, 1 
+1
+LANG:1 0 
+0
+LAYER, 2 
+1
+LANG:1 0 
+0
+LAYER, 3 
+1
+LANG:1 0 
+0
+LAYER, 4 
+1
+LANG:1 0 
+0
+LAYER, 5 
+1
+LANG:1 0 
+0
+LAYER, 6 
+1
+LANG:1 0 
+0
+LAYER, 7 
+1
+LANG:1 0 
+0
+3 1 "CMS_GEM_LHCStatus" -1
+"objects\\fwTrending\\fwTrendingFaceplate.pnl" 259 352 T 18 1.493230174081238 0 1.189873417721519 -368.7466150870407 -68.83544303797478
+22
+"$ZoomWindowTitle"""
+"$bShowGrid"""
+"$bShowLegend"""
+"$bTrendLog"""
+"$dsCurveColor"""
+"$dsCurveDPE"""
+"$dsCurveLegend"""
+"$dsCurveRange"""
+"$dsCurveScaleVisible"""
+"$dsCurveToolTipText"""
+"$dsCurveVisible"""
+"$dsCurvesType"""
+"$dsUnit"""
+"$fMaxPercentageForLog"""
+"$fMinForLog"""
+"$iMarkerType"""
+"$sBackColor"""
+"$sDpName""CMS_GEM_LHCStatus"
+"$sForeColor"""
+"$sRefName""CMS_GEM_LHCStatus."
+"$sTimeRange"""
+"$templateParameters"""
+0

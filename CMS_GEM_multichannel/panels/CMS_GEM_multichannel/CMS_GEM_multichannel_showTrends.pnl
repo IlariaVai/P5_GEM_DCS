@@ -1,0 +1,241 @@
+V 14
+1
+LANG:10001 0 
+PANEL,-1 -1 666 217 N "_3DFace" 0
+E E E E E 1 -1 -1 0  61 33
+""0  1
+E E 3
+"CBRef" "1"
+"EClose" E
+"dpi" "96"
+0 0 0
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:10001 0 
+13 1
+"BUTTON_CLOSE"
+""
+1 60.88749999999999 93 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+0 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0  60 84 263 118
+
+T 
+2
+LANG:10001 20 Top chamber - Common
+LANG:1 14 Show Trendpage
+"main()
+{
+   ChildPanelOn(\"CMS_GEM_multichannel/CMS_GEM_multichannel_trendpageCommon_Top.pnl\", \"Trendpage Top Chamber - common\", \"\", 0, 0); 
+}" 0
+ E E "main()
+{
+  this.text(\"Layer1 Chamber - Common\");
+}" 0
+
+13 2
+"PUSH_BUTTON3"
+""
+1 61 41 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+1 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0  60 32 224 66
+
+T 
+2
+LANG:10001 15 Board Trendpage
+LANG:1 14 Show Trendpage
+"main()
+{
+   ChildPanelOn(\"CMS_GEM_multichannel/CMS_GEM_multichannel_trendpageBoard.pnl\", \"Board trendpage\", \"\", 0, 0); 
+}" 0
+ E E "main()
+{
+  this.text(\"Board Trendpage\");
+}" 0
+
+13 3
+"PUSH_BUTTON2"
+""
+1 192.4887640449438 630 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+2 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0  61 141 264 175
+
+T 
+2
+LANG:10001 23 Bottom Chamber - Common
+LANG:1 14 Show Trendpage
+"main()
+{
+   ChildPanelOn(\"CMS_GEM_multichannel/CMS_GEM_multichannel_trendpageCommon_Bot.pnl\", \"Trendpage Bottom Chamber - common\", \"\", 0, 0); 
+}" 0
+ E E "main()
+{
+  this.text(\"Layer2 Chamber - Common\");
+}" 0
+
+13 4
+"PUSH_BUTTON4"
+""
+1 285 93 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+3 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0  284 84 487 118
+
+T 
+2
+LANG:10001 18 Top Chamber - More
+LANG:1 14 Show Trendpage
+"main()
+{
+   ChildPanelOn(\"CMS_GEM_multichannel/CMS_GEM_multichannel_trendpageMore_Top.pnl\", \"Trendpage Top Chamber - more\", \"\", 0, 0); 
+}" 0
+ E E "main()
+{
+  this.text(\"Layer1 Chamber - More\");
+}" 0
+
+13 5
+"PUSH_BUTTON5"
+""
+1 286 150 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+4 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0  285 141 488 175
+
+T 
+2
+LANG:10001 21 Bottom Chamber - More
+LANG:1 14 Show Trendpage
+"main()
+{
+   ChildPanelOn(\"CMS_GEM_multichannel/CMS_GEM_multichannel_trendpageMore_Bot.pnl\", \"Trendpage Bottom Chamber - more\", \"\", 0, 0); 
+}" 0
+ E E "main()
+{
+  this.text(\"Layer2 Chamber - More\");
+}" 0
+
+13 6
+"PUSH_BUTTON1"
+""
+1 569 179.25 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+5 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0  567 170.75 651 204.75
+
+T 
+2
+LANG:10001 5 Close
+LANG:1 5 Close
+"
+
+main()
+{
+PanelOff(\"\");
+}
+" 0
+ E E "main()
+{
+  this.text(\"Close\");
+}" 0
+
+0
+LAYER, 1 
+1
+LANG:10001 0 
+0
+LAYER, 2 
+1
+LANG:10001 0 
+0
+LAYER, 3 
+1
+LANG:10001 0 
+0
+LAYER, 4 
+1
+LANG:10001 0 
+0
+LAYER, 5 
+1
+LANG:10001 0 
+0
+LAYER, 6 
+1
+LANG:10001 0 
+0
+LAYER, 7 
+1
+LANG:10001 0 
+0
+0

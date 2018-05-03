@@ -1,0 +1,5858 @@
+V 12
+1
+LANG:1 22 CMS_GEM_Alarm_Settings
+PANEL,-1 -1 1026 972 N "_3DFace" 0
+E E E E E 1 -1 -1 0  30 19
+""0  1
+E E 2
+"CBRef" "1"
+"EClose" E
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:1 0 
+30 0
+"mixer_frame"
+""
+1 30 19 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+0 0 0 0 0 0
+E E E
+1
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 0 1 0 1 E 1.4375 0 2.447963800904977 -13.125 13.48868778280544 0 E 30 19 351 241
+1
+LANG:1 35 MS Shell Dlg 2,-1,19,5,50,0,0,0,0,0
+0 1
+LANG:1 5 Mixer
+30 1
+"rack_frame"
+""
+1 30 19 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+1 0 0 0 0 0
+E E E
+1
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 0 1 0 1 E 1.4375 0 1.357466063348416 -13.125 585.2081447963801 0 E 30 19 351 241
+1
+LANG:1 35 MS Shell Dlg 2,-1,19,5,50,0,0,0,0,0
+0 1
+LANG:1 4 Rack
+30 2
+"exhaust_frame"
+""
+1 30 19 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+2 0 0 0 0 0
+E E E
+1
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 0 1 0 1 E 1.4375 0 2.447963800904978 488.875 13.48868778280544 0 E 30 19 351 241
+1
+LANG:1 35 MS Shell Dlg 2,-1,19,5,50,0,0,0,0,0
+0 1
+LANG:1 7 Exhaust
+30 3
+"flocells_frame"
+""
+1 30 19 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+3 0 0 0 0 0
+E E E
+1
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 0 1 0 1 E 1.4375 0 1.357466063348416 488.875 585.2081447963801 0 E 30 19 351 241
+1
+LANG:1 35 MS Shell Dlg 2,-1,19,5,50,0,0,0,0,0
+0 1
+LANG:1 10 Flow Cells
+13 4
+"close_button"
+""
+1 890 931 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+4 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  888 924 992 958
+
+T 
+1
+LANG:1 5 Close
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_panelOff();
+}
+
+EP_panelOff()
+{
+  PanelOff();
+}
+
+// SimpleCtrlScript {EP_panelOff}
+// Function {PanelOff}
+// Panel {}
+// Module {}
+// SimpleCtrlScriptEnd {EP_panelOff}
+" 0
+ E E E
+2 5
+"input_flow_text"
+""
+1 550.5 690.5 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+5 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 550.5 690.5 675.5 710.5
+1 2 2 "0s" 0 0 0 64 0 0  550.5 690.5 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 14 Max Input Flow
+2 7
+"diff_text"
+""
+1 551 724 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+7 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 551 724 676 744
+1 2 2 "0s" 0 0 0 64 0 0  551 724 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 15 Max In-Out Flow
+14 8
+"warning_max_input_flow"
+""
+1 854 495 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+8 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  760 689 811 719
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_InFlow.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_InFlow.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_InFlow.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 9
+"error_max_input_flow"
+""
+1 1020 495 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+9 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  926 689 977 719
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_InFlow.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_InFlow.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_InFlow.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 10
+"warning_min_input_flow"
+""
+1 790 495 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+10 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  696 689 747 719
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_InFlow.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_InFlow.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_InFlow.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 11
+"error_min_input_flow"
+""
+1 956 495 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+11 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  862 689 913 719
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_InFlow.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_InFlow.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_InFlow.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 12
+"warning_diff_flow"
+""
+1 854 528 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+12 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  760 722 811 752
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_InOutFlow.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_InOutFlow.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_InOutFlow.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 13
+"error_diff_flow"
+""
+1 1020 528 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+13 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  926 722 977 752
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_InOutFlow.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_InOutFlow.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_InOutFlow.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+13 20
+"set_flowcells"
+""
+1 874.5 841 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+20 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  873 834 977 868
+
+T 
+1
+LANG:1 3 Set
+"main()
+{
+  
+  dyn_string exceptionInfo;
+  bool answ;
+  fwGeneral_openMessagePanel(\"Do you really want to apply these limits?\", answ , exceptionInfo, \"Confirm\", false );
+  DebugTN(\"answer\",answ);
+  
+  if (answ)
+  {
+    applyChanges();
+  }
+}
+
+  
+void applyChanges()
+{
+  
+ dyn_string limits = makeDynString(\"Warning_InFlow.Max_Flow\",
+                                   \"Warning_InFlow.Min_Flow\",
+                                   \"Error_InFlow.Max_Flow\",
+                                   \"Error_InFlow.Min_Flow\",
+                                   \"Warning_InOutFlow.Max_Flow\",
+                                   \"Error_InOutFlow.Max_Flow\");
+     
+     
+     
+  dyn_float data = makeDynFloat(warning_max_input_flow.text,
+                                warning_min_input_flow.text,
+                                error_max_input_flow.text,
+                                error_min_input_flow.text,
+                                warning_diff_flow.text,
+                                error_diff_flow.text); 
+
+  int numbers = dynlen(data);
+
+  for(int i=1; i<=numbers; i++){
+  
+   // DebugN(\"Valore = \", data[i]);  
+    dpSet(limits[i],data[i]);
+  }
+ 
+ dyn_string variables = makeDynString(\"CMSGEM_Di_FE6102Ch1.Value\",
+                                      \"CMSGEM_Di_FE6102Ch2.Value\",
+                                      \"CMSGEM_Di_FE6102Ch3.Value\",
+                                      \"CMSGEM_Di_FE6102Ch4.Value\",
+                                      \"CMSGEM_Di_FE6102Ch5.Value\",
+                                      \"CMSGEM_Di_FE6102Ch6.Value\",
+                                      \"CMS_GEM_Di_Ch1.Value\",
+                                      \"CMS_GEM_Di_Ch2.Value\",
+                                      \"CMS_GEM_Di_Ch3.Value\",
+                                      \"CMS_GEM_Di_Ch4.Value\",
+                                      \"CMS_GEM_Di_Ch5.Value\",
+                                      \"CMS_GEM_Di_Ch6.Value\"
+                                      );  
+  
+  dpConnect(\"setAlarm\",variables);
+   
+}
+
+setAlarm(dyn_string variables, dyn_float a)
+{
+
+  dyn_string channelsName = makeDynString(\"CMSGEM_Di_FE6102Ch1.Value\",
+                                          \"CMSGEM_Di_FE6102Ch2.Value\",
+                                          \"CMSGEM_Di_FE6102Ch3.Value\",
+                                          \"CMSGEM_Di_FE6102Ch4.Value\",
+                                          \"CMSGEM_Di_FE6102Ch5.Value\",
+                                          \"CMSGEM_Di_FE6102Ch6.Value\"
+                                          );  
+ 
+  dyn_string differencesName = makeDynString(\"CMS_GEM_Di_Ch1.Value\",
+                                             \"CMS_GEM_Di_Ch2.Value\",
+                                             \"CMS_GEM_Di_Ch3.Value\",
+                                             \"CMS_GEM_Di_Ch4.Value\",
+                                             \"CMS_GEM_Di_Ch5.Value\",
+                                             \"CMS_GEM_Di_Ch6.Value\"
+                                             );  
+   
+  dyn_float data = makeDynFloat(warning_max_input_flow.text,
+                                warning_min_input_flow.text,
+                                error_max_input_flow.text,
+                                error_min_input_flow.text,
+                                warning_diff_flow.text,
+                                error_diff_flow.text); 
+
+    
+  dyn_float channels, differences;
+
+  for(int i=1; i<=6; i++){
+    channels[i]=a[i];  
+  }  
+  
+  for(int j=7; j<=12; j++){
+    differences[j-6]=a[j]; 
+  }
+ 
+ // DebugN(\"Differences are = \", differences);
+  
+  dyn_float limits;
+  dyn_string alerttext, alertclass;
+  dyn_float limits2;
+  dyn_string alerttext2, alertclass2;
+  dyn_errClass err;
+  dyn_string exceptionInfo;
+  string alertPanel, alertHelp;
+  dyn_string summary, alertPanelParameters;
+//  string color;
+  
+  
+  for(int k=1; k<=6; k++){
+    
+//      if(differences[k] > -0.5 && differences[k] < data[5])
+//    {  
+    limits=makeDynFloat(data[4], data[2], data[1], data[3]);
+    alerttext=makeDynString(\"Alert: too low input flow - Call the GEM DOC (161558)\", \"Warning: low input flow - Call the GEM DOC (161558)\", \"OK\", \"Warning: high input flow - Call the GEM DOC (161558)\", \"Alert: too high input flow - Call the GEM DOC (161558)\"); 
+    alertclass=makeDynString(\"_fwErrorAck_70.\", \"_fwWarningAck_50.\", \"\",\"_fwWarningAck_50.\",\"_fwErrorAck_70.\");
+    
+ //   DebugN(\"Caso 1 per canale \", k); 
+    
+      fwAlertConfig_deactivate(channelsName[k], exceptionInfo);
+      fwAlertConfig_set(channelsName[k], DPCONFIG_ALERT_NONBINARYSIGNAL, alerttext, limits, alertclass, summary, alertPanel, alertPanelParameters, alertHelp, exceptionInfo);   
+      fwAlertConfig_activate(channelsName[k], exceptionInfo);
+
+//       DebugN(\"Colore \", color);   
+//       dpGet(channelsName[k]+\":_alert_hdl.._act_state_color\", color);
+//     
+//    }
+  
+  
+//  else{
+    limits2=makeDynFloat(-0.5, data[5], data[6]);
+    alerttext2=makeDynString(\"Alert: input flow lower then output - Call the GEM DOC (161558)\", \"OK\",\"Warning: check the input and output flow - Call the GEM DOC (161558)\", \"Alert: check the input and output flow - Call the GEM DOC (161558)\"); 
+    alertclass2=makeDynString(\"_fwErrorAck_70.\", \"\", \"_fwWarningAck_50.\", \"_fwErrorAck_70.\");
+     
+//DebugN(\"Caso 2 per canale \", k);    
+          
+      fwAlertConfig_deactivate(differencesName[k], exceptionInfo);
+      fwAlertConfig_set(differencesName[k], DPCONFIG_ALERT_NONBINARYSIGNAL, alerttext2, limits2, alertclass2, summary, alertPanel, alertPanelParameters, alertHelp, exceptionInfo);   
+      fwAlertConfig_activate(differencesName[k], exceptionInfo);
+      
+      
+//        DebugN(\"Colore \", color);   
+//       dpGet(differencesName[k]+\":_alert_hdl.._act_state_color\", color);
+//     
+
+// DebugN(\"differenze\", differencesName[k]);   
+    
+      
+//  }
+
+  
+  
+  
+  
+  }
+  
+
+
+}" 0
+ E E E
+13 21
+"check_flowcells"
+""
+1 549 841 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+21 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  547 834 651 868
+
+T 
+1
+LANG:1 5 Check
+"main()
+{
+  float Error_Input_Flow;
+  Error_Input_Flow = error_max_input_flow.text;
+  
+  float Warning_Input_Flow;
+  Warning_Input_Flow = warning_max_input_flow.text; 
+
+  if (Warning_Input_Flow > Error_Input_Flow){
+    error_max_input_flow.backCol(\"FwAlarmFatalAck\");
+    warning_max_input_flow.backCol(\"FwAlarmFatalAck\");
+    //input_flow_text.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (Warning_Input_Flow == Error_Input_Flow){
+    error_max_input_flow.backCol(\"FwStateOKNotPhysics\");
+    warning_max_input_flow.backCol(\"FwStateOKNotPhysics\");
+    //input_flow_text.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    error_max_input_flow.backCol(\"FwStateOKPhysics\");
+    warning_max_input_flow.backCol(\"FwStateOKPhysics\"); 
+    //input_flow_text.backCol(\"FwStateOKPhysics\"); 
+  }  
+  
+  /////////////////////////////////////////////////////////////////////////////
+  
+  float Error_Min_Input_Flow;
+  Error_Min_Input_Flow = error_min_input_flow.text;
+  
+  float Warning_Min_Input_Flow;
+  Warning_Min_Input_Flow = warning_min_input_flow.text; 
+
+  if (Warning_Min_Input_Flow < Error_Min_Input_Flow){
+    error_min_input_flow.backCol(\"FwAlarmFatalAck\");
+    warning_min_input_flow.backCol(\"FwAlarmFatalAck\");
+    //input_flow_text.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (Warning_Min_Input_Flow == Error_Min_Input_Flow){
+    error_min_input_flow.backCol(\"FwStateOKNotPhysics\");
+    warning_min_input_flow.backCol(\"FwStateOKNotPhysics\");
+    //input_flow_text.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    error_min_input_flow.backCol(\"FwStateOKPhysics\");
+    warning_min_input_flow.backCol(\"FwStateOKPhysics\"); 
+    //input_flow_text.backCol(\"FwStateOKPhysics\"); 
+  }  
+  
+  ///////////////////////////////////////////////////////////////////////////
+  
+  float Error_Diff_Flow;
+  Error_Diff_Flow = error_diff_flow.text;
+  
+  float Warning_Diff_Flow;
+  Warning_Diff_Flow = warning_diff_flow.text; 
+
+  if (Warning_Diff_Flow > Error_Diff_Flow){
+    error_diff_flow.backCol(\"FwAlarmFatalAck\");
+    warning_diff_flow.backCol(\"FwAlarmFatalAck\");
+    //diff_text.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (Warning_Diff_Flow == Error_Diff_Flow){
+    error_diff_flow.backCol(\"FwStateOKNotPhysics\");
+    warning_diff_flow.backCol(\"FwStateOKNotPhysics\");
+    //diff_text.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    error_diff_flow.backCol(\"FwStateOKPhysics\");
+    warning_diff_flow.backCol(\"FwStateOKPhysics\"); 
+    //diff_text.backCol(\"FwStateOKPhysics\"); 
+  }  
+  
+////////////////////////////////////////////////////////////////////////////
+  
+  if (Warning_Min_Input_Flow>Warning_Input_Flow){
+    warning_max_input_flow.backCol(\"FwAlarmFatalAck\");
+    warning_min_input_flow.backCol(\"FwAlarmFatalAck\");
+    //input_flow_text.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (Warning_Min_Input_Flow == Warning_Input_Flow) { 
+    warning_max_input_flow.backCol(\"FwStateOKNotPhysics\");
+    warning_min_input_flow.backCol(\"FwStateOKNotPhysics\");
+    //input_flow_text.backCol(\"FwStateOKNotPhysics\");
+  }
+ 
+////////////////////////////////////////////////////////////////////////////
+  
+  if (Error_Min_Input_Flow>Error_Input_Flow){
+    error_max_input_flow.backCol(\"FwAlarmFatalAck\");
+    error_min_input_flow.backCol(\"FwAlarmFatalAck\");
+    //input_flow_text.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (Error_Min_Input_Flow == Error_Input_Flow) { 
+    error_max_input_flow.backCol(\"FwStateOKNotPhysics\");
+    error_min_input_flow.backCol(\"FwStateOKNotPhysics\");
+    //input_flow_text.backCol(\"FwStateOKNotPhysics\");
+  }
+  
+}" 0
+ E E E
+2 24
+"total_alarm_flow"
+""
+1 50 191 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+24 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 191 175 211
+1 2 2 "0s" 0 0 0 64 0 0  50 191 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 10 Total Flow
+2 25
+"ar_ratio_alarm"
+""
+1 50 237 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+25 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 237 175 257
+1 2 2 "0s" 0 0 0 64 0 0  50 237 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 13 Ar Line Ratio
+2 26
+"co2_alarm_ratio"
+""
+1 50 270 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+26 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 270 175 290
+1 2 2 "0s" 0 0 0 64 0 0  50 270 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 14 CO2 Line Ratio
+2 27
+"cf4_alarm_ratio"
+""
+1 50 303 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+27 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 303 175 323
+1 2 2 "0s" 0 0 0 64 0 0  50 303 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 14 CF4 Line Ratio
+2 28
+"ar_alarm_pressure"
+""
+1 50 357 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+28 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 357 175 377
+1 2 2 "0s" 0 0 0 64 0 0  50 357 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 17 Ar Input Pressure
+2 29
+"co2_alarm_pressure"
+""
+1 50 389.5 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+29 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 389.5 175 409.5
+1 2 2 "0s" 0 0 0 64 0 0  50 389.5 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 18 CO2 Input Pressure
+2 30
+"cf4_alarm_pressure"
+""
+1 50 423 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+30 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 423 175 443
+1 2 2 "0s" 0 0 0 64 0 0  50 423 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 18 CF4 Input Pressure
+2 31
+"output_alarm_pressure"
+""
+1 50 477 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+31 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 477 175 497
+1 2 2 "0s" 0 0 0 64 0 0  50 477 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 15 Output Pressure
+2 32
+"main_alarm_flow"
+""
+1 50 510 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+32 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 510 175 530
+1 2 2 "0s" 0 0 0 64 0 0  50 510 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 15 Main Input Flow
+14 33
+"total_flow_warning_min"
+""
+1 193 188 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+33 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  191 189 242 219
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_Total_Flow.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_Total_Flow.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_Total_Flow.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 34
+"total_flow_warning_max"
+""
+1 257 188 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+34 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  255 189 306 219
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_Total_Flow.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_Total_Flow.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_Total_Flow.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 35
+"total_flow_error_min"
+""
+1 353 188 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+35 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  351 189 402 219
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_Total_Flow.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_Total_Flow.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_Total_Flow.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 36
+"total_flow_error_max"
+""
+1 417 188 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+36 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  415 189 466 219
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_Total_Flow.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_Total_Flow.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_Total_Flow.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 37
+"ar_warning_min"
+""
+1 193 234 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+37 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  191 235 242 265
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_Ar_Ratio.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_Ar_Ratio.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_Ar_Ratio.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 38
+"ar_warning_max"
+""
+1 257 234 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+38 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  255 235 306 265
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_Ar_Ratio.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_Ar_Ratio.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_Ar_Ratio.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 39
+"ar_error_min"
+""
+1 353 234 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+39 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  351 235 402 265
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_Ar_Ratio.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_Ar_Ratio.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_Ar_Ratio.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 40
+"ar_error_max"
+""
+1 417 234 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+40 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  415 235 466 265
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_Ar_Ratio.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_Ar_Ratio.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_Ar_Ratio.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 41
+"co2_warning_min"
+""
+1 193 267 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+41 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  191 268 242 298
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_CO2_Ratio.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_CO2_Ratio.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_CO2_Ratio.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 42
+"co2_warning_max"
+""
+1 257 267 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+42 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  255 268 306 298
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_CO2_Ratio.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_CO2_Ratio.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_CO2_Ratio.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 43
+"co2_error_min"
+""
+1 353 267 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+43 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  351 268 402 298
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_CO2_Ratio.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_CO2_Ratio.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_CO2_Ratio.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 44
+"co2_error_max"
+""
+1 417 267 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+44 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  415 268 466 298
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_CO2_Ratio.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_CO2_Ratio.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_CO2_Ratio.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 45
+"cf4_warning_min"
+""
+1 193 300 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+45 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  191 301 242 331
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_CF4_Ratio.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_CF4_Ratio.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_CF4_Ratio.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 46
+"cf4_warning_max"
+""
+1 257 300 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+46 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  255 301 306 331
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_CF4_Ratio.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_CF4_Ratio.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_CF4_Ratio.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 47
+"cf4_error_min"
+""
+1 353 300 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+47 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  351 301 402 331
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_CF4_Ratio.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_CF4_Ratio.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_CF4_Ratio.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 48
+"cf4_error_max"
+""
+1 417 300 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+48 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  415 301 466 331
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_CF4_Ratio.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_CF4_Ratio.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_CF4_Ratio.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 49
+"ar_pressure_warning_min"
+""
+1 193 354 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+49 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  191 355 242 385
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_Ar_Pressure.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_Ar_Pressure.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_Ar_Pressure.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 50
+"ar_pressure_warning_max"
+""
+1 257 354 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+50 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  255 355 306 385
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_Ar_Pressure.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_Ar_Pressure.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_Ar_Pressure.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 51
+"ar_pressure_error_min"
+""
+1 353 354 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+51 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  351 355 402 385
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_Ar_Pressure.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_Ar_Pressure.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_Ar_Pressure.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 52
+"ar_pressure_error_max"
+""
+1 417 354 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+52 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  415 355 466 385
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_Ar_Pressure.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_Ar_Pressure.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_Ar_Pressure.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 53
+"co2_pressure_warning_min"
+""
+1 193 387 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+53 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  191 388 242 418
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_CO2_Pressure.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_CO2_Pressure.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_CO2_Pressure.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 54
+"co2_pressure_warning_max"
+""
+1 257 387 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+54 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  255 388 306 418
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_CO2_Pressure.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_CO2_Pressure.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_CO2_Pressure.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 55
+"co2_pressure_error_min"
+""
+1 353 387 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+55 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  351 388 402 418
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_CO2_Pressure.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_CO2_Pressure.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_CO2_Pressure.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 56
+"co2_pressure_error_max"
+""
+1 417 387 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+56 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  415 388 466 418
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_CO2_Pressure.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_CO2_Pressure.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_CO2_Pressure.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 57
+"cf4_pressure_warning_min"
+""
+1 193 420 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+57 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  191 421 242 451
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_CF4_Pressure.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_CF4_Pressure.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_CF4_Pressure.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 58
+"cf4_pressure_warning_max"
+""
+1 257 420 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+58 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  255 421 306 451
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_CF4_Pressure.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_CF4_Pressure.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_CF4_Pressure.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 59
+"cf4_pressure_error_min"
+""
+1 353 420 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+59 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  351 421 402 451
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_Ar_Pressure.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_Ar_Pressure.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_Ar_Pressure.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 60
+"cf4_pressure_error_max"
+""
+1 417 420 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+60 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  415 421 466 451
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_CF4_Pressure.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_CF4_Pressure.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_CF4_Pressure.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 61
+"output_pressure_warning_min"
+""
+1 193 474 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+61 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  191 475 242 505
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_Output_Pressure.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_Output_Pressure.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_Output_Pressure.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 62
+"output_pressure_warning_max"
+""
+1 257 474 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+62 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  255 475 306 505
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_Output_Pressure.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_Output_Pressure.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_Output_Pressure.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 63
+"output_pressure_error_min"
+""
+1 353 474 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+63 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  351 475 402 505
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_Output_Pressure.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_Output_Pressure.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_Output_Pressure.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 64
+"output_pressure_error_max"
+""
+1 417 474 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+64 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  415 475 466 505
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_Output_Pressure.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_Output_Pressure.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_Output_Pressure.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 65
+"main_flow_warning_min"
+""
+1 193 507 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+65 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  191 508 242 538
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_Main_Flow.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_Main_Flow.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_Main_Flow.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 66
+"main_flow_warning_max"
+""
+1 257 507 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+66 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  255 508 306 538
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_Main_Flow.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_Main_Flow.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_Main_Flow.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 67
+"main_flow_error_min"
+""
+1 353 507 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+67 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  351 508 402 538
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_Main_Flow.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_Main_Flow.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_Main_Flow.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 68
+"main_flow_error_max"
+""
+1 417 507 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+68 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  415 508 466 538
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_Main_Flow.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_Main_Flow.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_Main_Flow.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+2 69
+"PRIMITIVE_TEXT7"
+""
+1 200 171 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+69 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 200 171 222 186
+0 2 2 "0s" 0 0 0 192 0 0  200 171 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 3 Min
+2 70
+"PRIMITIVE_TEXT8"
+""
+1 360 171 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+70 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 360 171 382 186
+0 2 2 "0s" 0 0 0 192 0 0  360 171 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 3 Min
+2 71
+"PRIMITIVE_TEXT9"
+""
+1 264 171 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+71 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 264 171 289 186
+0 2 2 "0s" 0 0 0 192 0 0  264 171 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 3 Max
+2 72
+"PRIMITIVE_TEXT10"
+""
+1 424 171 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+72 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 424 171 449 186
+0 2 2 "0s" 0 0 0 192 0 0  424 171 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 3 Max
+2 73
+"PRIMITIVE_TEXT11"
+""
+1 216 147 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+73 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 216 147 265 162
+0 2 2 "0s" 0 0 0 192 0 0  216 147 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 7 Warning
+2 74
+"PRIMITIVE_TEXT12"
+""
+1 387 147 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+74 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 387 147 418 162
+0 2 2 "0s" 0 0 0 192 0 0  387 147 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 5 Error
+13 75
+"set_mixer"
+""
+1 360 561 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E "///old configuration, only for backup
+
+
+
+
+// main()
+// {
+//   dpConnect(\"setTotalFlowWarningMin\",\"Warning_Total_Flow.Min_Flow\");
+//   dpConnect(\"setTotalFlowWarningMax\",\"Warning_Total_Flow.Max_Flow\");
+//   dpConnect(\"setTotalFlowErrorMin\",\"Error_Total_Flow.Min_Flow\");
+//   dpConnect(\"setTotalFlowErrorMax\",\"Error_Total_Flow.Max_Flow\");
+// 
+//   dpConnect(\"setArRatioWarningMin\",\"Warning_Ar_Ratio.Min_Flow\");
+//   dpConnect(\"setArRatioWarningMax\",\"Warning_Ar_Ratio.Max_Flow\");
+//   dpConnect(\"setArRatioErrorMin\",\"Error_Ar_Ratio.Min_Flow\");
+//   dpConnect(\"setArRatioErrorMax\",\"Error_Ar_Ratio.Max_Flow\");
+//   
+//   dpConnect(\"setCO2RatioWarningMin\",\"Warning_CO2_Ratio.Min_Flow\");
+//   dpConnect(\"setCO2RatioWarningMax\",\"Warning_CO2_Ratio.Max_Flow\");
+//   dpConnect(\"setCO2RatioErrorMin\",\"Error_CO2_Ratio.Min_Flow\");
+//   dpConnect(\"setCO2RatioErrorMax\",\"Error_CO2_Ratio.Max_Flow\"); 
+//   
+//   dpConnect(\"setCF4RatioWarningMin\",\"Warning_CF4_Ratio.Min_Flow\");
+//   dpConnect(\"setCF4RatioWarningMax\",\"Warning_CF4_Ratio.Max_Flow\");
+//   dpConnect(\"setCF4RatioErrorMin\",\"Error_CF4_Ratio.Min_Flow\");
+//   dpConnect(\"setCF4RatioErrorMax\",\"Error_CF4_Ratio.Max_Flow\");  
+//   
+//   dpConnect(\"setArPressureWarningMin\",\"Warning_Ar_Pressure.Min_Flow\");
+//   dpConnect(\"setArPressureWarningMax\",\"Warning_Ar_Pressure.Max_Flow\");
+//   dpConnect(\"setArPressureErrorMin\",\"Error_Ar_Pressure.Min_Flow\");
+//   dpConnect(\"setArPressureErrorMax\",\"Error_Ar_Pressure.Max_Flow\");  
+//  
+//   dpConnect(\"setCO2PressureWarningMin\",\"Warning_CO2_Pressure.Min_Flow\");
+//   dpConnect(\"setCO2PressureWarningMax\",\"Warning_CO2_Pressure.Max_Flow\");
+//   dpConnect(\"setCO2PressureErrorMin\",\"Error_CO2_Pressure.Min_Flow\");
+//   dpConnect(\"setCO2PressureErrorMax\",\"Error_CO2_Pressure.Max_Flow\");  
+//  
+//   dpConnect(\"setCF4PressureWarningMin\",\"Warning_CF4_Pressure.Min_Flow\");
+//   dpConnect(\"setCF4PressureWarningMax\",\"Warning_CF4_Pressure.Max_Flow\");
+//   dpConnect(\"setCF4PressureErrorMin\",\"Error_CF4_Pressure.Min_Flow\");
+//   dpConnect(\"setCF4PressureErrorMax\",\"Error_CF4_Pressure.Max_Flow\");  
+// 
+//   dpConnect(\"setOutputPressureWarningMin\",\"Warning_Output_Pressure.Min_Flow\");
+//   dpConnect(\"setOutputPressureWarningMax\",\"Warning_Output_Pressure.Max_Flow\");
+//   dpConnect(\"setOutputPressureErrorMin\",\"Error_Output_Pressure.Min_Flow\");
+//   dpConnect(\"setOutputPressureErrorMax\",\"Error_Output_Pressure.Max_Flow\");  
+//  
+//   dpConnect(\"setMainFlowWarningMin\",\"Warning_Main_Flow.Min_Flow\");
+//   dpConnect(\"setMainFlowWarningMax\",\"Warning_Main_Flow.Max_Flow\");
+//   dpConnect(\"setMainFlowErrorMin\",\"Error_Main_Flow.Min_Flow\");
+//   dpConnect(\"setMainFlowErrorMax\",\"Error_Main_Flow.Max_Flow\");  
+// }
+// 
+// setTotalFlowWarningMin(string dpe, anytype warning_min)
+// {
+//   int W_Min_TotalFlow;
+//   float warning_min;
+//   warning_min = total_flow_warning_min.text;
+//       
+//   W_Min_TotalFlow = dpSet(\"Warning_Total_Flow.Min_Flow\",warning_min);
+// }
+// 
+// setTotalFlowWarningMax(string dpe, anytype warning_max)
+// {
+//   int W_Max_TotalFlow;
+//   float warning_max;
+//   warning_max = total_flow_warning_max.text;
+//       
+//   W_Max_TotalFlow = dpSet(\"Warning_Total_Flow.Max_Flow\",warning_max);
+// }
+// 
+// setTotalFlowErrorMin(string dpe, anytype error_min)
+// {
+//   int E_Min_TotalFlow;
+//   float error_min;
+//   error_min = total_flow_error_min.text;
+//       
+//   E_Min_TotalFlow = dpSet(\"Error_Total_Flow.Min_Flow\",error_min);
+// }
+// 
+// setTotalFlowErrorMax(string dpe, anytype error_max)
+// {
+//   int E_Max_TotalFlow;
+//   float error_max;
+//   error_max = total_flow_error_max.text;
+//       
+//   E_Max_TotalFlow = dpSet(\"Error_Total_Flow.Max_Flow\",error_max);
+// }
+// 
+///////////////////////////////////////////////////////////////////////////
+// 
+// setArRatioWarningMin(string dpe, anytype warning_min)
+// {
+//   int W_Min_ArRatio;
+//   float warning_min;
+//   warning_min = ar_warning_min.text;
+//       
+//   W_Min_ArRatio = dpSet(\"Warning_Ar_Ratio.Min_Flow\",warning_min);
+// }
+// 
+// setArRatioWarningMax(string dpe, anytype warning_max)
+// {
+//   int W_Max_ArRatio;
+//   float warning_max;
+//   warning_max = ar_warning_max.text;
+//       
+//   W_Max_ArRatio = dpSet(\"Warning_Ar_Ratio.Max_Flow\",warning_max);
+// }
+// 
+// setArRatioErrorMin(string dpe, anytype error_min)
+// {
+//   int E_Min_ArRatio;
+//   float error_min;
+//   error_min = ar_error_min.text;
+//       
+//   E_Min_ArRatio = dpSet(\"Error_Ar_Ratio.Min_Flow\",error_min);
+// }
+// 
+// setArRatioErrorMax(string dpe, anytype error_max)
+// {
+//   int E_Max_ArRatio;
+//   float error_max;
+//   error_max = ar_error_max.text;
+//       
+//   E_Max_ArRatio = dpSet(\"Error_Ar_Ratio.Max_Flow\",error_max);
+// }
+// 
+//////////////////////////////////////////////////////////////////////////////
+// 
+// setCO2RatioWarningMin(string dpe, anytype warning_min)
+// {
+//   int W_Min_CO2Ratio;
+//   float warning_min;
+//   warning_min = co2_warning_min.text;
+//       
+//   W_Min_CO2Ratio = dpSet(\"Warning_CO2_Ratio.Min_Flow\",warning_min);
+// }
+// 
+// setCO2RatioWarningMax(string dpe, anytype warning_max)
+// {
+//   int W_Max_CO2Ratio;
+//   float warning_max;
+//   warning_max = co2_warning_max.text;
+//       
+//   W_Max_CO2Ratio = dpSet(\"Warning_CO2_Ratio.Max_Flow\",warning_max);
+// }
+// 
+// setCO2RatioErrorMin(string dpe, anytype error_min)
+// {
+//   int E_Min_CO2Ratio;
+//   float error_min;
+//   error_min = co2_error_min.text;
+//       
+//   E_Min_CO2Ratio = dpSet(\"Error_CO2_Ratio.Min_Flow\",error_min);
+// }
+// 
+// setCO2RatioErrorMax(string dpe, anytype error_max)
+// {
+//   int E_Max_CO2Ratio;
+//   float error_max;
+//   error_max = co2_error_max.text;
+//       
+//   E_Max_CO2Ratio = dpSet(\"Error_CO2_Ratio.Max_Flow\",error_max);
+// }
+// 
+//////////////////////////////////////////////////////////////////////////////
+// 
+// 
+// setCF4RatioWarningMin(string dpe, anytype warning_min)
+// {
+//   int W_Min_CF4Ratio;
+//   float warning_min;
+//   warning_min = cf4_warning_min.text;
+//       
+//   W_Min_CF4Ratio = dpSet(\"Warning_CF4_Ratio.Min_Flow\",warning_min);
+// }
+// 
+// setCF4RatioWarningMax(string dpe, anytype warning_max)
+// {
+//   int W_Max_CF4Ratio;
+//   float warning_max;
+//   warning_max = cf4_warning_max.text;
+//       
+//   W_Max_CF4Ratio = dpSet(\"Warning_CF4_Ratio.Max_Flow\",warning_max);
+// }
+// 
+// setCF4RatioErrorMin(string dpe, anytype error_min)
+// {
+//   int E_Min_CF4Ratio;
+//   float error_min;
+//   error_min = cf4_error_min.text;
+//       
+//   E_Min_CF4Ratio = dpSet(\"Error_CF4_Ratio.Min_Flow\",error_min);
+// }
+// 
+// setCF4RatioErrorMax(string dpe, anytype error_max)
+// {
+//   int E_Max_CF4Ratio;
+//   float error_max;
+//   error_max = cf4_error_max.text;
+//       
+//   E_Max_CF4Ratio = dpSet(\"Error_CF4_Ratio.Max_Flow\",error_max);
+// }
+// 
+//////////////////////////////////////////////////////////////////////////////
+// 
+// setArPressureWarningMin(string dpe, anytype warning_min)
+// {
+//   int W_Min_ArPressure;
+//   float warning_min;
+//   warning_min = ar_pressure_warning_min.text;
+//       
+//   W_Min_ArPressure = dpSet(\"Warning_Ar_Pressure.Min_Flow\",warning_min);
+// }
+// 
+// setArPressureWarningMax(string dpe, anytype warning_max)
+// {
+//   int W_Max_ArPressure;
+//   float warning_max;
+//   warning_max = ar_pressure_warning_max.text;
+//       
+//   W_Max_ArPressure = dpSet(\"Warning_Ar_Pressure.Max_Flow\",warning_max);
+// }
+// 
+// setArPressureErrorMin(string dpe, anytype error_min)
+// {
+//   int E_Min_ArPressure;
+//   float error_min;
+//   error_min = ar_pressure_error_min.text;
+//       
+//   E_Min_ArPressure = dpSet(\"Error_Ar_Pressure.Min_Flow\",error_min);
+// }
+// 
+// setArPressureErrorMax(string dpe, anytype error_max)
+// {
+//   int E_Max_ArPressure;
+//   float error_max;
+//   error_max = ar_pressure_error_max.text;
+//       
+//   E_Max_ArPressure = dpSet(\"Error_Ar_Pressure.Max_Flow\",error_max);
+// }
+// 
+//////////////////////////////////////////////////////////////////////////////
+// 
+// setCO2PressureWarningMin(string dpe, anytype warning_min)
+// {
+//   int W_Min_CO2Pressure;
+//   float warning_min;
+//   warning_min = co2_pressure_warning_min.text;
+//       
+//   W_Min_CO2Pressure = dpSet(\"Warning_CO2_Pressure.Min_Flow\",warning_min);
+// }
+// 
+// setCO2PressureWarningMax(string dpe, anytype warning_max)
+// {
+//   int W_Max_CO2Pressure;
+//   float warning_max;
+//   warning_max = co2_pressure_warning_max.text;
+//       
+//   W_Max_CO2Pressure = dpSet(\"Warning_CO2_Pressure.Max_Flow\",warning_max);
+// }
+// 
+// setCO2PressureErrorMin(string dpe, anytype error_min)
+// {
+//   int E_Min_CO2Pressure;
+//   float error_min;
+//   error_min = co2_pressure_error_min.text;
+//       
+//   E_Min_CO2Pressure = dpSet(\"Error_CO2_Pressure.Min_Flow\",error_min);
+// }
+// 
+// setCO2PressureErrorMax(string dpe, anytype error_max)
+// {
+//   int E_Max_CO2Pressure;
+//   float error_max;
+//   error_max = co2_pressure_error_max.text;
+//       
+//   E_Max_CO2Pressure = dpSet(\"Error_CO2_Pressure.Max_Flow\",error_max);
+// }
+// 
+//////////////////////////////////////////////////////////////////////////////
+// 
+// setCF4PressureWarningMin(string dpe, anytype warning_min)
+// {
+//   int W_Min_CF4Pressure;
+//   float warning_min;
+//   warning_min = cf4_pressure_warning_min.text;
+//       
+//   W_Min_CF4Pressure = dpSet(\"Warning_CF4_Pressure.Min_Flow\",warning_min);
+// }
+// 
+// setCF4PressureWarningMax(string dpe, anytype warning_max)
+// {
+//   int W_Max_CF4Pressure;
+//   float warning_max;
+//   warning_max = cf4_pressure_warning_max.text;
+//       
+//   W_Max_CF4Pressure = dpSet(\"Warning_CF4_Pressure.Max_Flow\",warning_max);
+// }
+// 
+// setCF4PressureErrorMin(string dpe, anytype error_min)
+// {
+//   int E_Min_CF4Pressure;
+//   float error_min;
+//   error_min = cf4_pressure_error_min.text;
+//       
+//   E_Min_CF4Pressure = dpSet(\"Error_CF4_Pressure.Min_Flow\",error_min);
+// }
+// 
+// setCF4PressureErrorMax(string dpe, anytype error_max)
+// {
+//   int E_Max_CF4Pressure;
+//   float error_max;
+//   error_max = cf4_pressure_error_max.text;
+//       
+//   E_Max_CF4Pressure = dpSet(\"Error_CF4_Pressure.Max_Flow\",error_max);
+// }
+// 
+//////////////////////////////////////////////////////////////////////////////
+// 
+// setOutputPressureWarningMin(string dpe, anytype warning_min)
+// {
+//   int W_Min_OutputPressure;
+//   float warning_min;
+//   warning_min = output_pressure_warning_min.text;
+//       
+//   W_Min_OutputPressure = dpSet(\"Warning_Output_Pressure.Min_Flow\",warning_min);
+// }
+// 
+// setOutputPressureWarningMax(string dpe, anytype warning_max)
+// {
+//   int W_Max_OutputPressure;
+//   float warning_max;
+//   warning_max = output_pressure_warning_max.text;
+//       
+//   W_Max_OutputPressure = dpSet(\"Warning_Output_Pressure.Max_Flow\",warning_max);
+// }
+// 
+// setOutputPressureErrorMin(string dpe, anytype error_min)
+// {
+//   int E_Min_OutputPressure;
+//   float error_min;
+//   error_min = output_pressure_error_min.text;
+//       
+//   E_Min_OutputPressure = dpSet(\"Error_Output_Pressure.Min_Flow\",error_min);
+// }
+// 
+// setOutputPressureErrorMax(string dpe, anytype error_max)
+// {
+//   int E_Max_OutputPressure;
+//   float error_max;
+//   error_max = output_pressure_error_max.text;
+//       
+//   E_Max_OutputPressure = dpSet(\"Error_Output_Pressure.Max_Flow\",error_max);
+// }
+// 
+//////////////////////////////////////////////////////////////////////////////
+// 
+// setMainFlowWarningMin(string dpe, anytype warning_min)
+// {
+//   int W_Min_MainFlow;
+//   float warning_min;
+//   warning_min = main_flow_warning_min.text;
+//       
+//   W_Min_MainFlow = dpSet(\"Warning_Main_Flow.Min_Flow\",warning_min);
+// }
+// 
+// setMainFlowWarningMax(string dpe, anytype warning_max)
+// {
+//   int W_Max_MainFlow;
+//   float warning_max;
+//   warning_max = main_flow_warning_max.text;
+//       
+//   W_Max_MainFlow = dpSet(\"Warning_Main_Flow.Max_Flow\",warning_max);
+// }
+// 
+// setMainFlowErrorMin(string dpe, anytype error_min)
+// {
+//   int E_Min_MainFlow;
+//   float error_min;
+//   error_min = main_flow_error_min.text;
+//       
+//   E_Min_MainFlow = dpSet(\"Error_Main_Flow.Min_Flow\",error_min);
+// }
+// 
+// setMainFlowErrorMax(string dpe, anytype error_max)
+// {
+//   int E_Max_MainFlow;
+//   float error_max;
+//   error_max = main_flow_error_max.text;
+//       
+//   E_Max_MainFlow = dpSet(\"Error_Main_Flow.Max_Flow\",error_max);
+// }
+// 
+//////////////////////////////////////////////////////////////////////////////
+// " 0
+
+75 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  358 554 462 588
+
+T 
+1
+LANG:1 3 Set
+"main()
+{
+  
+  dyn_string exceptionInfo;
+  bool answ;
+  fwGeneral_openMessagePanel(\"Do you really want to apply these limits?\", answ , exceptionInfo, \"Confirm\", false );
+  DebugTN(\"answer\",answ);
+  
+  if (answ)
+  {
+    applyChanges();
+  }
+}
+
+  
+void applyChanges()
+{ 
+  
+  
+ dyn_string limits = makeDynString(\"Warning_Total_Flow.Min_Flow\",
+                                   \"Warning_Total_Flow.Max_Flow\",
+                                   \"Error_Total_Flow.Min_Flow\",
+                                   \"Error_Total_Flow.Max_Flow\",
+                                   
+                                   \"Warning_Ar_Ratio.Min_Flow\",
+                                   \"Warning_Ar_Ratio.Max_Flow\",
+                                   \"Error_Ar_Ratio.Min_Flow\",
+                                   \"Error_Ar_Ratio.Max_Flow\",
+                                   
+                                   \"Warning_CO2_Ratio.Min_Flow\",
+                                   \"Warning_CO2_Ratio.Max_Flow\",
+                                   \"Error_CO2_Ratio.Min_Flow\",
+                                   \"Error_CO2_Ratio.Max_Flow\",
+                                   
+                                   \"Warning_CF4_Ratio.Min_Flow\",
+                                   \"Warning_CF4_Ratio.Max_Flow\",
+                                   \"Error_CF4_Ratio.Min_Flow\",
+                                   \"Error_CF4_Ratio.Max_Flow\",
+                                   
+                                   \"Warning_Ar_Pressure.Min_Flow\",
+                                   \"Warning_Ar_Pressure.Max_Flow\",
+                                   \"Error_Ar_Pressure.Min_Flow\",
+                                   \"Error_Ar_Pressure.Max_Flow\",
+                                   
+                                   \"Warning_CO2_Pressure.Min_Flow\",
+                                   \"Warning_CO2_Pressure.Max_Flow\",
+                                   \"Error_CO2_Pressure.Min_Flow\",
+                                   \"Error_CO2_Pressure.Max_Flow\",
+                                   
+                                   \"Warning_CF4_Pressure.Min_Flow\",
+                                   \"Warning_CF4_Pressure.Max_Flow\",
+                                   \"Error_CF4_Pressure.Min_Flow\",
+                                   \"Error_CF4_Pressure.Max_Flow\",
+                                   
+                                   \"Warning_Output_Pressure.Min_Flow\",
+                                   \"Warning_Output_Pressure.Max_Flow\",
+                                   \"Error_Output_Pressure.Min_Flow\",
+                                   \"Error_Output_Pressure.Max_Flow\",
+                                   
+                                   \"Warning_Main_Flow.Min_Flow\",
+                                   \"Warning_Main_Flow.Max_Flow\",
+                                   \"Error_Main_Flow.Min_Flow\",
+                                   \"Error_Main_Flow.Max_Flow\");
+ 
+ 
+  dyn_float data = makeDynFloat(total_flow_warning_min.text,
+                                total_flow_warning_max.text,
+                                total_flow_error_min.text,
+                                total_flow_error_max.text,
+                                
+                                ar_warning_min.text,
+                                ar_warning_max.text,
+                                ar_error_min.text,
+                                ar_error_max.text,
+                                
+                                co2_warning_min.text,
+                                co2_warning_max.text,
+                                co2_error_min.text,
+                                co2_error_max.text,
+                                
+                                cf4_warning_min.text,
+                                cf4_warning_max.text,
+                                cf4_error_min.text,
+                                cf4_error_max.text,
+                                
+                                ar_pressure_warning_min.text,
+                                ar_pressure_warning_max.text,
+                                ar_pressure_error_min.text,
+                                ar_pressure_error_max.text,
+                                
+                                co2_pressure_warning_min.text,
+                                co2_pressure_warning_max.text,
+                                co2_pressure_error_min.text,
+                                co2_pressure_error_max.text,
+                                
+                                cf4_pressure_warning_min.text,
+                                cf4_pressure_warning_max.text,
+                                cf4_pressure_error_min.text,
+                                cf4_pressure_error_max.text,
+                                
+                                output_pressure_warning_min.text,
+                                output_pressure_warning_max.text,
+                                output_pressure_error_min.text,
+                                output_pressure_error_max.text,
+                                
+                                main_flow_warning_min.text,
+                                main_flow_warning_max.text,
+                                main_flow_error_min.text,
+                                main_flow_error_max.text
+                                ); 
+
+  int numbers = dynlen(data);
+
+  for(int i=1; i<=numbers; i++){
+  
+   // DebugN(\"Valore = \", data[i]);  
+    dpSet(limits[i],data[i]);
+  }
+  
+ 
+
+  dyn_float limits_TotalFlow, limits_Ar_per, limits_CO2_per, limits_CF4_per, limits_Ar_p, limits_CO2_p, limits_CF4_p, limits_out_p, limits_main_flow;
+  dyn_string alerttext_flow, alerttext_per, alerttext_p, alertclass;
+  dyn_errClass err;
+  dyn_string exceptionInfo;
+  string alertPanel, alertHelp;
+  dyn_string summary, alertPanelParameters;
+  
+    limits_TotalFlow=makeDynFloat(data[3], data[1], data[2], data[4]);
+    limits_Ar_per=makeDynFloat(data[7], data[5], data[6], data[8]);
+    limits_CO2_per=makeDynFloat(data[11], data[9], data[10], data[12]);
+    limits_CF4_per = makeDynFloat(data[15], data[13], data[14], data[16]);
+    limits_Ar_p=makeDynFloat(data[19], data[17], data[18], data[20]);
+    limits_CO2_p=makeDynFloat(data[23], data[21], data[22], data[24]);
+    limits_CF4_p = makeDynFloat(data[27], data[25], data[26], data[28]);
+    limits_out_p=makeDynFloat(data[31], data[29], data[30], data[32]);
+    limits_main_flow=makeDynFloat(data[35], data[33], data[34], data[36]);
+    
+    alerttext_flow=makeDynString(\"Alert: too low total input flow - Call the GEM DOC (161558)\", \"Warning: low total input flow - Call the GEM DOC (161558)\", \"OK\", \"Warning: high total input flow - Call the GEM DOC (161558)\", \"Alert: too high total input flow - Call the GEM DOC (161558)\"); 
+    alerttext_per=makeDynString(\"Alert: too low percentage in mixture - Call the GEM DOC (161558)\", \"Warning: low total percentage in mixture - Call the GEM DOC (161558)\", \"OK\", \"Warning: high percentage in mixture - Call the GEM DOC (161558)\", \"Alert: too high percentage in mixture - Call the GEM DOC (161558)\"); 
+    alerttext_p=makeDynString(\"Alert: too low pressure - Call the GEM DOC (161558)\", \"Warning: low pressure - Call the GEM DOC (161558)\", \"OK\", \"Warning: high pressure - Call the GEM DOC (161558)\", \"Alert: too high pressure - Call the GEM DOC (161558)\"); 
+   
+   
+    alertclass=makeDynString(\"_fwErrorAck_70.\", \"_fwWarningAck_50.\", \"\",\"_fwWarningAck_50.\",\"_fwErrorAck_70.\");
+    
+  //  DebugN(\"limits Ch1 are = \", limits);    
+    
+      fwAlertConfig_deactivate(\"CMSGEM_Mx_TotalFlowAS.Value\", exceptionInfo);
+      fwAlertConfig_set(\"CMSGEM_Mx_TotalFlowAS.Value\", DPCONFIG_ALERT_NONBINARYSIGNAL, alerttext_flow, limits_TotalFlow, alertclass, summary, alertPanel, alertPanelParameters, alertHelp, exceptionInfo);   
+      fwAlertConfig_activate(\"CMSGEM_Mx_TotalFlowAS.Value\", exceptionInfo);
+
+      fwAlertConfig_deactivate(\"CMSGEM_Mx_L1CompRatioAS.Value\", exceptionInfo);
+      fwAlertConfig_set(\"CMSGEM_Mx_L1CompRatioAS.Value\", DPCONFIG_ALERT_NONBINARYSIGNAL, alerttext_per, limits_Ar_per, alertclass, summary, alertPanel, alertPanelParameters, alertHelp, exceptionInfo);   
+      fwAlertConfig_activate(\"CMSGEM_Mx_L1CompRatioAS.Value\", exceptionInfo);
+      
+      fwAlertConfig_deactivate(\"CMSGEM_Mx_L2CompRatioAS.Value\", exceptionInfo);
+      fwAlertConfig_set(\"CMSGEM_Mx_L2CompRatioAS.Value\", DPCONFIG_ALERT_NONBINARYSIGNAL, alerttext_per, limits_CO2_per, alertclass, summary, alertPanel, alertPanelParameters, alertHelp, exceptionInfo);   
+      fwAlertConfig_activate(\"CMSGEM_Mx_L2CompRatioAS.Value\", exceptionInfo);
+
+      fwAlertConfig_deactivate(\"CMSGEM_Mx_PT1103.Value\", exceptionInfo);
+      fwAlertConfig_set(\"CMSGEM_Mx_PT1103.Value\", DPCONFIG_ALERT_NONBINARYSIGNAL, alerttext_p, limits_Ar_p, alertclass, summary, alertPanel, alertPanelParameters, alertHelp, exceptionInfo);   
+      fwAlertConfig_activate(\"CMSGEM_Mx_PT1103.Value\", exceptionInfo);
+
+      fwAlertConfig_deactivate(\"CMSGEM_Mx_PT1203.Value\", exceptionInfo);
+      fwAlertConfig_set(\"CMSGEM_Mx_PT1203.Value\", DPCONFIG_ALERT_NONBINARYSIGNAL, alerttext_p, limits_CO2_p, alertclass, summary, alertPanel, alertPanelParameters, alertHelp, exceptionInfo);   
+      fwAlertConfig_activate(\"CMSGEM_Mx_PT1203.Value\", exceptionInfo);
+
+      fwAlertConfig_deactivate(\"CMSGEM_Mx_PT1009.Value\", exceptionInfo);
+      fwAlertConfig_set(\"CMSGEM_Mx_PT1009.Value\", DPCONFIG_ALERT_NONBINARYSIGNAL, alerttext_p, limits_out_p, alertclass, summary, alertPanel, alertPanelParameters, alertHelp, exceptionInfo);   
+      fwAlertConfig_activate(\"CMSGEM_Mx_PT1009.Value\", exceptionInfo);
+      
+      fwAlertConfig_deactivate(\"CMSGEM_Di_TotFlowAS.Value\", exceptionInfo);
+      fwAlertConfig_set(\"CMSGEM_Di_TotFlowAS.Value\", DPCONFIG_ALERT_NONBINARYSIGNAL, alerttext_flow, limits_main_flow, alertclass, summary, alertPanel, alertPanelParameters, alertHelp, exceptionInfo);   
+      fwAlertConfig_activate(\"CMSGEM_Di_TotFlowAS.Value\", exceptionInfo);
+
+      
+ if (mixture_box.text == \"Ar/CO2\"){
+      fwAlertConfig_deactivate(\"CMSGEM_Mx_L3CompRatioAS.Value\", exceptionInfo);
+      fwAlertConfig_deactivate(\"CMSGEM_Mx_PT1303.Value\", exceptionInfo);
+      
+      dpSet(\"Gas_Mixture.Value\",\"FALSE\");
+
+     }
+ else{
+      fwAlertConfig_deactivate(\"CMSGEM_Mx_L3CompRatioAS.Value\", exceptionInfo);
+      fwAlertConfig_set(\"CMSGEM_Mx_L3CompRatioAS.Value\", DPCONFIG_ALERT_NONBINARYSIGNAL, alerttext_per, limits_CF4_per, alertclass, summary, alertPanel, alertPanelParameters, alertHelp, exceptionInfo);   
+      fwAlertConfig_activate(\"CMSGEM_Mx_L3CompRatioAS.Value\", exceptionInfo);
+      
+      fwAlertConfig_deactivate(\"CMSGEM_Mx_PT1303.Value\", exceptionInfo);
+      fwAlertConfig_set(\"CMSGEM_Mx_PT1303.Value\", DPCONFIG_ALERT_NONBINARYSIGNAL, alerttext_p, limits_CF4_p, alertclass, summary, alertPanel, alertPanelParameters, alertHelp, exceptionInfo);   
+      fwAlertConfig_activate(\"CMSGEM_Mx_PT1303.Value\", exceptionInfo);
+      
+      dpSet(\"Gas_Mixture.Value\",\"TRUE\");
+      }
+
+ 
+   dyn_errClass err;
+
+  err = getLastError();
+  if (dynlen(err) > 0)
+    errorDialog(err);
+   
+    }
+
+" 0
+ E E E
+13 76
+"check_mixer"
+""
+1 48 561 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+76 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  46 554 150 588
+
+T 
+1
+LANG:1 5 Check
+"main()
+{
+ float total_flow_warning_MIN, total_flow_warning_MAX;
+ float total_flow_error_MIN, total_flow_error_MAX;
+ float ar_warning_MIN, ar_warning_MAX;
+ float ar_error_MIN, ar_error_MAX;
+ float co2_warning_MIN, co2_warning_MAX;
+ float co2_error_MIN, co2_error_MAX;
+ float cf4_warning_MIN, cf4_warning_MAX;
+ float cf4_error_MIN, cf4_error_MAX; 
+ float ar_pressure_warning_MIN, ar_pressure_warning_MAX;
+ float ar_pressure_error_MIN, ar_pressure_error_MAX;
+ float co2_pressure_warning_MIN, co2_pressure_warning_MAX;
+ float co2_pressure_error_MIN, co2_pressure_error_MAX;
+ float cf4_pressure_warning_MIN, cf4_pressure_warning_MAX;
+ float cf4_pressure_error_MIN, cf4_pressure_error_MAX;
+ float output_pressure_warning_MIN, output_pressure_warning_MAX;
+ float output_pressure_error_MIN, output_pressure_error_MAX;
+ float main_flow_warning_MIN, main_flow_warning_MAX;
+ float main_flow_error_MIN, main_flow_error_MAX;
+ 
+ total_flow_warning_MIN = total_flow_warning_min.text; 
+ total_flow_warning_MAX = total_flow_warning_max.text;
+ total_flow_error_MIN = total_flow_error_min.text; 
+ total_flow_error_MAX = total_flow_error_max.text;
+ ar_warning_MIN = ar_warning_min.text; 
+ ar_warning_MAX = ar_warning_max.text;
+ ar_error_MIN = ar_error_min.text; 
+ ar_error_MAX = ar_error_max.text;
+ co2_warning_MIN = co2_warning_min.text; 
+ co2_warning_MAX = co2_warning_max.text;
+ co2_error_MIN = co2_error_min.text; 
+ co2_error_MAX = co2_error_max.text;
+ cf4_warning_MIN = cf4_warning_min.text; 
+ cf4_warning_MAX = cf4_warning_max.text;
+ cf4_error_MIN = cf4_error_min.text; 
+ cf4_error_MAX = cf4_error_max.text; 
+ ar_pressure_warning_MIN = ar_pressure_warning_min.text; 
+ ar_pressure_warning_MAX = ar_pressure_warning_max.text;
+ ar_pressure_error_MIN = ar_pressure_error_min.text; 
+ ar_pressure_error_MAX = ar_pressure_error_max.text;
+ co2_pressure_warning_MIN = co2_pressure_warning_min.text; 
+ co2_pressure_warning_MAX = co2_pressure_warning_max.text;
+ co2_pressure_error_MIN = co2_pressure_error_min.text; 
+ co2_pressure_error_MAX = co2_pressure_error_max.text;
+ cf4_pressure_warning_MIN = cf4_pressure_warning_min.text; 
+ cf4_pressure_warning_MAX = cf4_pressure_warning_max.text;
+ cf4_pressure_error_MIN = cf4_pressure_error_min.text; 
+ cf4_pressure_error_MAX = cf4_pressure_error_max.text;
+ output_pressure_warning_MIN = output_pressure_warning_min.text; 
+ output_pressure_warning_MAX = output_pressure_warning_max.text;
+ output_pressure_error_MIN = output_pressure_error_min.text; 
+ output_pressure_error_MAX = output_pressure_error_max.text;
+ main_flow_warning_MIN = main_flow_warning_min.text; 
+ main_flow_warning_MAX = main_flow_warning_max.text;
+ main_flow_error_MIN = main_flow_error_min.text; 
+ main_flow_error_MAX = main_flow_error_max.text;
+ 
+ if (total_flow_warning_MIN > total_flow_warning_MAX){
+    //total_alarm_flow.backCol(\"FwAlarmFatalAck\");
+    total_flow_warning_min.backCol(\"FwAlarmFatalAck\");
+    total_flow_warning_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (total_flow_warning_MIN == total_flow_warning_MAX){
+    //total_alarm_flow.backCol(\"FwStateOKNotPhysics\");
+    total_flow_warning_min.backCol(\"FwStateOKNotPhysics\");
+    total_flow_warning_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //total_alarm_flow.backCol(\"FwStateOKPhysics\");
+    total_flow_warning_min.backCol(\"FwStateOKPhysics\"); 
+    total_flow_warning_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+  
+/////////////////////////////////////////////////////////////////////////////
+
+ if (total_flow_error_MIN > total_flow_error_MAX){
+    //total_alarm_flow.backCol(\"FwAlarmFatalAck\");
+    total_flow_error_min.backCol(\"FwAlarmFatalAck\");
+    total_flow_error_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (total_flow_error_MIN == total_flow_error_MAX){
+    //total_alarm_flow.backCol(\"FwStateOKNotPhysics\");
+    total_flow_error_min.backCol(\"FwStateOKNotPhysics\");
+    total_flow_error_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //total_alarm_flow.backCol(\"FwStateOKPhysics\");
+    total_flow_error_min.backCol(\"FwStateOKPhysics\"); 
+    total_flow_error_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+  
+  if (ar_warning_MIN > ar_warning_MAX){
+    //ar_ratio_alarm.backCol(\"FwAlarmFatalAck\");
+    ar_warning_min.backCol(\"FwAlarmFatalAck\");
+    ar_warning_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (ar_warning_MIN == ar_warning_MAX){
+    //ar_ratio_alarm.backCol(\"FwStateOKNotPhysics\");
+    ar_warning_min.backCol(\"FwStateOKNotPhysics\");
+    ar_warning_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //ar_ratio_alarm.backCol(\"FwStateOKPhysics\");
+    ar_warning_min.backCol(\"FwStateOKPhysics\"); 
+    ar_warning_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+  
+/////////////////////////////////////////////////////////////////////////////
+
+ if (ar_error_MIN > ar_error_MAX){
+    //ar_ratio_alarm.backCol(\"FwAlarmFatalAck\");
+    ar_error_min.backCol(\"FwAlarmFatalAck\");
+    ar_error_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (ar_error_MIN == ar_error_MAX){
+    //ar_ratio_alarm.backCol(\"FwStateOKNotPhysics\");
+    ar_error_min.backCol(\"FwStateOKNotPhysics\");
+    ar_error_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //ar_ratio_alarm.backCol(\"FwStateOKPhysics\");
+    ar_error_min.backCol(\"FwStateOKPhysics\"); 
+    ar_error_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+
+  if (co2_warning_MIN > co2_warning_MAX){
+    //co2_alarm_ratio.backCol(\"FwAlarmFatalAck\");
+    co2_warning_min.backCol(\"FwAlarmFatalAck\");
+    co2_warning_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (co2_warning_MIN == co2_warning_MAX){
+    //co2_alarm_ratio.backCol(\"FwStateOKNotPhysics\");
+    co2_warning_min.backCol(\"FwStateOKNotPhysics\");
+    co2_warning_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //co2_alarm_ratio.backCol(\"FwStateOKPhysics\");
+    co2_warning_min.backCol(\"FwStateOKPhysics\"); 
+    co2_warning_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+  
+/////////////////////////////////////////////////////////////////////////////
+
+ if (co2_error_MIN > co2_error_MAX){
+    //co2_alarm_ratio.backCol(\"FwAlarmFatalAck\");
+    co2_error_min.backCol(\"FwAlarmFatalAck\");
+    co2_error_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (co2_error_MIN == co2_error_MAX){
+    //co2_alarm_ratio.backCol(\"FwStateOKNotPhysics\");
+    co2_error_min.backCol(\"FwStateOKNotPhysics\");
+    co2_error_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //co2_alarm_ratio.backCol(\"FwStateOKPhysics\");
+    co2_error_min.backCol(\"FwStateOKPhysics\"); 
+    co2_error_max.backCol(\"FwStateOKPhysics\"); 
+  }
+
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+  
+  if (cf4_warning_MIN > cf4_warning_MAX){
+    //cf4_alarm_ratio.backCol(\"FwAlarmFatalAck\");
+    cf4_warning_min.backCol(\"FwAlarmFatalAck\");
+    cf4_warning_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (cf4_warning_MIN == cf4_warning_MAX){
+    //cf4_alarm_ratio.backCol(\"FwStateOKNotPhysics\");
+    cf4_warning_min.backCol(\"FwStateOKNotPhysics\");
+    cf4_warning_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //cf4_alarm_ratio.backCol(\"FwStateOKPhysics\");
+    cf4_warning_min.backCol(\"FwStateOKPhysics\"); 
+    cf4_warning_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+  
+/////////////////////////////////////////////////////////////////////////////
+
+ if (cf4_error_MIN > cf4_error_MAX){
+    //cf4_alarm_ratio.backCol(\"FwAlarmFatalAck\");
+    cf4_error_min.backCol(\"FwAlarmFatalAck\");
+    cf4_error_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (cf4_error_MIN == cf4_error_MAX){
+    //cf4_alarm_ratio.backCol(\"FwStateOKNotPhysics\");
+    cf4_error_min.backCol(\"FwStateOKNotPhysics\");
+    cf4_error_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //cf4_alarm_ratio.backCol(\"FwStateOKPhysics\");
+    cf4_error_min.backCol(\"FwStateOKPhysics\"); 
+    cf4_error_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+  
+  if (ar_pressure_warning_MIN > ar_pressure_warning_MAX){
+    //ar_alarm_pressure.backCol(\"FwAlarmFatalAck\");
+    ar_pressure_warning_min.backCol(\"FwAlarmFatalAck\");
+    ar_pressure_warning_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (ar_pressure_warning_MIN == ar_pressure_warning_MAX){
+    //ar_alarm_pressure.backCol(\"FwStateOKNotPhysics\");
+    ar_pressure_warning_min.backCol(\"FwStateOKNotPhysics\");
+    ar_pressure_warning_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //ar_alarm_pressure.backCol(\"FwStateOKPhysics\");
+    ar_pressure_warning_min.backCol(\"FwStateOKPhysics\"); 
+    ar_pressure_warning_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+  
+/////////////////////////////////////////////////////////////////////////////
+
+ if (ar_pressure_error_MIN > ar_pressure_error_MAX){
+    //ar_alarm_pressure.backCol(\"FwAlarmFatalAck\");
+    ar_pressure_error_min.backCol(\"FwAlarmFatalAck\");
+    ar_pressure_error_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (ar_pressure_error_MIN == ar_pressure_error_MAX){
+    //ar_alarm_pressure.backCol(\"FwStateOKNotPhysics\");
+    ar_pressure_error_min.backCol(\"FwStateOKNotPhysics\");
+    ar_pressure_error_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //ar_alarm_pressure.backCol(\"FwStateOKPhysics\");
+    ar_pressure_error_min.backCol(\"FwStateOKPhysics\"); 
+    ar_pressure_error_max.backCol(\"FwStateOKPhysics\"); 
+  } 
+ 
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+  
+  if (co2_pressure_warning_MIN > co2_pressure_warning_MAX){
+    //co2_alarm_pressure.backCol(\"FwAlarmFatalAck\");
+    co2_pressure_warning_min.backCol(\"FwAlarmFatalAck\");
+    co2_pressure_warning_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (co2_pressure_warning_MIN == co2_pressure_warning_MAX){
+    //co2_alarm_pressure.backCol(\"FwStateOKNotPhysics\");
+    co2_pressure_warning_min.backCol(\"FwStateOKNotPhysics\");
+    co2_pressure_warning_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //co2_alarm_pressure.backCol(\"FwStateOKPhysics\");
+    co2_pressure_warning_min.backCol(\"FwStateOKPhysics\"); 
+    co2_pressure_warning_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+  
+/////////////////////////////////////////////////////////////////////////////
+
+ if (co2_pressure_error_MIN > co2_pressure_error_MAX){
+    //co2_alarm_pressure.backCol(\"FwAlarmFatalAck\");
+    co2_pressure_error_min.backCol(\"FwAlarmFatalAck\");
+    co2_pressure_error_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (co2_pressure_error_MIN == co2_pressure_error_MAX){
+    //co2_alarm_pressure.backCol(\"FwStateOKNotPhysics\");
+    co2_pressure_error_min.backCol(\"FwStateOKNotPhysics\");
+    co2_pressure_error_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //co2_alarm_pressure.backCol(\"FwStateOKPhysics\");
+    co2_pressure_error_min.backCol(\"FwStateOKPhysics\"); 
+    co2_pressure_error_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+  
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+  
+  if (cf4_pressure_warning_MIN > cf4_pressure_warning_MAX){
+    //cf4_alarm_pressure.backCol(\"FwAlarmFatalAck\");
+    cf4_pressure_warning_min.backCol(\"FwAlarmFatalAck\");
+    cf4_pressure_warning_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (cf4_pressure_warning_MIN == cf4_pressure_warning_MAX){
+    //cf4_alarm_pressure.backCol(\"FwStateOKNotPhysics\");
+    cf4_pressure_warning_min.backCol(\"FwStateOKNotPhysics\");
+    cf4_pressure_warning_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //cf4_alarm_pressure.backCol(\"FwStateOKPhysics\");
+    cf4_pressure_warning_min.backCol(\"FwStateOKPhysics\"); 
+    cf4_pressure_warning_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+  
+/////////////////////////////////////////////////////////////////////////////
+
+ if (cf4_pressure_error_MIN > cf4_pressure_error_MAX){
+    //cf4_alarm_pressure.backCol(\"FwAlarmFatalAck\");
+    cf4_pressure_error_min.backCol(\"FwAlarmFatalAck\");
+    cf4_pressure_error_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (cf4_pressure_error_MIN == cf4_pressure_error_MAX){
+    //cf4_alarm_pressure.backCol(\"FwStateOKNotPhysics\");
+    cf4_pressure_error_min.backCol(\"FwStateOKNotPhysics\");
+    cf4_pressure_error_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //cf4_alarm_pressure.backCol(\"FwStateOKPhysics\");
+    cf4_pressure_error_min.backCol(\"FwStateOKPhysics\"); 
+    cf4_pressure_error_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+ 
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+  
+  if (output_pressure_warning_MIN > output_pressure_warning_MAX){
+    //output_alarm_pressure.backCol(\"FwAlarmFatalAck\");
+    output_pressure_warning_min.backCol(\"FwAlarmFatalAck\");
+    output_pressure_warning_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (output_pressure_warning_MIN == output_pressure_warning_MAX){
+    //output_alarm_pressure.backCol(\"FwStateOKNotPhysics\");
+    output_pressure_warning_min.backCol(\"FwStateOKNotPhysics\");
+    output_pressure_warning_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //output_alarm_pressure.backCol(\"FwStateOKPhysics\");
+    output_pressure_warning_min.backCol(\"FwStateOKPhysics\"); 
+    output_pressure_warning_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+  
+/////////////////////////////////////////////////////////////////////////////
+
+ if (output_pressure_error_MIN > output_pressure_error_MAX){
+    //output_alarm_pressure.backCol(\"FwAlarmFatalAck\");
+    output_pressure_error_min.backCol(\"FwAlarmFatalAck\");
+    output_pressure_error_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (output_pressure_error_MIN == output_pressure_error_MAX){
+    //output_alarm_pressure.backCol(\"FwStateOKNotPhysics\");
+    output_pressure_error_min.backCol(\"FwStateOKNotPhysics\");
+    output_pressure_error_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //output_alarm_pressure.backCol(\"FwStateOKPhysics\");
+    output_pressure_error_min.backCol(\"FwStateOKPhysics\"); 
+    output_pressure_error_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+  
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+  
+  if (main_flow_warning_MIN > main_flow_warning_MAX){
+    //main_alarm_flow.backCol(\"FwAlarmFatalAck\");
+    main_flow_warning_min.backCol(\"FwAlarmFatalAck\");
+    main_flow_warning_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (main_flow_warning_MIN == main_flow_warning_MAX){
+    //main_alarm_flow.backCol(\"FwStateOKNotPhysics\");
+    main_flow_warning_min.backCol(\"FwStateOKNotPhysics\");
+    main_flow_warning_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //main_alarm_flow.backCol(\"FwStateOKPhysics\");
+    main_flow_warning_min.backCol(\"FwStateOKPhysics\"); 
+    main_flow_warning_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+  
+/////////////////////////////////////////////////////////////////////////////
+
+ if (main_flow_error_MIN > main_flow_error_MAX){
+    //main_alarm_flow.backCol(\"FwAlarmFatalAck\");
+    main_flow_error_min.backCol(\"FwAlarmFatalAck\");
+    main_flow_error_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (main_flow_error_MIN == main_flow_error_MAX){
+    //main_alarm_flow.backCol(\"FwStateOKNotPhysics\");
+    main_flow_error_min.backCol(\"FwStateOKNotPhysics\");
+    main_flow_error_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //main_alarm_flow.backCol(\"FwStateOKPhysics\");
+    main_flow_error_min.backCol(\"FwStateOKPhysics\"); 
+    main_flow_error_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+  
+ //////////////////////////////////////////////////////////////////////////////
+ //////////////////////////////////////////////////////////////////////////////
+  
+if (mixture_box.text == \"Ar/CO2\"){
+    //cf4_alarm_ratio.enabled(0);
+    cf4_warning_min.enabled(0);
+    cf4_warning_max.enabled(0);
+    cf4_error_min.enabled(0);
+    cf4_error_max.enabled(0);
+    
+    //cf4_alarm_pressure.enabled(0);
+    cf4_pressure_warning_min.enabled(0);
+    cf4_pressure_warning_max.enabled(0);
+    cf4_pressure_error_min.enabled(0);
+    cf4_pressure_error_max.enabled(0);
+  }
+
+else{  
+  //cf4_alarm_ratio.enabled(1);
+    cf4_warning_min.enabled(1);
+    cf4_warning_max.enabled(1);
+    cf4_error_min.enabled(1);
+    cf4_error_max.enabled(1);
+    
+    //cf4_alarm_pressure.enabled(1);
+    cf4_pressure_warning_min.enabled(1);
+    cf4_pressure_warning_max.enabled(1);
+    cf4_pressure_error_min.enabled(1);
+    cf4_pressure_error_max.enabled(1);
+  }
+///////////////////////////////////////////////////////////////////////////////    
+  
+}" 0
+ E E E
+22 77
+"mixture_box"
+""
+1 530 190 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+77 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  195 110 328 138
+2
+1
+LANG:1 6 Ar/CO2
+
+0
+1
+LANG:1 10 Ar/CO2/CF4
+
+0
+
+"main()
+{
+  dpConnect(\"setGasMixture\",\"Gas_Mixture.Value\");  
+}
+
+setGasMixture(string dpe, anytype gas_mixture)
+{
+  string gas_mixture;
+  gas_mixture = this.text;
+  if (gas_mixture == \"Ar/CO2\")
+      dpSet(\"Gas_Mixture.Value\",\"FALSE\");
+  if (gas_mixture == \"Ar/CO2/CF4\")
+      dpSet(\"Gas_Mixture.Value\",\"TRUE\");
+}
+" 0
+
+E
+E
+ 1 0
+2 79
+"mixture_text"
+""
+1 50 112 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+79 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 112 175 132
+1 2 2 "0s" 0 0 0 64 0 0  50 112 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 7 Mixture
+2 80
+"pt6122_text"
+""
+1 50 691 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+80 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 691 175 711
+1 2 2 "0s" 0 0 0 64 0 0  50 691 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 23 Input Pressure (PT6122)
+2 81
+"pt6124_text"
+""
+1 50 723.5 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+81 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 723.5 175 743.5
+1 2 2 "0s" 0 0 0 64 0 0  50 723.5 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 23 Input Pressure (PT6124)
+2 82
+"regulator_text"
+""
+1 50 757 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+82 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 757 175 777
+1 2 2 "0s" 0 0 0 64 0 0  50 757 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 12 Reg Pressure
+14 83
+"pt6122_warning_min"
+""
+1 193 688 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+83 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  191 689 242 719
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_PT6122.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_PT6122.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_PT6122.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 84
+"pt6122_warning_max"
+""
+1 257 688 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+84 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  255 689 306 719
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_PT6122.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_PT6122.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_PT6122.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 85
+"pt6122_error_min"
+""
+1 353 688 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+85 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  351 689 402 719
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_PT6122.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_PT6122.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_PT6122.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 86
+"pt6122_error_max"
+""
+1 417 686 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+86 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  415 687 466 717
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_PT6122.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_PT6122.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_PT6122.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 87
+"pt6124_warning_min"
+""
+1 193 721 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+87 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  191 722 242 752
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_PT6124.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_PT6124.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_PT6124.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 88
+"pt6124_warning_max"
+""
+1 257 721 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+88 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  255 722 306 752
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_PT6124.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_PT6124.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_PT6124.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 89
+"pt6124_error_min"
+""
+1 353 721 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+89 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  351 722 402 752
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_PT6124.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_PT6124.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_PT6124.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 90
+"pt6124_error_max"
+""
+1 417 721 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+90 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  415 722 466 752
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_PT6124.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_PT6124.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_PT6124.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 91
+"regulator_warning_min"
+""
+1 193 754 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+91 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  191 755 242 785
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_Regulator.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_Regulator.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_Regulator.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 92
+"regulator_warning_max"
+""
+1 257 754 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+92 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  255 755 306 785
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_Regulator.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_Regulator.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_Regulator.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 93
+"regulator_error_min"
+""
+1 353 754 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+93 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  351 755 402 785
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_Regulator.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_Regulator.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_Regulator.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 94
+"regulator_error_max"
+""
+1 417 754 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+94 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  415 755 466 785
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_Regulator.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_Regulator.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_Regulator.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+2 95
+"PRIMITIVE_TEXT18"
+""
+1 195 669 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+95 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 195 669 217 684
+0 2 2 "0s" 0 0 0 192 0 0  195 669 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 3 Min
+2 96
+"PRIMITIVE_TEXT19"
+""
+1 355 669 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+96 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 355 669 377 684
+0 2 2 "0s" 0 0 0 192 0 0  355 669 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 3 Min
+2 97
+"PRIMITIVE_TEXT20"
+""
+1 259 669 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+97 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 259 669 284 684
+0 2 2 "0s" 0 0 0 192 0 0  259 669 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 3 Max
+2 98
+"PRIMITIVE_TEXT21"
+""
+1 419 669 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+98 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 419 669 444 684
+0 2 2 "0s" 0 0 0 192 0 0  419 669 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 3 Max
+2 99
+"PRIMITIVE_TEXT22"
+""
+1 211 645 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+99 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 211 645 260 660
+0 2 2 "0s" 0 0 0 192 0 0  211 645 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 7 Warning
+2 100
+"PRIMITIVE_TEXT23"
+""
+1 382 645 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+100 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 382 645 413 660
+0 2 2 "0s" 0 0 0 192 0 0  382 645 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 5 Error
+13 101
+"set_rack"
+""
+1 360 841 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+101 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  358 834 462 868
+
+T 
+1
+LANG:1 3 Set
+"main()
+{
+  
+  dyn_string exceptionInfo;
+  bool answ;
+  fwGeneral_openMessagePanel(\"Do you really want to apply these limits?\", answ , exceptionInfo, \"Confirm\", false );
+  DebugTN(\"answer\",answ);
+  
+  if (answ)
+  {
+    applyChanges();
+  }
+}
+
+  
+ void applyChanges() 
+ {
+  
+ dyn_string limits = makeDynString(\"Warning_PT6122.Max_Flow\",
+                                   \"Warning_PT6122.Min_Flow\",
+                                   \"Warning_PT6124.Max_Flow\",
+                                   \"Warning_PT6124.Min_Flow\",
+                                   \"Warning_Regulator.Max_Flow\",
+                                   \"Warning_Regulator.Min_Flow\",
+                                   \"Warning_Channel.Max_Flow\",
+                                   \"Warning_Channel.Min_Flow\",
+                                   \"Error_PT6122.Max_Flow\",
+                                   \"Error_PT6122.Min_Flow\",
+                                   \"Error_PT6124.Max_Flow\",
+                                   \"Error_PT6124.Min_Flow\",
+                                   \"Error_Regulator.Max_Flow\",
+                                   \"Error_Regulator.Min_Flow\",
+                                   \"Error_Channel.Max_Flow\",
+                                   \"Error_Channel.Min_Flow\");
+ 
+  dyn_float data = makeDynFloat(pt6122_warning_max.text,
+                                pt6122_warning_min.text,
+                                pt6124_warning_max.text,
+                                pt6124_warning_min.text,
+                                regulator_warning_max.text,
+                                regulator_warning_min.text,
+                                channel_warning_max.text,
+                                channel_warning_min.text,
+                                pt6122_error_max.text,
+                                pt6122_error_min.text,
+                                pt6124_error_max.text,
+                                pt6124_error_min.text,
+                                regulator_error_max.text,
+                                regulator_error_min.text,
+                                channel_error_max.text,
+                                channel_error_min.text); 
+
+  int numbers = dynlen(data);
+
+  for(int i=1; i<=numbers; i++){
+  
+   // DebugN(\"Valore = \", data[i]);  
+    dpSet(limits[i],data[i]);
+  }
+  
+  
+   dyn_float limits_PT6124, limits_PT6122, limits_PT6125, limits_PT6104;
+  dyn_string alerttext, alertclass;
+//  dyn_bool limitsincl;
+  dyn_errClass err;
+//  string color;
+  dyn_string exceptionInfo;
+  string alertPanel, alertHelp;
+  dyn_string summary, alertPanelParameters;
+  
+    limits_PT6124=makeDynFloat(data[12],data[4],data[3], data[11]);
+    limits_PT6122=makeDynFloat(data[10],data[2],data[1], data[9]);
+    limits_PT6125=makeDynFloat(data[14],data[6],data[5], data[13]);
+    limits_PT6104=makeDynFloat(data[16],data[8],data[7], data[15]);
+    
+    alerttext=makeDynString(\"Alert: too low pressure - Call the GEM DOC (161558)\", \"Warning: low pressure - Call the GEM DOC (161558)\", \"OK\", \"Warning: high pressure - Call the GEM DOC (161558)\", \"Alert: too high pressure - Call the GEM DOC (161558)\"); 
+    alertclass=makeDynString(\"_fwErrorAck_70.\", \"_fwWarningAck_50.\", \"\",\"_fwWarningAck_50.\",\"_fwErrorAck_70.\");
+    
+  //  DebugN(\"limits Ch1 are = \", limits);    
+    
+      fwAlertConfig_deactivate(\"CMSGEM_Di_PT6124.Value\", exceptionInfo);
+      fwAlertConfig_set(\"CMSGEM_Di_PT6124.Value\", DPCONFIG_ALERT_NONBINARYSIGNAL, alerttext, limits_PT6124, alertclass, summary, alertPanel, alertPanelParameters, alertHelp, exceptionInfo);   
+      fwAlertConfig_activate(\"CMSGEM_Di_PT6124.Value\", exceptionInfo);
+
+      fwAlertConfig_deactivate(\"CMSGEM_Di_PT6122.Value\", exceptionInfo);
+      fwAlertConfig_set(\"CMSGEM_Di_PT6122.Value\", DPCONFIG_ALERT_NONBINARYSIGNAL, alerttext, limits_PT6122, alertclass, summary, alertPanel, alertPanelParameters, alertHelp, exceptionInfo);   
+      fwAlertConfig_activate(\"CMSGEM_Di_PT6122.Value\", exceptionInfo);
+ 
+      fwAlertConfig_deactivate(\"CMSGEM_Di_PT6125.Value\", exceptionInfo);
+      fwAlertConfig_set(\"CMSGEM_Di_PT6125.Value\", DPCONFIG_ALERT_NONBINARYSIGNAL, alerttext, limits_PT6125, alertclass, summary, alertPanel, alertPanelParameters, alertHelp, exceptionInfo);   
+      fwAlertConfig_activate(\"CMSGEM_Di_PT6125.Value\", exceptionInfo);
+ 
+      fwAlertConfig_deactivate(\"CMSGEM_Di_PT6104.Value\", exceptionInfo);
+      fwAlertConfig_set(\"CMSGEM_Di_PT6104.Value\", DPCONFIG_ALERT_NONBINARYSIGNAL, alerttext, limits_PT6104, alertclass, summary, alertPanel, alertPanelParameters, alertHelp, exceptionInfo);   
+      fwAlertConfig_activate(\"CMSGEM_Di_PT6104.Value\", exceptionInfo);
+
+  err = getLastError();
+  if (dynlen(err) > 0)
+    errorDialog(err);
+    
+    
+      
+ 
+  
+  
+  
+}" 0
+ E E E
+13 102
+"check_rack"
+""
+1 44 841 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+102 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  42 834 146 868
+
+T 
+1
+LANG:1 5 Check
+"main()
+{
+  float pt6122_warning_MIN, pt6122_warning_MAX;   
+  float pt6122_error_MIN, pt6122_error_MAX;
+  float pt6124_warning_MIN, pt6124_warning_MAX;
+  float pt6124_error_MIN, pt6124_error_MAX;
+  float regulator_warning_MIN, regulator_warning_MAX;
+  float regulator_error_MIN, regulator_error_MAX;
+  float channel_warning_MIN, channel_warning_MAX;
+  float channel_error_MIN, channel_error_MAX;
+  
+  pt6122_warning_MIN = pt6122_warning_min.text;
+  pt6122_warning_MAX = pt6122_warning_max.text;
+  pt6122_error_MIN = pt6122_error_min.text;
+  pt6122_error_MAX = pt6122_error_max.text; 
+  pt6124_warning_MIN = pt6124_warning_min.text;
+  pt6124_warning_MAX = pt6124_warning_max.text;
+  pt6124_error_MIN = pt6124_error_min.text;
+  pt6124_error_MAX = pt6124_error_max.text; 
+  regulator_warning_MIN = regulator_warning_min.text;
+  regulator_warning_MAX = regulator_warning_max.text;
+  regulator_error_MIN = regulator_error_min.text;
+  regulator_error_MAX = regulator_error_max.text; 
+  channel_warning_MIN = channel_warning_min.text;
+  channel_warning_MAX = channel_warning_max.text;
+  channel_error_MIN = channel_error_min.text;
+  channel_error_MAX = channel_error_max.text; 
+ 
+  
+  if (pt6122_warning_MIN > pt6122_warning_MAX){
+    //pt6122_text.backCol(\"FwAlarmFatalAck\");
+    pt6122_warning_min.backCol(\"FwAlarmFatalAck\");
+    pt6122_warning_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (pt6122_warning_MIN == pt6122_warning_MAX){
+    //pt6122_text.backCol(\"FwStateOKNotPhysics\");
+    pt6122_warning_min.backCol(\"FwStateOKNotPhysics\");
+    pt6122_warning_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //pt6122_text.backCol(\"FwStateOKPhysics\");
+    pt6122_warning_min.backCol(\"FwStateOKPhysics\"); 
+    pt6122_warning_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+
+////////////////////////////////////////////////////////////////////
+
+  if (pt6122_error_MIN > pt6122_error_MAX){
+    //pt6122_text.backCol(\"FwAlarmFatalAck\");
+    pt6122_error_min.backCol(\"FwAlarmFatalAck\");
+    pt6122_error_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (pt6122_error_MIN == pt6122_error_MAX){
+    //pt6122_text.backCol(\"FwStateOKNotPhysics\");
+    pt6122_error_min.backCol(\"FwStateOKNotPhysics\");
+    pt6122_error_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //pt6122_text.backCol(\"FwStateOKPhysics\");
+    pt6122_error_min.backCol(\"FwStateOKPhysics\"); 
+    pt6122_error_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+  
+  
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+  if (pt6124_warning_MIN > pt6124_warning_MAX){
+    //pt6124_text.backCol(\"FwAlarmFatalAck\");
+    pt6124_warning_min.backCol(\"FwAlarmFatalAck\");
+    pt6124_warning_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (pt6124_warning_MIN == pt6124_warning_MAX){
+    //pt6124_text.backCol(\"FwStateOKNotPhysics\");
+    pt6124_warning_min.backCol(\"FwStateOKNotPhysics\");
+    pt6124_warning_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //pt6124_text.backCol(\"FwStateOKPhysics\");
+    pt6124_warning_min.backCol(\"FwStateOKPhysics\"); 
+    pt6124_warning_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+
+////////////////////////////////////////////////////////////////////
+
+  if (pt6124_error_MIN > pt6124_error_MAX){
+    //pt6124_text.backCol(\"FwAlarmFatalAck\");
+    pt6124_error_min.backCol(\"FwAlarmFatalAck\");
+    pt6124_error_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (pt6124_error_MIN == pt6124_error_MAX){
+    //pt6124_text.backCol(\"FwStateOKNotPhysics\");
+    pt6124_error_min.backCol(\"FwStateOKNotPhysics\");
+    pt6124_error_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //pt6124_text.backCol(\"FwStateOKPhysics\");
+    pt6124_error_min.backCol(\"FwStateOKPhysics\"); 
+    pt6124_error_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+  if (regulator_warning_MIN > regulator_warning_MAX){
+    //regulator_text.backCol(\"FwAlarmFatalAck\");
+    regulator_warning_min.backCol(\"FwAlarmFatalAck\");
+    regulator_warning_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (regulator_warning_MIN == regulator_warning_MAX){
+    //regulator_text.backCol(\"FwStateOKNotPhysics\");
+    regulator_warning_min.backCol(\"FwStateOKNotPhysics\");
+    regulator_warning_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //regulator_text.backCol(\"FwStateOKPhysics\");
+    regulator_warning_min.backCol(\"FwStateOKPhysics\"); 
+    regulator_warning_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+
+////////////////////////////////////////////////////////////////////
+
+  if (regulator_error_MIN > regulator_error_MAX){
+    //regulator_text.backCol(\"FwAlarmFatalAck\");
+    regulator_error_min.backCol(\"FwAlarmFatalAck\");
+    regulator_error_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (regulator_error_MIN == regulator_error_MAX){
+    //regulator_text.backCol(\"FwStateOKNotPhysics\");
+    regulator_error_min.backCol(\"FwStateOKNotPhysics\");
+    regulator_error_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //regulator_text.backCol(\"FwStateOKPhysics\");
+    regulator_error_min.backCol(\"FwStateOKPhysics\"); 
+    regulator_error_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+ 
+ 
+ if (channel_warning_MIN > channel_warning_MAX){
+    //channel_text.backCol(\"FwAlarmFatalAck\");
+    channel_warning_min.backCol(\"FwAlarmFatalAck\");
+    channel_warning_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (channel_warning_MIN == channel_warning_MAX){
+    //channel_text.backCol(\"FwStateOKNotPhysics\");
+    channel_warning_min.backCol(\"FwStateOKNotPhysics\");
+    channel_warning_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //channel_text.backCol(\"FwStateOKPhysics\");
+    channel_warning_min.backCol(\"FwStateOKPhysics\"); 
+    channel_warning_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+
+////////////////////////////////////////////////////////////////////
+
+  if (channel_error_MIN > channel_error_MAX){
+    //channel_text.backCol(\"FwAlarmFatalAck\");
+    channel_error_min.backCol(\"FwAlarmFatalAck\");
+    channel_error_max.backCol(\"FwAlarmFatalAck\");
+  }
+  else if (channel_error_MIN == channel_error_MAX){
+    //channel_text.backCol(\"FwStateOKNotPhysics\");
+    channel_error_min.backCol(\"FwStateOKNotPhysics\");
+    channel_error_max.backCol(\"FwStateOKNotPhysics\");
+  }
+  else{
+    //channel_text.backCol(\"FwStateOKPhysics\");
+    channel_error_min.backCol(\"FwStateOKPhysics\"); 
+    channel_error_max.backCol(\"FwStateOKPhysics\"); 
+  }  
+ 
+}" 0
+ E E E
+2 103
+"PRIMITIVE_TEXT24"
+""
+1 710 669 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+103 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 710 669 732 684
+0 2 2 "0s" 0 0 0 192 0 0  710 669 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 3 Min
+2 104
+"PRIMITIVE_TEXT25"
+""
+1 870 669 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+104 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 870 669 892 684
+0 2 2 "0s" 0 0 0 192 0 0  870 669 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 3 Min
+2 105
+"PRIMITIVE_TEXT26"
+""
+1 774 669 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+105 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 774 669 799 684
+0 2 2 "0s" 0 0 0 192 0 0  774 669 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 3 Max
+2 106
+"PRIMITIVE_TEXT27"
+""
+1 934 669 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+106 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 934 669 959 684
+0 2 2 "0s" 0 0 0 192 0 0  934 669 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 3 Max
+2 107
+"PRIMITIVE_TEXT28"
+""
+1 726 645 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+107 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 726 645 775 660
+0 2 2 "0s" 0 0 0 192 0 0  726 645 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 7 Warning
+2 108
+"PRIMITIVE_TEXT29"
+""
+1 897 645 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+108 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 897 645 928 660
+0 2 2 "0s" 0 0 0 192 0 0  897 645 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 5 Error
+2 109
+"PRIMITIVE_TEXT30"
+""
+1 50 793 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+109 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 793 175 813
+1 2 2 "0s" 0 0 0 64 0 0  50 793 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 1
+LANG:1 11 Ch Pressure
+14 110
+"channel_warning_min"
+""
+1 193 790 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+110 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  191 791 242 821
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_Channel.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_Channel.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_Channel.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 111
+"channel_warning_max"
+""
+1 257 790 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+111 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  255 791 306 821
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Warning_Channel.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Warning_Channel.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Warning_Channel.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 112
+"channel_error_min"
+""
+1 353 790 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+112 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  351 791 402 821
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_Channel.Min_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_Channel.Min_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_Channel.Min_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 113
+"channel_error_max"
+""
+1 417 790 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+113 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  415 791 466 821
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Error_Channel.Max_Flow:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Error_Channel.Max_Flow:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Error_Channel.Max_Flow}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+13 114
+"activate_basic_button"
+""
+1 30 24 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+114 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  28 8 222 52
+
+T 
+1
+LANG:1 29 Activate Basic Alarm Handling
+"main()
+{
+  
+  dyn_string exceptionInfo;
+  bool answ;
+  fwGeneral_openMessagePanel(\"Do you really want to activate the basic alarm handling?\", answ , exceptionInfo, \"Confirm\", false );
+  DebugTN(\"answer\",answ);
+  
+  if (answ)
+  {
+    applyChanges();
+  }
+}
+
+  
+void applyChanges()
+{
+  
+//  dyn_string variables = makeDynString(\"CMSGEM_Gs_GsStepWS.Value\",
+//                                       \"CMSGEM_Mx_StepperWS.Value\",
+//                                       \"CMSGEM_Di_Rack61StepWS.Value\"                                      
+//                                       );  
+
+ dyn_string exc; 
+ 
+ dyn_mixed alarmObjectGas, alarmObjectMixer, alarmObjectRack;
+ 
+   fwAlertConfig_objectCreateDiscrete(
+         alarmObjectGas,
+         makeDynString(\"Run\",\"Stop\",\"Fill start-up\",\"Filling\",\"Run Start-Up\",\"Purge Start-Up\", \"Purging\", \"Recuperation Start-Up\", \"Recuperating\" ),
+         makeDynString(\"*\",\"100\",\"26-32\",\"33-34\",\"16-24\",\"1-5\",\"6\",\"7-14\",\"15\"),
+         makeDynString(\"\",\"_fwErrorAck.\",\"_fwWarningAck.\",\"_fwWarningAck.\",\"_fwWarningAck.\",\"_fwWarningAck.\",\"_fwWarningAck.\",\"_fwWarningAck.\",\"_fwWarningAck.\"),
+         \"\",         
+         makeDynString(\"\"),
+         \"\",
+         false,
+         makeDynBool(0,0,0,0,0,0,0,0,0),
+         \"\",
+         makeDynString(\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"),
+         exc
+       );
+
+   fwAlertConfig_objectSet(\"CMSGEM_Gs_GsStepWS.Value\",alarmObjectGas,exc);
+   fwAlertConfig_activate(\"CMSGEM_Gs_GsStepWS.Value\",exc);
+
+   
+   
+   fwAlertConfig_objectCreateDiscrete(
+         alarmObjectMixer,
+         makeDynString(\"Run\",\"Stop\",\"Run/U\",\"RunHalt\",\"Fill/U\",\"Fill\", \"Purge/U\", \"Purge\", \"Direct/U\",\"Direct/S\" ),
+         makeDynString(\"*\",\"1\",\"4,8\",\"14\",\"2,6\",\"10\",\"3,7\",\"11\",\"5,9\", \"13\"),
+         makeDynString(\"\",\"_fwErrorAck.\",\"_fwWarningAck.\",\"_fwWarningAck.\",\"_fwWarningAck.\",\"_fwWarningAck.\",\"_fwWarningAck.\",\"_fwWarningAck.\",\"_fwWarningAck.\",\"_fwWarningAck.\"),
+         \"\",         
+         makeDynString(\"\"),
+         \"\",
+         false,
+         makeDynBool(0,0,0,0,0,0,0,0,0,0),
+         \"\",
+         makeDynString(\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"),
+         exc
+       );
+
+   fwAlertConfig_objectSet(\"CMSGEM_Mx_StepperWS.Value\",alarmObjectMixer,exc);
+   fwAlertConfig_activate(\"CMSGEM_Mx_StepperWS.Value\",exc);
+
+   
+   fwAlertConfig_objectCreateDiscrete(
+         alarmObjectRack,
+         makeDynString(\"Run\",\"Stop\",\"Run/Starting\",\"Run/Not Ready\",\"Individual Purge/Starting\",\"Individual Purge/Ready\", \"Common Purge/Starting\", \"Common Purge/Ready\"),
+         makeDynString(\"35\",\"1\",\"25,27\",\"30\",\"5,7\",\"10\",\"15,17\",\"20\"),
+         makeDynString(\"\",\"_fwErrorAck.\",\"_fwWarningAck.\",\"_fwWarningAck.\",\"_fwWarningAck.\",\"_fwWarningAck.\",\"_fwWarningAck.\",\"_fwWarningAck.\"),
+         \"\",         
+         makeDynString(\"\"),
+         \"\",
+         false,
+         makeDynBool(0,0,0,0,0,0,0,0),
+         \"\",
+         makeDynString(\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"),
+         exc
+       );
+
+   fwAlertConfig_objectSet(\"CMSGEM_Di_Rack61StepWS.Value\",alarmObjectRack,exc);
+   fwAlertConfig_activate(\"CMSGEM_Di_Rack61StepWS.Value\",exc);
+
+   
+ }
+
+// 
+// 
+// 
+// 
+// 
+//  
+//  dpConnect(\"setAlarm\",variables);
+//    
+// }
+// 
+// setAlarm(dyn_string variables, dyn_float a)
+// {
+// 
+//     
+//   
+//   
+//   
+//   
+//   
+//   dyn_float channels, differences;
+// 
+//   for(int i=1; i<=6; i++){
+//     channels[i]=a[i];  
+//   }  
+//   
+//   for(int j=7; j<=12; j++){
+//     differences[j-6]=a[j]; 
+//   }
+//  
+ // DebugN(\"Differences are = \", differences);
+//   
+//   dyn_float limits;
+//   dyn_string alerttext, alertclass;
+//   dyn_errClass err;
+//   dyn_string exceptionInfo;
+//   string alertPanel, alertHelp;
+//   dyn_string summary, alertPanelParameters;
+//  string color;
+//   
+//   
+//   for(int k=1; k<=6; k++){
+//     
+//       if(differences[k] > -0.5 && differences[k] < data[5])
+//     {  
+//     limits=makeDynFloat(data[4], data[2], data[1], data[3]);
+//     alerttext=makeDynString(\"Alert: too low input flow\", \"Warning: low input flow\", \"OK\", \"Warning: high input flow\", \"Alert: too high input flow\"); 
+//     alertclass=makeDynString(\"_fwErrorAck.\", \"_fwWarningAck.\", \"\",\"_fwWarningAck.\",\"_fwErrorAck.\");
+//     
+ //   DebugN(\"Caso 1 per canale \", k); 
+//     
+//       fwAlertConfig_deactivate(channelsName[k], exceptionInfo);
+//       fwAlertConfig_set(channelsName[k], DPCONFIG_ALERT_NONBINARYSIGNAL, alerttext, limits, alertclass, summary, alertPanel, alertPanelParameters, alertHelp, exceptionInfo);   
+//       fwAlertConfig_activate(channelsName[k], exceptionInfo);
+// 
+//       DebugN(\"Colore \", color);   
+//       dpGet(channelsName[k]+\":_alert_hdl.._act_state_color\", color);
+//     
+//     }
+//   
+//   
+//   else{
+//     limits=makeDynFloat(-0.5, data[5], data[6]);
+//     alerttext=makeDynString(\"Alert: input flow lower then output\", \"OK\",\"Warning: check the input and output flow\", \"Alert: check the input and output flow\"); 
+//     alertclass=makeDynString(\"_fwErrorAck.\", \"\", \"_fwWarningAck.\", \"_fwErrorAck.\");
+//      
+//DebugN(\"Caso 2 per canale \", k);    
+//           
+//       fwAlertConfig_deactivate(differencesName[k], exceptionInfo);
+//       fwAlertConfig_set(differencesName[k], DPCONFIG_ALERT_NONBINARYSIGNAL, alerttext, limits, alertclass, summary, alertPanel, alertPanelParameters, alertHelp, exceptionInfo);   
+//       fwAlertConfig_activate(differencesName[k], exceptionInfo);
+//       
+//       
+//        DebugN(\"Colore \", color);   
+//       dpGet(differencesName[k]+\":_alert_hdl.._act_state_color\", color);
+//     
+// 
+// DebugN(\"differenze\", differencesName[k]);   
+//     
+//       
+//   }
+// 
+//   
+//   
+//   
+//   
+//   }
+//   
+// 
+// 
+// }" 0
+ E E E
+0
+LAYER, 1 
+1
+LANG:1 0 
+0
+LAYER, 2 
+1
+LANG:1 0 
+0
+LAYER, 3 
+1
+LANG:1 0 
+0
+LAYER, 4 
+1
+LANG:1 0 
+0
+LAYER, 5 
+1
+LANG:1 0 
+0
+LAYER, 6 
+1
+LANG:1 0 
+0
+LAYER, 7 
+1
+LANG:1 0 
+0
+0

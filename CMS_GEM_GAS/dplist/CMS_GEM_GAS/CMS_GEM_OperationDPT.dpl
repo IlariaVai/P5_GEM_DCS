@@ -1,0 +1,21 @@
+# ascii dump of database
+
+# DpType
+TypeName
+LHCFloat.LHCFloat	1#1
+	value	22#2
+LHCString.LHCString	1#1
+	value	25#2
+MAGNETBool.MAGNETBool	1#1
+	value	23#2
+MAGNETFloat.MAGNETFloat	1#1
+	value	22#2
+DSSBool.DSSBool	1#1
+	value	23#2
+DSSSensors.DSSSensors	1#1
+	Temperature1	22#2
+	Temperature2	22#3
+	TurbineCurrent1	22#4
+	TurbineCurrent2	22#5
+FOSSensors.FOSSensors	1#1
+	value	22#2

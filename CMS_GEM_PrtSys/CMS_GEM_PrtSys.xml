@@ -1,0 +1,11 @@
+<component>
+<name>CMS_GEM_PrtSys</name>
+<version>1.0.9</version>
+<date>05/10/2017</date>
+<required>CMSfwDetectorProtection=1.5.8</required>
+<required>CMSfwInstallUtils=2.2.3</required>
+<dplist>./dplist/CMS_GEM_PrtSys/ProtBit.dpl</dplist>
+<file>./scripts/libs/CMS_GEM_PrtSys/fwGEM_DetProt.ctl</file>
+<postInstall>./scripts/CMS_GEM_PrtSys/CMS_GEM_PrtSys.postinstall</postInstall>
+<file>./CMS_GEM_PrtSys.xml</file>
+</component>

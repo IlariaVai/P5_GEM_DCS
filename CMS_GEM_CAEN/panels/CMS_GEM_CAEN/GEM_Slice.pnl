@@ -1,0 +1,2734 @@
+V 14
+2
+LANG:1 3 SCN
+LANG:10001 3 SCN
+PANEL,-1 -1 305 615 N "_3DFace" 4
+"$SC_HV_Address1"
+"$SC_HV_Address2"
+"$SC_LV_Address"
+"$SC_Number"
+"main()
+{
+  string LVBase;  
+  SCNumber=$SC_Number;
+  HVAddressT=$SC_HV_Address1;
+  HVAddressB=$SC_HV_Address2;
+  LVAddress=$SC_LV_Address;
+  LVBase=LVAddress;
+  strreplace(LVBase,\"channel000\",\"\");
+  LVAddressVFT=LVBase+\"channel000\";
+  LVAddressOHT1=LVBase+\"channel001\";
+  LVAddressOHT2=LVBase+\"channel002\";
+  LVAddressVFB=LVBase+\"channel003\";
+  LVAddressOHB1=LVBase+\"channel004\";
+  LVAddressOHB2=LVBase+\"channel005\";
+  glayer1.text=\"LAYER 1\";
+  glayer2.text=\"LAYER 2\";
+  float iHpT,iHpB;
+  dpGet(LVAddressOHT2+\".settings.rUp\",iHpT);
+  dpGet(LVAddressOHB2+\".settings.rUp\",iHpB);
+  LVsq=makeDynFloat(iHpT,iHpB,5);
+  //dpConnect(\"LV_SeqUp\",LVAddressOHT2+\".settings.rUp\",LVAddressOHB2+\".settings.rUp\");
+  //if(SCNumber==30)
+         //(HpL1,HpL2,nIt);
+  //else
+    //LVsq=makeDynFloat(1.5,1.5,5);System1:MC_SC1top_overview.actual.VmonSum
+  if(HVAddressT!=\"N\")
+  {
+   if(SCNumber==\"01\")
+    {
+     dpConnect(\"Slice_MonitorThv\",HVAddressT+\".actual.VmonSum\");
+     dpConnect(\"Slice_MonitorTAl_HV\",HVAddressT+\".actual.status\");
+     lbVFT.text(\"  LV\");
+     lbOH1T.visible(0);
+     lbOH2T.visible(0);
+     OHT1.visible(0);
+     OHT1i.visible(0);
+     OHT2.visible(0);
+     OHT2i.visible(0);
+     LV_OH2V_V_T.visible(0);
+     LV_OH2V_A_T.visible(0);
+     LV_OH4V_V_T.visible(0);
+     LV_OH4V_A_T.visible(0);
+    }
+   else
+     {
+      dpConnect(\"Slice_MonitorThv\",HVAddressT+\".actual.vMon\");
+      dpConnect(\"Slice_MonitorTihv\",HVAddressT+\".actual.iMon\");
+      dpConnect(\"Slice_MonitorTAl_HV\",HVAddressT+\".actual.status\");
+     }
+  }
+  if(HVAddressB!=\"N\")
+  {
+   if(SCNumber==\"01\")
+    {
+     dpConnect(\"Slice_MonitorBhv\",HVAddressB+\".actual.VmonSum\");
+     dpConnect(\"Slice_MonitorBAl_HV\",HVAddressB+\".actual.status\");
+     lbVFB.text(\"LV\");
+     lbOH1B.visible(0);
+     lbOH2B.visible(0);
+     OHB1.visible(0);
+     OHB1i.visible(0);
+     OHB2.visible(0);
+     OHB2i.visible(0);
+     LV_OH2V_V_B.visible(0);
+     LV_OH2V_A_B.visible(0);
+     LV_OH4V_V_B.visible(0);
+     LV_OH4V_A_B.visible(0);
+
+     
+    }
+   else
+     {
+      dpConnect(\"Slice_MonitorBhv\",HVAddressB+\".actual.vMon\");
+      dpConnect(\"Slice_MonitorBihv\",HVAddressB+\".actual.iMon\");
+      dpConnect(\"Slice_MonitorBAl_HV\",HVAddressB+\".actual.status\");
+     }
+   
+  }  
+   if(LVAddress!=\"N\")
+  {
+   dpConnect(\"Slice_MonitorT\",LVAddressVFT+\".actual.vMon\",LVAddressOHT1+\".actual.vMon\",LVAddressOHT2+\".actual.vMon\");
+   dpConnect(\"Slice_MonitorTi\",LVAddressVFT+\".actual.iMon\",LVAddressOHT1+\".actual.iMon\",LVAddressOHT2+\".actual.iMon\");   
+   dpConnect(\"Slice_MonitorB\",LVAddressVFB+\".actual.vMon\",LVAddressOHB1+\".actual.vMon\",LVAddressOHB2+\".actual.vMon\");
+   dpConnect(\"Slice_MonitorBi\",LVAddressVFB+\".actual.iMon\",LVAddressOHB1+\".actual.iMon\",LVAddressOHB2+\".actual.iMon\");
+   dpConnect(\"Slice_MonitorTAl_VFT\",LVAddressVFT+\".actual.status\");
+   dpConnect(\"Slice_MonitorTAl_OH1\",LVAddressOHT1+\".actual.status\");
+   dpConnect(\"Slice_MonitorTAl_OH2\",LVAddressOHT2+\".actual.status\");
+  
+   dpConnect(\"Slice_MonitorBAl_VFT\",LVAddressVFB+\".actual.status\");
+   dpConnect(\"Slice_MonitorBAl_OH1\",LVAddressOHB1+\".actual.status\");
+   dpConnect(\"Slice_MonitorBAl_OH2\",LVAddressOHB2+\".actual.status\");
+  }
+  if(SCNumber==\"01\")
+  {
+   SCN.text=\"GEMINI\\n\"+SCNumber+\" (Multich. + V3)\";
+   
+  }
+  else 
+   SCN.text=\"GEMINI\\n\"+SCNumber;
+  dyn_string exceptionInfo;
+  fwAccessControl_setupPanel(\"ApplyPanelAccessControl\", exceptionInfo);
+  
+}
+" 0
+ E E E E 1 -1 -1 0  0 0
+""0  1
+E "string SCNumber,HVAddressT,HVAddressB;
+string LVAddress,LVAddressVFT,LVAddressOHT1,LVAddressOHT2;
+string LVAddressVFB,LVAddressOHB1,LVAddressOHB2;
+bool AlarmT, AlarmB;
+bool chstate1,chstate2,chstate3,chstate4;
+bool chstate5,chstate6,chstate7,chstate8;
+bool AC_LC_Settings,AC_usr;
+dyn_float LVsq;
+dyn_string LVsqStr;
+dyn_dyn_string vmT,vmB;
+dyn_float imT,imB;
+//
+Slice_MonitorThv(string dp1, float hv1)
+{
+  setValue(\"HVT\",\"text\",hv1);
+}
+Slice_MonitorTihv(string dp1, float hv1)
+{
+  setValue(\"HVTi\",\"text\",hv1+\"uA\");
+}
+Slice_MonitorBhv(string dp1, float hv2)
+{ 
+  setValue(\"HVB\",\"text\",hv2);
+}
+Slice_MonitorBihv(string dp1, float hv2)
+{
+ 
+  setValue(\"HVBi\",\"text\",hv2);
+  
+}
+Slice_MonitorT(string dp2, float vftt,string dp3, float oht1,string dp4, float oht2)
+{
+  
+  setValue(\"VFATT\",\"text\",vftt);
+  setValue(\"OHT1\",\"text\",oht1);
+  setValue(\"OHT2\",\"text\",oht2);
+}
+Slice_MonitorTi(string dp2, float vftt,string dp3, float oht1,string dp4, float oht2)
+{
+  
+  setValue(\"VFATTi\",\"text\",vftt);
+  setValue(\"OHT1i\",\"text\",oht1);
+  setValue(\"OHT2i\",\"text\",oht2);
+}
+Slice_MonitorB(string dp2, float vftb,string dp3, float ohb1,string dp4, float ohb2)
+{
+ 
+  setValue(\"VFATB\",\"text\",vftb);
+  setValue(\"OHB1\",\"text\",ohb1);
+  setValue(\"OHB2\",\"text\",ohb2);
+}
+Slice_MonitorBi(string dp2, float vftb,string dp3, float ohb1,string dp4, float ohb2)
+{
+  setValue(\"VFATBi\",\"text\",vftb);
+  setValue(\"OHB1i\",\"text\",ohb1);
+  setValue(\"OHB2i\",\"text\",ohb2);
+}
+//***********************SETTINGS*************************
+chSettingsHV(string chNo)
+ {
+   //ChildPanelOn(\"/CMS_GEM_CAEN/fwCaenChannelOperation\",\"Channel Settings\",makeDynString(\"$sDpName:\"+chNo),0,0);
+  if(AC_LC_Settings)
+   ChildPanelOnCentralModal(\"/CMS_GEM_CAEN/CMS_GEM_HVSetTabs\",\"chsettings\",makeDynString(\"$ChannelClicked:\"+chNo));
+ }
+ chSettingsLV(string chNo)
+ {
+   //ChildPanelOn(\"/CMS_GEM_CAEN/fwCaenChannelOperation\",\"Channel Settings\",makeDynString(\"$sDpName:\"+chNo),0,0);
+  if(AC_LC_Settings)
+  {
+   if(chNo==\"T\")
+     ChildPanelOnCentralModal(\"/CMS_GEM_CAEN/CMS_GEM_SimpleSettings\",\"chsettings\",makeDynString(\"$1:T\",\"$GEMINI:\"+SCNumber,\"$ChannelClicked1:\"+LVAddressVFT,\"$ChannelClicked2:\"+LVAddressOHT1,\"$ChannelClicked3:\"+LVAddressOHT2));
+   if(chNo==\"B\")
+     ChildPanelOnCentralModal(\"/CMS_GEM_CAEN/CMS_GEM_SimpleSettings\",\"chsettings\",makeDynString(\"$1:B\",\"$GEMINI:\"+SCNumber,\"$ChannelClicked1:\"+LVAddressVFB,\"$ChannelClicked2:\"+LVAddressOHB1,\"$ChannelClicked3:\"+LVAddressOHB2));
+   }
+ }
+ chSettingsr(string chNo,string trp)
+ {
+   //ChildPanelOnCentralModal(\"/fwCaen/fwCaenChannelOperation\",\"Channel Settings\",makeDynString(\"$sDpName:\"+chNo));
+   if(AC_LC_Settings) 
+    ChildPanelOnCentralModal(\"/CMS_GEM_CAEN/FwCaenChannelBasicRC\",\"Channel Settings\",makeDynString(\"$2:\"+chNo,\"$TrPlot:\"+trp));
+   
+   
+ }
+ 
+//****************************** On OFF *******************
+/*Slice_MonitorTisOn(string dp1, bool on1,string dp2, bool on2,string dp3, bool on3,string dp4, bool on4)
+{
+  
+  if(on1 && on2 && on3 && on4)
+  {
+    setValue(\"GEMT\",\"backCol\",\"FwStateOKPhysics\");
+    setValue(\"SwT\",\"text\",\"OFF\");
+    setValue(\"SwT\",\"backCol\",\"FwStateOKPhysics\");
+    
+  }
+  else
+  {
+    setValue(\"GEMB\",\"backCol\",\"FwStateOKNotPhysics\");    
+    setValue(\"SwT\",\"text\",\"ON\");
+    setValue(\"SwT\",\"backCol\",\"FwStateOKNotPhysics\");
+    
+  }
+}
+Slice_MonitorBisOn(string dp1, bool on1,string dp2, bool on2,string dp3, bool on3,string dp4, bool on4)
+{
+
+  if(on1 && on2 && on3 && on4)
+  {
+    setValue(\"GEMB\",\"backCol\",\"FwStateOKPhysics\");
+    setValue(\"SwB\",\"text\",\"OFF\");
+    
+  }
+  else
+  {
+    setValue(\"GEMB\",\"backCol\",\"FwStateOKNotPhysics\");
+    setValue(\"SwB\",\"text\",\"ON\");
+  }
+  
+}*/
+
+//****************************ALARMS ****************************
+
+Slice_MonitorTAl_HV(string dp1, int st1)
+{
+ 
+  if(st1==0)
+   {
+      setValue(\"BkHVT\",\"backCol\",\"FwStateOKNotPhysics\");
+      chstate1=0;
+      
+   }
+  if(st1==1)
+   {
+      setValue(\"BkHVT\",\"backCol\",\"FwStateOKPhysics\");
+      chstate1=1;
+      
+   }
+  if(st1==3)
+   {
+      setValue(\"BkHVT\",\"backCol\",\"FwStateAttention1\");
+      chstate1=3;
+   }
+  if(st1==5)
+   {
+      setValue(\"BkHVT\",\"backCol\",\"FwStateAttention1\");
+      chstate1=5;
+   }
+  if(st1 > 8)  
+      setValue(\"BkHVT\",\"backCol\",\"FwStateAttention3\"); 
+  if(st1 << 9)
+  {
+       AlarmT=st1;  
+  //dpGet(dp1+\"stime\",Altime);
+   
+      
+       //\"Ramp Up\" 3;
+       
+                      
+       //\"Ramp Down\" 5;
+   }
+       
+  else
+   {
+        //setValue(\"GEMT\",\"backCol\",\"FwStateAttention3\");        
+        
+       
+         //Over_Current
+        //Over Voltage 17              
+       
+         //Under Voltage  33             
+      
+      
+          //her Conditions 65               
+        
+     }
+    //Al_Time.text=Altime;
+}
+Slice_MonitorTAl_VFT(string dp1, int st1)
+{
+ 
+  
+  if(st1==0)
+   {
+      setValue(\"BkVFT\",\"backCol\",\"FwStateOKNotPhysics\");
+      chstate2=0;      
+      
+   }
+  if(st1==1)
+   {
+      setValue(\"BkVFT\",\"backCol\",\"FwStateOKPhysics\");
+      chstate2=1;
+      
+   }
+  if(st1==3)
+   {
+      setValue(\"BkVFT\",\"backCol\",\"FwStateAttention1\");
+      chstate2=3;
+   }
+  if(st1==5)
+   {
+      setValue(\"BkVFT\",\"backCol\",\"FwStateAttention1\");
+      chstate2=5;
+   }
+  if(st1 > 8)  
+      setValue(\"BkVFT\",\"backCol\",\"FwStateAttention3\"); 
+}
+Slice_MonitorTAl_OH1(string dp1, int st1)
+{
+ 
+  if(st1==0)
+   {
+      setValue(\"BkOH1T\",\"backCol\",\"FwStateOKNotPhysics\");
+      chstate3=0;
+      
+   }
+  if(st1==1)
+   {
+      setValue(\"BkOH1T\",\"backCol\",\"FwStateOKPhysics\");
+      chstate3=1;
+      
+   }
+  if(st1==3)
+   {
+      setValue(\"BkOH1T\",\"backCol\",\"FwStateAttention1\");
+      chstate3=3;
+   }
+  if(st1==5)
+   {
+      setValue(\"BkOH1T\",\"backCol\",\"FwStateAttention1\");
+      chstate3=5;
+   }
+  if(st1 > 8)  
+      setValue(\"BkOH1T\",\"backCol\",\"FwStateAttention3\"); 
+}
+Slice_MonitorTAl_OH2(string dp1, int st1)
+{
+ 
+  if(st1==0)
+   {
+      setValue(\"BkOH2T\",\"backCol\",\"FwStateOKNotPhysics\");
+      chstate4=0;
+      
+   }
+  if(st1==1)
+   {
+      setValue(\"BkOH2T\",\"backCol\",\"FwStateOKPhysics\");
+      chstate4=1;
+      
+   }
+  if(st1==3)
+   {
+      setValue(\"BkOH2T\",\"backCol\",\"FwStateAttention1\");
+      chstate4=3;
+   }
+  if(st1==5)
+   {
+      setValue(\"BkOH2T\",\"backCol\",\"FwStateAttention1\");
+      chstate4=5;
+   }
+  if(st1 > 8)  
+     setValue(\"BkOH2T\",\"backCol\",\"FwStateAttention3\"); 
+    
+}
+Slice_MonitorBAl_HV(string dp1, int st1)
+{
+ 
+  if(st1==0)
+   {
+      setValue(\"BkHVB\",\"backCol\",\"FwStateOKNotPhysics\");
+      chstate5=0;
+   }
+  if(st1==1)
+   {
+      setValue(\"BkHVB\",\"backCol\",\"FwStateOKPhysics\");
+      chstate5=1;
+   }
+  if(st1==3)
+   {
+      setValue(\"BkHVB\",\"backCol\",\"FwStateAttention1\");
+      chstate5=3;
+   }
+  if(st1==5)
+   {
+      setValue(\"BkHVB\",\"backCol\",\"FwStateAttention1\");
+      chstate5=5;
+   }
+  if(st1 > 8)  
+      setValue(\"BkHVB\",\"backCol\",\"FwStateAttention3\"); 
+}
+Slice_MonitorBAl_VFT(string dp1, int st1)
+{
+ 
+ if(st1==0)
+   {
+      setValue(\"BkVFB\",\"backCol\",\"FwStateOKNotPhysics\");
+      chstate6=0;
+   }
+  if(st1==1)
+   {
+      setValue(\"BkVFB\",\"backCol\",\"FwStateOKPhysics\");
+      chstate6=1;
+   }
+  if(st1==3)
+   {
+      setValue(\"BkVFB\",\"backCol\",\"FwStateAttention1\");
+      chstate6=3;
+   }
+  if(st1==5)
+   {
+      setValue(\"BkVFB\",\"backCol\",\"FwStateAttention1\");
+      chstate6=5;
+   }
+  if(st1 > 8)  
+      setValue(\"BkVFB\",\"backCol\",\"FwStateAttention3\"); 
+}
+Slice_MonitorBAl_OH1(string dp1, int st1)
+{
+  if(st1==0)
+   {
+      setValue(\"BkOH1B\",\"backCol\",\"FwStateOKNotPhysics\");
+      chstate7=0;
+   }
+  if(st1==1)
+   {
+      setValue(\"BkOH1B\",\"backCol\",\"FwStateOKPhysics\");
+      chstate7=1;
+   }
+  if(st1==3)
+   {
+      setValue(\"BkOH1B\",\"backCol\",\"FwStateAttention1\");
+      chstate7=3;
+   }
+  if(st1==5)
+   {
+      setValue(\"BkOH1B\",\"backCol\",\"FwStateAttention1\");
+      chstate7=5;
+   }
+  if(st1 > 8)  
+      setValue(\"BkOH1B\",\"backCol\",\"FwStateAttention3\"); 
+}
+Slice_MonitorBAl_OH2(string dp1, int st1)
+{
+ if(st1==0)
+   {
+      setValue(\"BkOH2B\",\"backCol\",\"FwStateOKNotPhysics\");
+      chstate8=0;
+   }
+  if(st1==1)
+   {
+      setValue(\"BkOH2B\",\"backCol\",\"FwStateOKPhysics\");
+      chstate8=1;
+   }
+  if(st1==3)
+   {
+      setValue(\"BkOH2B\",\"backCol\",\"FwStateAttention1\");
+      chstate8=3;
+   }
+  if(st1==5)
+   {
+      setValue(\"BkOH2B\",\"backCol\",\"FwStateAttention1\");
+      chstate8=5;
+   }
+  if(st1 > 8)  
+      setValue(\"BkOH2B\",\"backCol\",\"FwStateAttention3\"); 
+    
+}
+
+void ApplyPanelAccessControl(string s1, string s2)
+{
+bool hasDebug, hasControl,hasMonitor,hasVisualize,hasModify;
+dyn_string exceptionInfo;
+// revoke all previous rights:
+DisableAllInPanel();
+// check privileges:
+string domain;
+domain=\"CMS_GEM\";
+//domain=\"Gem\";
+fwAccessControl_isGranted( domain+\":Control\", hasControl, exceptionInfo);
+fwAccessControl_isGranted( domain+\":Debug\", hasDebug, exceptionInfo);
+fwAccessControl_isGranted( domain+\":Monitor\", hasMonitor, exceptionInfo);
+//fwAccessControl_isGranted( domain+\":Visualize\",hasVisualize, exceptionInfo);
+fwAccessControl_isGranted( domain+\":Modify\",hasModify, exceptionInfo);
+if (dynlen(exceptionInfo)) { fwExceptionHandling_display(exceptionInfo); return;}
+// enable/disable panel functionality:
+//if (hasControl) AlcLV.enabled = true;
+//if (hasDebug) AlcHV.enabled = true;
+if (hasControl)
+ {
+  //
+  AC_usr=true;
+  SwitchEn(true);
+ }
+if (hasDebug)
+ {
+  AC_LC_Settings=true;
+  AC_usr=true;
+  SwitchEn(true);
+  
+ }
+if (hasMonitor)
+ {
+  //
+  AC_usr=true;
+  SwitchEn(true);
+ }
+
+if (hasVisualize)
+ {
+  AC_usr=true;
+  SwitchEn(true);
+  
+ }
+if (hasModify)
+ {
+  AC_LC_Settings=true;
+  AC_usr=true;
+  SwitchEn(true);
+  
+ }
+
+}
+void DisableAllInPanel()
+{
+// disable all widgets in a panel...
+  AC_LC_Settings=false;
+  AC_usr=false;
+ SwT.enabled=false;
+ SwTf.enabled=false;
+ SwB.enabled=false;
+ SwBf.enabled=false;
+ //SwBf.enabled==false;
+ SwThvon.enabled=false;
+ SwThvf.enabled=false;
+ SwBhvon.enabled=false;
+ SwBhvf.enabled=false;
+ Powercycle_Top_Button.enabled=false;
+ Powercycle_Bottom_Button.enabled=false;
+ 
+ 
+}
+SwitchEn(bool en)
+{
+if(SCNumber!=\"01\")
+  {
+  SwT.enabled=true;
+ SwTf.enabled=true;
+ SwB.enabled=true;
+ SwBf.enabled=true;}
+ //SwBf.enabled==true;
+ SwThvon.enabled=true;
+ SwThvf.enabled=true;
+ SwBhvon.enabled=true;
+ SwBhvf.enabled=true;
+ Powercycle_Top_Button.enabled=true;
+ Powercycle_Bottom_Button.enabled=true;
+ 
+ 
+}
+SampleVI(int m) //m iteration number
+{
+ int i=0;
+ float vi=0.1;
+ do
+ {  
+  dpGet(OnAdrdressOrd[1]+\".actual.vMon\",vmT[m]);
+   if(m>1)
+    vi=vi+vmT[m-1];
+   if(vmT[m]>vi)
+   {
+    dpGet(OnAdrdressOrd[1]+\".actual.iMon\",imT[m]);
+    
+    i=2;
+   }
+   else
+   {
+    delay(2);
+    vi=vmT[m];
+   }
+  i++;
+ }
+ while(i<2);
+}
+ 
+string formatMVals(string ly)
+{
+  dyn_string msg=\"Ok\";
+  dyn_string im;
+  dyn_dyn_string vm;
+  //float v=(string)vm[1,1];
+  if(ly==\"T\")
+  {
+    vm=vmT;
+    im=imT;
+  }
+  else
+  {
+    vm=vmB;
+    im=imB;
+   }
+     msg=\"t(1) --> [\"+substr(vm[1][1],0,4)+\" , \"+substr(vm[1][2],0,4)+\" , \"+substr(vm[1][3],0,4)+\" , \"+substr(im[1],0,6)+\"]  \";
+    msg+=\"t(2) --> [\"+substr(vm[2][1],0,4)+\" , \"+substr(vm[2][2],0,4)+\" , \"+substr(vm[2][3],0,4)+\" , \"+substr(im[2],0,6)+\"]  \";
+    msg+=\"t(3) --> [\"+substr(vm[3][1],0,4)+\" , \"+substr(vm[3][2],0,4)+\" , \"+substr(vm[3][3],0,4)+\" , \"+substr(im[3],0,6)+\"]  \";
+    msg+=\"t(4) --> [\"+substr(vm[4][1],0,4)+\" , \"+substr(vm[4][2],0,4)+\" , \"+substr(vm[4][3],0,4)+\" , \"+substr(im[4],0,6)+\"]  \";
+    msg+=\"t(5) --> [\"+substr(vm[5][1],0,4)+\" , \"+substr(vm[5][2],0,4)+\" , \"+substr(vm[5][3],0,4)+\" , \"+substr(im[5],0,6)+\"]  \";
+    return msg;
+  
+  
+}
+LV_SeqUp(string dp1, int st1,string dp2, int st2)
+{
+  
+  LVsq=makeDynFloat(st1,st2,LVsq[3]);
+}
+" 0
+ 3
+"CBRef" "1"
+"EClose" E
+"dpi" "96"
+0 0 0
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:1 0 
+10 36
+"GEMB"
+""
+1 90 220 E E E 1 E 1 E N {0,0,0} E N "FwStateOKNotPhysics" E E
+ E E
+36 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+3
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "1"
+E E 0 1 3 2 1 E 0.934375 0 1 -16.06595047699221 104.4 1 E 4 90 220
+260 220
+340 500
+20 500
+ 1
+6 77
+"BkOH2B"
+""
+1 76 163 E E E 1 E 1 E N {0,0,0} E N "STD_valve_open" E E
+ E E
+77 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+3
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E -1 1 3 2 1 E 0.9336255960621439 0 1 -20.95554530072294 357 1 E 76 163 272 193
+6 76
+"BkOH1B"
+""
+1 76 163 E E E 1 E 1 E N {0,0,0} E N "STD_valve_open" E E
+ E E
+76 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+3
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E -1 1 3 2 1 E 0.9336255960621439 0 1 -20.95554530072291 317.3333333333334 1 E 76 163 272 193
+6 75
+"BkVFB"
+""
+1 76 163 E E E 1 E 1 E N {0,0,0} E N "STD_valve_open" E E
+ E E
+75 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+3
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E -1 1 3 2 1 E 0.9336255960621439 0 1 -20.3395642717156 277 1 E 76 163 272 193
+6 74
+"BkHVB"
+""
+1 76 163 E E E 1 E 1 E N {0,0,0} E N "STD_valve_open" E E
+ E E
+74 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+3
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E -1 1 3 2 1 E 0.9336255960621439 0 1 -20.3153703917347 237 1 E 76 163 272 193
+10 31
+"GEMT"
+""
+1 90 220 E E E 1 E 1 E N {0,0,0} E N "FwStateOKNotPhysics" E E
+ E E
+31 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+3
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "1"
+E E 0 1 3 2 1 E 0.934375 0 1 -16.18749999999999 -173 1 E 4 90 220
+260 220
+340 500
+20 500
+ 1
+6 73
+"BkOH2T"
+""
+1 76 163 E E E 1 E 1 E N {0,0,0} E N "STD_valve_open" E E
+ E E
+73 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+3
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E -1 1 3 2 1 E 0.9387273752755982 0 1 -21.34328052094546 77 1 E 76 163 272 193
+6 72
+"BkOH1T"
+""
+1 76 163 E E E 1 E 1 E N {0,0,0} E N "STD_valve_open" E E
+ E E
+72 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+3
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E -1 1 3 2 1 E 0.9387273752755982 0 1 -20.95607513374009 37 1 E 76 163 272 193
+6 71
+"BkVFT"
+""
+1 76 163 E E E 1 E 1 E N {0,0,0} E N "STD_valve_open" E E
+ E E
+71 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+3
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E -1 1 3 2 1 E 0.9387273752755982 0 1 -21.24538831632749 -3 1 E 76 163 272 193
+6 70
+"BkHVT"
+""
+1 76 163 E E E 1 E 1 E N {0,0,0} E N "STD_valve_open" E E
+ E E
+70 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+3
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E -1 1 3 2 1 E 0.9387273752755982 0 1 -21.42543882137791 -43 1 E 76 163 272 193
+2 59
+"glayer2"
+""
+1 146.69375 369 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+59 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E 1.040447945025526 0 0.8827537593984962 -42.95629497763549 11.25704887218053 0 E 146.69375 369 215.69375 403
+0 2 2 "0s" 0 0 0 65 0 0  146.69375 369 1
+2
+LANG:1 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+LANG:10001 34 MS Sans Serif,-1,16,5,75,0,0,0,0,0
+0 2
+LANG:1 6 Bottom
+LANG:10001 7 Layer 2
+2 22
+"lbHVT"
+""
+1 143.3565143824025 128 E E E 1 E 1 E N "_WindowText" E N "_Transparent" E E
+ E E
+22 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E "main(mapping event)
+{
+  ChildPanelOn(\"/fwTrending/fwTrendingPlot\", \"GEM \"+SCNumber+\"T HV\",makeDynString(\"$PlotName:HV_GEM\"+SCNumber+\"T\"),0,0);
+}" 0
+ 0 1 3 2 1 E U  0 E 143.3565143824025 128 163.3565143824025 148
+0 2 2 "0s" 0 0 0 64 0 0  143.3565143824025 128 1
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,75,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:1 2 HV
+LANG:10001 2 HV
+2 23
+"lbVFT"
+""
+1 168.5999999999999 212 E E E 1 E 1 E N "_WindowText" E N "_Transparent" E E
+ E E
+23 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E "main(mapping event)
+{
+   ChildPanelOn(\"/fwTrending/fwTrendingPlot\", \"GEM \"+SCNumber+\"T VFAT\",makeDynString(\"$PlotName:LV_\"+SCNumber+\"T1\"),0,0);
+}" 0
+ 0 1 3 2 1 E 1.660416666666663 0 1 -143.28931895093 -46 0 E 168.5999999999999 212 188.5999999999999 232
+0 2 2 "0s" 0 0 0 64 0 0  168.5999999999999 212 1
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,75,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:1 4 VFAT
+LANG:10001 4 VFAT
+2 27
+"lbOH1T"
+""
+1 132.594923857868 209.0000000000001 E E E 1 E 1 E N "_WindowText" E N "_Transparent" E E
+ E E
+27 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E "main(mapping event)
+{
+  ChildPanelOn(\"/fwTrending/fwTrendingPlot\", \"GEM \"+SCNumber+\"T OH2V\",makeDynString(\"$PlotName:LV_\"+SCNumber+\"T2\"),0,0);
+}" 0
+ 0 1 3 2 1 E U  0 E 132.594923857868 209.0000000000001 172.5949238578681 239.0000000000001
+0 2 2 "0s" 0 0 0 64 0 0  132.594923857868 209.0000000000001 1
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,75,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:1 5  OH2V
+LANG:10001 5  OH2V
+2 28
+"lbOH2T"
+""
+1 133 250 E E E 1 E 1 E N "_WindowText" E N "_Transparent" E E
+ E E
+28 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E "main(mapping event)
+{
+  ChildPanelOn(\"/fwTrending/fwTrendingPlot\", \"GEM \"+SCNumber+\"T OH4V\",makeDynString(\"$PlotName:LV_\"+SCNumber+\"T3\"),0,0);
+}" 0
+ 0 1 3 2 1 E U  0 E 133 250 173 280
+0 2 2 "0s" 0 0 0 64 0 0  133 250 1
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,75,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:1 5  OH4V
+LANG:10001 5  OH4V
+14 9
+"HVT"
+""
+1 50.15651438240266 128 E E E 1 E 1 E N "WF_Text" E N "_Transparent" E E
+ "main(mapping event)
+{
+  string dpTPlot;
+  dpTPlot=\"HV_GEM\"+SCNumber+\"T\";  
+  chSettingsr(HVAddressT,dpTPlot);
+}" 0
+ "main(mapping event)
+{
+  //ChildPanelOnCentralModal(\"CMS_GEM_SimpleSettings\",\"Settings\",makeDynString(\"$ChannelClicked:\"+HVAddressT));
+}" 0
+
+9 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  48 118 111 152
+2 "5d" 5 0 0 0 0 -1  "main()
+{
+  chSettingsHV(HVAddressT);
+}" 0
+ E E
+14 10
+"VFATT"
+""
+1 50.3502643824026 168 E E E 1 E 1 E N "WF_Text" E N "_Transparent" E E
+ "main(mapping event)
+{
+  //chSettingsr(LVAddressVFT);
+  string dpTPlot;
+  dpTPlot=\"LV_\"+SCNumber+\"T1\";  
+  chSettingsr(LVAddressVFT,dpTPlot);
+}" 0
+ E
+10 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  48 158 111 192
+2 "1.3f" 5 0 0 0 0 -1  "main()
+{
+  chSettingsLV(\"T\");
+}" 0
+ E E
+14 11
+"OHT1"
+""
+1 50.49492385786805 207.8000000000001 E E E 1 E 1 E N "WF_Text" E N "_Transparent" E E
+ "main(mapping event)
+{
+  //chSettingsr(LVAddressOHT1);
+  string dpTPlot;
+  dpTPlot=\"LV_\"+SCNumber+\"T2\";  
+  chSettingsr(LVAddressOHT1,dpTPlot);
+}" 0
+ E
+11 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  48 198 111 232
+2 "1.3f" 5 0 0 0 0 -1  "main()
+{
+  chSettingsLV(\"T\");
+}" 0
+ E E
+14 12
+"OHT2"
+""
+1 50.49492385786805 248 E E E 1 E 1 E N "WF_Text" E N "_Transparent" E E
+ "main(mapping event)
+{
+  string dpTPlot;
+  dpTPlot=\"LV_\"+SCNumber+\"T3\";  
+  chSettingsr(LVAddressOHT2,dpTPlot);
+}" 0
+ E
+12 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  48 238 111 272
+2 "1.3f" 5 0 0 0 0 -1  "main()
+{
+  chSettingsLV(\"T\");
+}" 0
+ E E
+2 37
+"lbHVB"
+""
+1 142.6056049069373 405 E E E 1 E 1 E N "_WindowText" E N "_Transparent" E E
+ E E
+37 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E "main(mapping event)
+{
+   ChildPanelOn(\"/fwTrending/fwTrendingPlot\", \"GEM \"+SCNumber+\"B HV\",makeDynString(\"$PlotName:HV_GEM\"+SCNumber+\"B\"),0,0);
+}" 0
+ 0 1 3 2 1 E U  0 E 142.6056049069373 405 162.6056049069373 425
+0 2 2 "0s" 0 0 0 64 0 0  142.6056049069373 405 1
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,75,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:1 2 HV
+LANG:10001 2 HV
+2 39
+"lbOH1B"
+""
+1 133.19375 489.5333333333334 E E E 1 E 1 E N "_WindowText" E N "_Transparent" E E
+ E E
+39 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E "main(mapping event)
+{
+  ChildPanelOn(\"/fwTrending/fwTrendingPlot\", \"GEM \"+SCNumber+\"B OH2V\",makeDynString(\"$PlotName:LV_\"+SCNumber+\"B2\"),0,0);
+}" 0
+ 0 1 3 2 1 E U  0 E 133.19375 489.5333333333334 173.19375 519.5333333333334
+0 2 2 "0s" 0 0 0 64 0 0  133.19375 489.5333333333334 1
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,75,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:1 5  OH2V
+LANG:10001 5  OH2V
+2 40
+"lbOH2B"
+""
+1 133 530 E E E 1 E 1 E N "_WindowText" E N "_Transparent" E E
+ E E
+40 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E "main(mapping event)
+{
+  ChildPanelOn(\"/fwTrending/fwTrendingPlot\", \"GEM \"+SCNumber+\"B OH4V\",makeDynString(\"$PlotName:LV_\"+SCNumber+\"B3\"),0,0);
+}" 0
+ 0 1 3 2 1 E U  0 E 133 530 173 560
+0 2 2 "0s" 0 0 0 64 0 0  133 530 1
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,75,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:1 5  OH4V
+LANG:10001 5  OH4V
+14 41
+"HVB"
+""
+1 48.08815666429922 419 E E E 1 E 1 E N "WF_Text" E N "_Transparent" E E
+ "main(mapping event)
+{
+  string dpTPlot;
+  dpTPlot=\"HV_GEM\"+SCNumber+\"B\";  
+  chSettingsr(HVAddressB,dpTPlot);
+}" 0
+ E
+41 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  48 398 111 432
+2 "5d" 5 0 0 0 0 -1  "main()
+{
+  chSettingsHV(HVAddressB);
+}" 0
+ E E
+14 43
+"OHB1"
+""
+1 50.00000000000006 488.3333333333334 E E E 1 E 1 E N "WF_Text" E N "_Transparent" E E
+ "main(mapping event)
+{
+  string dpTPlot;
+  dpTPlot=\"LV_\"+SCNumber+\"B2\";  
+  chSettingsr(LVAddressOHB1,dpTPlot);
+}" 0
+ E
+43 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  48 478 111 512
+2 "1.3f" 5 0 0 0 0 -1  "main()
+{
+  chSettingsLV(\"B\");
+}" 0
+ E E
+14 44
+"OHB2"
+""
+1 50.48984771573601 529 E E E 1 E 1 E N "WF_Text" E N "_Transparent" E E
+ "main(mapping event)
+{
+  string dpTPlot;
+  dpTPlot=\"LV_\"+SCNumber+\"B3\";  
+  chSettingsr(LVAddressOHB2,dpTPlot);
+}" 0
+ E
+44 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  48 519 111 553
+2 "1.3f" 5 0 0 0 0 -1  "main()
+{
+  chSettingsLV(\"B\");
+}" 0
+ E E
+14 45
+"HVBi"
+""
+1 171.9946710467018 419 E E E 1 E 1 E N "WF_Text" E N "_Transparent" E E
+ "main(mapping event)
+{
+  string dpTPlot;
+  dpTPlot=\"HV_GEM\"+SCNumber+\"B\";  
+  chSettingsr(HVAddressB,dpTPlot);
+}" 0
+ E
+45 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  171 398 234 432
+2 "5.1f" 7 0 0 0 0 -1  "main()
+{
+  chSettings(HVAddressB);
+}" 0
+ E E
+14 47
+"OHB1i"
+""
+1 171.0392431933551 499.3333333333334 E E E 1 E 1 E N "WF_Text" E N "_Transparent" E E
+ "main(mapping event)
+{
+  string dpTPlot;
+  dpTPlot=\"LV_\"+SCNumber+\"B2\";  
+  chSettingsr(LVAddressOHB1,dpTPlot);
+}" 0
+ E
+47 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  171 478 234 512
+2 "2.3f" 6 0 0 0 0 -1  "main()
+{
+  chSettingsLV(\"B\");
+}" 0
+ E E
+14 48
+"OHB2i"
+""
+1 171.5290909090909 540 E E E 1 E 1 E N "WF_Text" E N "_Transparent" E E
+ "main(mapping event)
+{
+  string dpTPlot;
+  dpTPlot=\"LV_\"+SCNumber+\"B3\";  
+  chSettingsr(LVAddressOHB2,dpTPlot);
+}" 0
+ E
+48 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  171 519 234 553
+2 "2.3f" 6 0 0 0 0 -1  "main()
+{
+  chSettingsLV(\"B\");
+}" 0
+ E E
+2 54
+"PRIMITIVE_TEXT20"
+""
+1 93.45312499999997 143 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+54 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E 2.724637148152597 0 1 -194.8616723990838 -43 0 E 93.45312499999997 143 113.453125 163
+0 2 2 "0s" 0 0 0 64 0 0  93.45312499999997 143 1
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,75,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:1 7 Voltage
+LANG:10001 5 Volts
+2 55
+"PRIMITIVE_TEXT21"
+""
+1 222.009375 138 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+55 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E 2.714041462783681 0 1 -427.1374450232063 -38 0 E 222.009375 138 242.009375 158
+0 2 2 "0s" 0 0 0 64 0 0  222.009375 138 1
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,75,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:1 7 Current
+LANG:10001 7 Current
+2 56
+"PRIMITIVE_TEXT22"
+""
+1 94.18749999999989 421 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+56 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E 3.441078494469877 0 1 -264.1065806978812 -41 0 E 94.18749999999989 421 114.1874999999999 441
+0 2 2 "0s" 0 0 0 64 0 0  94.18749999999989 421 1
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,75,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:1 7 Voltage
+LANG:10001 5 Volts
+2 57
+"PRIMITIVE_TEXT23"
+""
+1 222.009375 138 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+57 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E 2.714041462783681 0 1 -427.6482586479287 240 0 E 222.009375 138 242.009375 158
+0 2 2 "0s" 0 0 0 64 0 0  222.009375 138 1
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,75,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:1 7 Current
+LANG:10001 7 Current
+14 32
+"HVTi"
+""
+1 171.1124242424242 139 E E E 1 E 1 E N "WF_Text" E N "_Transparent" E E
+ "main(mapping event)
+{
+  string dpTPlot;
+  dpTPlot=\"HV_GEM\"+SCNumber+\"T\";  
+  chSettingsr(HVAddressT,dpTPlot);
+}" 0
+ E
+32 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  171 118 234 152
+2 "5.1f" 7 0 0 0 0 -1  "main()
+{
+  chSettings(HVAddressT);
+}" 0
+ E E
+14 33
+"VFATTi"
+""
+1 171.3061742424242 179 E E E 1 E 1 E N "WF_Text" E N "_Transparent" E E
+ "main(mapping event)
+{
+  //chSettingsr(LVAddressVFT);
+  string dpTPlot;
+  dpTPlot=\"LV_\"+SCNumber+\"T1\";  
+  chSettingsr(LVAddressVFT,dpTPlot);
+}" 0
+ E
+33 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  171 158 234 192
+2 "2.3f" 6 0 0 0 0 -1  "main()
+{
+  chSettingsLV(\"T\");
+}" 0
+ E E
+14 34
+"OHT1i"
+""
+1 171.4508337178896 218.8000000000001 E E E 1 E 1 E N "WF_Text" E N "_Transparent" E E
+ "main(mapping event)
+{
+  //chSettingsr(LVAddressOHT1);
+  string dpTPlot;
+  dpTPlot=\"LV_\"+SCNumber+\"T2\";  
+  chSettingsr(LVAddressOHT1,dpTPlot);
+}" 0
+ E
+34 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  171 198 234 232
+2 "2.3f" 6 0 0 0 0 -1  "main()
+{
+  chSettingsLV(\"T\");
+}" 0
+ E E
+14 35
+"OHT2i"
+""
+1 171.4508337178896 259 E E E 1 E 1 E N "WF_Text" E N "_Transparent" E E
+ "main(mapping event)
+{
+  string dpTPlot;
+  dpTPlot=\"LV_\"+SCNumber+\"T3\";  
+  chSettingsr(LVAddressOHT2,dpTPlot);
+}" 0
+ E
+35 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  171 238 234 272
+2 "2.3f" 6 0 0 0 0 -1  "main()
+{
+  chSettingsLV(\"T\");
+}" 0
+ E E
+2 60
+"glayer1"
+""
+1 146.8333333333333 89 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+60 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E 1.032259743362698 0 0.9009771146969835 -42.03262405306814 -22.59789808590774 0 E 146.8333333333333 89 215.8333333333333 123
+0 2 2 "0s" 0 0 0 65 0 0  146.8333333333333 89 2
+2
+LANG:1 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+LANG:10001 34 MS Sans Serif,-1,16,5,75,0,0,0,0,0
+0 2
+LANG:1 3 TOP
+LANG:10001 7 Layer 1
+2
+LANG:1 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+LANG:10001 34 MS Sans Serif,-1,16,5,75,0,0,0,0,0
+0 2
+LANG:1 0 
+LANG:10001 0 
+13 66
+"SwT"
+""
+1 60 310 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+66 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 34 MS Sans Serif,-1,11,5,50,0,0,0,0,0
+LANG:10001 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+0  24.4496745230078 303.4 79.4496745230078 326.4
+
+T 
+2
+LANG:1 5 LV ON
+LANG:10001 5 ON LV
+"main(mapping event)
+{
+ //dpSetWait(HVAddressT+\".settings.onOff\",0); 
+   
+   
+    
+  dpSetWait(LVAddressOHT1+\".settings.onOff\",1);  
+
+  delay(5);  
+  
+  dpSetWait(LVAddressOHT2+\".settings.onOff\",1);
+  dpSetWait(LVAddressVFT+\".settings.onOff\",1); 
+  
+}" 0
+ E E E
+2 68
+"SCN"
+""
+1 95 33 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+68 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E 1.117531485874582 0 1.111402576583099 -49.65551019797051 -36.36680760696446 0 E 95 33 250 73
+0 2 2 "0s" 0 0 0 65 0 0  95 33 2
+2
+LANG:1 26 Arial,-1,20,5,50,0,0,0,0,0
+LANG:10001 26 Arial,-1,20,5,50,0,0,0,0,0
+0 2
+LANG:1 13 SUPER CHAMBER
+LANG:10001 6 GEMINI
+2
+LANG:1 26 Arial,-1,20,5,50,0,0,0,0,0
+LANG:10001 26 Arial,-1,20,5,50,0,0,0,0,0
+0 2
+LANG:1 0 
+LANG:10001 0 
+14 42
+"VFATB"
+""
+1 48.08937225752672 459.0833333333333 E E E 1 E 1 E N "WF_Text" E N "_Transparent" E E
+ "main(mapping event)
+{
+  string dpTPlot;
+  dpTPlot=\"LV_\"+SCNumber+\"B1\";  
+  chSettingsr(LVAddressVFB,dpTPlot);
+}" 0
+ E
+42 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  48 438 111 472
+2 "1.3f" 5 0 0 0 0 -1  "main()
+{
+  chSettingsLV(\"B\");
+}" 0
+ E E
+14 46
+"VFATBi"
+""
+1 171.1625533065961 459.0833333333333 E E E 1 E 1 E N "WF_Text" E N "_Transparent" E E
+ "main(mapping event)
+{
+  string dpTPlot;
+  dpTPlot=\"LV_\"+SCNumber+\"B1\";  
+  chSettingsr(LVAddressVFB,dpTPlot);
+}" 0
+ E
+46 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0  171 438 234 472
+2 "2.3f" 6 0 0 0 0 -1  "main()
+{
+  chSettingsLV(\"B\");
+}" 0
+ E E
+2 62
+"lbVFB"
+""
+1 168.5999999999999 212 E E E 1 E 1 E N "_WindowText" E N "_Transparent" E E
+ E E
+62 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E "main(mapping event)
+{
+  ChildPanelOn(\"/fwTrending/fwTrendingPlot\", \"GEM \"+SCNumber+\"B VFAT\",makeDynString(\"$PlotName:LV_\"+SCNumber+\"B1\"),0,0);
+}" 0
+ 0 1 3 2 1 E 1.660416666666663 0 1 -142.970988744626 235 0 E 168.5999999999999 212 188.5999999999999 232
+0 2 2 "0s" 0 0 0 64 0 0  168.5999999999999 212 1
+2
+LANG:1 35 MS Shell Dlg 2,-1,13,5,75,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:1 4 VFAT
+LANG:10001 4 VFAT
+13 78
+"SwTf"
+""
+1 160.6405360797517 311 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+78 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 34 MS Sans Serif,-1,11,5,50,0,0,0,0,0
+LANG:10001 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+0  84.4496745230078 303.4 142.4496745230078 326.4
+
+T 
+2
+LANG:1 6 LV OFF
+LANG:10001 3 OFF
+"main(mapping event)
+{
+ //dpSetWait(HVAddressT+\".settings.onOff\",0); 
+   
+   
+    
+  dpSetWait(LVAddressOHT1+\".settings.onOff\",0);  
+   
+  dpSetWait(LVAddressOHT2+\".settings.onOff\",0);
+  dpSetWait(LVAddressVFT+\".settings.onOff\",0); 
+  
+}" 0
+ E E E
+13 80
+"SwThvon"
+""
+1 205.0532857991682 294.6 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+80 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+LANG:10001 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+0  167 288 225 320
+
+T 
+2
+LANG:1 5 HV ON
+LANG:10001 5 ON HV
+"main(mapping event)
+{
+ 
+  dpSetWait(HVAddressT+\".settings.onOff\",1); 
+   
+  
+ 
+  
+}" 0
+ E E E
+13 81
+"SwThvf"
+""
+1 305.1908615567439 295.6 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+81 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+LANG:10001 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+0  229 288 287 320
+
+T 
+2
+LANG:1 6 HV OFF
+LANG:10001 3 OFF
+"main(mapping event)
+{
+ dpSetWait(HVAddressT+\".settings.onOff\",0); 
+   
+  
+  
+}" 0
+ E E E
+13 82
+"SwB"
+""
+1 62 589 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+82 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 34 MS Sans Serif,-1,11,5,50,0,0,0,0,0
+LANG:10001 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+0  24.19671420083179 582.4 82.19671420083179 605.4
+
+T 
+2
+LANG:1 5 LV ON
+LANG:10001 5 ON LV
+"main(mapping event)
+{
+  //dpSetWait(HVAddressT+\".settings.onOff\",0); 
+   
+  
+    
+  dpSetWait(LVAddressOHB1+\".settings.onOff\",1);  
+
+  delay(5);  
+  
+  dpSetWait(LVAddressOHB2+\".settings.onOff\",1);
+  dpSetWait(LVAddressVFB+\".settings.onOff\",1);  
+}" 0
+ E E E
+13 84
+"SwBhvon"
+""
+1 205.0532857991682 576.65 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+84 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+LANG:10001 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+0  167 570.05 225 602.05
+
+T 
+2
+LANG:1 5 HV ON
+LANG:10001 5 ON HV
+"main(mapping event)
+{
+ 
+  dpSetWait(HVAddressB+\".settings.onOff\",1); 
+   
+  
+ 
+  
+}" 0
+ E E E
+13 85
+"SwBhvf"
+""
+1 305.1908615567439 577.65 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+85 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+LANG:10001 34 MS Sans Serif,-1,13,5,50,0,0,0,0,0
+0  229 570.05 287 602.05
+
+T 
+2
+LANG:1 6 HV OFF
+LANG:10001 3 OFF
+"main(mapping event)
+{
+ dpSetWait(HVAddressB+\".settings.onOff\",0); 
+   
+  
+  
+}" 0
+ E E E
+13 87
+"SwBf"
+""
+1 86 591 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+87 0 0 0 0 0
+E E E
+0
+2
+LANG:1 0 
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+2
+LANG:1 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  84 582 142 605
+
+T 
+2
+LANG:1 6 LV OFF
+LANG:10001 3 OFF
+"main(mapping event)
+{
+  //dpSetWait(HVAddressT+\".settings.onOff\",0); 
+   
+  
+    
+  dpSetWait(LVAddressOHB1+\".settings.onOff\",0);  
+   
+  dpSetWait(LVAddressOHB2+\".settings.onOff\",0);
+  dpSetWait(LVAddressVFB+\".settings.onOff\",0);  
+}" 0
+ E E E
+13 88
+"Powercycle_Bottom_Button"
+""
+1 26 567 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+88 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:1 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  24 558 141 581
+
+T 
+1
+LANG:1 13 POWERCYCLE LV
+"main(mapping event)
+{
+ 
+  string ChamberName;
+  ChamberName = \"cms_gem_dcs_1:GEMINI\"+SCNumber+\"L2\";
+   
+  dpSetWait(ChamberName+\".value\",1); //Set a flag for powercycling, to avoid that HV is immediately switched OFF
+  
+  
+  dyn_string OnAdrdressOrd;
+  OnAdrdressOrd[1]=LVAddressOHB2;
+  OnAdrdressOrd[2]=LVAddressOHB1;
+  OnAdrdressOrd[3]=LVAddressVFB;
+  
+  string msg;
+  string sys=getSystemName();
+
+  //////Powercycle sequence for GEMINI01 is a single OFF/ON cycle. Complete procedure for the others V2 chambers
+  
+  if(SCNumber == \"01\"){
+     msg=\"*** INFO -\";
+     msg=msg+\" Powercycle sequence for GEMINI\" + SCNumber+ \"Layer 2 consist only in a single OFF/ON cycle\";
+     dpSet(sys+\"fwCU_GEM_ENDCAP_Minus.message\",msg);
+     
+     string mask;
+     dpGet(OnAdrdressOrd[3]+\".mask\",mask1); //Check if GEMINI01 is locked
+     
+     if(!mask){
+       dpSetWait(OnAdrdressOrd[3]+\".settings.onOff\",0);
+       delay(3); 
+       dpSetWait(OnAdrdressOrd[3]+\".settings.onOff\",1);  
+     }
+     else{
+         msg=\"*** INFO -\";
+         msg=msg+\" GEMINI\" + SCNumber+ \"Layer 2 is locked\";
+         dpSet(sys+\"fwCU_GEM_ENDCAP_Minus.message\",msg);  
+     }
+  }
+  else{
+
+
+  float im;
+  int n,m,nmax;
+  /*OnAdrdressOrd[(int)oovf]=LVAddressVFT;
+  OnAdrdressOrd[(int)oo2v]=LVAddressOHT1;
+  OnAdrdressOrd[(int)oo4v]=LVAddressOHT2;
+  dpSetWait(HVAddressT+\".settings.onOff\",1); */
+
+  float OH4_Iok,t1,t2,t3;
+  OH4_Iok=LVsq[2];
+  nmax=LVsq[3];
+  n=0;
+  m=0; 
+  string mask1,mask2,mask3;
+  dpGet(OnAdrdressOrd[1]+\".mask\",mask1);
+  if(!mask1)
+  {
+  msg=\"*** INFO -\";
+  msg=msg+\" Startup sequence for GEMINI\" + SCNumber+ \"Layer 2 started at\";
+  dpSet(sys+\"fwCU_GEM_ENDCAP_Minus.message\",msg);
+  msg=\"*** INFO -\";  
+  msg=getCurrentTime();
+  dpSet(sys+\"fwCU_GEM_ENDCAP_Minus.message\",msg);
+   msg=\"*** INFO -\";  
+   msg=msg+\" Display format [voltage OH4v,voltag OH2v,voltag VFAT, current OH4v]\" +\" OH4_IOk = \" + OH4_Iok;
+  dpSet(sys+\"fwCU_GEM_ENDCAP_Minus.message\",msg);
+  do
+  {
+    //int k=5*n;    
+    n++; 
+    m=0;
+    dpSetWait(OnAdrdressOrd[1]+\".settings.onOff\",0);
+    dpSetWait(OnAdrdressOrd[2]+\".settings.onOff\",0);
+    dpSetWait(OnAdrdressOrd[3]+\".settings.onOff\",0);
+    delay(3); 
+    dpSetWait(OnAdrdressOrd[1]+\".settings.onOff\",1);
+    m++; 
+    delay(3);
+    dpGet(OnAdrdressOrd[1]+\".actual.vMon\",t1);
+    dpGet(OnAdrdressOrd[2]+\".actual.vMon\",t2);
+    dpGet(OnAdrdressOrd[3]+\".actual.vMon\",t3);
+    vmB[m]=makeDynString(t1,t2,t3);
+    dpGet(OnAdrdressOrd[1]+\".actual.iMon\",imB[m]);
+    
+    m++;
+    delay(2,500);
+    dpGet(OnAdrdressOrd[1]+\".actual.vMon\",t1);
+    dpGet(OnAdrdressOrd[2]+\".actual.vMon\",t2);
+    dpGet(OnAdrdressOrd[3]+\".actual.vMon\",t3);
+    vmB[m]=makeDynString(t1,t2,t3);
+    dpGet(OnAdrdressOrd[1]+\".actual.iMon\",imB[m]);
+    
+    m++;
+    delay(2,500);
+    dpGet(OnAdrdressOrd[1]+\".actual.vMon\",t1);
+    dpGet(OnAdrdressOrd[2]+\".actual.vMon\",t2);
+    dpGet(OnAdrdressOrd[3]+\".actual.vMon\",t3);
+    vmB[m]=makeDynString(t1,t2,t3);
+    dpGet(OnAdrdressOrd[1]+\".actual.iMon\",imB[m]);
+    
+    m++;
+    delay(2,500);
+    dpGet(OnAdrdressOrd[1]+\".actual.vMon\",t1);
+    dpGet(OnAdrdressOrd[2]+\".actual.vMon\",t2);
+    dpGet(OnAdrdressOrd[3]+\".actual.vMon\",t3);
+    vmB[m]=makeDynString(t1,t2,t3);
+    dpGet(OnAdrdressOrd[1]+\".actual.iMon\",imB[m]);
+    
+     m++;
+    delay(2,500);
+    dpGet(OnAdrdressOrd[1]+\".actual.vMon\",t1);
+    dpGet(OnAdrdressOrd[2]+\".actual.vMon\",t2);
+    dpGet(OnAdrdressOrd[3]+\".actual.vMon\",t3);
+    vmB[m]=makeDynString(t1,t2,t3);
+    dpGet(OnAdrdressOrd[1]+\".actual.iMon\",imB[m]);
+    
+    msg=\"*** INFO -\";
+    //msg=msg+\" Iteration \"+n+\": Voltage,Current after t(x)s :  t(1)=\"+vmT[k+1]+\",\"+imT[k+1]+\"   t(2)=\"+vmT[k+2]+\",\"+imT[k+2]+\"   t(3)=\"+vmT[k+3]+\",\"+imT[k+3]+\"   t(4)=\"+vmT[k+4]+\",\"+imT[k+4]+\"   t(5)=\"+vmT[k+5]+\",\"+imT[k+5];
+    msg=msg+\" Iteration \"+n+\": \"+formatMVals(\"B\");
+    dpSet(sys+\"fwCU_GEM_ENDCAP_Minus.message\",msg);
+  } 
+  while(imB[m] < OH4_Iok && n < nmax);
+ }    //mask condition for OH4V
+  dpGet(OnAdrdressOrd[2]+\".mask\",mask2);
+  if(!mask2)
+   dpSetWait(OnAdrdressOrd[2]+\".settings.onOff\",1);
+  dpGet(OnAdrdressOrd[3]+\".mask\",mask3);
+  if(!mask3)
+   dpSetWait(OnAdrdressOrd[3]+\".settings.onOff\",1);  
+  //dpGet(OnAdrdressOrd[1]+\".actual.iMon\",imT[n]);
+  if(!mask1)
+  {
+   if(imB[m] < OH4_Iok )
+   {
+    msg=\"*** WARNING -\";
+    msg=msg+\" GEMINI\" + SCNumber+ \"Layer 2 Happy current not Reached after \"+n+\" iterations\";
+    dpSet(sys+\"fwCU_GEM_ENDCAP_Minus.message\",msg);
+    //dpSetWait(OnAdrdressOrd[1]+\".actual.iMon\",0);
+    //ChildPanelOnRelativModal(\"/vision/MessageWarning\", \"Warning\", makeDynString(\"$1:Power Sequence Fails \"+n+\" Times\"), 20, 10); 
+    
+   }
+  else 
+    {
+     msg=\"*** INFO -\";
+     msg=msg+\"GEMINI\" + SCNumber+ \"Layer 2 Happy current Reached after \"+n+\" iterations\";
+     dpSet(sys+\"fwCU_GEM_ENDCAP_Minus.message\",msg);
+    //dpSetWait(OnAdrdressOrd[2]+\".actual.iMon\",1);
+    //dpSetWait(OnAdrdressOrd[3]+\".actual.iMon\",1);  
+    }
+  }
+ else 
+   {
+    msg=\"*** INFO -\";
+    msg=msg+\"GEMINI\" + SCNumber+ \"Layer 2 OH4V locked\";
+    dpSet(sys+\"fwCU_GEM_ENDCAP_Minus.message\",msg);
+    //dpSetWait(OnAdrdressOrd[2]+\".actual.iMon\",1);
+   //dpSetWait(OnAdrdressOrd[3]+\".actual.iMon\",1);  
+   }
+   //dpSet(getSystemName()+\"GL1.GEMCAEN.GP2\",imT);
+  //dpSet(\"System1:GL1.GEMCAEN.GP2\",imT);
+  //DebugN(\"nmax=\"+nmax+\" and OH4_Iok=\"+OH4_Iok+\" and m=\"+m);
+}
+    dpSetWait(ChamberName+\".value\",0);  //Release Powercycling flag
+
+}" 0
+ E E E
+13 89
+"Powercycle_Top_Button"
+""
+1 26 287 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+89 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:1 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  24 278 141 301
+
+T 
+1
+LANG:1 13 POWERCYCLE LV
+"main(mapping event)
+{
+ 
+  string ChamberName;
+  ChamberName = \"cms_gem_dcs_1:GEMINI\"+SCNumber+\"L1\";
+   
+  dpSetWait(ChamberName+\".value\",1); //Set a flag for powercycling, to avoid that HV is immediately switched OFF
+
+  dyn_string OnAdrdressOrd;
+  string msg;
+  string sys=getSystemName(); 
+  
+  OnAdrdressOrd[1]=LVAddressOHT2;        //OHv4
+  OnAdrdressOrd[2]=LVAddressOHT1;        // OH2V
+  OnAdrdressOrd[3]=LVAddressVFT;
+
+  //////Powercycle sequence for GEMINI01 is a single OFF/ON cycle. Complete procedure for the others V2 chambers
+  
+  if(SCNumber == \"01\"){
+     msg=\"*** INFO -\";
+     msg=msg+\" Powercycle sequence for GEMINI\" + SCNumber+ \"Layer 1 consist only in a single OFF/ON cycle\";
+     dpSet(sys+\"fwCU_GEM_ENDCAP_Minus.message\",msg);
+     
+     string mask;
+     dpGet(OnAdrdressOrd[3]+\".mask\",mask1); //Check if GEMINI01 is locked
+     
+     if(!mask){
+     
+       dpSetWait(OnAdrdressOrd[3]+\".settings.onOff\",0);
+       delay(3); 
+       dpSetWait(OnAdrdressOrd[3]+\".settings.onOff\",1);
+     } 
+    else{
+         msg=\"*** INFO -\";
+         msg=msg+\" GEMINI\" + SCNumber+ \"Layer 1 is locked\";
+         dpSet(sys+\"fwCU_GEM_ENDCAP_Minus.message\",msg);  
+     } 
+  
+  }
+  else{
+    
+  dyn_string msgVals;
+  
+  int n,m,nmax;
+//   OnAdrdressOrd[1]=LVAddressOHT2;        //OHv4
+//   OnAdrdressOrd[2]=LVAddressOHT1;        // OH2V
+//   OnAdrdressOrd[3]=LVAddressVFT;
+  float OH4_Iok,t1,t2,t3;
+  OH4_Iok=LVsq[1];
+  nmax=LVsq[3];
+  n=0;
+  string mask1,mask2,mask3;
+  dpGet(OnAdrdressOrd[1]+\".mask\",mask1);
+  if(!mask1)
+  {
+  msg=\"*** INFO -\";
+  msg=msg+\" Startup sequence for GEMINI\" + SCNumber+ \"Layer 1 started at\";
+  dpSet(sys+\"fwCU_GEM_ENDCAP_Minus.message\",msg);
+  msg=\"*** INFO -\";  
+  msg=getCurrentTime();
+  dpSet(sys+\"fwCU_GEM_ENDCAP_Minus.message\",msg);
+   msg=\"*** INFO -\";  
+   msg=msg+\" Display format [voltage OH4v,voltage OH2v,voltage VFAT, current OH4v]\"+\" OH4_IOk = \" + OH4_Iok;
+  dpSet(sys+\"fwCU_GEM_ENDCAP_Minus.message\",msg);
+  do
+  {
+    //int k=5*n;    
+    n++; 
+    m=0;
+    dpSetWait(OnAdrdressOrd[1]+\".settings.onOff\",0);
+    dpSetWait(OnAdrdressOrd[2]+\".settings.onOff\",0);
+    dpSetWait(OnAdrdressOrd[3]+\".settings.onOff\",0);
+    delay(3); 
+    dpSetWait(OnAdrdressOrd[1]+\".settings.onOff\",1);
+    m++; 
+    delay(3);
+    dpGet(OnAdrdressOrd[1]+\".actual.vMon\",t1);
+    dpGet(OnAdrdressOrd[2]+\".actual.vMon\",t2);
+    dpGet(OnAdrdressOrd[3]+\".actual.vMon\",t3);
+    vmT[m]=makeDynString(t1,t2,t3);
+    dpGet(OnAdrdressOrd[1]+\".actual.iMon\",imT[m]);
+    
+    m++;
+    delay(2,500);
+    dpGet(OnAdrdressOrd[1]+\".actual.vMon\",t1);
+    dpGet(OnAdrdressOrd[2]+\".actual.vMon\",t2);
+    dpGet(OnAdrdressOrd[3]+\".actual.vMon\",t3);
+    vmT[m]=makeDynString(t1,t2,t3);
+    dpGet(OnAdrdressOrd[1]+\".actual.iMon\",imT[m]);
+    
+    m++;
+    delay(2,500);
+    dpGet(OnAdrdressOrd[1]+\".actual.vMon\",t1);
+    dpGet(OnAdrdressOrd[2]+\".actual.vMon\",t2);
+    dpGet(OnAdrdressOrd[3]+\".actual.vMon\",t3);
+    vmT[m]=makeDynString(t1,t2,t3);
+    dpGet(OnAdrdressOrd[1]+\".actual.iMon\",imT[m]);
+    
+    m++;
+    delay(2,500);
+    dpGet(OnAdrdressOrd[1]+\".actual.vMon\",t1);
+    dpGet(OnAdrdressOrd[2]+\".actual.vMon\",t2);
+    dpGet(OnAdrdressOrd[3]+\".actual.vMon\",t3);
+    vmT[m]=makeDynString(t1,t2,t3);
+    dpGet(OnAdrdressOrd[1]+\".actual.iMon\",imT[m]);
+    
+     m++;
+    delay(2,500);
+    dpGet(OnAdrdressOrd[1]+\".actual.vMon\",t1);
+    dpGet(OnAdrdressOrd[2]+\".actual.vMon\",t2);
+    dpGet(OnAdrdressOrd[3]+\".actual.vMon\",t3);
+    vmT[m]=makeDynString(t1,t2,t3);
+    dpGet(OnAdrdressOrd[1]+\".actual.iMon\",imT[m]);
+    
+    msg=\"*** INFO -\";
+    //msg=msg+\" Iteration \"+n+\": Voltage,Current after t(x)s :  t(1)=\"+vmT[k+1]+\",\"+imT[k+1]+\"   t(2)=\"+vmT[k+2]+\",\"+imT[k+2]+\"   t(3)=\"+vmT[k+3]+\",\"+imT[k+3]+\"   t(4)=\"+vmT[k+4]+\",\"+imT[k+4]+\"   t(5)=\"+vmT[k+5]+\",\"+imT[k+5];
+    msg=msg+\" Iteration \"+n+\": \"+formatMVals(\"T\");
+    dpSet(sys+\"fwCU_GEM_ENDCAP_Minus.message\",msg);
+  } 
+  while(imT[m] < OH4_Iok && n < nmax);
+ }    //mask condition for OH4V
+  dpGet(OnAdrdressOrd[2]+\".mask\",mask2);
+  if(!mask2)
+   dpSetWait(OnAdrdressOrd[2]+\".settings.onOff\",1);
+  dpGet(OnAdrdressOrd[3]+\".mask\",mask3);
+  if(!mask3)
+   dpSetWait(OnAdrdressOrd[3]+\".settings.onOff\",1);  
+  //dpGet(OnAdrdressOrd[1]+\".actual.iMon\",imT[n]);
+  if(!mask1)
+  {
+   if(imT[m] < OH4_Iok )
+   {
+    msg=\"*** WARNING -\";
+    msg=msg+\" GEMINI\" + SCNumber+ \"Layer 1 Happy current not Reached after \"+n+\" iterations\";
+    dpSet(sys+\"fwCU_GEM_ENDCAP_Minus.message\",msg);
+    //dpSetWait(OnAdrdressOrd[1]+\".actual.iMon\",0);
+    //ChildPanelOnRelativModal(\"/vision/MessageWarning\", \"Warning\", makeDynString(\"$1:Power Sequence Fails \"+n+\" Times\"), 20, 10); 
+    
+   }
+  else 
+    {
+     msg=\"*** INFO -\";
+     msg=msg+\"GEMINI\" + SCNumber+ \"Layer 1 Happy current Reached after \"+n+\" iterations\";
+     dpSet(sys+\"fwCU_GEM_ENDCAP_Minus.message\",msg);
+    //dpSetWait(OnAdrdressOrd[2]+\".actual.iMon\",1);
+    //dpSetWait(OnAdrdressOrd[3]+\".actual.iMon\",1);  
+    }
+  }
+ else 
+   {
+    msg=\"*** INFO -\";
+    msg=msg+\"GEMINI\" + SCNumber+ \"Layer 1 OH4V locked\";
+    dpSet(sys+\"fwCU_GEM_ENDCAP_Minus.message\",msg);
+    //dpSetWait(OnAdrdressOrd[2]+\".actual.iMon\",1);
+   //dpSetWait(OnAdrdressOrd[3]+\".actual.iMon\",1);  
+   }
+   //dpSet(getSystemName()+\"GL1.GEMCAEN.GP2\",imT);
+  //dpSet(\"System1:GL1.GEMCAEN.GP2\",imT);
+  //DebugN(\"nmax=\"+nmax+\" and OH4_Iok=\"+OH4_Iok+\" and m=\"+m);
+ }
+  dpSetWait(ChamberName+\".value\",0); //Release Powercycling flag
+}" 0
+ E E E
+2 90
+"HV_V_T"
+""
+1 112.2485040247239 130 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+90 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 112.2485040247239 130 132.2485040247239 150
+0 2 2 "0s" 0 0 0 64 0 0  112.2485040247239 130 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:1 3 (V)
+2 91
+"LV_VFAT_V_T"
+""
+1 112 170 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+91 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 112 170 132 190
+0 2 2 "0s" 0 0 0 64 0 0  112 170 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:1 3 (V)
+2 92
+"LV_OH2V_V_T"
+""
+1 112 210 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+92 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 112 210 132 230
+0 2 2 "0s" 0 0 0 64 0 0  112 210 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:1 3 (V)
+2 93
+"LV_OH4V_V_T"
+""
+1 112.2485040247239 250 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+93 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 112.2485040247239 250 132.2485040247239 270
+0 2 2 "0s" 0 0 0 64 0 0  112.2485040247239 250 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:1 3 (V)
+2 94
+"PRIMITIVE_TEXT28"
+""
+1 112 410 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+94 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 112 410 132 430
+0 2 2 "0s" 0 0 0 64 0 0  112 410 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:1 3 (V)
+2 95
+"LV_VFAT_V_B"
+""
+1 112.2485040247239 448 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+95 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 112.2485040247239 448 132.2485040247239 468
+0 2 2 "0s" 0 0 0 64 0 0  112.2485040247239 448 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:1 3 (V)
+2 96
+"LV_OH2V_V_B"
+""
+1 112.4422540247239 489.5333333333334 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+96 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 112.4422540247239 489.5333333333334 132.4422540247239 509.5333333333334
+0 2 2 "0s" 0 0 0 64 0 0  112.4422540247239 489.5333333333334 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:1 3 (V)
+2 97
+"LV_OH4V_V_B"
+""
+1 112.2485040247239 530 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+97 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 112.2485040247239 530 132.2485040247239 550
+0 2 2 "0s" 0 0 0 64 0 0  112.2485040247239 530 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:1 3 (V)
+2 98
+"HV_uA_T"
+""
+1 237 132 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+98 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 237 132 257 152
+0 2 2 "0s" 0 0 0 64 0 0  237 132 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:1 4 (uA)
+2 99
+"HV_uA_B"
+""
+1 236.5778582712894 410 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+99 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 236.5778582712894 410 256.5778582712894 430
+0 2 2 "0s" 0 0 0 64 0 0  236.5778582712894 410 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:1 4 (uA)
+2 100
+"LV_VFAT_A_T"
+""
+1 237.125 168 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+100 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 237.125 168 257.125 188
+0 2 2 "0s" 0 0 0 64 0 0  237.125 168 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:1 3 (A)
+2 101
+"LV_OH2V_A_T"
+""
+1 237.125 208 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+101 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 237.125 208 257.125 228
+0 2 2 "0s" 0 0 0 64 0 0  237.125 208 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:1 3 (A)
+2 102
+"LV_OH4V_A_T"
+""
+1 237 250 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+102 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 237 250 257 270
+0 2 2 "0s" 0 0 0 64 0 0  237 250 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:1 3 (A)
+2 103
+"LV_VFAT_A_B"
+""
+1 237.125 448 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+103 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 237.125 448 257.125 468
+0 2 2 "0s" 0 0 0 64 0 0  237.125 448 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:1 3 (A)
+2 104
+"LV_OH2V_A_B"
+""
+1 237.125 490 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+104 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 237.125 490 257.125 510
+0 2 2 "0s" 0 0 0 64 0 0  237.125 490 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:1 3 (A)
+2 105
+"LV_OH4V_A_B"
+""
+1 237 530 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+105 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 3 2 1 E U  0 E 237 530 257 550
+0 2 2 "0s" 0 0 0 64 0 0  237 530 1
+1
+LANG:1 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:1 3 (A)
+0
+LAYER, 1 
+1
+LANG:1 0 
+0
+LAYER, 2 
+1
+LANG:1 0 
+0
+LAYER, 3 
+1
+LANG:1 0 
+0
+LAYER, 4 
+1
+LANG:1 0 
+0
+LAYER, 5 
+1
+LANG:1 0 
+0
+LAYER, 6 
+1
+LANG:1 0 
+0
+LAYER, 7 
+1
+LANG:1 0 
+0
+0

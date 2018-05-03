@@ -1,0 +1,1002 @@
+V 12
+1
+LANG:1 0 
+PANEL,-1 -1 1025 365 N "_3DFace" 0
+E E E E E 1 -1 -1 0  10 10
+""0  1
+E E 3
+"CBRef" "1"
+"EClose" E
+"UnifiedDraw" ""
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:1 0 
+30 0
+"mixer_frame"
+""
+1 30 14 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+0 0 0 0 0 0
+E E E
+1
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 0 1 0 1 E 1 0 0.684931506849315 -20 0.4109589041095894 0 E 30 14 661 161
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,0,0,0,0,0
+0 1
+LANG:1 9 Mixer DPs
+13 1
+"Close_Button"
+""
+1 1070 470 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+1 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  865 297 989 331
+
+T 
+1
+LANG:1 5 Close
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_panelOff();
+}
+
+EP_panelOff()
+{
+  PanelOff();
+}
+
+// SimpleCtrlScript {EP_panelOff}
+// Function {PanelOff}
+// Panel {}
+// Module {}
+// SimpleCtrlScriptEnd {EP_panelOff}
+" 0
+ E E E
+22 6
+"mixer_box"
+""
+1 20 60 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+6 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  18 44 242 88
+10
+1
+LANG:1 4 NONE
+
+0
+1
+LANG:1 3 ALL
+
+0
+1
+LANG:1 29 CMSGEM_Mx_L1CompRatioAS.Value
+
+0
+1
+LANG:1 29 CMSGEM_Mx_L2CompRatioAS.Value
+
+0
+1
+LANG:1 29 CMSGEM_Mx_L3CompRatioAS.Value
+
+0
+1
+LANG:1 22 CMSGEM_Mx_PT1103.Value
+
+0
+1
+LANG:1 22 CMSGEM_Mx_PT1203.Value
+
+0
+1
+LANG:1 22 CMSGEM_Mx_PT1303.Value
+
+0
+1
+LANG:1 22 CMSGEM_Mx_PT1009.Value
+
+0
+1
+LANG:1 25 CMSGEM_Di_TotFlowAS.Value
+
+0
+
+E
+E
+E
+ 1 0
+13 7
+"mask_mixer_button"
+""
+1 268 62.71999999999999 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+7 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,50,0,0,0,0,0
+0  266 44 430 92
+
+T 
+1
+LANG:1 4 Mask
+"main()
+{
+  
+  dyn_string exceptionInfo;
+  bool answ;
+  fwGeneral_openMessagePanel(\"Do you really want to mask this channel?\", answ , exceptionInfo, \"Confirm\", false );
+  DebugTN(\"answer\",answ);
+  
+  if (answ)
+  {
+    applyChanges();
+  }
+}
+
+  
+ void applyChanges()
+ { 
+   
+  
+  string channel;
+  getValue(\"mixer_box\",\"text\",channel); 
+  
+//    DebugN(\"selezione = \", channel);
+
+  dyn_string dps = makeDynString(\"CMSGEM_Mx_TotalFlowAS.Value\",
+                                 \"CMSGEM_Mx_L1CompRatioAS.Value\",
+                                 \"CMSGEM_Mx_L2CompRatioAS.Value\",
+                                 \"CMSGEM_Mx_L3CompRatioAS.Value\",
+                                 \"CMSGEM_Mx_PT1103.Value\",
+                                 \"CMSGEM_Mx_PT1203.Value\",
+                                 \"CMSGEM_Mx_PT1303.Value\",
+                                 \"CMSGEM_Mx_PT1009.Value\",
+                                 \"CMSGEM_Di_TotFlowAS.Value\");
+  
+  dyn_string exceptionInfo;  
+  dyn_errClass err;
+  int datapoints = dynlen(dps);
+ // DebugN(datapoints);
+  
+  if(channel == \"ALL\"){  
+    for(int i=1; i<=datapoints; i++){
+   //   DebugN(\"dp = \",dps[i]);
+       fwAlertConfig_deactivate(dps[i], exceptionInfo);
+     }
+    }
+  else if(channel == \"NONE\"){
+     return 0;
+     }   
+  else{
+    fwAlertConfig_deactivate(channel, exceptionInfo);
+      DebugN(\"canale = \", channel);
+     }   
+     
+  err = getLastError();
+  if (dynlen(err) > 0)
+    errorDialog(err);
+
+
+}
+" 0
+ E E E
+13 8
+"unmask_mixer_button"
+""
+1 451 62.71999999999999 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+8 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,50,0,0,0,0,0
+0  449 44 613 92
+
+T 
+1
+LANG:1 6 Unmask
+"main()
+{
+  
+  dyn_string exceptionInfo;
+  bool answ;
+  fwGeneral_openMessagePanel(\"Do you really want to unmask this channel?\", answ , exceptionInfo, \"Confirm\", false );
+  DebugTN(\"answer\",answ);
+  
+  if (answ)
+  {
+    applyChanges();
+  }
+}
+
+  
+ void applyChanges()
+ { 
+  
+  
+  string channel;
+  getValue(\"mixer_box\",\"text\",channel); 
+  
+//    DebugN(\"selezione = \", channel);
+
+  dyn_string dps = makeDynString(\"CMSGEM_Mx_TotalFlowAS.Value\",
+                                 \"CMSGEM_Mx_L1CompRatioAS.Value\",
+                                 \"CMSGEM_Mx_L2CompRatioAS.Value\",
+                                 \"CMSGEM_Mx_L3CompRatioAS.Value\",
+                                 \"CMSGEM_Mx_PT1103.Value\",
+                                 \"CMSGEM_Mx_PT1203.Value\",
+                                 \"CMSGEM_Mx_PT1303.Value\",
+                                 \"CMSGEM_Mx_PT1009.Value\",
+                                 \"CMSGEM_Di_TotFlowAS.Value\");
+  
+  dyn_string exceptionInfo;  
+  dyn_errClass err;
+ int datapoints = dynlen(dps);
+ // DebugN(datapoints);
+  
+  if(channel == \"ALL\"){  
+    for(int i=1; i<=datapoints; i++){
+   //   DebugN(\"dp = \",dps[i]);
+       fwAlertConfig_activate(dps[i], exceptionInfo);
+     }
+    }
+   else if(channel == \"NONE\"){
+     return 0;
+     }   
+  else{
+    fwAlertConfig_activate(channel, exceptionInfo);
+//      DebugN(\"canale = \", channel);
+     }   
+     
+  err = getLastError();
+  if (dynlen(err) > 0)
+    errorDialog(err);
+
+
+}
+" 0
+ E E E
+30 9
+"rack_frame"
+""
+1 30 14 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+9 0 0 0 0 0
+E E E
+1
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 0 1 0 1 E 1 0 0.684931506849315 -20 117.4109589041096 0 E 30 14 661 161
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,0,0,0,0,0
+0 1
+LANG:1 8 Rack DPs
+22 10
+"rack_box"
+""
+1 20 177 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+10 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  18 161 242 205
+6
+1
+LANG:1 4 NONE
+
+0
+1
+LANG:1 3 ALL
+
+0
+1
+LANG:1 22 CMSGEM_Di_PT6124.Value
+
+0
+1
+LANG:1 22 CMSGEM_Di_PT6122.Value
+
+0
+1
+LANG:1 22 CMSGEM_Di_PT6125.Value
+
+0
+1
+LANG:1 22 CMSGEM_Di_PT6104.Value
+
+0
+
+E
+E
+E
+ 1 0
+13 11
+"rack_mask_button"
+""
+1 268 179.72 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+11 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,50,0,0,0,0,0
+0  266 161 430 209
+
+T 
+1
+LANG:1 4 Mask
+"main()
+{
+  
+  dyn_string exceptionInfo;
+  bool answ;
+  fwGeneral_openMessagePanel(\"Do you really want to mask this channel?\", answ , exceptionInfo, \"Confirm\", false );
+  DebugTN(\"answer\",answ);
+  
+  if (answ)
+  {
+    applyChanges();
+  }
+}
+
+  
+ void applyChanges()
+ { 
+
+  string channel;
+  getValue(\"rack_box\",\"text\",channel); 
+  
+//    DebugN(\"selezione = \", channel);
+
+  dyn_string dps = makeDynString(\"CMSGEM_Di_PT6124.Value\",
+                                 \"CMSGEM_Di_PT6122.Value\",
+                                 \"CMSGEM_Di_PT6125.Value\",
+                                 \"CMSGEM_Di_PT6104.Value\");
+  
+  dyn_string exceptionInfo;  
+  dyn_errClass err;
+  int datapoints = dynlen(dps);
+ // DebugN(datapoints);
+  
+  if(channel == \"ALL\"){  
+    for(int i=1; i<=datapoints; i++){
+   //   DebugN(\"dp = \",dps[i]);
+       fwAlertConfig_deactivate(dps[i], exceptionInfo);
+     }
+    }
+   else if(channel == \"NONE\"){
+     return 0;
+     }   
+  else{
+    fwAlertConfig_deactivate(channel, exceptionInfo);
+//      DebugN(\"canale = \", channel);
+     }   
+     
+  err = getLastError();
+  if (dynlen(err) > 0)
+    errorDialog(err);
+
+
+}
+" 0
+ E E E
+13 12
+"rack_unmask_button"
+""
+1 451 179.72 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+12 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,50,0,0,0,0,0
+0  449 161 613 209
+
+T 
+1
+LANG:1 6 Unmask
+"main()
+{
+  
+  dyn_string exceptionInfo;
+  bool answ;
+  fwGeneral_openMessagePanel(\"Do you really want to unmask this channel?\", answ , exceptionInfo, \"Confirm\", false );
+  DebugTN(\"answer\",answ);
+  
+  if (answ)
+  {
+    applyChanges();
+  }
+}
+
+  
+ void applyChanges()
+ { 
+  
+  
+  string channel;
+  getValue(\"rack_box\",\"text\",channel); 
+  
+//    DebugN(\"selezione = \", channel);
+
+  dyn_string dps = makeDynString(\"CMSGEM_Di_PT6124.Value\",
+                                 \"CMSGEM_Di_PT6122.Value\",
+                                 \"CMSGEM_Di_PT6125.Value\",
+                                 \"CMSGEM_Di_PT6104.Value\");
+  
+  dyn_string exceptionInfo;  
+  dyn_errClass err;
+ int datapoints = dynlen(dps);
+ // DebugN(datapoints);
+  
+  if(channel == \"ALL\"){  
+    for(int i=1; i<=datapoints; i++){
+   //   DebugN(\"dp = \",dps[i]);
+       fwAlertConfig_activate(dps[i], exceptionInfo);
+     }
+    }
+   else if(channel == \"NONE\"){
+     return 0;
+     }   
+  else{
+    fwAlertConfig_activate(channel, exceptionInfo);
+//      DebugN(\"canale = \", channel);
+     }   
+     
+  err = getLastError();
+  if (dynlen(err) > 0)
+    errorDialog(err);
+
+
+}
+" 0
+ E E E
+30 13
+"flowcell_frame"
+""
+1 30 14 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+13 0 0 0 0 0
+E E E
+1
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 0 1 0 1 E 1 0 0.684931506849315 -20 232.4109589041096 0 E 30 14 661 161
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,0,0,0,0,0
+0 1
+LANG:1 12 Flowcell DPs
+22 14
+"flowcell_box"
+""
+1 20 292 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+14 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  18 276 242 320
+20
+1
+LANG:1 4 NONE
+
+0
+1
+LANG:1 3 ALL
+
+0
+1
+LANG:1 25 CMSGEM_Di_FE6102Ch1.Value
+
+0
+1
+LANG:1 25 CMSGEM_Di_FE6102Ch2.Value
+
+0
+1
+LANG:1 25 CMSGEM_Di_FE6102Ch3.Value
+
+0
+1
+LANG:1 25 CMSGEM_Di_FE6102Ch4.Value
+
+0
+1
+LANG:1 25 CMSGEM_Di_FE6102Ch5.Value
+
+0
+1
+LANG:1 25 CMSGEM_Di_FE6102Ch6.Value
+
+0
+1
+LANG:1 25 CMSGEM_Di_FE6106Ch1.Value
+
+0
+1
+LANG:1 25 CMSGEM_Di_FE6106Ch2.Value
+
+0
+1
+LANG:1 25 CMSGEM_Di_FE6106Ch3.Value
+
+0
+1
+LANG:1 25 CMSGEM_Di_FE6106Ch4.Value
+
+0
+1
+LANG:1 25 CMSGEM_Di_FE6106Ch5.Value
+
+0
+1
+LANG:1 25 CMSGEM_Di_FE6106Ch6.Value
+
+0
+1
+LANG:1 20 CMS_GEM_Di_Ch1.Value
+
+0
+1
+LANG:1 20 CMS_GEM_Di_Ch2.Value
+
+0
+1
+LANG:1 20 CMS_GEM_Di_Ch3.Value
+
+0
+1
+LANG:1 20 CMS_GEM_Di_Ch4.Value
+
+0
+1
+LANG:1 20 CMS_GEM_Di_Ch5.Value
+
+0
+1
+LANG:1 20 CMS_GEM_Di_Ch6.Value
+
+0
+
+E
+E
+E
+ 1 0
+13 15
+"flowcell_mask_button"
+""
+1 268 294.72 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+15 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,50,0,0,0,0,0
+0  266 276 430 324
+
+T 
+1
+LANG:1 4 Mask
+"main()
+{
+  
+  dyn_string exceptionInfo;
+  bool answ;
+  fwGeneral_openMessagePanel(\"Do you really want to mask this channel?\", answ , exceptionInfo, \"Confirm\", false );
+  DebugTN(\"answer\",answ);
+  
+  if (answ)
+  {
+    applyChanges();
+  }
+}
+
+  
+ void applyChanges()
+ { 
+
+  string channel;
+  getValue(\"flowcell_box\",\"text\",channel); 
+  
+//    DebugN(\"selezione = \", channel);
+
+  dyn_string dps = makeDynString(\"CMSGEM_Di_FE6102Ch1.Value\",
+                                 \"CMSGEM_Di_FE6102Ch2.Value\",
+                                 \"CMSGEM_Di_FE6102Ch3.Value\",
+                                 \"CMSGEM_Di_FE6102Ch4.Value\",
+                                 \"CMSGEM_Di_FE6102Ch5.Value\",
+                                 \"CMSGEM_Di_FE6102Ch6.Value\",
+                                 \"CMSGEM_Di_FE6106Ch1.Value\",
+                                 \"CMSGEM_Di_FE6106Ch2.Value\",
+                                 \"CMSGEM_Di_FE6106Ch3.Value\",
+                                 \"CMSGEM_Di_FE6106Ch4.Value\",
+                                 \"CMSGEM_Di_FE6106Ch5.Value\",
+                                 \"CMSGEM_Di_FE6106Ch6.Value\",
+                                 \"CMS_GEM_Di_Ch1.Value\",
+                                 \"CMS_GEM_Di_Ch2.Value\",
+                                 \"CMS_GEM_Di_Ch3.Value\",
+                                 \"CMS_GEM_Di_Ch4.Value\",
+                                 \"CMS_GEM_Di_Ch5.Value\",
+                                 \"CMS_GEM_Di_Ch6.Value\");
+  
+  dyn_string exceptionInfo;  
+  dyn_errClass err;
+ int datapoints = dynlen(dps);
+ // DebugN(datapoints);
+  
+  if(channel == \"ALL\"){  
+    for(int i=1; i<=datapoints; i++){
+   //   DebugN(\"dp = \",dps[i]);
+       fwAlertConfig_deactivate(dps[i], exceptionInfo);
+     }
+    }
+   else if(channel == \"NONE\"){
+     return 0;
+     }   
+  else{
+    fwAlertConfig_deactivate(channel, exceptionInfo);
+//      DebugN(\"canale = \", channel);
+     }   
+     
+  err = getLastError();
+  if (dynlen(err) > 0)
+    errorDialog(err);
+
+
+}
+" 0
+ E E E
+13 16
+"flowcell_unmask_button"
+""
+1 451 294.72 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+16 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,50,0,0,0,0,0
+0  449 276 613 324
+
+T 
+1
+LANG:1 6 Unmask
+"main()
+{
+  
+  dyn_string exceptionInfo;
+  bool answ;
+  fwGeneral_openMessagePanel(\"Do you really want to unmask this channel?\", answ , exceptionInfo, \"Confirm\", false );
+  DebugTN(\"answer\",answ);
+  
+  if (answ)
+  {
+    applyChanges();
+  }
+}
+
+  
+ void applyChanges()
+ { 
+
+  string channel;
+  getValue(\"flowcell_box\",\"text\",channel); 
+  
+//    DebugN(\"selezione = \", channel);
+
+  dyn_string dps = makeDynString(\"CMSGEM_Di_FE6102Ch1.Value\",
+                                 \"CMSGEM_Di_FE6102Ch2.Value\",
+                                 \"CMSGEM_Di_FE6102Ch3.Value\",
+                                 \"CMSGEM_Di_FE6102Ch4.Value\",
+                                 \"CMSGEM_Di_FE6102Ch5.Value\",
+                                 \"CMSGEM_Di_FE6102Ch6.Value\",
+                                 \"CMSGEM_Di_FE6106Ch1.Value\",
+                                 \"CMSGEM_Di_FE6106Ch2.Value\",
+                                 \"CMSGEM_Di_FE6106Ch3.Value\",
+                                 \"CMSGEM_Di_FE6106Ch4.Value\",
+                                 \"CMSGEM_Di_FE6106Ch5.Value\",
+                                 \"CMSGEM_Di_FE6106Ch6.Value\",
+                                 \"CMS_GEM_Di_Ch1.Value\",
+                                 \"CMS_GEM_Di_Ch2.Value\",
+                                 \"CMS_GEM_Di_Ch3.Value\",
+                                 \"CMS_GEM_Di_Ch4.Value\",
+                                 \"CMS_GEM_Di_Ch5.Value\",
+                                 \"CMS_GEM_Di_Ch6.Value\");
+  
+  dyn_string exceptionInfo;  
+  dyn_errClass err;
+ int datapoints = dynlen(dps);
+ // DebugN(datapoints);
+  
+  if(channel == \"ALL\"){  
+    for(int i=1; i<=datapoints; i++){
+   //   DebugN(\"dp = \",dps[i]);
+       fwAlertConfig_activate(dps[i], exceptionInfo);
+     }
+    }
+   else if(channel == \"NONE\"){
+     return 0;
+     }   
+  else{
+    fwAlertConfig_activate(channel, exceptionInfo);
+//      DebugN(\"canale = \", channel);
+     }   
+     
+  err = getLastError();
+  if (dynlen(err) > 0)
+    errorDialog(err);
+
+
+}
+" 0
+ E E E
+13 17
+"mask_all_button"
+""
+1 709 84 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+17 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,50,0,0,0,0,0
+0  707 58 951 122
+
+T 
+1
+LANG:1 8 Mask ALL
+"main()
+{
+
+  dyn_string exceptionInfo;
+  bool answ;
+  fwGeneral_openMessagePanel(\"Do you really want to mask these channels?\", answ , exceptionInfo, \"Confirm\", false );
+  DebugTN(\"answer\",answ);
+  
+  if (answ)
+  {
+    applyChanges();
+  }
+}
+
+  
+ void applyChanges()
+ { 
+  
+  
+  
+  dyn_string dps = makeDynString(\"CMSGEM_Mx_TotalFlowAS.Value\",
+                                 \"CMSGEM_Mx_L1CompRatioAS.Value\",
+                                 \"CMSGEM_Mx_L2CompRatioAS.Value\",
+                                 \"CMSGEM_Mx_L3CompRatioAS.Value\",
+                                 \"CMSGEM_Mx_PT1103.Value\",
+                                 \"CMSGEM_Mx_PT1203.Value\",
+                                 \"CMSGEM_Mx_PT1303.Value\",
+                                 \"CMSGEM_Mx_PT1009.Value\",
+                                 \"CMSGEM_Di_TotFlowAS.Value\",
+                                 \"CMSGEM_Di_PT6124.Value\",
+                                 \"CMSGEM_Di_PT6122.Value\",
+                                 \"CMSGEM_Di_PT6125.Value\",
+                                 \"CMSGEM_Di_PT6104.Value\",
+                                 \"CMSGEM_Di_FE6102Ch1.Value\",
+                                 \"CMSGEM_Di_FE6102Ch2.Value\",
+                                 \"CMSGEM_Di_FE6102Ch3.Value\",
+                                 \"CMSGEM_Di_FE6102Ch4.Value\",
+                                 \"CMSGEM_Di_FE6102Ch5.Value\",
+                                 \"CMSGEM_Di_FE6102Ch6.Value\",
+                                 \"CMSGEM_Di_FE6106Ch1.Value\",
+                                 \"CMSGEM_Di_FE6106Ch2.Value\",
+                                 \"CMSGEM_Di_FE6106Ch3.Value\",
+                                 \"CMSGEM_Di_FE6106Ch4.Value\",
+                                 \"CMSGEM_Di_FE6106Ch5.Value\",
+                                 \"CMSGEM_Di_FE6106Ch6.Value\",
+                                 \"CMS_GEM_Di_Ch1.Value\",
+                                 \"CMS_GEM_Di_Ch2.Value\",
+                                 \"CMS_GEM_Di_Ch3.Value\",
+                                 \"CMS_GEM_Di_Ch4.Value\",
+                                 \"CMS_GEM_Di_Ch5.Value\",
+                                 \"CMS_GEM_Di_Ch6.Value\");
+  
+  dyn_string exceptionInfo;  
+  dyn_errClass err;
+  
+  int datapoints = dynlen(dps);
+  // DebugN(datapoints);
+  
+    for(int i=1; i<=datapoints; i++){
+   //   DebugN(\"dp = \",dps[i]);
+       fwAlertConfig_deactivate(dps[i], exceptionInfo);
+     }
+ 
+  err = getLastError();
+  if (dynlen(err) > 0)
+    errorDialog(err);
+    
+}" 0
+ E E E
+13 18
+"unmask_all_button"
+""
+1 709 179 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+18 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,50,0,0,0,0,0
+0  707 153 951 217
+
+T 
+1
+LANG:1 10 Unmask ALL
+"main()
+{
+  
+  dyn_string exceptionInfo;
+  bool answ;
+  fwGeneral_openMessagePanel(\"Do you really want to unmask these channels?\", answ , exceptionInfo, \"Confirm\", false );
+  DebugTN(\"answer\",answ);
+  
+  if (answ)
+  {
+    applyChanges();
+  }
+}
+
+  
+ void applyChanges()
+ { 
+  
+  
+  dyn_string dps = makeDynString(\"CMSGEM_Mx_TotalFlowAS.Value\",
+                                 \"CMSGEM_Mx_L1CompRatioAS.Value\",
+                                 \"CMSGEM_Mx_L2CompRatioAS.Value\",
+                                 \"CMSGEM_Mx_L3CompRatioAS.Value\",
+                                 \"CMSGEM_Mx_PT1103.Value\",
+                                 \"CMSGEM_Mx_PT1203.Value\",
+                                 \"CMSGEM_Mx_PT1303.Value\",
+                                 \"CMSGEM_Mx_PT1009.Value\",
+                                 \"CMSGEM_Di_TotFlowAS.Value\",
+                                 \"CMSGEM_Di_PT6124.Value\",
+                                 \"CMSGEM_Di_PT6122.Value\",
+                                 \"CMSGEM_Di_PT6125.Value\",
+                                 \"CMSGEM_Di_PT6104.Value\",
+                                 \"CMSGEM_Di_FE6102Ch1.Value\",
+                                 \"CMSGEM_Di_FE6102Ch2.Value\",
+                                 \"CMSGEM_Di_FE6102Ch3.Value\",
+                                 \"CMSGEM_Di_FE6102Ch4.Value\",
+                                 \"CMSGEM_Di_FE6102Ch5.Value\",
+                                 \"CMSGEM_Di_FE6102Ch6.Value\",
+                                 \"CMSGEM_Di_FE6106Ch1.Value\",
+                                 \"CMSGEM_Di_FE6106Ch2.Value\",
+                                 \"CMSGEM_Di_FE6106Ch3.Value\",
+                                 \"CMSGEM_Di_FE6106Ch4.Value\",
+                                 \"CMSGEM_Di_FE6106Ch5.Value\",
+                                 \"CMSGEM_Di_FE6106Ch6.Value\",
+                                 \"CMS_GEM_Di_Ch1.Value\",
+                                 \"CMS_GEM_Di_Ch2.Value\",
+                                 \"CMS_GEM_Di_Ch3.Value\",
+                                 \"CMS_GEM_Di_Ch4.Value\",
+                                 \"CMS_GEM_Di_Ch5.Value\",
+                                 \"CMS_GEM_Di_Ch6.Value\");
+  
+  dyn_string exceptionInfo;  
+  dyn_errClass err;
+  
+  int datapoints = dynlen(dps);
+ // DebugN(datapoints);
+    for(int i=1; i<=datapoints; i++){
+   //   DebugN(\"dp = \",dps[i]);
+       fwAlertConfig_activate(dps[i], exceptionInfo);
+     }
+ 
+  err = getLastError();
+  if (dynlen(err) > 0)
+    errorDialog(err);
+    
+}" 0
+ E E E
+0
+LAYER, 1 
+1
+LANG:1 0 
+0
+LAYER, 2 
+1
+LANG:1 0 
+0
+LAYER, 3 
+1
+LANG:1 0 
+0
+LAYER, 4 
+1
+LANG:1 0 
+0
+LAYER, 5 
+1
+LANG:1 0 
+0
+LAYER, 6 
+1
+LANG:1 0 
+0
+LAYER, 7 
+1
+LANG:1 0 
+0
+0

@@ -1,0 +1,20 @@
+# ascii dump of database
+
+# Datapoint/DpId
+DpName	TypeName	ID
+ConfigurationSetups/default	_FwConfigurationDB_setup	2852427
+DBConnections/GEMConfDB	_FwDBConnection	2852428
+
+# DpValue
+Manager/User	ElementName	TypeName	_original.._value	_original.._status64	_original.._stime
+UI (7)/0	ConfigurationSetups/default.version	_FwConfigurationDB_setup	5	0x8300000000000101	06.03.2017 17:16:54.408
+UI (9)/64940	ConfigurationSetups/default.DBConnection	_FwConfigurationDB_setup	"GEMConfDB"	0x8300000000200101	14.02.2018 16:28:59.937
+UI (7)/0	ConfigurationSetups/default.default	_FwConfigurationDB_setup	1	0x8300000000000101	06.03.2017 17:16:54.424
+UI (7)/0	DBConnections/GEMConfDB.version	_FwDBConnection	5	0x8300000000000101	06.03.2017 17:19:58.348
+UI (7)/0	DBConnections/GEMConfDB.description	_FwDBConnection	""	0x8300000000000101	06.03.2017 17:19:58.348
+UI (7)/0	DBConnections/GEMConfDB.dbType	_FwDBConnection	"ORACLE"	0x8300000000000101	06.03.2017 17:19:58.348
+UI (7)/0	DBConnections/GEMConfDB.dbName	_FwDBConnection	"CMS_OMDS_LB"	0x8300000000000101	06.03.2017 17:19:58.348
+UI (7)/0	DBConnections/GEMConfDB.dbUser	_FwDBConnection	"CMS_GEM_PVSS_CONF"	0x8300000000000101	06.03.2017 17:19:58.348
+UI (7)/0	DBConnections/GEMConfDB.dbPassword	_FwDBConnection	"0uBl94lH19/x02LS"	0x8300000000000101	06.03.2017 17:19:58.348
+UI (7)/0	DBConnections/GEMConfDB.connectString	_FwDBConnection	"driver=<DRIVER>;uid=<USER>;enc_pwd=<PASSWORD>;database=<DBNAME>;"	0x8300000000000101	06.03.2017 17:19:58.348
+UI (7)/0	DBConnections/GEMConfDB.dbSchema	_FwDBConnection	""	0x8300000000000101	06.03.2017 17:19:58.348

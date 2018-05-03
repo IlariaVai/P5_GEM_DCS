@@ -1,0 +1,480 @@
+V 12
+1
+LANG:1 0 
+PANEL,-1 -1 1105 660 N "_3DFace" 1
+"$Rack"
+"main()
+{
+  string moduleName, panelName, refName, plotDpName;
+  dyn_string templateParameterNames, templateParameterValues;
+  int x,y;
+  dyn_string exceptionInfo;
+  float xScale, yScale;
+    
+    moduleName = myModuleName();
+    panelName = \"CMS_GEM_GAS/CMS_GEMfwDSSSensors.pnl\";
+    refName = \"PANEL_REF1\";
+    plotDpName = \"cms_gem_dcs_1:CMS_GEM_DSSSensors\";
+    templateParameterNames = \"Rack\";
+    templateParameterValues = $Rack;
+    x = 60;
+    y = 190;
+    xScale = 1.7;
+    yScale = 1.3;
+    
+      DebugTN(\"templateParameterValues = \", templateParameterValues);
+    
+  fwTrending_addFaceplate(moduleName, panelName, refName, plotDpName, templateParameterNames, templateParameterValues, x,y,exceptionInfo, xScale, yScale);  
+  
+      DebugTN(\"exceptionInfo = \", exceptionInfo);
+  
+}" 0
+ E E E E 1 -1 -1 0  50 90
+""0  1
+E E 2
+"CBRef" "1"
+"EClose" E
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:1 0 
+2 0
+"PRIMITIVE_TEXT1"
+""
+1 50 90 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+0 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 50 90 330 160
+0 2 2 "0s" 0 0 0 64 0 0  50 90 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 13 Temperature 1
+2 1
+"PRIMITIVE_TEXT2"
+""
+1 50 127 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+1 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 50 127 330 197
+0 2 2 "0s" 0 0 0 64 0 0  50 127 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 13 Temperature 2
+2 2
+"PRIMITIVE_TEXT3"
+""
+1 561 90 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+2 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 561 90 841 160
+0 2 2 "0s" 0 0 0 64 0 0  561 90 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 17 Turbine Current 1
+2 3
+"PRIMITIVE_TEXT4"
+""
+1 561 127 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+3 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 561 127 841 197
+0 2 2 "0s" 0 0 0 64 0 0  561 127 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 17 Turbine Current 2
+14 4
+"TEXT_FIELD1"
+""
+1 230 90 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+4 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  228 79 402 113
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( $Rack+\".Temperature1:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            $Rack+\".Temperature1:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+    string value;
+    value = strformat(\"\\\\left{%6.2}\",6,fNewValue); 
+    
+    this.text(value);
+  
+}
+
+
+// 
+// EP_textFieldInCB(string dp, float fNewValue)
+// {
+//   setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+// }
+// 
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {$Rack.Temperature1}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 5
+"TEXT_FIELD2"
+""
+1 230 134 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+5 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  228 123 402 157
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( $Rack+\".Temperature2:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            $Rack+\".Temperature2:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+    string value;
+    value = strformat(\"\\\\left{%6.2}\",6,fNewValue); 
+    
+    this.text(value);
+  
+}
+
+
+// EP_textFieldInCB(string dp, float fNewValue)
+// {
+//   setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+// }
+// 
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {$Rack.Temperature2}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 6
+"TEXT_FIELD3"
+""
+1 758 90 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+6 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  756 79 930 113
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( $Rack+\".TurbineCurrent1:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            $Rack+\".TurbineCurrent1:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+    string value;
+    value = strformat(\"\\\\left{%6.2}\",6,fNewValue); 
+    
+    this.text(value);
+  
+}
+
+
+// EP_textFieldInCB(string dp, float fNewValue)
+// {
+//   setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+// }
+// 
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {$Rack.TurbineCurrent1}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 7
+"TEXT_FIELD4"
+""
+1 758 134 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+7 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  756 123 930 157
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( $Rack+\".TurbineCurrent2:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            $Rack+\".TurbineCurrent2:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+    string value;
+    value = strformat(\"\\\\left{%6.2}\",6,fNewValue); 
+    
+    this.text(value);
+  
+}
+
+
+// EP_textFieldInCB(string dp, float fNewValue)
+// {
+//   setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+// }
+// 
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {$Rack.TurbineCurrent2}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+13 88
+"PUSH_Close"
+""
+1 980 530 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+9 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  978 514 1092 558
+
+T 
+1
+LANG:1 5 Close
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_panelOff();
+}
+
+EP_panelOff()
+{
+  PanelOff();
+}
+
+// SimpleCtrlScript {EP_panelOff}
+// Function {PanelOff}
+// Panel {}
+// Module {}
+// SimpleCtrlScriptEnd {EP_panelOff}
+" 0
+ E E E
+2 89
+"PRIMITIVE_TEXT5"
+""
+1 50 20 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+10 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 50 20 700 230
+0 2 2 "0s" 0 0 0 64 0 0  50 20 1
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 0 
+2 170
+"PRIMITIVE_TEXT6"
+""
+1 50 20 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+11 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+"main()
+{
+  this.text($Rack + \" Sensors\");
+}" 0
+ E 0 1 1 2 1 E U  0 E 50 20 630 210
+0 2 2 "0s" 0 0 0 64 0 0  50 20 1
+1
+LANG:1 35 MS Shell Dlg 2,16,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 12 Rack Sensors
+0
+LAYER, 1 
+1
+LANG:1 0 
+0
+LAYER, 2 
+1
+LANG:1 0 
+0
+LAYER, 3 
+1
+LANG:1 0 
+0
+LAYER, 4 
+1
+LANG:1 0 
+0
+LAYER, 5 
+1
+LANG:1 0 
+0
+LAYER, 6 
+1
+LANG:1 0 
+0
+LAYER, 7 
+1
+LANG:1 0 
+0
+0

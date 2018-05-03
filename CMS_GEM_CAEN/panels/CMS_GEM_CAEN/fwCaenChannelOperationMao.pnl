@@ -1,0 +1,1703 @@
+V 14
+2
+LANG:10001 8 (NoName)
+LANG:1 8 (NoName)
+PANEL,-1 -1 699 550 N "_3DFace" 1
+"$sDpName"
+"
+main()
+{
+  string sDeviceDpType, sDeviceModel;
+  dyn_string exceptionInfo;
+  dyn_dyn_string ddsDeviceHierarchy;  // Hierarchy object
+                                      //     [hierachy from Channel to Crate][1]: Device DP name
+                                      //     [hierachy from Channel to Crate][2]: Device position as string (keeping trailing 0s)
+                                      //     [hierachy from Channel to Crate][1]: Device position as integer (no extra 0s)
+
+
+  // Initialize global variables
+  g_bPanelInitialized = FALSE;
+  g_sDpName           = dpSubStr($sDpName, DPSUB_SYS_DP);
+  sDeviceDpType       = dpTypeName(g_sDpName);
+  g_sDpElement        = dpSubStr($sDpName, DPSUB_SYS_DP_EL);
+  strreplace(g_sDpElement, g_sDpName, \"\");
+
+
+  // Get model and model elements
+  fwDevice_getModel(makeDynString(g_sDpName), sDeviceModel, exceptionInfo);
+  if( 0 < dynlen(exceptionInfo) )
+  {
+    fwExceptionHandling_display(exceptionInfo);
+    return;
+  }
+
+
+  fwDevice_getConfigElements(sDeviceDpType, fwDevice_ALL, g_ddsElements, exceptionInfo, sDeviceModel, g_sDpName);
+  if( 0 < dynlen(exceptionInfo) )
+  {
+    fwExceptionHandling_display(exceptionInfo);
+    return;
+  }
+
+
+  // Display names of channel and parents only if it is an independent channel
+  // (not referenced from another datapoint)
+  if( $sDpName == g_sDpName )
+  {
+    fwDevice_getHierarchy($sDpName, ddsDeviceHierarchy, exceptionInfo);
+    if( 0 < dynlen(exceptionInfo) )
+    {
+      fwExceptionHandling_display(exceptionInfo);
+      return;
+    }    
+
+    setMultiValue(\"TEXT_FIELD_CHANNEL_NUMBER\", \"text\", ddsDeviceHierarchy[1][3],                        // Channel number (integer)
+                  \"TEXT_FIELD_BOARD_NAME\",     \"text\", dpSubStr(ddsDeviceHierarchy[2][1], DPSUB_DP),    // Board dpName
+                  \"TEXT_FIELD_BOARD_NUMBER\",   \"text\", ddsDeviceHierarchy[2][3],                        // Board number (integer)
+                  \"TEXT_FIELD_CRATE_NAME\",     \"text\", dpSubStr(ddsDeviceHierarchy[3][1], DPSUB_DP) );  // Crate dpName
+  }
+  else
+  {
+    setMultiValue(\"TEXT_FIELD_CHANNEL_NUMBER\", \"visible\", FALSE,
+                  \"TEXT_FIELD_BOARD_NAME\",     \"visible\", FALSE,
+                  \"PRIMITIVE_TEXT_BOARD\",      \"visible\", FALSE,
+                  \"TEXT_FIELD_BOARD_NUMBER\",   \"visible\", FALSE,
+                  \"TEXT_FIELD_CRATE_NAME\",     \"visible\", FALSE,
+                  \"PRIMITIVE_TEXT_CRATE\",      \"visible\", FALSE,
+                  \"PRIMITIVE_TEXT_SLOT\",       \"visible\", FALSE,
+                  \"PRIMITIVE_TEXT_NUMBER\",     \"visible\", FALSE);
+  }
+  setValue(\"TEXT_FIELD_CHANNEL_NAME\", \"text\", $sDpName);
+
+
+  // Enable timestamp display for Vmon if it is a valid element
+  if( 1 > dynContains(g_ddsElements[1], g_sDpElement + \".actual.vMon\") )
+  {
+    setMultiValue(\"TEXT_FIELD_LAST_MODIFIED\",     \"enabled\", FALSE,
+                  \"PRIMITIVE_TEXT_LAST_MODIFIED\", \"enabled\", FALSE);
+  }
+  else
+  {
+    setMultiValue(\"TEXT_FIELD_LAST_MODIFIED\",     \"enabled\", TRUE,
+                  \"PRIMITIVE_TEXT_LAST_MODIFIED\", \"enabled\", TRUE);
+  }
+  
+
+  // Display ON / OFF command if the channel supports it
+  if( 1 > dynContains(g_ddsElements[1], g_sDpElement + \".settings.onOff\") )
+  {
+    onOffDisplay(FALSE);
+  }
+  else
+  {
+    // Needed in case panel loaded twice, one time immediately after the other
+    // and the on/off command is not available the first time but the second is
+    onOffDisplay(TRUE);
+  }
+
+
+  // Display Global ON command if the channel supports it
+  if( 1 > dynContains(g_ddsElements[1], g_sDpElement + \".settings.globalOnEn\") )
+  {
+    globalOnDisplay(FALSE);
+  }
+  else
+  {
+    // Needed in case panel loaded twice, one time immediately after the other
+    // and the on/off command is not available the first time but the second is
+    globalOnDisplay(TRUE);
+  }
+
+
+  // Display Global OFF command if the channel supports it
+  if( 1 > dynContains(g_ddsElements[1], g_sDpElement + \".settings.globalOffEn\") )
+  {
+    globalOffDisplay(FALSE);
+  }
+  else
+  {
+    // Needed in case panel loaded twice, one time immediately after the other
+    // and the on/off command is not available the first time but the second is
+    globalOffDisplay(TRUE);
+  }
+
+
+  // Set panel is already initialized  
+  g_bPanelInitialized = TRUE;
+  
+
+  // Initialize Last Modified field
+  initialize_LastModified();
+  
+  // Initialize On / Off
+  initialize_OnOff();
+  
+  // Initialize Global Off and Global On
+  initialize_GlobalOn();
+  initialize_GlobalOff();
+  dyn_string exceptionInfo;
+  fwAccessControl_setupPanel(\"ApplyPanelAccessControl\", exceptionInfo);
+}
+
+
+
+
+
+
+
+" 0
+ "main()
+{
+  //int iCloseWindow; // Avoid closing panel with \"X\" window button.
+}
+" 0
+ E E E 1 -1 -1 0  0 0
+""0  1
+E "bool           g_bPanelInitialized;        // Doesn't allow initialize other shapes until DPEs has been calculated
+string         g_sDpName;                  // Channel DPE
+string         g_sDpElement;               // Channel DPE element
+dyn_dyn_string g_ddsElements;              // Object with following arrays:
+                                           //     g_ddsElements[fwDevice_ELEMENTS_INDEX]:       dp elements that can have the selected config
+                                           //     g_ddsElements[fwDevice_PROPERTY_NAMES_INDEX]: property names for the above elements
+                                           //     g_ddsElements[fwDevice_USER_DATA_INDEX]:      user data for the above elements
+                                           //     g_ddsElements[fwDevice_DESCRIPTION_INDEX]:    description for the above elements
+
+
+
+//SVar for GEM
+bool AC_LC_Settings,AC_usr;
+// Enable disable ON / OFF commands display
+void onOffDisplay(bool bEnable)
+{
+  setMultiValue(\"FRAME_COMMANDS\",       \"enabled\", bEnable,
+                \"PRIMITIVE_TEXT_ONOFF\", \"enabled\", bEnable,
+                \"TEXT_FIELD_ONOFF\",     \"enabled\", bEnable,
+                \"PUSH_BUTTON_OFF\",      \"enabled\", bEnable,
+                \"PUSH_BUTTON_ON\",       \"enabled\", bEnable);
+
+}// onOffDisplay()
+
+
+
+
+
+// Enable disable Global ON command display
+void globalOnDisplay(bool bEnable)
+{
+  setMultiValue(\"PRIMITIVE_TEXT_GLOBAL_ON\",      \"enabled\", bEnable,
+                \"TEXT_FIELD_GLOBAL_ON\",          \"enabled\", bEnable,
+                \"PUSH_BUTTON_GLOBAL_ON_ENABLE\",  \"enabled\", bEnable,
+                \"PUSH_BUTTON_GLOBAL_ON_DISABLE\", \"enabled\", bEnable);
+
+}// globalOnDisplay()
+
+
+
+
+
+// Enable disable Global OFF command display
+void globalOffDisplay(bool bEnable)
+{
+  setMultiValue(\"PRIMITIVE_TEXT_GLOBAL_OFF\",      \"enabled\", bEnable,
+                \"TEXT_FIELD_GLOBAL_OFF\",          \"enabled\", bEnable,
+                \"PUSH_BUTTON_GLOBAL_OFF_ENABLE\",  \"enabled\", bEnable,
+                \"PUSH_BUTTON_GLOBAL_OFF_DISABLE\", \"enabled\", bEnable);
+
+}// globalOffDisplay()
+
+
+
+
+
+void initialize_GlobalOff()
+{
+  bool bEnable;
+  string sDpe;
+
+
+  getValue(\"TEXT_FIELD_GLOBAL_OFF\", \"enabled\", bEnable);
+  if( FALSE == bEnable )
+  {
+    return;
+  }
+
+
+  sDpe = g_sDpName + g_sDpElement + \".readBackSettings.globalOffEn\";
+  if( -1 == dpConnect(\"globalOffCB\", TRUE, sDpe) )
+  {
+    setValue(\"TEXT_FIELD_GLOBAL_OFF\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+}// initialize_GlobalOn()
+
+
+
+
+
+void globalOffCB(string sDpe, bool bValue)
+{
+  if( TRUE == bValue )
+  {
+    setValue(\"TEXT_FIELD_GLOBAL_OFF\", \"text\", \"Enabled\");
+  }  
+  else
+  {
+    setValue(\"TEXT_FIELD_GLOBAL_OFF\", \"text\", \"Disabled\");
+  }
+
+}// globalOffCB()
+
+
+
+
+
+void initialize_GlobalOn()
+{
+  bool bEnable;
+  string sDpe;
+
+  getValue(\"TEXT_FIELD_GLOBAL_ON\", \"enabled\", bEnable);
+  if( FALSE == bEnable )
+  {
+    return;
+  }
+
+
+  sDpe = g_sDpName + g_sDpElement + \".readBackSettings.globalOnEn\";
+  if( -1 == dpConnect(\"globalOnCB\", TRUE, sDpe) )
+  {
+    setValue(\"TEXT_FIELD_GLOBAL_ON\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+}// initialize_GlobalOn()
+
+
+
+
+
+void globalOnCB(string sDpe, bool bValue)
+{
+  if( TRUE == bValue )
+  {
+    setValue(\"TEXT_FIELD_GLOBAL_ON\", \"text\", \"Enabled\");
+  }  
+  else
+  {
+    setValue(\"TEXT_FIELD_GLOBAL_ON\", \"text\", \"Disabled\");
+  }
+
+}// globalOnCB()
+
+
+
+
+
+void initialize_OnOff()
+{
+  bool bEnable;
+  string sDpe;
+
+  getValue(\"TEXT_FIELD_ONOFF\", \"enabled\", bEnable);
+  if( FALSE == bEnable )
+  {
+    return;
+  }
+  else
+  {
+    sDpe = g_sDpName + g_sDpElement + \".actual.isOn\";
+    if( -1 == dpConnect(\"onOffCB\", TRUE, sDpe) )
+    {
+      setValue(\"TEXT_FIELD_ONOFF\", \"color\", \"_dpdoesnotexist\");
+      return;
+    }
+  }
+
+}// initialize_OnOff()
+
+
+
+
+
+void onOffCB(string sDpe, bool bValue)
+{
+  if( TRUE == bValue )
+  {
+    setValue(\"TEXT_FIELD_ONOFF\", \"text\", \"ON\");
+  }
+  else
+  {
+    setValue(\"TEXT_FIELD_ONOFF\", \"text\", \"OFF\");
+  }
+
+}// initialize_OnOff()
+
+
+
+
+
+void initialize_LastModified()
+{
+  bool bEnable;
+  string sDpe;
+
+  getValue(\"TEXT_FIELD_LAST_MODIFIED\", \"enabled\", bEnable);
+  if( FALSE == bEnable )
+  {
+    return;
+  }
+
+  sDpe = g_sDpName + g_sDpElement + \".actual.vMon\" + \":_online.._stime\";
+  if( -1 == dpConnect(\"lastModifiedCB\", sDpe) )
+  {
+    setMultiValue(\"TEXT_FIELD_LAST_MODIFIED\", \"backCol\", \"_dpdoesnotexist\",
+                  \"TEXT_FIELD_LAST_MODIFIED\", \"foreCol\", \"_dpdoesnotexist\");
+  }
+
+}// initialize_LastModified()
+
+
+
+
+
+void lastModifiedCB(string sDp, string sText)
+{
+  setValue(\"TEXT_FIELD_LAST_MODIFIED\", \"text\", sText);
+
+}// lastModifiedCB()
+
+
+
+
+
+void initialize_SettingsTable()
+{
+  bool bEnableTable;
+  int iLoop, iLen;
+  string sReadBackSetting, sSetting, sSettingDpe, sReadBackSettingDpe, sSettingValue, sExceptionMessage;
+  dyn_string exceptionInfo, dsNotToDisplayDpes;
+  dyn_dyn_string ddsTable;
+
+
+  // Delay code until panel has initialized all global variables
+  while( !g_bPanelInitialized )
+  {
+    delay(0, 300);
+  }
+
+
+  // Initialize variables
+  bEnableTable              = FALSE;
+  gListOfDpElementToConnect = makeDynString();
+  dsNotToDisplayDpes        = makeDynString(g_sDpElement + \".settings.onOff\",        // DPES to don't show in the table.
+                                            g_sDpElement + \".settings.globalOnEn\",
+                                            g_sDpElement + \".settings.globalOffEn\");
+
+  // Prepare settings table
+  setMultiValue(\"TABLE_SETTINGS\", \"sortOnClick\", FALSE,
+                \"TABLE_SETTINGS\", \"lineVisible\", FALSE,
+                \"TABLE_SETTINGS\", \"deleteAllLines\");
+
+  // Display only the g_ddsElements which: \".settings.X\" is equal to \".readBack.X\"
+  iLen = dynlen(g_ddsElements[1]);
+  for( iLoop = 1 ; iLen >= iLoop ; iLoop++ )
+  {
+
+    // Find setting DPE and remove DPEs that shouldn't be showed
+    if( (0 <= strpos(g_ddsElements[1][iLoop], \".settings\") ) &&
+        (1 > dynContains(dsNotToDisplayDpes, g_ddsElements[1][iLoop]) ) )
+    {
+      // Check that readBackSettings DPE exists
+      sReadBackSetting = g_ddsElements[1][iLoop];
+      strreplace(sReadBackSetting, \".settings\", \".readBackSettings\");
+      if( 0 < dynContains(g_ddsElements[1], sReadBackSetting) )
+      {
+        sSetting = g_ddsElements[1][iLoop];
+        strreplace(sSetting, \".settings.\", \"\");
+
+        sSettingDpe         = g_sDpName + g_sDpElement + g_ddsElements[1][iLoop];
+        sReadBackSettingDpe = g_sDpName + g_sDpElement + sReadBackSetting;
+
+        if( dpExists(sSettingDpe) && dpExists(sReadBackSettingDpe) )
+        {
+          bEnableTable = TRUE;
+          
+          // Get Value and units to create a structure and publicate in the table         
+          dpGet(sSettingDpe, sSettingValue);
+
+          dynAppend(gListOfSettingsDpElement, sSettingDpe);
+          
+          dynAppend(ddsTable[1], sSetting);
+          dynAppend(ddsTable[2], sSettingValue);
+          dynAppend(ddsTable[3], dpGetUnit(sSettingDpe));
+          dynAppend(ddsTable[4], sSettingDpe);
+          dynAppend(ddsTable[5], sReadBackSettingDpe);
+        }
+        else
+        {
+          sExceptionMessage = sExceptionMessage + \". \" + \"The data point element\" + sSettingDpe + \" or \" + sReadBackSettingDpe + \" do not exist.\";
+          continue;
+        }
+      }
+      else
+      {
+        continue;
+      }
+
+    }
+
+  }
+  
+  // Initialize table with ddsTable information
+  if( FALSE == bEnableTable )
+  {
+    setValue(\"TABLE_SETTINGS\", \"enabled\", FALSE);
+  }
+  else
+  {
+    if( 5 == dynlen(ddsTable) )
+    {
+      setValue(\"TABLE_SETTINGS\", \"appendLines\", dynlen(ddsTable[1]),
+                                               \"element\",     ddsTable[1],
+                                               \"settings\",    ddsTable[2],
+                                               \"unit\",        ddsTable[3],
+                                               \"setDpe\",      ddsTable[4],
+                                               \"readbackDpe\", ddsTable[5]);
+
+      // Connect to all settings DPE
+      iLen = dynlen(ddsTable[4]);
+      for( iLoop = 1 ; iLen >= iLoop ; iLoop++ )
+      {
+        if( 0 != dpConnect(\"settingsDataCB\", ddsTable[4][iLoop] ) )
+        {
+          sExceptionMessage = sExceptionMessage + \". \" + \"Connection to DPE was unsucessfull: \" + ddsTable[4][iLoop];
+          setValue(\"TABLE_SETTINGS\", \"cellBackColRC\", iLoop-1 , \"settings\", \"DpDoesNotExist\");
+        }
+      }
+
+      // To animate setting table (ReadBack column)
+      gListOfDpElementToConnect = ddsTable[5];
+
+    }
+  }
+
+  if( \"\" != sExceptionMessage )
+  {
+    fwException_raise(exceptionInfo, \"ERROR\", sExceptionMessage, \"\");
+  }
+
+  // Connect ReadBackSettings column (value and color)
+  fwColourTable_connectCellBackColToValueStatus(exceptionInfo);  
+  if( 0 < dynlen(exceptionInfo) )
+  {
+    fwExceptionHandling_display(exceptionInfo);
+  }
+  
+}// initialize_SettingsTable()
+
+
+
+
+
+void settingsDataCB(string sDpe, string sValue)
+{
+  int iCellPos;
+  string sDpName;
+  
+  sDpName  = dpSubStr(sDpe, DPSUB_SYS_DP_EL);
+  iCellPos = dynContains(gListOfSettingsDpElement, sDpName);
+  
+  if( 1 <= iCellPos )
+  {
+    setValue(\"TABLE_SETTINGS\", \"cellValueRC\", (iCellPos - 1), \"settings\", sValue);
+  }
+  
+}// settingsDataCB()
+
+
+
+
+
+void initialize_ValuesTable()
+{
+  bool bEnableTable;
+  int iLoop, iLoopInt, iLen;
+  string sParameter;
+  dyn_string dsNotToDisplayDpes, exceptionInfo;
+  dyn_dyn_string ddsTable;
+
+
+  // Delay code until panel has initialized all global variables
+  while( !g_bPanelInitialized )
+  {
+    delay(0, 300);
+  }  
+  
+  
+  // Initialize variables
+  bEnableTable              = FALSE;
+  iLoopInt                  = 1;
+  gListOfDpElementToConnect = makeDynString();
+
+
+  // Prepare values table
+  setMultiValue(\"TABLE_ACTUAL\", \"sortOnClick\", FALSE,
+                \"TABLE_ACTUAL\", \"lineVisible\", FALSE,
+                \"TABLE_ACTUAL\", \"deleteAllLines\");
+
+
+  // DPES to don't present in the table (already represented its information)
+  dsNotToDisplayDpes = makeDynString(g_sDpElement + \".actual.hardwareAlarm\",
+                                     g_sDpElement + \".actual.iMonAlarmDefn\",
+                                     g_sDpElement + \".actual.status\",
+                                     g_sDpElement + \".actual.vMonAlarmDefn\");
+
+  // Display the g_ddsElements which contain \".actual.\" in the DPE name and are not in the explicit list dsNotToDisplayDpes
+  iLen = dynlen(g_ddsElements[1]);
+  for( iLoop = 1 ; iLen >= iLoop ; iLoop++ )
+  {
+    if( (0 <= strpos(g_ddsElements[1][iLoop], \".actual.\") )             &&
+        (1 > dynContains(dsNotToDisplayDpes, g_ddsElements[1][iLoop]) ) )
+    {
+      bEnableTable = TRUE;
+      
+      dynAppend(gListOfDpElementToConnect, g_sDpName + g_ddsElements[1][iLoop]);
+
+      // Create structure to populate table faster
+      sParameter = g_ddsElements[2][iLoop];
+      strreplace(sParameter, \".actual.\", \"\");
+      dynAppend(ddsTable[1], sParameter);
+      dynAppend(ddsTable[2], dpGetUnit(g_sDpName + g_ddsElements[1][iLoop]));
+      dynAppend(ddsTable[3], g_sDpName + g_ddsElements[1][iLoop]);
+    }
+
+  }
+  
+  // Add all the lines to the table
+  if( FALSE == bEnableTable )
+  {
+    setValue(\"TABLE_ACTUAL\", \"enabled\", FALSE);    
+  }
+  else
+  {
+    setValue(\"TABLE_ACTUAL\", \"appendLines\", dynlen(ddsTable[1]),
+                                           \"parameter\", ddsTable[1],
+                                           \"units\",     ddsTable[2],
+                                           \"dpe\",       ddsTable[3]);
+  }
+
+
+  // Animate table using default Table framework from fwGeneral
+  fwColourTable_connectCellBackColToValueStatus(exceptionInfo);
+
+}// initialize_ValuesTable()
+
+
+
+
+
+void setDpe(string sDpe, anytype aValue)
+{
+  dyn_string exceptionInfo;
+
+
+  if( 0 != dpSet(sDpe, aValue) )
+  {
+    fwException_raise(exceptionInfo, \"ERROR\", \"Error setting \" + sDpe + \" to \" + bValue, \"\");
+    fwExceptionHandling_display(exceptionInfo);
+  }
+
+}// setDpe()
+
+void ApplyPanelAccessControl(string s1, string s2)
+{
+bool hasDebug, hasControl,hasMonitor,hasVisualize,hasModify;
+dyn_string exceptionInfo;
+// revoke all previous rights:
+DisableAllInPanel();
+// check privileges:
+string domain;
+domain=\"CMS_GEM\";
+//domain=\"Gem\";
+fwAccessControl_isGranted( domain+\":Control\", hasControl, exceptionInfo);
+fwAccessControl_isGranted( domain+\":Debug\", hasDebug, exceptionInfo);
+fwAccessControl_isGranted( domain+\":Monitor\", hasMonitor, exceptionInfo);
+//fwAccessControl_isGranted( domain+\":Visualize\",hasVisualize, exceptionInfo);
+fwAccessControl_isGranted( domain+\":Modify\",hasModify, exceptionInfo);
+if (dynlen(exceptionInfo)) { fwExceptionHandling_display(exceptionInfo); return;}
+// enable/disable panel functionality:
+//if (hasControl) AlcLV.enabled = true;
+//if (hasDebug) AlcHV.enabled = true;
+if (hasControl)
+ {
+  //
+  //AC_usr=true;
+  
+ }
+if (hasDebug)
+ {
+  AC_LC_Settings=true;
+  PUSH_BUTTON_OFF.enabled=true;
+  
+ }
+if (hasMonitor)
+ {
+  //
+  //AC_usr=true;
+  
+ }
+
+if (hasVisualize)
+ {
+  //AC_usr=true;
+  
+  
+ }
+if (hasModify)
+ {
+  AC_LC_Settings=true;
+  PUSH_BUTTON_OFF.enabled=true;
+  
+  
+ }
+
+}
+void DisableAllInPanel()
+{
+// disable all widgets in a panel...
+  AC_LC_Settings=false;
+  AC_usr=false;
+ PUSH_BUTTON_OFF.enabled=false;
+}
+
+
+
+" 0
+ 3
+"CBRef" "1"
+"EClose" E
+"dpi" "96"
+0 0 0
+""
+NC
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:10001 6 Layer1
+2 17
+"PRIMITIVE_TEXT_TITLE"
+""
+1 36 55 E E E 1 E 1 E N {0,0,0} E N "_Transparent" E E
+ E E
+17 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"sizePolicy" "Fixed Fixed"
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 0 1 E U  0 E 12 12 229 33
+0 2 0 "0s" 0 0 0 192 0 0  12 12 1
+2
+LANG:10001 26 Arial,-1,19,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,19,5,50,0,0,0,0,0
+0 2
+LANG:10001 22 CAEN Channel Operation
+LANG:1 22 CAEN Channel Operation
+2 28
+"PRIMITIVE_TEXT_NUMBER"
+""
+1 571 150 E E E 1 E 1 E N {0,0,0} E N "_Transparent" E E
+ E E
+28 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"sizePolicy" "Fixed Fixed"
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 0 1 E U  0 E 568 52 617 67
+0 2 0 "0s" 0 0 0 194 0 0  617 52 1
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:10001 7 Number:
+LANG:1 7 Number:
+2 29
+"PRIMITIVE_TEXT_CHANNEL"
+""
+1 52 119 E E E 1 E 1 E N {0,0,0} E N "_Transparent" E E
+ E E
+29 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"sizePolicy" "Fixed Fixed"
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 0 1 E U  0 E 19 52 70 67
+0 2 0 "0s" 0 0 0 194 0 0  70 52 1
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:10001 8 Channel:
+LANG:1 8 Channel:
+2 30
+"PRIMITIVE_TEXT_BOARD"
+""
+1 382 267 E E E 1 E 1 E N {0,0,0} E N "_Transparent" E E
+ E E
+30 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"sizePolicy" "Fixed Fixed"
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 0 1 E U  0 E 19 92 59 107
+0 2 0 "0s" 0 0 0 192 0 0  19 92 1
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:10001 6 Board:
+LANG:1 6 Board:
+2 31
+"PRIMITIVE_TEXT_CRATE"
+""
+1 421 447 E E E 1 E 1 E N {0,0,0} E N "_Transparent" E E
+ E E
+31 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"sizePolicy" "Fixed Fixed"
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 0 1 E U  0 E 19 131 56 146
+0 2 0 "0s" 0 0 0 192 0 0  19 131 1
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:10001 6 Crate:
+LANG:1 6 Crate:
+2 32
+"PRIMITIVE_TEXT_SLOT"
+""
+1 429 273 E E E 1 E 1 E N {0,0,0} E N "_Transparent" E E
+ E E
+32 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"sizePolicy" "Fixed Fixed"
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 0 1 E U  0 E 398 93 425 108
+0 2 0 "0s" 0 0 0 194 0 0  425 93 1
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:10001 5 Slot:
+LANG:1 5 Slot:
+2 86
+"PRIMITIVE_TEXT_LAST_MODIFIED"
+""
+1 593 571 E E E 1 E 1 E N {0,0,0} E N "_Transparent" E E
+ E E
+85 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"sizePolicy" "Fixed Fixed"
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 0 1 E U  0 E 373 444 490 459
+0 2 2 "0s" 0 0 0 192 0 0  373 444 1
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:10001 19 vMon Last Modified:
+LANG:1 19 vMon Last Modified:
+1 117 0 "" 19
+0
+30 105
+"FRAME_COMMANDS"
+""
+1 10 539 E E E 1 E 1 E N "_3DText" E N "_Transparent" E E
+ E E
+100 0 0 0 0 0
+E E E
+1
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 0 1 E U  0 E 10 468 580 539
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:10001 8 Commands
+LANG:1 8 Commands
+2 107
+"PRIMITIVE_TEXT_ONOFF"
+""
+1 73 680 E E E 1 E 1 E N {0,0,0} E N "_Transparent" E E
+ E E
+101 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"sizePolicy" "Fixed Fixed"
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 0 1 E U  0 E 35 500 71 515
+0 2 0 "0s" 0 0 0 194 0 0  71 500 1
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:10001 5 Power
+LANG:1 5 Power
+2 109
+"PRIMITIVE_TEXT_GLOBAL_OFF"
+""
+1 303 693 E E E 1 E 1 E N {0,0,0} E N "_Transparent" E E
+ E E
+103 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"sizePolicy" "Fixed Fixed"
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 0 1 E U  0 E 243 513 301 528
+0 2 0 "0s" 0 0 0 194 0 0  301 513 1
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:10001 10 Global Off
+LANG:1 10 Global Off
+2 113
+"PRIMITIVE_TEXT_GLOBAL_ON"
+""
+1 303 663 E E E 1 E 1 E N {0,0,0} E N "_Transparent" E E
+ E E
+107 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+4
+"sizePolicy" "Fixed Fixed"
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 0 1 E U  0 E 243 483 301 498
+0 2 0 "0s" 0 0 0 194 0 0  301 483 1
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0 2
+LANG:10001 9 Global On
+LANG:1 9 Global On
+25 38
+"TABLE_SETTINGS"
+""
+1 5 160 E E E 1 E 1 E N "_WindowText" E N "_3DFace" E E
+ E E
+37 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0  8 158 352 432
+"dyn_string gListOfDpElementToConnect;
+dyn_string gListOfSettingsDpElement;
+
+main()
+{
+  initialize_SettingsTable();
+
+}
+
+" 0
+"main(int iPosX, string sColumnName, string sValue)
+{
+  int iColumnNumberSetting, iColumnNumberReadBack;
+  string sDpe;
+  dyn_string dsLine, exceptionInfo;
+if(AC_LC_Settings)
+  {
+  getMultiValue(\"TABLE_SETTINGS\", \"getLineN\",     iPosX,         dsLine,
+                \"TABLE_SETTINGS\", \"nameToColumn\", \"setDpe\",      iColumnNumberSetting,
+                \"TABLE_SETTINGS\", \"nameToColumn\", \"readbackDpe\", iColumnNumberReadBack);
+
+  if( \"settings\" == sColumnName )
+  {
+    sDpe = dsLine[iColumnNumberSetting + 1];
+    strreplace(sDpe, g_sDpName, \"\");
+
+    ChildPanelOnCentral(\"fwGeneral/fwChangeSetting.pnl\", 
+                        \"Settings\",
+                        makeDynString(\"$sDpName:\"   + g_sDpName,
+                                      \"$dpSetName:\" + sDpe) );
+  }
+  else 
+  {
+    sDpe = dsLine[iColumnNumberReadBack + 1];
+    fwGeneral_openDetailsPanel(sDpe, exceptionInfo);
+    if( 0 < dynlen(exceptionInfo) )
+    {
+      fwExceptionHandling_display(exceptionInfo);
+    }
+  }
+ }
+}
+
+
+
+" 0
+ 1 0 1 6 1 "element" 8 1 0 "s" 2
+LANG:10001 9 Parameter
+LANG:1 9 Parameter
+E
+2
+LANG:10001 0 
+LANG:1 0 
+
+100 "settings" 6 1 0 "s" 2
+LANG:10001 7 Setting
+LANG:1 7 Setting
+E
+2
+LANG:10001 0 
+LANG:1 0 
+
+75 "status" 7 1 0 "s" 2
+LANG:10001 8 ReadBack
+LANG:1 8 ReadBack
+E
+2
+LANG:10001 0 
+LANG:1 0 
+
+90 "unit" 4 1 0 "s" 2
+LANG:10001 5 Units
+LANG:1 5 Units
+E
+2
+LANG:10001 0 
+LANG:1 0 
+
+55 "setDpe" 4 0 0 "s" 2
+LANG:10001 6 setDpe
+LANG:1 6 setDpe
+E
+2
+LANG:10001 0 
+LANG:1 0 
+
+55 "readbackDpe" 4 0 0 "s" 2
+LANG:10001 11 readbackDpe
+LANG:1 11 readbackDpe
+E
+2
+LANG:10001 0 
+LANG:1 0 
+
+55 
+26 26 "" 1 2
+LANG:10001 2 #1
+LANG:1 2 #1
+8 30
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0 0 1 1 1 7
+1 0
+14 34
+"TEXT_FIELD_CHANNEL_NAME"
+""
+1 241 146 E E E 1 E 1 E N "_WindowText" E N "_3DFace" E E
+ E E
+34 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0  72 48 552 75
+2 "0s" 0 0 0 0 0 -1  E E E
+14 35
+"TEXT_FIELD_BOARD_NAME"
+""
+1 814 313 E E E 1 E 1 E N "_WindowText" E N "_3DFace" E E
+ E E
+35 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0  72 88 372 115
+2 "0s" 0 0 0 0 0 -1  E E E
+14 36
+"TEXT_FIELD_CRATE_NAME"
+""
+1 765 508 E E E 1 E 1 E N "_WindowText" E N "_3DFace" E E
+ E E
+36 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0  71 126 372 153
+2 "0s" 0 0 0 0 0 -1  E E E
+14 37
+"TEXT_FIELD_BOARD_NUMBER"
+""
+1 595 292 E E E 1 E 1 E N "_WindowText" E N "_3DFace" E E
+ E E
+37 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0  430 88 484 115
+2 "0s" 0 0 0 0 0 -1  E E E
+25 41
+"TABLE_ACTUAL"
+""
+1 355 161 E E E 1 E 1 E N "_WindowText" E N "_3DFace" E E
+ E E
+40 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0  358 159 692 432
+"dyn_string gListOfDpElementToConnect;
+
+main()
+{
+  initialize_ValuesTable();
+}" 0
+"main(int iPosX, string sColumnName, string sValue)
+{
+  int iColumnNumber;
+  string sDpe;
+  dyn_string dsLine, exceptionInfo;
+
+  getMultiValue(\"TABLE_ACTUAL\", \"getLineN\", iPosX, dsLine,
+                \"TABLE_ACTUAL\", \"nameToColumn\", \"dpe\", iColumnNumber);
+
+  sDpe = dsLine[iColumnNumber + 1];
+  if( \"status\" == sColumnName )
+  {
+    ChildPanelOnCentralModal(\"fwConfigs/fwAlarmOperationPopupPanel.pnl\",
+                             \"AlarmOp\",
+                             makeDynString(\"$sDpe:\" + sDpe) );
+  }
+  else
+  {
+    fwGeneral_openDetailsPanel(sDpe, exceptionInfo);
+    if( 0 < dynlen(exceptionInfo) )
+    {
+      fwExceptionHandling_display(exceptionInfo);
+    }
+  }
+
+}
+
+
+
+" 0
+ 1 0 1 4 1 "parameter" 12 1 0 "s" 2
+LANG:10001 9 Parameter
+LANG:1 9 Parameter
+E
+2
+LANG:10001 0 
+LANG:1 0 
+
+150 "status" 8 1 0 "s" 2
+LANG:10001 5 Value
+LANG:1 5 Value
+E
+2
+LANG:10001 0 
+LANG:1 0 
+
+100 "units" 4 1 0 "s" 2
+LANG:10001 5 Units
+LANG:1 5 Units
+E
+2
+LANG:10001 0 
+LANG:1 0 
+
+55 "dpe" 4 0 0 "s" 2
+LANG:10001 3 dpe
+LANG:1 3 dpe
+E
+2
+LANG:10001 0 
+LANG:1 0 
+
+55 
+26 26 "" 1 2
+LANG:10001 2 #1
+LANG:1 2 #1
+8 30
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0 0 1 1 1 7
+1 0
+13 78
+"PUSH_BUTTON_ON"
+""
+1 122 497 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+77 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0  120 495 164 523
+
+T 
+2
+LANG:10001 2 On
+LANG:1 2 On
+"main()
+{
+  bool bValue;
+  string sDpe;
+
+  sDpe   = g_sDpName + g_sDpElement + \".settings.onOff\";
+  bValue = TRUE;
+
+  setDpe(sDpe, bValue);
+
+}
+
+
+" 0
+ E E E
+13 79
+"PUSH_BUTTON_OFF"
+""
+1 278 905 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+78 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0  166 495 210 523
+
+T 
+2
+LANG:10001 3 Off
+LANG:1 3 Off
+"main()
+{
+  bool bValue;
+  string sDpe;
+
+  sDpe   = g_sDpName + g_sDpElement + \".settings.onOff\";
+  bValue = FALSE;
+
+  setDpe(sDpe, bValue);
+
+}
+
+
+
+" 0
+ E E E
+14 88
+"TEXT_FIELD_LAST_MODIFIED"
+""
+1 490 439 E E E 1 E 1 E N "_WindowText" E N "_3DFace" E E
+ E E
+87 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0  488 437 682 464
+2 "0s" 0 0 0 0 0 -1  E E E
+13 104
+"PUSH_BUTTON_CLOSE"
+""
+1 616 515 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+100 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0  614 513 691 541
+
+T 
+2
+LANG:10001 5 Close
+LANG:1 5 Close
+"main()
+{
+  PanelOff();
+}
+" 0
+ E E E
+14 108
+"TEXT_FIELD_ONOFF"
+""
+1 208 707 E E E 1 E 1 E N "_WindowText" E N "_3DFace" E E
+ E E
+102 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0  76 495 120 523
+2 "0s" 0 0 0 0 0 -1  E E E
+13 110
+"PUSH_BUTTON_GLOBAL_OFF_ENABLE"
+""
+1 379 510 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+104 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0  377 508 430 536
+
+T 
+2
+LANG:10001 6 Enable
+LANG:1 6 Enable
+"main()
+{
+  bool bValue;
+  string sDpe;
+
+  sDpe   = g_sDpName + g_sDpElement + \".settings.globalOffEn\";
+  bValue = TRUE;
+
+  setDpe(sDpe, bValue);
+
+}
+
+" 0
+ E E E
+13 111
+"PUSH_BUTTON_GLOBAL_OFF_DISABLE"
+""
+1 568 918 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+105 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0  432 508 485 536
+
+T 
+2
+LANG:10001 7 Disable
+LANG:1 7 Disable
+"main()
+{
+  bool bValue;
+  string sDpe;
+
+  sDpe   = g_sDpName + g_sDpElement + \".settings.globalOffEn\";
+  bValue = FALSE;
+
+  setDpe(sDpe, bValue);
+
+}
+
+
+" 0
+ E E E
+14 112
+"TEXT_FIELD_GLOBAL_OFF"
+""
+1 505 712 E E E 1 E 1 E N "_WindowText" E N "_3DFace" E E
+ E E
+106 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0  307 508 372 535
+2 "0s" 0 0 0 0 0 -1  E E E
+13 114
+"PUSH_BUTTON_GLOBAL_ON_ENABLE"
+""
+1 379 480 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+108 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0  377 478 430 506
+
+T 
+2
+LANG:10001 6 Enable
+LANG:1 6 Enable
+"main()
+{
+  bool bValue;
+  string sDpe;
+
+  sDpe   = g_sDpName + g_sDpElement + \".settings.globalOnEn\";
+  bValue = TRUE;
+
+  setDpe(sDpe, bValue);
+
+}
+
+
+" 0
+ E E E
+13 115
+"PUSH_BUTTON_GLOBAL_ON_DISABLE"
+""
+1 568 888 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+109 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0  432 478 485 506
+
+T 
+2
+LANG:10001 7 Disable
+LANG:1 7 Disable
+"main()
+{
+  bool bValue;
+  string sDpe;
+
+  sDpe   = g_sDpName + g_sDpElement + \".settings.globalOnEn\";
+  bValue = FALSE;
+
+  setDpe(sDpe, bValue);
+
+}
+
+
+" 0
+ E E E
+14 116
+"TEXT_FIELD_GLOBAL_ON"
+""
+1 505 682 E E E 1 E 1 E N "_WindowText" E N "_3DFace" E E
+ E E
+110 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0  307 478 372 505
+2 "0s" 0 0 0 0 0 -1  E E E
+1 119 1 "" 0
+0
+14 33
+"TEXT_FIELD_CHANNEL_NUMBER"
+""
+1 640 174 E E E 1 E 1 E N "_WindowText" E N "_3DFace" E E
+ E E
+33 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0  618 48 672 75
+2 "0s" 0 0 0 0 0 -1  E E E
+13 106
+"PUSH_BUTTON_LOAD"
+""
+1 18 436 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+101 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 26 Arial,-1,13,5,50,0,0,0,0,0
+LANG:1 26 Arial,-1,13,5,50,0,0,0,0,0
+0  16 434 202 461
+
+T 
+2
+LANG:10001 27 Load settings from hardware
+LANG:1 27 Load settings from hardware
+"main()
+{
+  int iLoop, iLen;
+  float fValue;
+  string sSetDpe, sReadBackDpe;
+  dyn_string dsLine;
+
+  getValue(\"TABLE_SETTINGS\", \"lineCount\", iLen);
+  for( iLoop = 1 ; iLen >= iLoop ; iLoop++ )
+  {
+    dsLine       = TABLE_SETTINGS.getLineN(iLoop - 1);
+    sSetDpe      = dsLine[TABLE_SETTINGS.nameToColumn(\"setDpe\") + 1];
+    sReadBackDpe = dsLine[TABLE_SETTINGS.nameToColumn(\"readbackDpe\") + 1];
+
+    dpGet(sReadBackDpe, fValue);
+    dpSet(sSetDpe,      fValue);
+    
+    DebugN(\"Setting \" + sSetDpe + \" to same value as \" + sReadBackDpe + \". Value = \" + fValue);
+  }
+
+}
+
+
+
+
+
+" 0
+ E E E
+0
+LAYER, 1 
+1
+LANG:10001 6 Layer2
+0
+LAYER, 2 
+1
+LANG:10001 6 Layer3
+0
+LAYER, 3 
+1
+LANG:10001 6 Layer4
+0
+LAYER, 4 
+1
+LANG:10001 6 Layer5
+0
+LAYER, 5 
+1
+LANG:10001 6 Layer6
+0
+LAYER, 6 
+1
+LANG:10001 6 Layer7
+0
+LAYER, 7 
+1
+LANG:10001 6 Layer8
+0
+3 0 "" -1
+"layoutAlignment" "AlignCenter"
+"" ""
+"fwDeviceEditorNavigator/fwActionButton.pnl" 410 0 T 100 1 0 1 45 -2
+1
+"$sDpName""$sDpName"
+3 1 "Group3" -1
+"layoutAlignment" "AlignCenter"
+"" ""
+"objects/fwGeneral/fwHelpButton.pnl" 633 10 T 110 1 0 1 29 0
+1
+"$sPanelRelativePath""fwCaen/fwCaenChannelOperation"
+0

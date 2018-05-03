@@ -1,0 +1,71 @@
+V 12
+1
+LANG:1 0 
+PANEL,-1 -1 1079 612 N "_3DFace" 1
+"$Rack"
+E E E E E 1 -1 -1 0  21 94
+""0  1
+E E 2
+"CBRef" "1"
+"EClose" E
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:1 0 
+1 12 1 "" 0
+0
+1 13 1 "" 1
+0
+1 14 1 "" 2
+0
+1 15 1 "" 3
+0
+1 16 1 "" 4
+0
+1 17 1 "" 5
+0
+1 18 1 "" 6
+0
+1 19 1 "" 7
+0
+1 20 1 "" 88
+0
+1 21 1 "" 89
+0
+1 22 1 "" 170
+0
+0
+LAYER, 1 
+1
+LANG:1 0 
+0
+LAYER, 2 
+1
+LANG:1 0 
+0
+LAYER, 3 
+1
+LANG:1 0 
+0
+LAYER, 4 
+1
+LANG:1 0 
+0
+LAYER, 5 
+1
+LANG:1 0 
+0
+LAYER, 6 
+1
+LANG:1 0 
+0
+LAYER, 7 
+1
+LANG:1 0 
+0
+3 1 "PANEL_REF1" -1
+"CMS_GEM_GAS\\refCMS_GEMfwDSSSensors.pnl" 10 90 T 7 U 
+1
+"$Rack""$Rack"
+0

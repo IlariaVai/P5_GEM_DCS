@@ -1,0 +1,75 @@
+<component_configuration>
+	<stop_drivers>
+		<manager>
+		<driver>OPC DA Client</driver>
+		</manager>
+	</stop_drivers>
+	<stop_drivers>
+		<manager>
+		<driver>RDB Archive Manager</driver>
+		<num>99</num>
+		</manager>
+	</stop_drivers>
+
+	<append_managers>
+		<manager>
+			<type>WCCOActrl</type>
+			<num>25</num>
+			<options>-num 25 CMS_GEM_multichannel/GEMCaenConfigurator/GEMCaenConfigurator.ctl</options>
+			<mode>always</mode>
+			<restart>2</restart>
+			<counter>2</counter>
+			<sec_kill>30</sec_kill>
+			<isDriver>false</isDriver>
+			<restartManager>false</restartManager>
+		</manager>
+	</append_managers>
+	
+	<append_managers>
+		<manager>
+			<type>OPC DA Client</type>
+			<num>6</num>
+			<options></options>
+			<mode>always</mode>
+			<restart>2</restart>
+			<counter>2</counter>
+			<sec_kill>30</sec_kill>
+			<isDriver>false</isDriver>
+			<restartManager>false</restartManager>
+		</manager>
+	</append_managers>
+
+	<target>
+		<system_name>cms_gem_dcs_1:</system_name>
+		<configuration>
+			<tag>MC_caen_v2</tag>
+			<hardware>true</hardware>
+			<logical>true</logical>
+			<pattern>*</pattern>
+			<force_reinstall>true</force_reinstall>
+		</configuration>
+		<configuration>
+			<tag>MC_trending</tag>
+			<hardware>true</hardware>
+			<logical>true</logical>
+			<pattern>*</pattern>
+			<force_reinstall>true</force_reinstall>
+		</configuration>
+		<configuration>
+			<tag>MC_layerSummary</tag>
+			<hardware>true</hardware>
+			<logical>true</logical>
+			<pattern>*</pattern>
+			<force_reinstall>true</force_reinstall>
+		</configuration>
+		<configuration>
+			<tag>MC_FSM_GEMCaenConfigurator</tag>
+			<hardware>true</hardware>
+			<logical>false</logical>
+			<pattern>*</pattern>
+			<force_reinstall>true</force_reinstall>
+		</configuration>
+	</target>
+
+</component_configuration>
+

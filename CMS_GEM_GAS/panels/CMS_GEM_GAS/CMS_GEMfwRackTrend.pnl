@@ -1,0 +1,285 @@
+V 12
+1
+LANG:1 18 CMS_GEM_Rack_Trend
+PANEL,-1 -1 993 548 N "_3DFace" 0
+E E E E E 1 -1 -1 0  70 80
+""0  1
+E E 2
+"CBRef" "1"
+"EClose" E
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:1 0 
+13 1
+"close_button"
+""
+1 840 490 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+1 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  838 481 962 515
+
+T 
+1
+LANG:1 5 Close
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_panelOff();
+}
+
+EP_panelOff()
+{
+  PanelOff();
+}
+
+// SimpleCtrlScript {EP_panelOff}
+// Function {PanelOff}
+// Panel {}
+// Module {}
+// SimpleCtrlScriptEnd {EP_panelOff}
+" 0
+ E E E
+1 124 0 "9" 81
+0
+1 125 0 "10" 330
+0
+1 126 0 "10" 332
+0
+1 127 0 "10" 333
+0
+1 128 0 "10" 335
+0
+1 129 0 "10" 347
+0
+1 130 0 "10" 360
+0
+1 131 0 "10" 363
+0
+1 132 0 "10" 362
+0
+1 133 0 "10" 364
+0
+1 134 0 "10" 365
+0
+1 137 0 "10" 366
+0
+1 138 0 "10" 367
+0
+1 147 0 "5" 39
+0
+1 148 0 "5" 34
+0
+1 158 0 "5" 44
+0
+1 83 0 "9" 73
+0
+1 84 0 "9" 74
+0
+1 85 0 "9" 75
+0
+1 86 0 "9" 76
+0
+1 87 0 "9" 77
+0
+1 88 0 "9" 78
+0
+1 89 0 "9" 79
+0
+1 90 0 "9" 56
+0
+1 91 0 "9" 57
+0
+1 92 0 "9" 58
+0
+1 93 0 "9" 59
+0
+1 94 0 "9" 60
+0
+1 95 0 "9" 61
+0
+1 96 0 "9" 62
+0
+1 97 0 "9" 63
+0
+1 98 0 "9" 35
+0
+1 99 0 "9" 36
+0
+1 100 0 "9" 38
+0
+1 101 0 "9" 39
+0
+1 102 0 "9" 40
+0
+1 103 0 "9" 41
+0
+1 104 0 "9" 42
+0
+1 105 0 "9" 43
+0
+1 106 0 "9" 16
+0
+1 107 0 "9" 17
+0
+1 108 0 "9" 18
+0
+1 109 0 "9" 19
+0
+1 110 0 "9" 20
+0
+1 111 0 "9" 21
+0
+1 112 0 "9" 22
+0
+1 113 0 "9" 23
+0
+1 114 0 "9" 24
+0
+1 115 0 "9" 25
+0
+1 116 0 "9" 71
+0
+1 117 0 "9" 12
+0
+1 118 0 "9" 11
+0
+1 119 0 "9" 13
+0
+1 120 0 "9" 14
+0
+1 121 0 "9" 9
+0
+1 122 0 "9" 15
+0
+1 123 0 "9.0" 0
+0
+1 135 0 "10" 3
+0
+1 136 0 "10" 359
+0
+1 139 0 "10" 369
+0
+1 140 0 "5" 46
+0
+1 141 0 "5" 29
+0
+1 142 0 "5" 30
+0
+1 143 0 "5" 31
+0
+1 144 0 "5" 32
+0
+1 145 0 "5" 22
+0
+1 146 0 "5" 23
+0
+1 149 0 "5" 40
+0
+1 150 0 "5" 38
+0
+1 151 0 "5" 35
+0
+1 152 0 "5" 36
+0
+1 153 0 "5" 37
+0
+1 154 0 "5" 24
+0
+1 155 0 "5" 25
+0
+1 156 0 "5" 27
+0
+1 157 0 "5" 41
+0
+1 159 0 "5" 45
+0
+1 160 0 "5.0" 2
+0
+1 161 0 "5.0" 3
+0
+1 162 0 "" 77
+0
+2 82
+"PRIMITIVE_TEXT1"
+""
+1 40 10 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+2 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 40 10 530 420
+0 2 2 "0s" 0 0 0 64 0 0  40 10 1
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 14 GEM Rack Trend
+0
+LAYER, 1 
+1
+LANG:1 0 
+0
+LAYER, 2 
+1
+LANG:1 0 
+0
+LAYER, 3 
+1
+LANG:1 0 
+0
+LAYER, 4 
+1
+LANG:1 0 
+0
+LAYER, 5 
+1
+LANG:1 0 
+0
+LAYER, 6 
+1
+LANG:1 0 
+0
+LAYER, 7 
+1
+LANG:1 0 
+0
+3 0 "CMS_GEM_RackPressure" -1
+"objects\\fwTrending\\fwTrendingFaceplate.pnl" 80 109 T 2 1.760154738878143 0 1.772151898734177 -100.8123791102514 -143.1645569620253
+22
+"$ZoomWindowTitle"""
+"$bShowGrid"""
+"$bShowLegend"""
+"$bTrendLog"""
+"$dsCurveColor"""
+"$dsCurveDPE"""
+"$dsCurveLegend"""
+"$dsCurveRange"""
+"$dsCurveScaleVisible"""
+"$dsCurveToolTipText"""
+"$dsCurveVisible"""
+"$dsCurvesType"""
+"$dsUnit"""
+"$fMaxPercentageForLog"""
+"$fMinForLog"""
+"$iMarkerType"""
+"$sBackColor"""
+"$sDpName""CMS_GEM_Rack"
+"$sForeColor"""
+"$sRefName""CMS_GEM_RackPressure."
+"$sTimeRange"""
+"$templateParameters"""
+0

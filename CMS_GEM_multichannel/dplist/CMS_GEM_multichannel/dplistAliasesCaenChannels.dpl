@@ -1,0 +1,18 @@
+# ascii dump of database
+
+# Aliases/Comments
+AliasId	AliasName	CommentName
+CAEN/GEM_CAEN_HV/board12/channel000.	"GEM_HV/GEMINI01/GEMINI01L1/G3bot"	lt:1 LANG:10001 ""
+CAEN/GEM_CAEN_HV/board12/channel001.	"GEM_HV/GEMINI01/GEMINI01L1/G3top"	lt:1 LANG:10001 ""
+CAEN/GEM_CAEN_HV/board12/channel002.	"GEM_HV/GEMINI01/GEMINI01L1/G2bot"	lt:1 LANG:10001 ""
+CAEN/GEM_CAEN_HV/board12/channel003.	"GEM_HV/GEMINI01/GEMINI01L1/G2top"	lt:1 LANG:10001 ""
+CAEN/GEM_CAEN_HV/board12/channel004.	"GEM_HV/GEMINI01/GEMINI01L1/G1bot"	lt:1 LANG:10001 ""
+CAEN/GEM_CAEN_HV/board12/channel005.	"GEM_HV/GEMINI01/GEMINI01L1/G1top"	lt:1 LANG:10001 ""
+CAEN/GEM_CAEN_HV/board12/channel006.	"GEM_HV/GEMINI01/GEMINI01L1/Drift"	lt:1 LANG:10001 ""
+CAEN/GEM_CAEN_HV/board12/channel007.	"Gemini01/Gemini01-L2/G3bot"	lt:1 LANG:10001 ""
+CAEN/GEM_CAEN_HV/board12/channel008.	"Gemini01/Gemini01-L2/G3top"	lt:1 LANG:10001 ""
+CAEN/GEM_CAEN_HV/board12/channel009.	"Gemini01/Gemini01-L2/G2bot"	lt:1 LANG:10001 ""
+CAEN/GEM_CAEN_HV/board12/channel010.	"Gemini01/Gemini01-L2/G2top"	lt:1 LANG:10001 ""
+CAEN/GEM_CAEN_HV/board12/channel012.	"Gemini01/Gemini01-L2/G1top"	lt:1 LANG:10001 ""
+CAEN/GEM_CAEN_HV/board12/channel013.	"Gemini01/Gemini01-L2/Drift"	lt:1 LANG:10001 ""
+CAEN/GEM_CAEN_HV/board12/channel011.	"Gemini01/Gemini01-L2/G1bot"	lt:1 LANG:10001 ""

@@ -1,0 +1,5 @@
+# ascii dump of database
+
+# Aliases/Comments
+AliasId	AliasName	CommentName
+CAEN/GEM_CAEN_HV/board12.	"MULTICHANNEL_HV_board12"	lt:1 LANG:10001 "@%s@"

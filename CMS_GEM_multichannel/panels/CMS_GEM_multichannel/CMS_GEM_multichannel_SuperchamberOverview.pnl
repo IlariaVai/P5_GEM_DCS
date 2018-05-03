@@ -1,0 +1,2709 @@
+V 14
+2
+LANG:10001 0 
+LANG:1 0 
+PANEL,-1 -1 843 435 N "_3DFace" 0
+"main()
+{
+  
+//=================== Access Control ===================================================  
+dyn_string exceptionInfo;
+BUTTON_MaskUnmask.visible = false ;
+fwAccessControl_setupPanel( \"ApplyPanelAccessControl\", exceptionInfo);
+
+//======================= Update Summary dpes ==========================================
+updateChamberSummary();
+}
+
+
+updateChamberSummary()
+{
+  dyn_string SC01L1 = makeDynString
+            (//status
+            \"CAEN/GEM_CAEN_HV/board12/channel000.actual.status\",\"CAEN/GEM_CAEN_HV/board12/channel001.actual.status\",
+            \"CAEN/GEM_CAEN_HV/board12/channel002.actual.status\",\"CAEN/GEM_CAEN_HV/board12/channel003.actual.status\",\"CAEN/GEM_CAEN_HV/board12/channel004.actual.status\",
+            \"CAEN/GEM_CAEN_HV/board12/channel005.actual.status\",\"CAEN/GEM_CAEN_HV/board12/channel006.actual.status\",
+            //Vmon            
+            \"CAEN/GEM_CAEN_HV/board12/channel000.actual.vMon\",\"CAEN/GEM_CAEN_HV/board12/channel001.actual.vMon\",
+            \"CAEN/GEM_CAEN_HV/board12/channel002.actual.vMon\",\"CAEN/GEM_CAEN_HV/board12/channel003.actual.vMon\",\"CAEN/GEM_CAEN_HV/board12/channel004.actual.vMon\",
+            \"CAEN/GEM_CAEN_HV/board12/channel005.actual.vMon\",\"CAEN/GEM_CAEN_HV/board12/channel006.actual.vMon\"
+            );
+  dpConnect(\"update_McScOverviewSC01L1\" , SC01L1 );
+  
+  dyn_string SC01L2 = makeDynString
+            (//status
+            \"CAEN/GEM_CAEN_HV/board12/channel007.actual.status\",\"CAEN/GEM_CAEN_HV/board12/channel008.actual.status\",
+            \"CAEN/GEM_CAEN_HV/board12/channel009.actual.status\",\"CAEN/GEM_CAEN_HV/board12/channel010.actual.status\",\"CAEN/GEM_CAEN_HV/board12/channel011.actual.status\",
+            \"CAEN/GEM_CAEN_HV/board12/channel012.actual.status\",\"CAEN/GEM_CAEN_HV/board12/channel013.actual.status\",
+            //Vmon
+            \"CAEN/GEM_CAEN_HV/board12/channel007.actual.vMon\",\"CAEN/GEM_CAEN_HV/board12/channel008.actual.vMon\",
+            \"CAEN/GEM_CAEN_HV/board12/channel009.actual.vMon\",\"CAEN/GEM_CAEN_HV/board12/channel010.actual.vMon\",\"CAEN/GEM_CAEN_HV/board12/channel011.actual.vMon\",
+            \"CAEN/GEM_CAEN_HV/board12/channel012.actual.vMon\",\"CAEN/GEM_CAEN_HV/board12/channel013.actual.vMon\"
+            );
+  dpConnect(\"update_McScOverviewSC01L2\" , SC01L2 );  
+  
+  for (int i=1; i<=14; i++)
+  {
+  if(!dpExists(SC01L1[i])) DebugTN(\"SC01L1[\",i,\"] doesn't exist!!\");
+  if(!dpExists(SC01L2[i])) DebugTN(\"SC01L2[\",i,\"] doesn't exist!!\");
+  }
+}
+
+
+
+
+
+
+
+
+
+void ApplyPanelAccessControl(string s1, string s2)
+{
+  
+bool hasControl, hasModify;
+
+dyn_string exceptionInfo;
+
+BUTTON_MaskUnmask.enabled = false ;
+Button_AlarmScreen.enabled = false;
+
+// check privileges:
+fwAccessControl_isGranted( \"CMS_GEM:Control\", hasControl, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Modify\", hasModify, exceptionInfo);
+
+if (dynlen(exceptionInfo)) { fwExceptionHandling_display(exceptionInfo); return;}
+
+// enable/disable panel functionality:
+
+  if (hasControl) 
+  {
+    Button_AlarmScreen.enabled = true;
+  }  
+  if (hasModify) 
+  {
+    BUTTON_MaskUnmask.enabled = false ;
+    Button_AlarmScreen.enabled = true;
+  }
+}
+
+
+/*
+main()
+{
+dyn_string exceptionInfo;
+fwAccessControl_setupPanel( \"ApplyPanelAccessControl\", exceptionInfo);
+}
+
+
+
+
+void ApplyPanelAccessControl(string s1, string s2)
+{
+  
+bool hasControl, hasModify;
+
+dyn_string exceptionInfo;
+
+// revoke all previous rights:
+DisableAllInPanel();
+
+// check privileges:
+fwAccessControl_isGranted( \"CMS_GEM:Control\", hasControl, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Modify\", hasModify, exceptionInfo);
+
+if (dynlen(exceptionInfo)) { fwExceptionHandling_display(exceptionInfo); return;}
+
+// enable/disable panel functionality:
+
+  if (hasControl) setOperatorRights();
+  if (hasModify) setExpertRights();
+}
+
+
+void DisableAllInPanel()
+{
+  setAllInPanel(false);
+}
+
+void setExpertRights()
+{
+  setAllInPanel(true);
+}
+
+void setOperatorRights()
+{
+   bool set = true;
+   
+   CASCADE_DriftOnOff.enabled = set;
+   CASCADE_G1TopOnOff.enabled = set;
+   CASCADE_G1BotOnOff.enabled = set;
+   CASCADE_G2TopOnOff.enabled = set;
+   CASCADE_G2BotOnOff.enabled = set;
+   CASCADE_G3TopOnOff.enabled = set;
+   CASCADE_G3BotOnOff.enabled = set;
+   
+   CASCADE2_DriftOnOff.enabled = set;
+   CASCADE2_G1TopOnOff.enabled = set;
+   CASCADE2_G1BotOnOff.enabled = set;
+   CASCADE2_G2TopOnOff.enabled = set;
+   CASCADE2_G2BotOnOff.enabled = set;
+   CASCADE2_G3TopOnOff.enabled = set;
+   CASCADE2_G3BotOnOff.enabled = set;
+   
+   ALL_ON_BUTTON.enabled = set;
+   ALL_OFF_BUTTON.enabled = set;
+   
+   ALL_ON_BUTTON2.enabled = set;
+   ALL_OFF_BUTTON2.enabled = set;
+   
+   BUTTON_APPLY_CONFIGS.enabled = set;
+   BUTTON2_APPLY_CONFIGS.enabled = set;
+}
+
+void setAllInPanel(bool set)
+{
+  //board Settings
+ CASCADE_OpMode.enabled = set;
+ BUTTON_applyOpMode.enabled = set; 
+  
+ //layer1
+ CASCADE_DriftOnOff.enabled = set;
+ TEXT_DriftV0.enabled = set;
+ TEXT_DriftV1.enabled = set;
+ TEXT_DriftI0.enabled = set;
+ TEXT_DriftI1.enabled = set;
+ TEXT_DriftRUP.enabled = set;
+ TEXT_DriftRDWN.enabled = set;
+ TEXT_DriftTrip.enabled = set; 
+ 
+  CASCADE_G1TopOnOff.enabled = set;
+ TEXT_G1TopV0.enabled = set;
+ TEXT_G1TopV1.enabled = set;
+ TEXT_G1TopI0.enabled = set;
+ TEXT_G1TopI1.enabled = set;
+ TEXT_G1TopRUP.enabled = set;
+ TEXT_G1TopRDWN.enabled = set;
+ TEXT_G1TopTrip.enabled = set; 
+ 
+  CASCADE_G1BotOnOff.enabled = set;
+ TEXT_G1BotV0.enabled = set;
+ TEXT_G1BotV1.enabled = set;
+ TEXT_G1BotI0.enabled = set;
+ TEXT_G1BotI1.enabled = set;
+ TEXT_G1BotRUP.enabled = set;
+ TEXT_G1BotRDWN.enabled = set;
+ TEXT_G1BotTrip.enabled = set; 
+ 
+  CASCADE_G2TopOnOff.enabled = set;
+ TEXT_G2TopV0.enabled = set;
+ TEXT_G2TopV1.enabled = set;
+ TEXT_G2TopI0.enabled = set;
+ TEXT_G2TopI1.enabled = set;
+ TEXT_G2TopRUP.enabled = set;
+ TEXT_G2TopRDWN.enabled = set;
+ TEXT_G2TopTrip.enabled = set; 
+ 
+  CASCADE_G2BotOnOff.enabled = set;
+ TEXT_G2BotV0.enabled = set;
+ TEXT_G2BotV1.enabled = set;
+ TEXT_G2BotI0.enabled = set;
+ TEXT_G2BotI1.enabled = set;
+ TEXT_G2BotRUP.enabled = set;
+ TEXT_G2BotRDWN.enabled = set;
+ TEXT_G2BotTrip.enabled = set; 
+ 
+  CASCADE_G3TopOnOff.enabled = set;
+ TEXT_G3TopV0.enabled = set;
+ TEXT_G3TopV1.enabled = set;
+ TEXT_G3TopI0.enabled = set;
+ TEXT_G3TopI1.enabled = set;
+ TEXT_G3TopRUP.enabled = set;
+ TEXT_G3TopRDWN.enabled = set;
+ TEXT_G3TopTrip.enabled = set; 
+ 
+  CASCADE_G3BotOnOff.enabled = set;
+ TEXT_G3BotV0.enabled = set;
+ TEXT_G3BotV1.enabled = set;
+ TEXT_G3BotI0.enabled = set;
+ TEXT_G3BotI1.enabled = set;
+ TEXT_G3BotRUP.enabled = set;
+ TEXT_G3BotRDWN.enabled = set;
+ TEXT_G3BotTrip.enabled = set;
+ 
+ ALL_ON_BUTTON.enabled = set;
+ ALL_OFF_BUTTON.enabled = set;
+ BUTTON_SAVE_CONFIGS.enabled = set;
+ BUTTON_LOAD_CONFIGS.enabled = set;
+ load_default_button.enabled = set;
+ 
+ TEXT_DivCurr_top.enabled = set;
+ set_all_DivCurr_button.enabled = set;
+ TEXT_DivVolt_top.enabled = set;
+ set_all_DivVolt_button.enabled = set;
+ TEXT_AllI0.enabled = set;
+ set_all_i0_button.enabled = set;
+ BUTTON_APPLY_CONFIGS.enabled = set;
+ 
+ //layer2
+ CASCADE2_DriftOnOff.enabled = set;
+ TEXT2_DriftV0.enabled = set;
+ TEXT2_DriftV1.enabled = set;
+ TEXT2_DriftI0.enabled = set;
+ TEXT2_DriftI1.enabled = set;
+ TEXT2_DriftRUP.enabled = set;
+ TEXT2_DriftRDWN.enabled = set;
+ TEXT2_DriftTrip.enabled = set; 
+ 
+  CASCADE2_G1TopOnOff.enabled = set;
+ TEXT2_G1TopV0.enabled = set;
+ TEXT2_G1TopV1.enabled = set;
+ TEXT2_G1TopI0.enabled = set;
+ TEXT2_G1TopI1.enabled = set;
+ TEXT2_G1TopRUP.enabled = set;
+ TEXT2_G1TopRDWN.enabled = set;
+ TEXT2_G1TopTrip.enabled = set; 
+ 
+  CASCADE2_G1BotOnOff.enabled = set;
+ TEXT2_G1BotV0.enabled = set;
+ TEXT2_G1BotV1.enabled = set;
+ TEXT2_G1BotI0.enabled = set;
+ TEXT2_G1BotI1.enabled = set;
+ TEXT2_G1BotRUP.enabled = set;
+ TEXT2_G1BotRDWN.enabled = set;
+ TEXT2_G1BotTrip.enabled = set; 
+ 
+  CASCADE2_G2TopOnOff.enabled = set;
+ TEXT2_G2TopV0.enabled = set;
+ TEXT2_G2TopV1.enabled = set;
+ TEXT2_G2TopI0.enabled = set;
+ TEXT2_G2TopI1.enabled = set;
+ TEXT2_G2TopRUP.enabled = set;
+ TEXT2_G2TopRDWN.enabled = set;
+ TEXT2_G2TopTrip.enabled = set; 
+ 
+  CASCADE2_G2BotOnOff.enabled = set;
+ TEXT2_G2BotV0.enabled = set;
+ TEXT2_G2BotV1.enabled = set;
+ TEXT2_G2BotI0.enabled = set;
+ TEXT2_G2BotI1.enabled = set;
+ TEXT2_G2BotRUP.enabled = set;
+ TEXT2_G2BotRDWN.enabled = set;
+ TEXT2_G2BotTrip.enabled = set; 
+ 
+  CASCADE2_G3TopOnOff.enabled = set;
+ TEXT2_G3TopV0.enabled = set;
+ TEXT2_G3TopV1.enabled = set;
+ TEXT2_G3TopI0.enabled = set;
+ TEXT2_G3TopI1.enabled = set;
+ TEXT2_G3TopRUP.enabled = set;
+ TEXT2_G3TopRDWN.enabled = set;
+ TEXT2_G3TopTrip.enabled = set; 
+ 
+  CASCADE2_G3BotOnOff.enabled = set;
+ TEXT2_G3BotV0.enabled = set;
+ TEXT2_G3BotV1.enabled = set;
+ TEXT2_G3BotI0.enabled = set;
+ TEXT2_G3BotI1.enabled = set;
+ TEXT2_G3BotRUP.enabled = set;
+ TEXT2_G3BotRDWN.enabled = set;
+ TEXT2_G3BotTrip.enabled = set;
+ 
+ ALL_ON_BUTTON2.enabled = set;
+ ALL_OFF_BUTTON2.enabled = set;
+ BUTTON2_SAVE_CONFIGS.enabled = set;
+ BUTTON2_LOAD_CONFIGS.enabled = set;
+ load_default_value_bot.enabled = set;
+ 
+ TEXT_DivCurr_bot.enabled = set;
+ set_all_DivCurr_button_bot.enabled = set;
+ TEXT_DivVolt_bot.enabled = set;
+ set_all_DivVolt_button_bot.enabled = set;
+ TEXT_AllI0_Bot.enabled = set;
+ set_all_i0_button_bot.enabled = set;
+ BUTTON2_APPLY_CONFIGS.enabled = set;
+ 
+}
+*/" 0
+ E E E E 1 -1 -1 0  110 160
+""0  1
+E "update_McScOverviewSC01L1( dyn_string dp_CaenChannels ,  dyn_anytype values ) {
+  
+  //update vMonSum
+  dyn_string vMonDpes = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel000.actual.vMon\",\"CAEN/GEM_CAEN_HV/board12/channel001.actual.vMon\",
+                                      \"CAEN/GEM_CAEN_HV/board12/channel002.actual.vMon\",\"CAEN/GEM_CAEN_HV/board12/channel003.actual.vMon\",
+                                      \"CAEN/GEM_CAEN_HV/board12/channel004.actual.vMon\",\"CAEN/GEM_CAEN_HV/board12/channel005.actual.vMon\",
+                                      \"CAEN/GEM_CAEN_HV/board12/channel006.actual.vMon\");
+  dyn_float vMonFloats;
+  dpGet( vMonDpes , vMonFloats);
+  float new_VmonSum = 0;
+  int i=1;
+  for(i=1; i<=7; i++)
+  {
+    new_VmonSum = new_VmonSum + vMonFloats[i];
+  }
+  
+  dpSet(\"MC_SC1top_overview.actual.VmonSum\", new_VmonSum);
+  
+  //update status
+  dyn_string statusDpes = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel000.actual.status\",\"CAEN/GEM_CAEN_HV/board12/channel001.actual.status\",
+                                      \"CAEN/GEM_CAEN_HV/board12/channel002.actual.status\",\"CAEN/GEM_CAEN_HV/board12/channel003.actual.status\",
+                                      \"CAEN/GEM_CAEN_HV/board12/channel004.actual.status\",\"CAEN/GEM_CAEN_HV/board12/channel005.actual.status\",
+                                      \"CAEN/GEM_CAEN_HV/board12/channel006.actual.status\");
+  dyn_int statusInts;
+  dpGet( statusDpes , statusInts);
+  int new_status = 0;
+  i=1;
+  for (int i=1; i<=7 ; i++)
+  {
+    new_status = new_status | statusInts[i];
+  }
+  dpSet(\"MC_SC1top_overview.actual.status\", new_status);
+}
+
+//================================================================================================================================================
+update_McScOverviewSC01L2( dyn_string dp_CaenChannels ,  dyn_anytype values ) {
+  
+  //update vMonSum
+  dyn_string vMonDpes = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel007.actual.vMon\",\"CAEN/GEM_CAEN_HV/board12/channel008.actual.vMon\",
+                                      \"CAEN/GEM_CAEN_HV/board12/channel009.actual.vMon\",\"CAEN/GEM_CAEN_HV/board12/channel010.actual.vMon\",
+                                      \"CAEN/GEM_CAEN_HV/board12/channel011.actual.vMon\",\"CAEN/GEM_CAEN_HV/board12/channel012.actual.vMon\",
+                                      \"CAEN/GEM_CAEN_HV/board12/channel013.actual.vMon\");
+  dyn_float vMonFloats;
+  dpGet( vMonDpes , vMonFloats);
+  float new_VmonSum = 0;
+  int i=1;
+  for(i=1; i<=7; i++)
+  {
+    new_VmonSum = new_VmonSum + vMonFloats[i];
+  }
+
+  dpSet(\"MC_SC1bot_overview.actual.VmonSum\", new_VmonSum);
+  
+  //update status
+  dyn_string statusDpes = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel007.actual.status\",\"CAEN/GEM_CAEN_HV/board12/channel008.actual.status\",
+                                        \"CAEN/GEM_CAEN_HV/board12/channel009.actual.status\",\"CAEN/GEM_CAEN_HV/board12/channel010.actual.status\",
+                                        \"CAEN/GEM_CAEN_HV/board12/channel011.actual.status\",\"CAEN/GEM_CAEN_HV/board12/channel012.actual.status\",
+                                        \"CAEN/GEM_CAEN_HV/board12/channel013.actual.status\");
+  dyn_int statusInts;
+  dpGet( statusDpes , statusInts);
+  int new_status = 0;
+  i=1;
+  for (int i=1; i<=7 ; i++)
+  {
+    new_status = new_status | statusInts[i];
+  }
+  
+  dpSet(\"MC_SC1bot_overview.actual.status\", new_status);
+}" 0
+ 3
+"CBRef" "1"
+"EClose" E
+"dpi" "96"
+0 0 0
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:10001 0 
+13 24
+"BUTTON_ChangeSettings"
+""
+1 30 310 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+24 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  28 299 130.9999999999999 344
+
+T 
+2
+LANG:10001 15 Change
+Settings
+LANG:1 11 Settings...
+"main()
+{
+  ChildPanelOn(\"CMS_GEM_multichannel/CMS_GEM_multichannel_ChangeSettings.pnl\",\"Settings\", \"\", 0, 0);
+}" 0
+ E E "main()
+{
+  this.text(\"Change\\nSettings\");
+  this.backCol(\"_Button\");
+  this.foreCol(\"black\");
+}" 0
+
+30 66
+"FRAME4"
+""
+1 30 214 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+66 0 0 0 0 0
+E E E
+1
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 0 1 0 1 E 0.9111111111111113 0 0.5376344086021505 0.6666666666666465 56.02779239973387 0 E 30 214 121 401
+2
+LANG:10001 35 MS Shell Dlg 2,-1,16,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,12,-1,5,50,0,0,0,0,0
+0 2
+LANG:10001 5 Board
+LANG:1 5 Board
+2 67
+"PRIMITIVE_TEXT177"
+""
+1 30.125 10 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+67 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 5 1 2 1 E U  0 E 30.125 10 263 28
+0 2 2 "0s" 0 0 0 192 0 0  30.125 10 1
+2
+LANG:10001 35 MS Shell Dlg 2,-1,16,5,75,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,0,0,0,0,0
+0 2
+LANG:10001 21 SUPERCHAMBER OVERVIEW
+LANG:1 15 SYSTEM OVERVIEW
+13 68
+"BUTTON_Monitor"
+""
+1 160 310 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+68 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  158 299 261 344
+
+T 
+2
+LANG:10001 7 Monitor
+LANG:1 11 Settings...
+"main()
+{
+  ChildPanelOn(\"CMS_GEM_multichannel/CMS_GEM_multichannel_monitor.pnl\",\"Monitor\", \"\", 0, 0);
+}" 0
+ E E "main()
+{
+  this.text(\"Monitor\");
+  this.backCol(\"_Button\");
+  this.foreCol(\"black\");
+}" 0
+
+13 69
+"BUTTON_ShowTrends"
+""
+1 290 310 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+69 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  288 299 391 344
+
+T 
+2
+LANG:10001 11 Show
+Trends
+LANG:1 11 Settings...
+"main()
+{
+  ChildPanelOn(\"CMS_GEM_multichannel/CMS_GEM_multichannel_showTrends.pnl\",\"Show trends\", \"\", 0, 0);
+}" 0
+ E E "main()
+{
+  this.text(\"Show\\nTrends\");
+  this.backCol(\"_Button\");
+  this.foreCol(\"black\");
+}" 0
+
+2 71
+"PRIMITIVE_TEXT178"
+""
+1 37.00000109895956 204.2473262032084 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+71 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"main()
+{
+  this.text(\"OpMode\");
+}" 0
+ E 0 1 1 2 1 E U  0 E 37.00000109895956 204.2473262032084 94 241
+0 2 2 "0s" 0 0 0 192 0 0  37.00000109895956 204.2473262032084 2
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0 2
+LANG:10001 6 OpMode
+LANG:1 8 OverTemp
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0 1
+LANG:10001 0 
+14 72
+"TEXT_FIELD407"
+""
+1 749.0000010989595 335.2473262032084 E E E 1 E 1 E N "_WindowText" E N "lightgrey" E E
+ E E
+72 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0  34.99999890104056 218.9973211647537 95.99999890104044 245.9973211647537
+2 "0s" 0 0 0 1 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"CAEN/GEM_CAEN_HV/board12.readBackSettings.opMode\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"CAEN/GEM_CAEN_HV/board12.readBackSettings.opMode\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, int fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+  if (this.text==\"TRUE\") this.text=\"GEM\";
+  if (this.text==\"FALSE\") this.text=\"FREE\";
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {CMS_GEM_multichannel_board.readBackSettings.opMode}
+// DPConfig {:_online.._value}
+// DPType {int}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+// 
+// 
+" 0
+ E
+30 73
+"FRAME1"
+""
+1 30 214 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+73 0 0 0 0 0
+E E E
+1
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"main()
+{
+  this.text(\"Layer1\");
+}" 0
+ E 0 0 1 0 1 E 3.244444444444445 0 0.5376344086021505 -67.33333333333334 -65.05376344086021 0 E 30 214 121 401
+2
+LANG:10001 35 MS Shell Dlg 2,-1,16,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,12,-1,5,50,0,0,0,0,0
+0 2
+LANG:10001 6 Layer1
+LANG:1 3 Top
+7 74
+"CIRCLE_TopOvC"
+""
+1 110 550 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+74 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"// SimpleCtrlScriptStart {invalid}
+// main()
+// {
+//   dyn_string dps = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel006.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel005.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel004.actual.status:_online.._value\" , 
+//                                  \"CAEN/GEM_CAEN_HV/board12/channel003.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel002.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel001.actual.status:_online.._value\" ,
+//                                  \"CAEN/GEM_CAEN_HV/board12/channel000.actual.status:_online.._value\");
+// 
+//   EP_setBackColor(dps);
+//   
+//   int i=1;
+//   for(i=1 ; i<=dynlen(dps) ; i++)
+//   {
+//     dpConnectUserData(\"EP_setBackColor\",dps, dps[i]);
+//     dyn_errClass err = getLastError();
+//     if (dynlen(err) > 0)
+//     setValue(\"\", \"color\", \"_dpdoesnotexist\");
+//   }
+// }
+// 
+// 
+// bool checkAllDpsExist(dyn_string dps)
+//   {
+//     bool exist=1;
+//     int i=1;
+//     for (i=1; i<=dynlen(dps); i++)  exist=exist && dpExists(dps[i]);
+//     return exist;
+//   }
+// 
+// 
+// EP_setBackColor(dyn_string dps)
+//   {
+//     dyn_errClass err;
+// 
+//       if( !checkAllDpsExist(dps) )
+//     {
+//       setValue(\"\", \"color\", \"_dpdoesnotexist\");
+//       return;
+//     }
+// 
+// 
+//     dyn_int results = makeDynBool( 1,1,1,1,1,1,1 );
+//     dpGet( dps , results);
+//     bool ChannelStatus=0;
+//     bool ChamberStatus=0;
+//     int i=1;
+//     for (i=1;i<=dynlen(dps);i++) 
+//       {
+//       ChannelStatus=(results[i] & 0x008);      
+//       ChamberStatus=ChamberStatus || ChannelStatus;
+//       }
+//     EP_setBackColorCB(ChamberStatus);
+//     err = getLastError();
+//     if (dynlen(err) > 0)
+//       setValue(\"\", \"color\", \"_dpdoesnotexist\");
+// 
+//   }
+// 
+// 
+// EP_setBackColorCB(bool boNewValue)
+// {
+//   if (!boNewValue)
+//     setValue(\"\", \"backCol\", \"grey\");
+//   else
+//     setValue(\"\", \"backCol\", \"Red\");
+// }
+
+// SimpleCtrlScript {EP_setBackColor}
+// DP {CMS_GEM_multichannel_Top_{any}.actual.OvC}
+// DPConfig {:_online.._value}
+// DPType {bool}
+// AlertHdl {FALSE}
+// DPEInvalid {}
+// DPEConfigInvalid {}
+// Operator1 {notequal}
+// Operant1 {0}
+// Color1 {grey}
+// Operator2 {equal}
+// Operant2 {1}
+// Color2 {Red}
+// SimpleCtrlScriptEnd {EP_setBackColor}
+// 
+
+// SimpleCtrlScriptStart {invalid}
+main()
+{
+
+  dyn_string dps = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel006.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel005.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel004.actual.status:_online.._value\" , 
+                                 \"CAEN/GEM_CAEN_HV/board12/channel003.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel002.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel001.actual.status:_online.._value\" ,
+                                 \"CAEN/GEM_CAEN_HV/board12/channel000.actual.status:_online.._value\");
+  
+  dpConnect(\"GetOvC\",dps)  ;
+  
+ 
+}
+
+
+bool checkAllDpsExist(dyn_string dps)
+  {
+    bool exist=1;
+    int i=1;
+    for (i=1; i<=dynlen(dps); i++)  exist=exist && dpExists(dps[i]);
+    return exist;
+  }
+
+
+GetOvC(dyn_string dps, dyn_int results)
+  {
+    dyn_errClass err;
+    dyn_bool OvC_bit;
+    
+    int i=1;
+    for (i=1;i<=dynlen(dps);i++) 
+      {
+      OvC_bit[i]=(results[i] & 0x008);      
+      }
+
+      if( !checkAllDpsExist(dps) )
+    {
+      setValue(\"\", \"color\", \"_dpdoesnotexist\");
+      return;
+    }
+    
+    if(OvC_bit[1]==1 || OvC_bit[2]==1 || OvC_bit[3]==1 || OvC_bit[4]==1 || OvC_bit[5]==1 || OvC_bit[6]==1 || OvC_bit[7]==1){ 
+        setValue(\"\",\"backCol\",\"red\");
+      }
+    else {
+        setValue(\"\",\"backCol\",\"grey\");
+      }
+  }
+
+
+
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {CMS_GEM_multichannel_Bot_Drift.actual.status}
+// DPConfig {:_online.._value}
+// DPType {int}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+
+
+
+
+
+
+
+
+
+
+" 0
+ E 0 2 1 2 1 E 1 0 1 -48.00000000000003 -434 1 E 110 550 10 10
+2 75
+"PRIMITIVE_TEXT55"
+""
+1 47.12500000000004 87.00000000000001 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+75 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 47.12500000000004 87.00000000000001 77 104
+0 2 2 "0s" 0 0 0 192 0 0  47.12500000000004 87.00000000000001 1
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0 2
+LANG:10001 3 OvC
+LANG:1 3 OvC
+7 76
+"CIRCLE_TopOvV"
+""
+1 110 550 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+76 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"// SimpleCtrlScriptStart {invalid}
+// main()
+// {
+//   dyn_string dps = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel006.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel005.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel004.actual.status:_online.._value\" , 
+//                                  \"CAEN/GEM_CAEN_HV/board12/channel003.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel002.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel001.actual.status:_online.._value\" ,
+//                                  \"CAEN/GEM_CAEN_HV/board12/channel000.actual.status:_online.._value\");
+// 
+//   EP_setBackColor(dps);
+//     
+//   int i=1;
+//   for(i=1 ; i<=dynlen(dps) ; i++)
+//   {
+//     dpConnect(\"EP_setBackColor(dps)\", dps[i]);
+//     dyn_errClass err = getLastError();
+//     if (dynlen(err) > 0)
+//     setValue(\"\", \"color\", \"_dpdoesnotexist\");
+//   }
+// }
+// 
+// 
+// bool checkAllDpsExist(dyn_string dps)
+//   {
+//     bool exist=1;
+//     int i=1;
+//     for (i=1; i<=dynlen(dps); i++)  exist=exist && dpExists(dps[i]);
+//     return exist;
+//   }
+// 
+// 
+// EP_setBackColor(dyn_string dps)
+//   {
+//     dyn_errClass err;
+// 
+//       if( !checkAllDpsExist(dps) )
+//     {
+//       setValue(\"\", \"color\", \"_dpdoesnotexist\");
+//       return;
+//     }
+// 
+// 
+//     dyn_int results = makeDynBool( 1,1,1,1,1,1,1 );
+//     dpGet( dps , results);
+//     bool ChannelStatus=0;
+//     bool ChamberStatus=0;
+//     int i=1;
+//     for (i=1;i<=dynlen(dps);i++) 
+//       {
+//       ChannelStatus=(results[i] & 0x010);      
+//       ChamberStatus=ChamberStatus || ChannelStatus;
+//       }
+//     EP_setBackColorCB(ChamberStatus);
+//     err = getLastError();
+//     if (dynlen(err) > 0)
+//       setValue(\"\", \"color\", \"_dpdoesnotexist\");
+// 
+//   }
+// 
+// 
+// EP_setBackColorCB(bool boNewValue)
+// {
+//   if (!boNewValue)
+//     setValue(\"\", \"backCol\", \"grey\");
+//   else
+//     setValue(\"\", \"backCol\", \"Red\");
+// }
+// 
+// SimpleCtrlScript {EP_setBackColor}
+// DP {CMS_GEM_multichannel_Top_{any}.actual.OvC}
+// DPConfig {:_online.._value}
+// DPType {bool}
+// AlertHdl {FALSE}
+// DPEInvalid {}
+// DPEConfigInvalid {}
+// Operator1 {notequal}
+// Operant1 {0}
+// Color1 {grey}
+// Operator2 {equal}
+// Operant2 {1}
+// Color2 {Red}
+// SimpleCtrlScriptEnd {EP_setBackColor}
+// 
+ 
+
+main()
+{
+
+  dyn_string dps = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel006.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel005.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel004.actual.status:_online.._value\" , 
+                                 \"CAEN/GEM_CAEN_HV/board12/channel003.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel002.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel001.actual.status:_online.._value\" ,
+                                 \"CAEN/GEM_CAEN_HV/board12/channel000.actual.status:_online.._value\");
+  
+  dpConnect(\"GetOvV\",dps)  ;
+  
+ 
+}
+
+
+bool checkAllDpsExist(dyn_string dps)
+  {
+    bool exist=1;
+    int i=1;
+    for (i=1; i<=dynlen(dps); i++)  exist=exist && dpExists(dps[i]);
+    return exist;
+  }
+
+
+GetOvV(dyn_string dps, dyn_int results)
+  {
+    dyn_errClass err;
+    dyn_bool OvV_bit;
+    
+    int i=1;
+    for (i=1;i<=dynlen(dps);i++) 
+      {
+      OvV_bit[i]=(results[i] & 0x010);      
+      }
+
+      if( !checkAllDpsExist(dps) )
+    {
+      setValue(\"\", \"color\", \"_dpdoesnotexist\");
+      return;
+    }
+    
+    if(OvV_bit[1]==1 || OvV_bit[2]==1 || OvV_bit[3]==1 || OvV_bit[4]==1 || OvV_bit[5]==1 || OvV_bit[6]==1 || OvV_bit[7]==1){ 
+        setValue(\"\",\"backCol\",\"red\");
+      }
+    else {
+        setValue(\"\",\"backCol\",\"grey\");
+      }
+  }
+
+
+
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {CMS_GEM_multichannel_Bot_Drift.actual.status}
+// DPConfig {:_online.._value}
+// DPType {int}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+
+
+
+
+
+
+
+
+
+
+" 0
+ E 0 2 1 2 1 E 1 0 1 0.5000000000000142 -434 1 E 110 550 10 10
+2 77
+"PRIMITIVE_TEXT56"
+""
+1 95.62500000000004 87.00000000000001 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+77 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 95.62500000000004 87.00000000000001 125 104
+0 2 2 "0s" 0 0 0 192 0 0  95.62500000000004 87.00000000000001 1
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0 2
+LANG:10001 3 OvV
+LANG:1 3 OvV
+7 78
+"CIRCLE_TopUnV"
+""
+1 110 550 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+78 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"// SimpleCtrlScriptStart {invalid}
+// main()
+// {
+//   dyn_string dps = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel006.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel005.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel004.actual.status:_online.._value\" , 
+//                                  \"CAEN/GEM_CAEN_HV/board12/channel003.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel002.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel001.actual.status:_online.._value\" ,
+//                                  \"CAEN/GEM_CAEN_HV/board12/channel000.actual.status:_online.._value\");
+// 
+//   EP_setBackColor(dps);
+//     
+//   int i=1;
+//   for(i=1 ; i<=dynlen(dps) ; i++)
+//   {
+//     dpConnect(\"EP_setBackColor(dps)\", dps[i]);
+//     dyn_errClass err = getLastError();
+//     if (dynlen(err) > 0)
+//     setValue(\"\", \"color\", \"_dpdoesnotexist\");
+//   }
+// }
+// 
+// 
+// bool checkAllDpsExist(dyn_string dps)
+//   {
+//     bool exist=1;
+//     int i=1;
+//     for (i=1; i<=dynlen(dps); i++)  exist=exist && dpExists(dps[i]);
+//     return exist;
+//   }
+// 
+// 
+// EP_setBackColor(dyn_string dps)
+//   {
+//     dyn_errClass err;
+// 
+//       if( !checkAllDpsExist(dps) )
+//     {
+//       setValue(\"\", \"color\", \"_dpdoesnotexist\");
+//       return;
+//     }
+// 
+// 
+//     dyn_int results = makeDynBool( 1,1,1,1,1,1,1 );
+//     dpGet( dps , results);
+//     bool ChannelStatus=0;
+//     bool ChamberStatus=0;
+//     int i=1;
+//     for (i=1;i<=dynlen(dps);i++) 
+//       {
+//       ChannelStatus=(results[i] & 0x020);      
+//       ChamberStatus=ChamberStatus || ChannelStatus;
+//       }
+//     EP_setBackColorCB(ChamberStatus);
+//     err = getLastError();
+//     if (dynlen(err) > 0)
+//       setValue(\"\", \"color\", \"_dpdoesnotexist\");
+// 
+//   }
+// 
+// 
+// EP_setBackColorCB(bool boNewValue)
+// {
+//   if (!boNewValue)
+//     setValue(\"\", \"backCol\", \"grey\");
+//   else
+//     setValue(\"\", \"backCol\", \"Red\");
+// }
+// 
+// SimpleCtrlScript {EP_setBackColor}
+// DP {CMS_GEM_multichannel_Top_{any}.actual.OvC}
+// DPConfig {:_online.._value}
+// DPType {bool}
+// AlertHdl {FALSE}
+// DPEInvalid {}
+// DPEConfigInvalid {}
+// Operator1 {notequal}
+// Operant1 {0}
+// Color1 {grey}
+// Operator2 {equal}
+// Operant2 {1}
+// Color2 {Red}
+// SimpleCtrlScriptEnd {EP_setBackColor}
+// 
+// 
+main()
+{
+
+  dyn_string dps = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel006.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel005.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel004.actual.status:_online.._value\" , 
+                                 \"CAEN/GEM_CAEN_HV/board12/channel003.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel002.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel001.actual.status:_online.._value\" ,
+                                 \"CAEN/GEM_CAEN_HV/board12/channel000.actual.status:_online.._value\");
+  
+  dpConnect(\"GetUnV\",dps)  ;
+  
+ 
+}
+
+
+bool checkAllDpsExist(dyn_string dps)
+  {
+    bool exist=1;
+    int i=1;
+    for (i=1; i<=dynlen(dps); i++)  exist=exist && dpExists(dps[i]);
+    return exist;
+  }
+
+
+GetUnV(dyn_string dps, dyn_int results)
+  {
+    dyn_errClass err;
+    dyn_bool UnV_bit;
+    
+    int i=1;
+    for (i=1;i<=dynlen(dps);i++) 
+      {
+      UnV_bit[i]=(results[i] & 0x020);      
+      }
+
+      if( !checkAllDpsExist(dps) )
+    {
+      setValue(\"\", \"color\", \"_dpdoesnotexist\");
+      return;
+    }
+    
+    if(UnV_bit[1]==1 || UnV_bit[2]==1 || UnV_bit[3]==1 || UnV_bit[4]==1 || UnV_bit[5]==1 || UnV_bit[6]==1 || UnV_bit[7]==1){ 
+        setValue(\"\",\"backCol\",\"red\");
+      }
+    else {
+        setValue(\"\",\"backCol\",\"grey\");
+      }
+  }
+
+
+
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {CMS_GEM_multichannel_Bot_Drift.actual.status}
+// DPConfig {:_online.._value}
+// DPType {int}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+
+
+
+
+
+
+
+
+// 
+
+" 0
+ E 0 2 1 2 1 E 1 0 1 47.00000000000004 -434 1 E 110 550 10 10
+2 79
+"PRIMITIVE_TEXT57"
+""
+1 142.125 87.00000000000001 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+79 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 142.125 87.00000000000001 171 104
+0 2 2 "0s" 0 0 0 192 0 0  142.125 87.00000000000001 1
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0 2
+LANG:10001 3 UnV
+LANG:1 3 UnV
+7 80
+"CIRCLE_TopTrip"
+""
+1 110 550 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+80 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"// SimpleCtrlScriptStart {invalid}
+// main()
+// {
+//   dyn_string dps = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel006.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel005.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel004.actual.status:_online.._value\" , 
+//                                  \"CAEN/GEM_CAEN_HV/board12/channel003.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel002.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel001.actual.status:_online.._value\" ,
+//                                  \"CAEN/GEM_CAEN_HV/board12/channel000.actual.status:_online.._value\");
+// 
+//   EP_setBackColor(dps);
+//     
+//   int i=1;
+//   for(i=1 ; i<=dynlen(dps) ; i++)
+//   {
+//     dpConnect(\"EP_setBackColor(dps)\", dps[i]);
+//     dyn_errClass err = getLastError();
+//     if (dynlen(err) > 0)
+//     setValue(\"\", \"color\", \"_dpdoesnotexist\");
+//   }
+// }
+// 
+// 
+// bool checkAllDpsExist(dyn_string dps)
+//   {
+//     bool exist=1;
+//     int i=1;
+//     for (i=1; i<=dynlen(dps); i++)  exist=exist && dpExists(dps[i]);
+//     return exist;
+//   }
+// 
+// 
+// EP_setBackColor(dyn_string dps)
+//   {
+//     dyn_errClass err;
+// 
+//       if( !checkAllDpsExist(dps) )
+//     {
+//       setValue(\"\", \"color\", \"_dpdoesnotexist\");
+//       return;
+//     }
+// 
+// 
+//     dyn_int results = makeDynBool( 1,1,1,1,1,1,1 );
+//     dpGet( dps , results);
+//     bool ChannelStatus=0;
+//     bool ChamberStatus=0;
+//     int i=1;
+//     for (i=1;i<=dynlen(dps);i++) 
+//       {
+//       ChannelStatus=(results[i] & 0x200);      
+//       ChamberStatus=ChamberStatus || ChannelStatus;
+//       }
+//     EP_setBackColorCB(ChamberStatus);
+//     err = getLastError();
+//     if (dynlen(err) > 0)
+//       setValue(\"\", \"color\", \"_dpdoesnotexist\");
+// 
+//   }
+// 
+// 
+// EP_setBackColorCB(bool boNewValue)
+// {
+//   if (!boNewValue)
+//     setValue(\"\", \"backCol\", \"grey\");
+//   else
+//     setValue(\"\", \"backCol\", \"Red\");
+// }
+// 
+// SimpleCtrlScript {EP_setBackColor}
+// DP {CMS_GEM_multichannel_Top_{any}.actual.OvC}
+// DPConfig {:_online.._value}
+// DPType {bool}
+// AlertHdl {FALSE}
+// DPEInvalid {}
+// DPEConfigInvalid {}
+// Operator1 {notequal}
+// Operant1 {0}
+// Color1 {grey}
+// Operator2 {equal}
+// Operant2 {1}
+// Color2 {Red}
+// SimpleCtrlScriptEnd {EP_setBackColor}
+// 
+// 
+// 
+main()
+{
+
+  dyn_string dps = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel006.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel005.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel004.actual.status:_online.._value\" , 
+                                 \"CAEN/GEM_CAEN_HV/board12/channel003.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel002.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel001.actual.status:_online.._value\" ,
+                                 \"CAEN/GEM_CAEN_HV/board12/channel000.actual.status:_online.._value\");
+  
+  dpConnect(\"GetTrip\",dps)  ;
+  
+ 
+}
+
+
+bool checkAllDpsExist(dyn_string dps)
+  {
+    bool exist=1;
+    int i=1;
+    for (i=1; i<=dynlen(dps); i++)  exist=exist && dpExists(dps[i]);
+    return exist;
+  }
+
+
+GetTrip(dyn_string dps, dyn_int results)
+  {
+    dyn_errClass err;
+    dyn_bool Trip_bit;
+    
+    int i=1;
+    for (i=1;i<=dynlen(dps);i++) 
+      {
+      Trip_bit[i]=(results[i] & 0x200);      
+      }
+
+      if( !checkAllDpsExist(dps) )
+    {
+      setValue(\"\", \"color\", \"_dpdoesnotexist\");
+      return;
+    }
+    
+    if(Trip_bit[1]==1 || Trip_bit[2]==1 || Trip_bit[3]==1 || Trip_bit[4]==1 || Trip_bit[5]==1 || Trip_bit[6]==1 || Trip_bit[7]==1){ 
+        setValue(\"\",\"backCol\",\"red\");
+      }
+    else {
+        setValue(\"\",\"backCol\",\"grey\");
+      }
+  }
+
+
+
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {CMS_GEM_multichannel_Bot_Drift.actual.status}
+// DPConfig {:_online.._value}
+// DPType {int}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+
+
+
+
+
+
+
+
+
+
+" 0
+ E 0 2 1 2 1 E 1 0 1 91.00000000000004 -434 1 E 110 550 10 10
+2 81
+"PRIMITIVE_TEXT58"
+""
+1 188 87.00000000000001 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+81 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 188 87.00000000000001 215 104
+0 2 2 "0s" 0 0 0 192 0 0  188 87.00000000000001 1
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0 2
+LANG:10001 4 Trip
+LANG:1 4 Trip
+2 82
+"PRIMITIVE_TEXT171"
+""
+1 230 87 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+82 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"main()
+{
+  this.text(\"Status\");
+}" 0
+ E 0 1 1 2 1 E U  0 E 230 87 273 104
+0 2 2 "0s" 0 0 0 192 0 0  230 87 1
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0 2
+LANG:10001 6 Status
+LANG:1 12 Status (sum)
+30 84
+"FRAME3"
+""
+1 30 214 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+84 0 0 0 0 0
+E E E
+1
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"main()
+{
+    this.text(\"Layer2\");
+}" 0
+ E 0 0 1 0 1 E 3.244444444444445 0 0.5376344086021505 252.6666666666666 -65.05376344086021 0 E 30 214 121 401
+2
+LANG:10001 35 MS Shell Dlg 2,-1,16,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,12,-1,5,50,0,0,0,0,0
+0 2
+LANG:10001 6 Layer2
+LANG:1 6 Bottom
+7 85
+"CIRCLE_BotOvC"
+""
+1 110 550 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+85 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"// SimpleCtrlScriptStart {invalid}
+// main()
+// {
+//   dyn_string dps = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel013.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel012.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel011.actual.status:_online.._value\" , 
+//                                  \"CAEN/GEM_CAEN_HV/board12/channel010.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel009.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel008.actual.status:_online.._value\" ,
+//                                  \"CAEN/GEM_CAEN_HV/board12/channel007.actual.status:_online.._value\");
+// 
+//   EP_setBackColor(dps);
+//     
+//   int i=1;
+//   for(i=1 ; i<=dynlen(dps) ; i++)
+//   {
+//     dpConnect(\"EP_setBackColor(dps)\", dps[i]);
+//     dyn_errClass err = getLastError();
+//     if (dynlen(err) > 0)
+//     {
+//       setValue(\"\", \"color\", \"_dpdoesnotexist\");
+//       DebugTN(\"************** i=\", i);
+//       DebugTN(\"************** dps[i]=\", dps[i]);
+//     }
+//   }
+// }
+// 
+// 
+// bool checkAllDpsExist(dyn_string dps)
+//   {
+//     bool exist=1;
+//     int i=1;
+//     for (i=1; i<=dynlen(dps); i++)  exist=exist && dpExists(dps[i]);
+//     return exist;
+//   }
+// 
+// 
+// EP_setBackColor(dyn_string dps)
+//   {
+//     dyn_errClass err;
+// 
+//       if( !checkAllDpsExist(dps) )
+//     {
+//       setValue(\"\", \"color\", \"_dpdoesnotexist\");
+//       return;
+//     }
+// 
+// 
+//     dyn_int results = makeDynBool( 1,1,1,1,1,1,1 );
+//     dpGet( dps , results);
+//     bool ChannelStatus=0;
+//     bool ChamberStatus=0;
+//     int i=1;
+//     for (i=1;i<=dynlen(dps);i++) 
+//       {
+//       ChannelStatus=(results[i] & 0x008);      
+//       ChamberStatus=ChamberStatus || ChannelStatus;
+//       }
+//     EP_setBackColorCB(ChamberStatus);
+//     err = getLastError();
+//     if (dynlen(err) > 0)
+//       setValue(\"\", \"color\", \"_dpdoesnotexist\");
+// 
+//   }
+// 
+// 
+// EP_setBackColorCB(bool boNewValue)
+// {
+//   if (!boNewValue)
+//     setValue(\"\", \"backCol\", \"grey\");
+//   else
+//     setValue(\"\", \"backCol\", \"Red\");
+// }
+// 
+// SimpleCtrlScript {EP_setBackColor}
+// DP {CMS_GEM_multichannel_Top_{any}.actual.OvC}
+// DPConfig {:_online.._value}
+// DPType {bool}
+// AlertHdl {FALSE}
+// DPEInvalid {}
+// DPEConfigInvalid {}
+// Operator1 {notequal}
+// Operant1 {0}
+// Color1 {grey}
+// Operator2 {equal}
+// Operant2 {1}
+// Color2 {Red}
+// SimpleCtrlScriptEnd {EP_setBackColor}
+// 
+// 
+// 
+
+
+main()
+{
+
+  dyn_string dps = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel013.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel012.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel011.actual.status:_online.._value\" , 
+                                 \"CAEN/GEM_CAEN_HV/board12/channel010.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel009.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel008.actual.status:_online.._value\" ,
+                                 \"CAEN/GEM_CAEN_HV/board12/channel007.actual.status:_online.._value\");
+  
+  dpConnect(\"GetOvC\",dps)  ;
+  
+ 
+}
+
+
+bool checkAllDpsExist(dyn_string dps)
+  {
+    bool exist=1;
+    int i=1;
+    for (i=1; i<=dynlen(dps); i++)  exist=exist && dpExists(dps[i]);
+    return exist;
+  }
+
+
+GetOvC(dyn_string dps, dyn_int results)
+  {
+    dyn_errClass err;
+    dyn_bool OvC_bit;
+    
+    int i=1;
+    for (i=1;i<=dynlen(dps);i++) 
+      {
+      OvC_bit[i]=(results[i] & 0x008);      
+      }
+
+      if( !checkAllDpsExist(dps) )
+    {
+      setValue(\"\", \"color\", \"_dpdoesnotexist\");
+      return;
+    }
+    
+    if(OvC_bit[1]==1 || OvC_bit[2]==1 || OvC_bit[3]==1 || OvC_bit[4]==1 || OvC_bit[5]==1 || OvC_bit[6]==1 || OvC_bit[7]==1){ 
+        setValue(\"\",\"backCol\",\"red\");
+      }
+    else {
+        setValue(\"\",\"backCol\",\"grey\");
+      }
+  }
+
+
+
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {CMS_GEM_multichannel_Bot_Drift.actual.status}
+// DPConfig {:_online.._value}
+// DPType {int}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+
+
+
+
+
+
+
+
+
+
+" 0
+ E 0 2 1 2 1 E 1 0 1 272 -434 1 E 110 550 10 10
+2 86
+"PRIMITIVE_TEXT172"
+""
+1 367.1250000000001 87 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+86 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 367.1250000000001 87 397 104
+0 2 2 "0s" 0 0 0 192 0 0  367.1250000000001 87 1
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0 2
+LANG:10001 3 OvC
+LANG:1 3 OvC
+7 87
+"CIRCLE_BotOvV"
+""
+1 110 550 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+87 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"// SimpleCtrlScriptStart {invalid}
+// main()
+// {
+//   dyn_string dps = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel013.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel012.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel011.actual.status:_online.._value\" , 
+//                                  \"CAEN/GEM_CAEN_HV/board12/channel010.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel009.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel008.actual.status:_online.._value\" ,
+//                                  \"CAEN/GEM_CAEN_HV/board12/channel007.actual.status:_online.._value\");
+// 
+//   EP_setBackColor(dps);
+//     
+//   int i=1;
+//   for(i=1 ; i<=dynlen(dps) ; i++)
+//   {
+//     dpConnect(\"EP_setBackColor(dps)\", dps[i]);
+//     dyn_errClass err = getLastError();
+//     if (dynlen(err) > 0)
+//     setValue(\"\", \"color\", \"_dpdoesnotexist\");
+//   }
+// }
+// 
+// 
+// bool checkAllDpsExist(dyn_string dps)
+//   {
+//     bool exist=1;
+//     int i=1;
+//     for (i=1; i<=dynlen(dps); i++)  exist=exist && dpExists(dps[i]);
+//     return exist;
+//   }
+// 
+// 
+// EP_setBackColor(dyn_string dps)
+//   {
+//     dyn_errClass err;
+// 
+//       if( !checkAllDpsExist(dps) )
+//     {
+//       setValue(\"\", \"color\", \"_dpdoesnotexist\");
+//       return;
+//     }
+// 
+// 
+//     dyn_int results = makeDynBool( 1,1,1,1,1,1,1 );
+//     dpGet( dps , results);
+//     bool ChannelStatus=0;
+//     bool ChamberStatus=0;
+//     int i=1;
+//     for (i=1;i<=dynlen(dps);i++) 
+//       {
+//       ChannelStatus=(results[i] & 0x010);      
+//       ChamberStatus=ChamberStatus || ChannelStatus;
+//       }
+//     EP_setBackColorCB(ChamberStatus);
+//     err = getLastError();
+//     if (dynlen(err) > 0)
+//       setValue(\"\", \"color\", \"_dpdoesnotexist\");
+// 
+//   }
+// 
+// 
+// EP_setBackColorCB(bool boNewValue)
+// {
+//   if (!boNewValue)
+//     setValue(\"\", \"backCol\", \"grey\");
+//   else
+//     setValue(\"\", \"backCol\", \"Red\");
+// }
+// 
+// SimpleCtrlScript {EP_setBackColor}
+// DP {CMS_GEM_multichannel_Top_{any}.actual.OvC}
+// DPConfig {:_online.._value}
+// DPType {bool}
+// AlertHdl {FALSE}
+// DPEInvalid {}
+// DPEConfigInvalid {}
+// Operator1 {notequal}
+// Operant1 {0}
+// Color1 {grey}
+// Operator2 {equal}
+// Operant2 {1}
+// Color2 {Red}
+// SimpleCtrlScriptEnd {EP_setBackColor}
+// 
+// 
+// 
+main()
+{
+
+  dyn_string dps = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel013.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel012.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel011.actual.status:_online.._value\" , 
+                                 \"CAEN/GEM_CAEN_HV/board12/channel010.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel009.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel008.actual.status:_online.._value\" ,
+                                 \"CAEN/GEM_CAEN_HV/board12/channel007.actual.status:_online.._value\");
+  
+  dpConnect(\"GetOvV\",dps)  ;
+  
+ 
+}
+
+
+bool checkAllDpsExist(dyn_string dps)
+  {
+    bool exist=1;
+    int i=1;
+    for (i=1; i<=dynlen(dps); i++)  exist=exist && dpExists(dps[i]);
+    return exist;
+  }
+
+
+GetOvV(dyn_string dps, dyn_int results)
+  {
+    dyn_errClass err;
+    dyn_bool OvV_bit;
+    
+    int i=1;
+    for (i=1;i<=dynlen(dps);i++) 
+      {
+      OvV_bit[i]=(results[i] & 0x010);      
+      }
+
+      if( !checkAllDpsExist(dps) )
+    {
+      setValue(\"\", \"color\", \"_dpdoesnotexist\");
+      return;
+    }
+    
+    if(OvV_bit[1]==1 || OvV_bit[2]==1 || OvV_bit[3]==1 || OvV_bit[4]==1 || OvV_bit[5]==1 || OvV_bit[6]==1 || OvV_bit[7]==1){ 
+        setValue(\"\",\"backCol\",\"red\");
+      }
+    else {
+        setValue(\"\",\"backCol\",\"grey\");
+      }
+  }
+
+
+
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {CMS_GEM_multichannel_Bot_Drift.actual.status}
+// DPConfig {:_online.._value}
+// DPType {int}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+
+
+
+
+
+
+
+
+
+
+" 0
+ E 0 2 1 2 1 E 1 0 1 320.5 -434 1 E 110 550 10 10
+2 88
+"PRIMITIVE_TEXT173"
+""
+1 415.6250000000001 87 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+88 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 415.6250000000001 87 445 104
+0 2 2 "0s" 0 0 0 192 0 0  415.6250000000001 87 1
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0 2
+LANG:10001 3 OvV
+LANG:1 3 OvV
+7 89
+"CIRCLE_BotUnV"
+""
+1 110 550 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+89 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"// SimpleCtrlScriptStart {invalid}
+// main()
+// {
+//   dyn_string dps = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel013.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel012.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel011.actual.status:_online.._value\" , 
+//                                  \"CAEN/GEM_CAEN_HV/board12/channel010.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel009.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel008.actual.status:_online.._value\" ,
+//                                  \"CAEN/GEM_CAEN_HV/board12/channel007.actual.status:_online.._value\");
+// 
+//   EP_setBackColor(dps);
+//     
+//   int i=1;
+//   for(i=1 ; i<=dynlen(dps) ; i++)
+//   {
+//     dpConnect(\"EP_setBackColor(dps)\", dps[i]);
+//     dyn_errClass err = getLastError();
+//     if (dynlen(err) > 0)
+//     setValue(\"\", \"color\", \"_dpdoesnotexist\");
+//   }
+// }
+// 
+// 
+// bool checkAllDpsExist(dyn_string dps)
+//   {
+//     bool exist=1;
+//     int i=1;
+//     for (i=1; i<=dynlen(dps); i++)  exist=exist && dpExists(dps[i]);
+//     return exist;
+//   }
+// 
+// 
+// EP_setBackColor(dyn_string dps)
+//   {
+//     dyn_errClass err;
+// 
+//       if( !checkAllDpsExist(dps) )
+//     {
+//       setValue(\"\", \"color\", \"_dpdoesnotexist\");
+//       return;
+//     }
+// 
+// 
+//     dyn_int results = makeDynBool( 1,1,1,1,1,1,1 );
+//     dpGet( dps , results);
+//     bool ChannelStatus=0;
+//     bool ChamberStatus=0;
+//     int i=1;
+//     for (i=1;i<=dynlen(dps);i++) 
+//       {
+//       ChannelStatus=(results[i] & 0x020);      
+//       ChamberStatus=ChamberStatus || ChannelStatus;
+//       }
+//     EP_setBackColorCB(ChamberStatus);
+//     err = getLastError();
+//     if (dynlen(err) > 0)
+//       setValue(\"\", \"color\", \"_dpdoesnotexist\");
+// 
+//   }
+// 
+// 
+// EP_setBackColorCB(bool boNewValue)
+// {
+//   if (!boNewValue)
+//     setValue(\"\", \"backCol\", \"grey\");
+//   else
+//     setValue(\"\", \"backCol\", \"Red\");
+// }
+// 
+// SimpleCtrlScript {EP_setBackColor}
+// DP {CMS_GEM_multichannel_Top_{any}.actual.OvC}
+// DPConfig {:_online.._value}
+// DPType {bool}
+// AlertHdl {FALSE}
+// DPEInvalid {}
+// DPEConfigInvalid {}
+// Operator1 {notequal}
+// Operant1 {0}
+// Color1 {grey}
+// Operator2 {equal}
+// Operant2 {1}
+// Color2 {Red}
+// SimpleCtrlScriptEnd {EP_setBackColor}
+// 
+// 
+main()
+{
+
+  dyn_string dps = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel013.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel012.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel011.actual.status:_online.._value\" , 
+                                 \"CAEN/GEM_CAEN_HV/board12/channel010.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel009.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel008.actual.status:_online.._value\" ,
+                                 \"CAEN/GEM_CAEN_HV/board12/channel007.actual.status:_online.._value\");
+  
+  dpConnect(\"GetUnV\",dps)  ;
+  
+ 
+}
+
+
+bool checkAllDpsExist(dyn_string dps)
+  {
+    bool exist=1;
+    int i=1;
+    for (i=1; i<=dynlen(dps); i++)  exist=exist && dpExists(dps[i]);
+    return exist;
+  }
+
+
+GetUnV(dyn_string dps, dyn_int results)
+  {
+    dyn_errClass err;
+    dyn_bool UnV_bit;
+    
+    int i=1;
+    for (i=1;i<=dynlen(dps);i++) 
+      {
+      UnV_bit[i]=(results[i] & 0x020);      
+      }
+
+      if( !checkAllDpsExist(dps) )
+    {
+      setValue(\"\", \"color\", \"_dpdoesnotexist\");
+      return;
+    }
+    
+    if(UnV_bit[1]==1 || UnV_bit[2]==1 || UnV_bit[3]==1 || UnV_bit[4]==1 || UnV_bit[5]==1 || UnV_bit[6]==1 || UnV_bit[7]==1){ 
+        setValue(\"\",\"backCol\",\"red\");
+      }
+    else {
+        setValue(\"\",\"backCol\",\"grey\");
+      }
+  }
+
+
+
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {CMS_GEM_multichannel_Bot_Drift.actual.status}
+// DPConfig {:_online.._value}
+// DPType {int}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+
+
+
+
+
+
+
+
+
+
+" 0
+ E 0 2 1 2 1 E 1 0 1 367.0000000000001 -434 1 E 110 550 10 10
+2 90
+"PRIMITIVE_TEXT174"
+""
+1 462.1250000000001 87 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+90 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 462.1250000000001 87 491 104
+0 2 2 "0s" 0 0 0 192 0 0  462.1250000000001 87 1
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0 2
+LANG:10001 3 UnV
+LANG:1 3 UnV
+7 91
+"CIRCLE_BotTrip"
+""
+1 110 550 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+91 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"// SimpleCtrlScriptStart {invalid}
+// main()
+// {
+//   dyn_string dps = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel013.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel012.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel011.actual.status:_online.._value\" , 
+//                                  \"CAEN/GEM_CAEN_HV/board12/channel010.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel009.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel008.actual.status:_online.._value\" ,
+//                                  \"CAEN/GEM_CAEN_HV/board12/channel007.actual.status:_online.._value\");
+// 
+//   EP_setBackColor(dps);
+//     
+//   int i=1;
+//   for(i=1 ; i<=dynlen(dps) ; i++)
+//   {
+//     dpConnect(\"EP_setBackColor(dps)\", dps[i]);
+//     dyn_errClass err = getLastError();
+//     if (dynlen(err) > 0)
+//     setValue(\"\", \"color\", \"_dpdoesnotexist\");
+//   }
+// }
+// 
+// 
+// bool checkAllDpsExist(dyn_string dps)
+//   {
+//     bool exist=1;
+//     int i=1;
+//     for (i=1; i<=dynlen(dps); i++)  exist=exist && dpExists(dps[i]);
+//     return exist;
+//   }
+// 
+// 
+// EP_setBackColor(dyn_string dps)
+//   {
+//     dyn_errClass err;
+// 
+//       if( !checkAllDpsExist(dps) )
+//     {
+//       setValue(\"\", \"color\", \"_dpdoesnotexist\");
+//       return;
+//     }
+// 
+// 
+//     dyn_int results = makeDynBool( 1,1,1,1,1,1,1 );
+//     dpGet( dps , results);
+//     bool ChannelStatus=0;
+//     bool ChamberStatus=0;
+//     int i=1;
+//     for (i=1;i<=dynlen(dps);i++) 
+//       {
+//       ChannelStatus=(results[i] & 0x200);      
+//       ChamberStatus=ChamberStatus || ChannelStatus;
+//       }
+//     EP_setBackColorCB(ChamberStatus);
+//     err = getLastError();
+//     if (dynlen(err) > 0)
+//       setValue(\"\", \"color\", \"_dpdoesnotexist\");
+// 
+//   }
+// 
+// 
+// EP_setBackColorCB(bool boNewValue)
+// {
+//   if (!boNewValue)
+//     setValue(\"\", \"backCol\", \"grey\");
+//   else
+//     setValue(\"\", \"backCol\", \"Red\");
+// }
+// 
+// SimpleCtrlScript {EP_setBackColor}
+// DP {CMS_GEM_multichannel_Top_{any}.actual.Trip}
+// DPConfig {:_online.._value}
+// DPType {bool}
+// AlertHdl {FALSE}
+// DPEInvalid {}
+// DPEConfigInvalid {}
+// Operator1 {notequal}
+// Operant1 {0}
+// Color1 {grey}
+// Operator2 {equal}
+// Operant2 {1}
+// Color2 {Red}
+// SimpleCtrlScriptEnd {EP_setBackColor}
+// 
+// 
+// 
+main()
+{
+
+  dyn_string dps = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel013.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel012.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel011.actual.status:_online.._value\" , 
+                                 \"CAEN/GEM_CAEN_HV/board12/channel010.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel009.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel008.actual.status:_online.._value\" ,
+                                 \"CAEN/GEM_CAEN_HV/board12/channel007.actual.status:_online.._value\");
+  
+  dpConnect(\"GetTrip\",dps)  ;
+  
+ 
+}
+
+
+bool checkAllDpsExist(dyn_string dps)
+  {
+    bool exist=1;
+    int i=1;
+    for (i=1; i<=dynlen(dps); i++)  exist=exist && dpExists(dps[i]);
+    return exist;
+  }
+
+
+GetTrip(dyn_string dps, dyn_int results)
+  {
+    dyn_errClass err;
+    dyn_bool Trip_bit;
+    
+    int i=1;
+    for (i=1;i<=dynlen(dps);i++) 
+      {
+      Trip_bit[i]=(results[i] & 0x200);      
+      }
+
+      if( !checkAllDpsExist(dps) )
+    {
+      setValue(\"\", \"color\", \"_dpdoesnotexist\");
+      return;
+    }
+    
+    if(Trip_bit[1]==1 || Trip_bit[2]==1 || Trip_bit[3]==1 || Trip_bit[4]==1 || Trip_bit[5]==1 || Trip_bit[6]==1 || Trip_bit[7]==1){ 
+        setValue(\"\",\"backCol\",\"red\");
+      }
+    else {
+        setValue(\"\",\"backCol\",\"grey\");
+      }
+  }
+
+
+
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {CMS_GEM_multichannel_Bot_Drift.actual.status}
+// DPConfig {:_online.._value}
+// DPType {int}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+
+
+
+
+
+
+
+
+
+
+" 0
+ E 0 2 1 2 1 E 1 0 1 411.0000000000001 -434 1 E 110 550 10 10
+2 92
+"PRIMITIVE_TEXT175"
+""
+1 508 87 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+92 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 1 1 2 1 E U  0 E 508 87 535 104
+0 2 2 "0s" 0 0 0 192 0 0  508 87 1
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0 2
+LANG:10001 4 Trip
+LANG:1 4 Trip
+2 93
+"PRIMITIVE_TEXT176"
+""
+1 550 87 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+93 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"main()
+{
+  this.text(\"Status\");
+}" 0
+ E 0 1 1 2 1 E U  0 E 550 87 593 104
+0 2 2 "0s" 0 0 0 192 0 0  550 87 1
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0 2
+LANG:10001 6 Status
+LANG:1 12 Status (sum)
+7 95
+"CIRCLE_Top_Status"
+""
+1 110 550 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+95 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"// SimpleCtrlScriptStart {invalid}
+main()
+{
+
+  dyn_string dps = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel006.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel005.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel004.actual.status:_online.._value\" , 
+                                 \"CAEN/GEM_CAEN_HV/board12/channel003.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel002.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel001.actual.status:_online.._value\" ,
+                                 \"CAEN/GEM_CAEN_HV/board12/channel000.actual.status:_online.._value\");
+  
+  dpConnect(\"GetStatus\",dps)  ;
+  
+ 
+}
+
+
+bool checkAllDpsExist(dyn_string dps)
+  {
+    bool exist=1;
+    int i=1;
+    for (i=1; i<=dynlen(dps); i++)  exist=exist && dpExists(dps[i]);
+    return exist;
+  }
+
+
+GetStatus(dyn_string dps, dyn_int results)
+  {
+    dyn_errClass err;
+
+      if( !checkAllDpsExist(dps) )
+    {
+      setValue(\"\", \"color\", \"_dpdoesnotexist\");
+      return;
+    }
+    
+    if(results[1]==0 && results[2]==0 && results[3]==0 && results[4]==0 && results[5]==0 && results[6]==0 && results[7]==0){
+        setValue(\"\",\"backCol\",\"grey\");
+      }  
+    else if(results[1]==1 && results[2]==1 && results[3]==1 && results[4]==1 && results[5]==1 && results[6]==1 && results[7]==1){ 
+        setValue(\"\",\"backCol\",\"STD_led_On\");
+      }
+    else {
+        setValue(\"\",\"backCol\",\"STD_value_light\");
+      }
+  }
+
+
+
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {CMS_GEM_multichannel_Bot_Drift.actual.status}
+// DPConfig {:_online.._value}
+// DPType {int}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+
+
+
+
+
+
+
+
+
+" 0
+ E 0 2 1 2 1 E 1 0 1 140 -434 1 E 110 550 10 10
+7 96
+"ELLIPSE2"
+""
+1 110 550 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+96 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"// SimpleCtrlScriptStart {invalid}
+// SimpleCtrlScriptStart {invalid}
+main()
+{
+
+  dyn_string dps = makeDynString(\"CAEN/GEM_CAEN_HV/board12/channel013.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel012.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel011.actual.status:_online.._value\" , 
+                                 \"CAEN/GEM_CAEN_HV/board12/channel010.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel009.actual.status:_online.._value\" , \"CAEN/GEM_CAEN_HV/board12/channel008.actual.status:_online.._value\" ,
+                                 \"CAEN/GEM_CAEN_HV/board12/channel007.actual.status:_online.._value\");
+  
+  dpConnect(\"GetStatus\",dps)  ;
+  
+ 
+}
+
+
+bool checkAllDpsExist(dyn_string dps)
+  {
+    bool exist=1;
+    int i=1;
+    for (i=1; i<=dynlen(dps); i++)  exist=exist && dpExists(dps[i]);
+    return exist;
+  }
+
+
+GetStatus(dyn_string dps, dyn_int results)
+  {
+    dyn_errClass err;
+
+      if( !checkAllDpsExist(dps) )
+    {
+      setValue(\"\", \"color\", \"_dpdoesnotexist\");
+      return;
+    }
+    
+    if(results[1]==0 && results[2]==0 && results[3]==0 && results[4]==0 && results[5]==0 && results[6]==0 && results[7]==0){
+        setValue(\"\",\"backCol\",\"grey\");
+      }  
+    else if(results[1]==1 && results[2]==1 && results[3]==1 && results[4]==1 && results[5]==1 && results[6]==1 && results[7]==1){ 
+        setValue(\"\",\"backCol\",\"STD_led_On\");
+      }
+    else {
+        setValue(\"\",\"backCol\",\"STD_value_light\");
+      }
+  }
+
+
+
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {CMS_GEM_multichannel_Bot_Drift.actual.status}
+// DPConfig {:_online.._value}
+// DPType {int}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+
+
+
+
+
+
+
+
+
+" 0
+ E 0 2 1 2 1 E 1 0 1 460.09375 -434 1 E 110 550 10 10
+2 98
+"Text_Chamber_Name"
+""
+1 660 80 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+98 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+4
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 1 1 2 1 E 1 0 0.8 0 22.59999999999999 0 E 660 80 790 130
+0 2 2 "0s" 0 0 0 64 0 0  660 80 1
+1
+LANG:10001 35 MS Shell Dlg 2,-1,27,5,50,1,0,0,0,0
+0 1
+LANG:10001 9 GE-1/1 01
+13 99
+"Button_AlarmScreen"
+""
+1 30 370 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+99 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  28 354 131 399
+
+T 
+1
+LANG:10001 12 Alarm Screen
+"/*
+//OLD alarm screen
+main(mapping event)
+{
+    ChildPanelOn(\"fwAlarmHandling/fwAlarmScreen.pnl\",\"Alarm Screen\", \"\", 0, 0);
+}
+*/
+
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"fwAlarmHandling/fwAlarmHandlingDefaultScreen.pnl\",
+      \"Alarm Screen\",
+      makeDynString(\"\"));
+}" 0
+ E E "main()
+{
+  this.text(\"Alarm Screen\");
+}" 0
+
+13 100
+"BUTTON_MaskUnmask"
+""
+1 160 370 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+100 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  158 354 261 399
+
+T 
+1
+LANG:10001 11 Mask/Unmask
+"main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"CMS_GEM_multichannel/MaskUnmaskAlerts.pnl\", \"Mask/Unmask\", makeDynString(\"\"));
+}" 0
+ E E "main()
+{
+  this.text(\"Mask/Unmask\");
+}" 0
+
+13 101
+"PUSH_BUTTON1"
+""
+1 725 370 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+101 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  723 354 826 399
+
+T 
+1
+LANG:10001 12 Alarm Screen
+"/*
+//OLD alarm screen
+main(mapping event)
+{
+    ChildPanelOn(\"fwAlarmHandling/fwAlarmScreen.pnl\",\"Alarm Screen\", \"\", 0, 0);
+}
+*/
+
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"CMS_GEM_multichannel/FastDebug.pnl\",
+      \"History\",
+      makeDynString(\"\"));
+}" 0
+ E E "main()
+{
+  this.text(\"History\");
+}" 0
+
+13 102
+"BUTTON_DetectorProtection"
+""
+1 700.0000000000001 301 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+102 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  698.0000000000001 290 826 335
+
+T 
+2
+LANG:10001 29 Detector
+Protection (MC only)
+LANG:1 11 Settings...
+"main()
+{
+  ChildPanelOn(\"CMS_GEM_MC_DetectorProtection/MC_DetectorProtection.pnl\",\"Settings\", \"\", 0, 0);
+}" 0
+ E E "main()
+{
+  this.text(\"Detector\\nPrtection (MC only)\");
+  this.backCol(\"_Button\");
+  this.foreCol(\"black\");
+}" 0
+
+13 104
+"PUSH_BUTTON4"
+""
+1 725 243.9986605823769 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+104 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 35 MS Shell Dlg 2,-1,13,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  723 232.9986605823769 826 277.9986605823768
+
+T 
+2
+LANG:10001 25 Show GEM
+Links datapoints
+LANG:1 11 Settings...
+"main()
+{
+  ChildPanelOn(\"CMS_GEM_multichannel/CMS_GEM_multichannel_showGEMLinks.pnl\",\"GEM links\", \"\", 0, 0);
+}" 0
+ E E "main()
+{
+  this.text(\"Show GEM\\nLinks datapoints\");
+  this.backCol(\"_Button\");
+  this.foreCol(\"black\");
+}" 0
+
+0
+LAYER, 1 
+1
+LANG:10001 0 
+0
+LAYER, 2 
+1
+LANG:10001 0 
+0
+LAYER, 3 
+1
+LANG:10001 0 
+0
+LAYER, 4 
+1
+LANG:10001 0 
+0
+LAYER, 5 
+1
+LANG:10001 0 
+0
+LAYER, 6 
+1
+LANG:10001 0 
+0
+LAYER, 7 
+1
+LANG:10001 0 
+0
+0

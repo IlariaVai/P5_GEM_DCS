@@ -1,0 +1,26 @@
+<component>
+	<name>CMS_GEM_MC_DetectorProtection</name>
+	<version>1.0.1</version>
+	<date>27/04/2018</date>
+
+	<required>fwCaen=8.0.0</required>
+	<required>fwCore=8.0.6</required>
+	<required>fwXML=8.0.0</required>
+	<required>fwAccessControl=8.0.1</required>
+	<required>fwInstallationUtils=2.1</required>
+	<required>fwConfigurationDB=8.0.0</required>
+	<required>fwRDBArchiving=1.1.4</required>
+	<required>CMSfwInstallUtils=2.2.3</required>
+	<required>CMSfwRedundancy=1.1.5</required>
+	<required>CMSfwClass=1.4.1</required>
+	<required>CMSfwDetectorProtection=1.5.8</required>
+	<required>CMSfwRedundancy=1.1.9</required>
+		
+
+	<file>./panels/CMS_GEM_MC_DetectorProtection/MC_DetectorProtection.pnl</file>
+
+	<dplist>./dplist/CMS_GEM_MC_DetectorProtection/DPT_CMS_GEM_ProtectionConditions.dpl</dplist>
+	
+	<postInstall>./scripts/CMS_GEM_MC_DetectorProtection/CMS_GEM_MC_DetectorProtection.postinstall</postInstall>
+	<file>./CMS_GEM_MC_DetectorProtection.xml</file>
+</component>

@@ -1,0 +1,298 @@
+V 12
+1
+LANG:1 0 
+PANEL,-1 -1 344 326 N "_3DFace" 0
+"main()
+{
+  dyn_string exceptionInfo;
+  fwAccessControl_setupPanel( \"ApplyPanelAccessControl\", exceptionInfo);
+
+}
+
+void ApplyPanelAccessControl(string s1, string s2)
+{
+bool hasMonitor, hasModify, hasControl, hasDebug;
+
+dyn_string exceptionInfo;
+
+// revoke all previous rights:
+DisableAllInPanel();
+
+// check privileges:
+fwAccessControl_isGranted( \"CMS_GEM:Monitor\", hasMonitor, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Modify\", hasModify, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Control\", hasControl, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Debug\", hasDebug, exceptionInfo);
+
+if (dynlen(exceptionInfo)) { fwExceptionHandling_display(exceptionInfo); return;}
+
+// enable/disable panel functionality:
+if (hasModify) {
+   PUSH_ConfigureDip.enabled = TRUE;
+  }
+else if (hasControl){
+   PUSH_ConfigureDip.enabled = FALSE;
+  }
+}
+
+void DisableAllInPanel()
+{
+   PUSH_dipconfig.enabled = FALSE;
+  
+// disable all widgets in a panel...
+}
+
+" 0
+ E E E E 1 -1 -1 0  50 52
+""0  1
+E E 2
+"CBRef" "1"
+"EClose" E
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:1 0 
+13 0
+"PUSH_Dipcsv"
+""
+1 50 130 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+0 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  48 114 191 158
+
+T 
+1
+LANG:1 14 Create DIP csv
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"CMSfwDip/CMSfwDIP_UniversalTool.pnl\",
+      \"\",
+      makeDynString(\"\"));
+}
+
+// SimpleCtrlScript {EP_childPanelOn}
+// Function {ChildPanelOnCentral}
+// File {CMSfwDip/CMSfwDIP_UniversalTool.pnl}
+// Panel {}
+// Parent {}
+// Module {}
+// OffsetX {0}
+// OffsetY {0}
+// SimpleCtrlScriptEnd {EP_childPanelOn}
+" 0
+ E E E
+13 1
+"PUSH_ConfigureDip"
+""
+1 784 505 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+1 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  48 50 191 94
+
+T 
+1
+LANG:1 14 Set DIP Config
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"fwDIP/fwDip.pnl\",
+      \"\",
+      makeDynString(\"\"));
+}
+
+// SimpleCtrlScript {EP_childPanelOn}
+// Function {ChildPanelOnCentral}
+// File {fwDIP/fwDip.pnl}
+// Panel {}
+// Parent {}
+// Module {}
+// OffsetX {0}
+// OffsetY {0}
+// SimpleCtrlScriptEnd {EP_childPanelOn}
+" 0
+ E E "main()
+{
+  dyn_string exceptionInfo;
+  fwAccessControl_setupPanel( \"ApplyPanelAccessControl\", exceptionInfo);
+
+}
+
+void ApplyPanelAccessControl(string s1, string s2)
+{
+bool hasMonitor, hasModify, hasControl, hasDebug;
+
+dyn_string exceptionInfo;
+
+// revoke all previous rights:
+DisableAllInPanel();
+
+// check privileges:
+fwAccessControl_isGranted( \"CMS_GEM:Monitor\", hasMonitor, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Modify\", hasModify, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Control\", hasControl, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Debug\", hasDebug, exceptionInfo);
+
+if (dynlen(exceptionInfo)) { fwExceptionHandling_display(exceptionInfo); return;}
+
+// enable/disable panel functionality:
+if (hasModify) {
+   PUSH_ConfigureDip.enabled = TRUE;
+   PUSH_Dipcsv.enabled = TRUE;
+   PUSH_configuration.enabled = TRUE;
+  }
+else if (hasControl){
+   PUSH_ConfigureDip.enabled = FALSE;
+   PUSH_Dipcsv.enabled = FALSE;
+   PUSH_configuration.enabled = FALSE;
+  }
+}
+
+void DisableAllInPanel()
+{
+   PUSH_ConfigureDip.enabled = FALSE;
+   PUSH_Dipcsv.enabled = FALSE;
+   PUSH_configuration.enabled = FALSE;
+  
+// disable all widgets in a panel...
+}
+
+" 0
+
+13 2
+"PUSH_configuration"
+""
+1 50 194 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+2 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  48 178 191 222
+
+T 
+1
+LANG:1 23 Save/Load Configuration
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"CMSfwInstallUtils/SaveToConfDb.pnl\",
+      \"\",
+      makeDynString(\"\"));
+}
+
+// SimpleCtrlScript {EP_childPanelOn}
+// Function {ChildPanelOnCentral}
+// File {CMSfwInstallUtils/SaveToConfDb.pnl}
+// Panel {}
+// Parent {}
+// Module {}
+// OffsetX {0}
+// OffsetY {0}
+// SimpleCtrlScriptEnd {EP_childPanelOn}
+" 0
+ E E E
+13 3
+"PUSH_Close"
+""
+1 210 280 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+3 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  208 264 322 308
+
+T 
+1
+LANG:1 5 Close
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_panelOff();
+}
+
+EP_panelOff()
+{
+  PanelOff();
+}
+
+// SimpleCtrlScript {EP_panelOff}
+// Function {PanelOff}
+// Panel {}
+// Module {}
+// SimpleCtrlScriptEnd {EP_panelOff}
+" 0
+ E E E
+0
+LAYER, 1 
+1
+LANG:1 0 
+0
+LAYER, 2 
+1
+LANG:1 0 
+0
+LAYER, 3 
+1
+LANG:1 0 
+0
+LAYER, 4 
+1
+LANG:1 0 
+0
+LAYER, 5 
+1
+LANG:1 0 
+0
+LAYER, 6 
+1
+LANG:1 0 
+0
+LAYER, 7 
+1
+LANG:1 0 
+0
+0

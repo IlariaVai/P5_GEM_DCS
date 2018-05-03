@@ -1,0 +1,1091 @@
+V 12
+1
+LANG:1 0 
+PANEL,-1 -1 971 657 N "_3DFace" 0
+"main()
+{
+  dyn_string exceptionInfo;
+  fwAccessControl_setupPanel( \"ApplyPanelAccessControl\", exceptionInfo);
+
+}
+
+void ApplyPanelAccessControl(string s1, string s2)
+{
+bool hasMonitor, hasModify, hasControl, hasDebug;
+
+dyn_string exceptionInfo;
+
+// revoke all previous rights:
+DisableAllInPanel();
+
+// check privileges:
+fwAccessControl_isGranted( \"CMS_GEM:Monitor\", hasMonitor, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Modify\", hasModify, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Control\", hasControl, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Debug\", hasDebug, exceptionInfo);
+
+if (dynlen(exceptionInfo)) { fwExceptionHandling_display(exceptionInfo); return;}
+
+// enable/disable panel functionality:
+if (hasModify) {
+   PUSH_dipconfig.enabled = TRUE;
+  }
+else if (hasControl){
+   PUSH_dipconfig.enabled = FALSE;
+  }
+}
+
+void DisableAllInPanel()
+{
+   PUSH_dipconfig.enabled = FALSE;
+  
+// disable all widgets in a panel...
+}
+
+" 0
+ E E E E 1 -1 -1 0  380 60
+""0  1
+E E 2
+"CBRef" "1"
+"EClose" E
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:1 0 
+7 0
+"ELLIPSE_Cryo"
+""
+1 380 60 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+0 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_setBackColor();
+}
+
+EP_setBackColor()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"CryoState.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_setBackColorCB\", 
+            \"CryoState.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_setBackColorCB(string dpSource, bool boNewValue)
+{
+  if (!boNewValue)
+    setValue(\"\", \"backCol\", \"FwAlarmFatalAck\");
+  else
+    setValue(\"\", \"backCol\", \"Green\");
+}
+
+// SimpleCtrlScript {EP_setBackColor}
+// DP {CryoState.value}
+// DPConfig {:_online.._value}
+// DPType {bool}
+// AlertHdl {FALSE}
+// DPEInvalid {}
+// DPEConfigInvalid {}
+// Operator1 {notequal}
+// Operant1 {0}
+// Color1 {FwAlarmFatalAck}
+// Operator2 {equal}
+// Operant2 {1}
+// Color2 {Green}
+// SimpleCtrlScriptEnd {EP_setBackColor}
+" 0
+ E 0 1 1 2 1 E 0.7190625000000001 0 0.7 -73.24375000000003 38 1 E 380 60 20 20
+2 2
+"PRIMITIVE_TEXT1"
+""
+1 36 72 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+2 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 36 72 286 132
+0 2 2 "0s" 0 0 0 64 0 0  36 72 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 10 Cryo State
+2 3
+"PRIMITIVE_TEXT2"
+""
+1 36 117 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+3 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 36 117 286 177
+0 2 2 "0s" 0 0 0 64 0 0  36 117 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 11 Dewar State
+2 4
+"PRIMITIVE_TEXT3"
+""
+1 36 162 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+4 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 36 162 286 222
+0 2 2 "0s" 0 0 0 64 0 0  36 162 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 9 Emergency
+2 5
+"PRIMITIVE_TEXT4"
+""
+1 36 210 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+5 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 36 210 286 270
+0 2 2 "0s" 0 0 0 64 0 0  36 210 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 7 Ramping
+2 6
+"PRIMITIVE_TEXT5"
+""
+1 36 256 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+6 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 36 256 286 316
+0 2 2 "0s" 0 0 0 64 0 0  36 256 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 6 Steady
+7 7
+"ELLIPSE_Dewar"
+""
+1 380 60 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+7 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_setBackColor();
+}
+
+EP_setBackColor()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"DewarMode.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_setBackColorCB\", 
+            \"DewarMode.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_setBackColorCB(string dpSource, bool boNewValue)
+{
+  if (!boNewValue)
+    setValue(\"\", \"backCol\", \"FwAlarmFatalAck\");
+  else
+    setValue(\"\", \"backCol\", \"Green\");
+}
+
+// SimpleCtrlScript {EP_setBackColor}
+// DP {DewarMode.value}
+// DPConfig {:_online.._value}
+// DPType {bool}
+// AlertHdl {FALSE}
+// DPEInvalid {}
+// DPEConfigInvalid {}
+// Operator1 {notequal}
+// Operant1 {0}
+// Color1 {FwAlarmFatalAck}
+// Operator2 {equal}
+// Operant2 {1}
+// Color2 {Green}
+// SimpleCtrlScriptEnd {EP_setBackColor}
+" 0
+ E 0 1 1 2 1 E 0.7190625000000001 0 0.7 -73.24375000000003 87 1 E 380 60 20 20
+7 8
+"ELLIPSE_Emergency"
+""
+1 380 60 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+8 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_setBackColor();
+}
+
+EP_setBackColor()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Emergency.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_setBackColorCB\", 
+            \"Emergency.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+EP_setBackColorCB(string dpSource, bool boNewValue)
+{
+  if (!boNewValue)
+    setValue(\"\", \"backCol\", \"Darkgrey\");
+  else
+    setValue(\"\", \"backCol\", \"FwAlarmFatalAck\");
+}
+
+// SimpleCtrlScript {EP_setBackColor}
+// DP {Emergency.value}
+// DPConfig {:_online.._value}
+// DPType {bool}
+// AlertHdl {FALSE}
+// DPEInvalid {}
+// DPEConfigInvalid {}
+// Operator1 {notequal}
+// Operant1 {0}
+// Color1 {Darkgrey}
+// Operator2 {equal}
+// Operant2 {1}
+// Color2 {FwAlarmFatalAck}
+// SimpleCtrlScriptEnd {EP_setBackColor}
+" 0
+ E 0 1 1 2 1 E 0.7190625000000001 0 0.7 -73.24375000000003 136 1 E 380 60 20 20
+7 9
+"ELLIPSE_Ramping"
+""
+1 380 60 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+9 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_setBackColor();
+}
+
+EP_setBackColor()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Ramping.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_setBackColorCB\", 
+            \"Ramping.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+EP_setBackColorCB(string dpSource, bool boNewValue)
+{
+  if (!boNewValue)
+    setValue(\"\", \"backCol\", \"Darkgrey\");
+  else
+    setValue(\"\", \"backCol\", \"Yellow\");
+}
+
+// SimpleCtrlScript {EP_setBackColor}
+// DP {Ramping.value}
+// DPConfig {:_online.._value}
+// DPType {bool}
+// AlertHdl {FALSE}
+// DPEInvalid {}
+// DPEConfigInvalid {}
+// Operator1 {notequal}
+// Operant1 {0}
+// Color1 {Darkgrey}
+// Operator2 {equal}
+// Operant2 {1}
+// Color2 {Yellow}
+// SimpleCtrlScriptEnd {EP_setBackColor}
+" 0
+ E 0 1 1 2 1 E 0.7190625000000001 0 0.7 -73.24375000000003 182 1 E 380 60 20 20
+7 10
+"ELLIPSE_Steady"
+""
+1 380 60 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+10 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_setBackColor();
+}
+
+EP_setBackColor()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Steady.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_setBackColorCB\", 
+            \"Steady.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+EP_setBackColorCB(string dpSource, bool boNewValue)
+{
+  if (!boNewValue)
+    setValue(\"\", \"backCol\", \"Darkgrey\");
+  else
+    setValue(\"\", \"backCol\", \"Green\");
+}
+
+// SimpleCtrlScript {EP_setBackColor}
+// DP {Steady.value}
+// DPConfig {:_online.._value}
+// DPType {bool}
+// AlertHdl {FALSE}
+// DPEInvalid {}
+// DPEConfigInvalid {}
+// Operator1 {notequal}
+// Operant1 {0}
+// Color1 {Darkgrey}
+// Operator2 {equal}
+// Operant2 {1}
+// Color2 {Green}
+// SimpleCtrlScriptEnd {EP_setBackColor}
+" 0
+ E 0 1 1 2 1 E 0.7190625000000001 0 0.7 -73.24375000000003 226 1 E 380 60 20 20
+14 11
+"TEXT_Current"
+""
+1 610 74 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+11 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  608 58 792 102
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Current.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Current.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+    string value;
+    value = strformat(\"\\\\left{%6.2}\",6,fNewValue); 
+    
+    this.text(value);
+  
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {Current.value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 12
+"TEXT_DewarLevel"
+""
+1 610 138 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+12 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  608 122 792 166
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"DewarLevel.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"DewarLevel.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+    string value;
+    value = strformat(\"\\\\left{%6.2}\",6,fNewValue); 
+    
+    this.text(value);
+  
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {DewarLevel.value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 13
+"TEXT_Field"
+""
+1 610 198 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+13 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  608 182 792 226
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Field.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Field.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+// EP_textFieldInCB(string dp, string fNewValue)
+// {
+//     string value;
+//     value = strformat(\"\\\\left{%6.2}\",6,fNewValue); 
+//     
+//     this.text(value);
+//   
+// }
+// 
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+//SimpleCtrlScript {EP_textFieldIn}
+// DP {Field.value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 14
+"TEXT_Vacuum"
+""
+1 610 252 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+14 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  608 236 792 280
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"Vacuum.value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"Vacuum.value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+// EP_textFieldInCB(string dp, string fNewValue)
+// {
+//     string value;
+//     value = strformat(\"\\\\left{%6.2}\",6,fNewValue); 
+//     
+//     this.text(value);
+//   
+// }
+// 
+
+
+EP_textFieldInCB(string dp, float fNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, fNewValue, TRUE) );
+}
+
+//SimpleCtrlScript {EP_textFieldIn}
+// DP {Vacuum.value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+2 15
+"PRIMITIVE_TEXT6"
+""
+1 448 62 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+15 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 448 62 698 122
+0 2 2 "0s" 0 0 0 64 0 0  448 62 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 7 Current
+2 16
+"PRIMITIVE_TEXT7"
+""
+1 448 126 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+16 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 448 126 698 186
+0 2 2 "0s" 0 0 0 64 0 0  448 126 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 11 Dewar Level
+2 17
+"PRIMITIVE_TEXT8"
+""
+1 448 188 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+17 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 448 188 698 248
+0 2 2 "0s" 0 0 0 64 0 0  448 188 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 5 Field
+2 18
+"PRIMITIVE_TEXT9"
+""
+1 448 240 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+18 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 448 240 698 300
+0 2 2 "0s" 0 0 0 64 0 0  448 240 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 6 Vacuum
+1 385 0 "9" 81
+0
+1 386 0 "10" 330
+0
+1 387 0 "10" 332
+0
+1 388 0 "10" 333
+0
+1 389 0 "10" 335
+0
+1 390 0 "10" 347
+0
+1 391 0 "10" 360
+0
+1 392 0 "10" 363
+0
+1 393 0 "10" 362
+0
+1 394 0 "10" 364
+0
+1 395 0 "10" 365
+0
+1 398 0 "10" 366
+0
+1 399 0 "10" 367
+0
+1 408 0 "5" 39
+0
+1 409 0 "5" 34
+0
+1 419 0 "5" 44
+0
+1 344 0 "9" 73
+0
+1 345 0 "9" 74
+0
+1 346 0 "9" 75
+0
+1 347 0 "9" 76
+0
+1 348 0 "9" 77
+0
+1 349 0 "9" 78
+0
+1 350 0 "9" 79
+0
+1 351 0 "9" 56
+0
+1 352 0 "9" 57
+0
+1 353 0 "9" 58
+0
+1 354 0 "9" 59
+0
+1 355 0 "9" 60
+0
+1 356 0 "9" 61
+0
+1 357 0 "9" 62
+0
+1 358 0 "9" 63
+0
+1 359 0 "9" 35
+0
+1 360 0 "9" 36
+0
+1 361 0 "9" 38
+0
+1 362 0 "9" 39
+0
+1 363 0 "9" 40
+0
+1 364 0 "9" 41
+0
+1 365 0 "9" 42
+0
+1 366 0 "9" 43
+0
+1 367 0 "9" 16
+0
+1 368 0 "9" 17
+0
+1 369 0 "9" 18
+0
+1 370 0 "9" 19
+0
+1 371 0 "9" 20
+0
+1 372 0 "9" 21
+0
+1 373 0 "9" 22
+0
+1 374 0 "9" 23
+0
+1 375 0 "9" 24
+0
+1 376 0 "9" 25
+0
+1 377 0 "9" 71
+0
+1 378 0 "9" 12
+0
+1 379 0 "9" 11
+0
+1 380 0 "9" 13
+0
+1 381 0 "9" 14
+0
+1 382 0 "9" 9
+0
+1 383 0 "9" 15
+0
+1 384 0 "9.0" 0
+0
+1 396 0 "10" 3
+0
+1 397 0 "10" 359
+0
+1 400 0 "10" 369
+0
+1 401 0 "5" 46
+0
+1 402 0 "5" 29
+0
+1 403 0 "5" 30
+0
+1 404 0 "5" 31
+0
+1 405 0 "5" 32
+0
+1 406 0 "5" 22
+0
+1 407 0 "5" 23
+0
+1 410 0 "5" 40
+0
+1 411 0 "5" 38
+0
+1 412 0 "5" 35
+0
+1 413 0 "5" 36
+0
+1 414 0 "5" 37
+0
+1 415 0 "5" 24
+0
+1 416 0 "5" 25
+0
+1 417 0 "5" 27
+0
+1 418 0 "5" 41
+0
+1 420 0 "5" 45
+0
+1 421 0 "5.0" 2
+0
+1 422 0 "5.0" 3
+0
+1 423 0 "" 77
+0
+13 99
+"PUSH_Close"
+""
+1 820 574 E E E 1 E 0 E N "_ButtonText" E N "_Button" E E
+ E E
+20 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  818 558 932 602
+
+T 
+1
+LANG:1 5 Close
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_panelOff();
+}
+
+EP_panelOff()
+{
+  PanelOff();
+}
+
+// SimpleCtrlScript {EP_panelOff}
+// Function {PanelOff}
+// Panel {}
+// Module {}
+// SimpleCtrlScriptEnd {EP_panelOff}
+" 0
+ E E E
+2 100
+"PRIMITIVE_TEXT10"
+""
+1 36 15 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+21 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 36 15 496 65
+0 2 2 "0s" 0 0 0 64 0 0  36 15 1
+1
+LANG:1 35 MS Shell Dlg 2,16,-1,5,75,1,0,0,0,0
+0 1
+LANG:1 13 Magnet Status
+13 343
+"PUSH_dipconfig"
+""
+1 820 333.5800000000002 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+24 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  818 316 932 361
+
+T 
+1
+LANG:1 10 DIP Config
+"// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"CMS_GEM_GAS/CMS_GEMfwDIPConfig.pnl\",
+      \"\",
+      makeDynString(\"\"));
+}
+
+// SimpleCtrlScript {EP_childPanelOn}
+// Function {ChildPanelOnCentral}
+// File {CMS_GEMfwDIPConfig.pnl}
+// Panel {}
+// Parent {}
+// Module {}
+// OffsetX {0}
+// OffsetY {0}
+// SimpleCtrlScriptEnd {EP_childPanelOn}
+" 0
+ E E E
+0
+LAYER, 1 
+1
+LANG:1 0 
+0
+LAYER, 2 
+1
+LANG:1 0 
+0
+LAYER, 3 
+1
+LANG:1 0 
+0
+LAYER, 4 
+1
+LANG:1 0 
+0
+LAYER, 5 
+1
+LANG:1 0 
+0
+LAYER, 6 
+1
+LANG:1 0 
+0
+LAYER, 7 
+1
+LANG:1 0 
+0
+3 0 "CMS_GEM_MagnetStatus" -1
+"objects\\fwTrending\\fwTrendingFaceplate.pnl" 247 302 T 19 1.462282398452611 0 1.316455696202532 -327.183752417795 -79.56962025316453
+22
+"$ZoomWindowTitle"""
+"$bShowGrid"""
+"$bShowLegend"""
+"$bTrendLog"""
+"$dsCurveColor"""
+"$dsCurveDPE"""
+"$dsCurveLegend"""
+"$dsCurveRange"""
+"$dsCurveScaleVisible"""
+"$dsCurveToolTipText"""
+"$dsCurveVisible"""
+"$dsCurvesType"""
+"$dsUnit"""
+"$fMaxPercentageForLog"""
+"$fMinForLog"""
+"$iMarkerType"""
+"$sBackColor"""
+"$sDpName""CMS_GEM_MagnetStatus"
+"$sForeColor"""
+"$sRefName""CMS_GEM_MagnetStatus."
+"$sTimeRange"""
+"$templateParameters"""
+0

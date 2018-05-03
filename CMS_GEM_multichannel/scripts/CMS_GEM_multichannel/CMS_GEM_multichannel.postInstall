@@ -1,0 +1,122 @@
+#uses "CMSfwInstallUtils/CMSfwInstallUtils.ctl"
+#uses "fwInstallationUtils.ctl"
+#uses "CMS_GEM_multichannel/CMS_GEM_MC_fwGeneral.ctl"
+#uses "CMSfwFsmXml/CMSfwFsmXml.ctl"
+#uses "fwFsm.ctl"
+#uses "fwFsmTreeDisplay.ctl"
+
+
+main(){
+  
+ dyn_string exc;
+
+ fwInstallationUtils_loadConfigurations("CMS_GEM_multichannel",exc);
+ fwInstallationUtils_appendManagers("CMS_GEM_multichannel", exc);
+
+ installFSM();
+
+ DebugN("FSM installed");
+ 
+ DebugN("CMS_GEM_multichannel has been installed", exc);
+
+ fwInstallationUtils_endPostInstall("CMS_GEM_multichannel");
+  
+}
+
+void installFSM() {
+
+  fwFsmTree_stopTree();
+
+  string path_fsmxml = CMSfwFsmXml_findPath("/data/CMS_GEM_multichannel/FSM_multichannel.xml");
+  CMSfwFsmXml_import(path_fsmxml,false);
+
+  CMS_GEMfwHardwareMC_generateTree();
+
+  fwFsmTree_generateAll();
+  fwFsmTree_refreshTree();
+  fwFsm_restartAllDomains();
+
+}
+
+void CMS_GEMfwHardwareMC_generateTree()
+{
+	dyn_string nodes, exInfo;
+	string gemini01_node,gemini01L1_node,gemini01L2_node;
+	string channel_node;
+	string configuratorGemini01L1, configuratorGemini01L2;
+	dyn_string channelsGemini01L1, channelsGemini01L2;
+
+ channelsGemini01L1 = makeDynString("CAEN/GEM_CAEN_HV/board12/channel000","CAEN/GEM_CAEN_HV/board12/channel001","CAEN/GEM_CAEN_HV/board12/channel002","CAEN/GEM_CAEN_HV/board12/channel003",
+                                    "CAEN/GEM_CAEN_HV/board12/channel004","CAEN/GEM_CAEN_HV/board12/channel005","CAEN/GEM_CAEN_HV/board12/channel006");
+ channelsGemini01L2 = makeDynString("CAEN/GEM_CAEN_HV/board12/channel007","CAEN/GEM_CAEN_HV/board12/channel008","CAEN/GEM_CAEN_HV/board12/channel009","CAEN/GEM_CAEN_HV/board12/channel010",
+                                    "CAEN/GEM_CAEN_HV/board12/channel011","CAEN/GEM_CAEN_HV/board12/channel012","CAEN/GEM_CAEN_HV/board12/channel013");
+ 
+
+	
+	//create GEMINI01_HV (type GeminiMcNode)
+	fwTree_getRootNodes(nodes,exInfo);
+	DebugN(nodes, exInfo);
+	if(fwFsmTree_isNode("GEMINI01_HV")) fwFsmTree_removeNode("FSM","GEMINI01_HV");
+	gemini01_node=fwFsmTree_addNode("GEM_HV","GEMINI01_HV","GeminiMcNode",1);
+		DebugN("GEMINI01_HV node created");
+
+	fwTree_getRootNodes(nodes, exInfo);
+	//add list of children CU (type DiscNode)
+
+	//create GEMINI01L1_HV node (type LayerMcNode_Configurator)		
+	gemini01L1_node=fwFsmTree_addNode("GEMINI01_HV","GEMINI01L1_HV","LayerMcNode_Configurator",0);
+	
+	//create GEMINI01L2_HV node (type LayerMcNode_Configurator)		
+	gemini01L2_node=fwFsmTree_addNode("GEMINI01_HV","GEMINI01L2_HV","LayerMcNode_Configurator",0);	
+
+
+	//add configurator below GEMINI01L1
+	 	configuratorGemini01L1=fwFsmTree_addNode("GEMINI01L1_HV","Gemini01L1Configurator","GEMCaenConfigurator",0);
+ DebugN("Gemini01L1Configurator below GEMINI01L1 created");
+
+	//create Channels below GEMINI01L1 (devices of type FwCaenChannelA1515FsmDevice)
+		for(int i=dynlen(channelsGemini01L1); i>=1 ;i--)
+		{
+			channel_node=fwFsmTree_addNode("GEMINI01L1_HV",channelsGemini01L1[i],"FwCaenChannelA1515FsmDevice",0);
+		}
+	DebugN("Channels below GEMINI01L1 created");
+ 
+
+
+	//add configurator below GEMINI01L2 
+		configuratorGemini01L2=fwFsmTree_addNode("GEMINI01L2_HV","Gemini01L2Configurator","GEMCaenConfigurator",0);
+ DebugN("Gemini01L2Configurator below GEMINI01L2 created");
+
+	//create Channels below GEMINI01L2 (devices of type FwCaenChannelA1515FsmDevice)
+		for(int i=dynlen(channelsGemini01L2); i>=1 ;i--)
+		{
+			channel_node=fwFsmTree_addNode("GEMINI01L2_HV",channelsGemini01L2[i],"FwCaenChannelA1515FsmDevice",0);
+		}
+	DebugN("Channels below GEMINI01L2 created");
+ 
+
+
+
+
+
+
+	//Set correct node labels
+	dyn_string labelsGemini01L1 = makeDynString("Gemini01L1_G3bot", "Gemini01L1_G3top", "Gemini01L1_G2bot", "Gemini01L1_G2top", "Gemini01L1_G1bot", "Gemini01L1_G1top", "Gemini01L1_Drift");
+	dyn_string labelsGemini01L2 = makeDynString("Gemini01L2_G3bot", "Gemini01L2_G3top", "Gemini01L2_G2bot", "Gemini01L2_G2top", "Gemini01L2_G1bot", "Gemini01L2_G1top", "Gemini01L2_Drift"); 
+ 
+	for(int i=1; i<=dynlen(labelsGemini01L1);i++)
+		{
+			fwFsmTree_setNodeLabel(channelsGemini01L1[i], labelsGemini01L1[i]);
+			fwFsmTree_setNodeLabel(channelsGemini01L2[i], labelsGemini01L2[i]);
+		}
+	
+	DebugN("Labels set");
+
+
+	//Set user panel to node
+	//fwFsmTree_setNodePanel(gas_system_node, GS.pnl);
+
+	//fwFsmTree_generateAll(); // NEEDED for next steps??
+	//fwFsmTree_refreshTree(); 
+	DebugN("Structure ready");
+}

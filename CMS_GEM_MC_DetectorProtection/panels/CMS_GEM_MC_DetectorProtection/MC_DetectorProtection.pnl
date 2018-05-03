@@ -1,0 +1,1011 @@
+V 12
+1
+LANG:1 0 
+PANEL,-1 -1 387 380 N "_3DFace" 0
+"main()
+{
+dyn_string exceptionInfo;
+fwAccessControl_setupPanel( \"ApplyPanelAccessControl\", exceptionInfo);
+}
+
+
+
+
+void ApplyPanelAccessControl(string s1, string s2)
+{
+  
+bool hasControl, hasModify;
+
+dyn_string exceptionInfo;
+
+// revoke all previous rights:
+BUTTON_changeInputCondition.enabled = FALSE;
+BUTTON_changeG1top.enabled = FALSE;
+BUTTON_changeG2top.enabled = FALSE;
+BUTTON_changeG3top.enabled = FALSE;
+BUTTON_changeDrift.enabled = FALSE;
+BUTTON_changeG1bot.enabled = FALSE;
+BUTTON_changeG2bot.enabled = FALSE;
+BUTTON_changeG3bot.enabled = FALSE;
+
+// check privileges:
+fwAccessControl_isGranted( \"CMS_GEM:Control\", hasControl, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Modify\", hasModify, exceptionInfo);
+
+if (dynlen(exceptionInfo)) { fwExceptionHandling_display(exceptionInfo); return;}
+
+// enable/disable panel functionality:
+
+  if (hasControl) setOperatorRights();
+  if (hasModify) setExpertRights();
+}
+
+
+void setExpertRights()
+{
+  BUTTON_changeInputCondition.enabled = TRUE;
+  BUTTON_changeG1top.enabled = TRUE;
+  BUTTON_changeG2top.enabled = TRUE;
+  BUTTON_changeG3top.enabled = TRUE;
+  BUTTON_changeDrift.enabled = TRUE;
+  BUTTON_changeG1bot.enabled = TRUE;
+  BUTTON_changeG2bot.enabled = TRUE;
+  BUTTON_changeG3bot.enabled = TRUE;
+}
+
+void setOperatorRights()
+{
+  BUTTON_changeInputCondition.enabled = FALSE;
+  BUTTON_changeG1top.enabled = FALSE;
+  BUTTON_changeG2top.enabled = FALSE;
+  BUTTON_changeG3top.enabled = FALSE;
+  BUTTON_changeDrift.enabled = FALSE;
+  BUTTON_changeG1bot.enabled = FALSE;
+  BUTTON_changeG2bot.enabled = FALSE;
+  BUTTON_changeG3bot.enabled = FALSE;
+}
+" 0
+ E E E E 1 -1 -1 0  100 24
+""0  1
+E E 3
+"CBRef" "1"
+"EClose" E
+"UnifiedDraw" ""
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:1 0 
+14 1
+"TEXT_FIELD1"
+""
+1 170 40 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+1 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  168 32 217 57
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  this.editable(FALSE);
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"cms_gem_dcs_1:CMSfwDetectorProtection/Input/myCondition_boolCondition.status:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"cms_gem_dcs_1:CMSfwDetectorProtection/Input/myCondition_boolCondition.status:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, bool boNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, boNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {cms_gem_dcs_1:CMSfwDetectorProtection/Input/myCondition_boolCondition.status}
+// DPConfig {:_online.._value}
+// DPType {bool}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+2 2
+"PRIMITIVE_TEXT1"
+""
+1 17 40 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+2 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 17 40 161 52
+0 2 2 "0s" 0 0 0 192 0 0  17 40 1
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 28 Test STANDBY Input condition
+13 3
+"BUTTON_changeInputCondition"
+""
+1 240 40 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+3 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  238 34 312 58
+
+T 
+1
+LANG:1 6 Change
+"main()
+{
+  bool read;
+  string dp=\"cms_gem_dcs_1:CMSfwDetectorProtection/Input/myCondition_boolCondition.status\";
+  
+  dpGet(dp, read);
+  if(read) dpSet(dp, FALSE);
+  else     dpSet(dp, TRUE);
+}" 0
+ E E "main()
+{
+  this.text(\"Change\");
+}" 0
+
+14 4
+"TEXT_FIELD2"
+""
+1 210 110 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+4 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  208 102 257 127
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  this.editable(FALSE);
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"cms_gem_dcs_1:CMSfwDetectorProtection/Input/G1top_are_leq_STANDBY_boolCondition.status\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"cms_gem_dcs_1:CMSfwDetectorProtection/Input/G1top_are_leq_STANDBY_boolCondition.status\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, bool boNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, boNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {cms_gem_dcs_1:CMSfwDetectorProtection/Input/myCondition_boolCondition.status}
+// DPConfig {:_online.._value}
+// DPType {bool}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 5
+"TEXT_FIELD3"
+""
+1 210 140 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+5 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  208 132 257 157
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  this.editable(FALSE);
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"cms_gem_dcs_1:CMSfwDetectorProtection/Input/G2top_are_leq_STANDBY_boolCondition.status\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"cms_gem_dcs_1:CMSfwDetectorProtection/Input/G2top_are_leq_STANDBY_boolCondition.status\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, bool boNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, boNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {cms_gem_dcs_1:CMSfwDetectorProtection/Input/myCondition_boolCondition.status}
+// DPConfig {:_online.._value}
+// DPType {bool}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 6
+"TEXT_FIELD4"
+""
+1 210 170 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+6 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  208 162 257 187
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  this.editable(FALSE);
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"cms_gem_dcs_1:CMSfwDetectorProtection/Input/G3top_are_leq_STANDBY_boolCondition.status\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"cms_gem_dcs_1:CMSfwDetectorProtection/Input/G3top_are_leq_STANDBY_boolCondition.status\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, bool boNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, boNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {cms_gem_dcs_1:CMSfwDetectorProtection/Input/myCondition_boolCondition.status}
+// DPConfig {:_online.._value}
+// DPType {bool}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 7
+"TEXT_FIELD5"
+""
+1 210 200 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+7 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  208 192 257 217
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  this.editable(FALSE);
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"cms_gem_dcs_1:CMSfwDetectorProtection/Input/Drift_are_leq_STANDBY_boolCondition.status\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"cms_gem_dcs_1:CMSfwDetectorProtection/Input/Drift_are_leq_STANDBY_boolCondition.status\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, bool boNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, boNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {cms_gem_dcs_1:CMSfwDetectorProtection/Input/myCondition_boolCondition.status}
+// DPConfig {:_online.._value}
+// DPType {bool}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 8
+"TEXT_FIELD6"
+""
+1 210 230 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+8 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  208 222 257 247
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  this.editable(FALSE);
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"cms_gem_dcs_1:CMSfwDetectorProtection/Input/G1bot_are_leq_STANDBY_boolCondition.status\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"cms_gem_dcs_1:CMSfwDetectorProtection/Input/G1bot_are_leq_STANDBY_boolCondition.status\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, bool boNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, boNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {cms_gem_dcs_1:CMSfwDetectorProtection/Input/myCondition_boolCondition.status}
+// DPConfig {:_online.._value}
+// DPType {bool}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 9
+"TEXT_FIELD7"
+""
+1 210 260 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+9 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  208 252 257 277
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  this.editable(FALSE);
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"cms_gem_dcs_1:CMSfwDetectorProtection/Input/G2bot_are_leq_STANDBY_boolCondition.status\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"cms_gem_dcs_1:CMSfwDetectorProtection/Input/G2bot_are_leq_STANDBY_boolCondition.status\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, bool boNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, boNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {cms_gem_dcs_1:CMSfwDetectorProtection/Input/myCondition_boolCondition.status}
+// DPConfig {:_online.._value}
+// DPType {bool}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 10
+"TEXT_FIELD8"
+""
+1 210 290 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+10 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  208 282 257 307
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  this.editable(FALSE);
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"cms_gem_dcs_1:CMSfwDetectorProtection/Input/G3bot_are_leq_STANDBY_boolCondition.status\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"cms_gem_dcs_1:CMSfwDetectorProtection/Input/G3bot_are_leq_STANDBY_boolCondition.status\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, bool boNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, boNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {cms_gem_dcs_1:CMSfwDetectorProtection/Input/myCondition_boolCondition.status}
+// DPConfig {:_online.._value}
+// DPType {bool}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+2 12
+"PRIMITIVE_TEXT2"
+""
+1 20 110 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+12 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 20 110 198 122
+0 2 2 "0s" 0 0 0 192 0 0  20 110 1
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 34 All G1top have HV <= standby value
+2 13
+"PRIMITIVE_TEXT3"
+""
+1 20 140 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+13 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 20 140 198 152
+0 2 2 "0s" 0 0 0 192 0 0  20 140 1
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 34 All G2top have HV <= standby value
+2 14
+"PRIMITIVE_TEXT4"
+""
+1 20 170 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+14 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 20 170 198 182
+0 2 2 "0s" 0 0 0 192 0 0  20 170 1
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 34 All G3top have HV <= standby value
+2 15
+"PRIMITIVE_TEXT5"
+""
+1 20 200 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+15 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 20 200 190 212
+0 2 2 "0s" 0 0 0 192 0 0  20 200 1
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 34 All Drift have HV <= standby value
+2 16
+"PRIMITIVE_TEXT6"
+""
+1 20 230 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+16 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 20 230 198 242
+0 2 2 "0s" 0 0 0 192 0 0  20 230 1
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 34 All G1bot have HV <= standby value
+2 17
+"PRIMITIVE_TEXT7"
+""
+1 20 260 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+17 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 20 260 198 272
+0 2 2 "0s" 0 0 0 192 0 0  20 260 1
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 34 All G2bot have HV <= standby value
+2 18
+"PRIMITIVE_TEXT8"
+""
+1 20 290 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+18 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 20 290 198 302
+0 2 2 "0s" 0 0 0 192 0 0  20 290 1
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 34 All G3bot have HV <= standby value
+30 20
+"FRAME2"
+""
+1 10 74 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+20 0 0 0 0 0
+E E E
+1
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 0 1 0 1 E U  0 E 10 74 281 321
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 26 If Test condition is TRUE:
+13 21
+"PUSH_BUTTON_Close"
+""
+1 240 340 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+21 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  238 329 322 363
+
+T 
+1
+LANG:1 5 Close
+"main()
+{
+PanelOff(\"\");
+}
+" 0
+ E E "main()
+{
+  this.text(\"Close\");
+}" 0
+
+13 22
+"BUTTON_changeG1top"
+""
+1 300 110 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+22 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  298 104 372 128
+
+T 
+1
+LANG:1 6 Change
+"main()
+{
+  bool read;
+  string dp=\"cms_gem_dcs_1:CMSfwDetectorProtection/Input/G1top_are_leq_STANDBY_boolCondition.status\";
+  
+  dpGet(dp, read);
+  if(read) dpSet(dp, FALSE);
+  else     dpSet(dp, TRUE);
+}" 0
+ E E "main()
+{
+  this.text(\"Change\");
+}" 0
+
+13 23
+"BUTTON_changeG2top"
+""
+1 300 140 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+23 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  298 134 372 158
+
+T 
+1
+LANG:1 6 Change
+"main()
+{
+  bool read;
+  string dp=\"cms_gem_dcs_1:CMSfwDetectorProtection/Input/G2top_are_leq_STANDBY_boolCondition.status\";
+  
+  dpGet(dp, read);
+  if(read) dpSet(dp, FALSE);
+  else     dpSet(dp, TRUE);
+}" 0
+ E E "main()
+{
+  this.text(\"Change\");
+}" 0
+
+13 24
+"BUTTON_changeG3top"
+""
+1 300 170 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+24 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  298 164 372 188
+
+T 
+1
+LANG:1 6 Change
+"main()
+{
+  bool read;
+  string dp=\"cms_gem_dcs_1:CMSfwDetectorProtection/Input/G3top_are_leq_STANDBY_boolCondition.status\";
+  
+  dpGet(dp, read);
+  if(read) dpSet(dp, FALSE);
+  else     dpSet(dp, TRUE);
+}" 0
+ E E "main()
+{
+  this.text(\"Change\");
+}" 0
+
+13 25
+"BUTTON_changeDrift"
+""
+1 300 200 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+25 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  298 194 372 218
+
+T 
+1
+LANG:1 6 Change
+"main()
+{
+  bool read;
+  string dp=\"cms_gem_dcs_1:CMSfwDetectorProtection/Input/Drift_are_leq_STANDBY_boolCondition.status\";
+  
+  dpGet(dp, read);
+  if(read) dpSet(dp, FALSE);
+  else     dpSet(dp, TRUE);
+}" 0
+ E E "main()
+{
+  this.text(\"Change\");
+}" 0
+
+13 26
+"BUTTON_changeG1bot"
+""
+1 300 230 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+26 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  298 224 372 248
+
+T 
+1
+LANG:1 6 Change
+"main()
+{
+  bool read;
+  string dp=\"cms_gem_dcs_1:CMSfwDetectorProtection/Input/G1bot_are_leq_STANDBY_boolCondition.status\";
+  
+  dpGet(dp, read);
+  if(read) dpSet(dp, FALSE);
+  else     dpSet(dp, TRUE);
+}" 0
+ E E "main()
+{
+  this.text(\"Change\");
+}" 0
+
+13 27
+"BUTTON_changeG2bot"
+""
+1 300 260 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+27 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  298 254 372 278
+
+T 
+1
+LANG:1 6 Change
+"main()
+{
+  bool read;
+  string dp=\"cms_gem_dcs_1:CMSfwDetectorProtection/Input/G2bot_are_leq_STANDBY_boolCondition.status\";
+  
+  dpGet(dp, read);
+  if(read) dpSet(dp, FALSE);
+  else     dpSet(dp, TRUE);
+}" 0
+ E E "main()
+{
+  this.text(\"Change\");
+}" 0
+
+13 28
+"BUTTON_changeG3bot"
+""
+1 300 290 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+28 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  298 284 372 308
+
+T 
+1
+LANG:1 6 Change
+"main()
+{
+  bool read;
+  string dp=\"cms_gem_dcs_1:CMSfwDetectorProtection/Input/G3bot_are_leq_STANDBY_boolCondition.status\";
+  
+  dpGet(dp, read);
+  if(read) dpSet(dp, FALSE);
+  else     dpSet(dp, TRUE);
+}" 0
+ E E "main()
+{
+  this.text(\"Change\");
+}" 0
+
+0
+LAYER, 1 
+1
+LANG:1 0 
+0
+LAYER, 2 
+1
+LANG:1 0 
+0
+LAYER, 3 
+1
+LANG:1 0 
+0
+LAYER, 4 
+1
+LANG:1 0 
+0
+LAYER, 5 
+1
+LANG:1 0 
+0
+LAYER, 6 
+1
+LANG:1 0 
+0
+LAYER, 7 
+1
+LANG:1 0 
+0
+0

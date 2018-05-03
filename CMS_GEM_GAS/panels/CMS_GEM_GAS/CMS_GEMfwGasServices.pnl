@@ -1,0 +1,1813 @@
+V 12
+1
+LANG:1 20 CMS_GEM_Gas_Services
+PANEL,-1 -1 1145 528 N "_3DFace" 0
+E E E E E 1 -1 -1 0  30 6
+""0  1
+E E 2
+"CBRef" "1"
+"EClose" E
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:1 0 
+30 0
+"mixer_frame"
+""
+1 30 6 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+0 0 0 0 0 0
+E E E
+1
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 0 1 0 1 E 1.261904761904762 0 0.9007936507936508 -7.857142857142804 -4.604761904761894 0 E 30 6 451 511
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 5 Mixer
+2 2
+"status_text"
+""
+1 50 50 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+2 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 50 175 70
+1 2 2 "0s" 0 0 0 64 0 0  50 50 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 6 Status
+2 3
+"total_flow_text"
+""
+1 50 83 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+3 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 83 175 103
+1 2 2 "0s" 0 0 0 64 0 0  50 83 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 10 Total Flow
+2 4
+"ar_ratio"
+""
+1 50 137 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+4 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 137 175 157
+1 2 2 "0s" 0 0 0 64 0 0  50 137 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 13 Ar Line Ratio
+2 5
+"co2_ratio"
+""
+1 50 170 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+5 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 170 175 190
+1 2 2 "0s" 0 0 0 64 0 0  50 170 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 14 CO2 Line Ratio
+2 6
+"cf4_ratio"
+""
+1 50 203 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+6 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 203 175 223
+1 2 2 "0s" 0 0 0 64 0 0  50 203 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 14 CF4 Line Ratio
+2 7
+"ar_pressure"
+""
+1 50 257 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+7 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 257 175 277
+1 2 2 "0s" 0 0 0 64 0 0  50 257 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 17 Ar Input Pressure
+2 8
+"co2_pressure"
+""
+1 50 289.5 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+8 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 289.5 175 309.5
+1 2 2 "0s" 0 0 0 64 0 0  50 289.5 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 18 CO2 Input Pressure
+2 9
+"cf4_pressure"
+""
+1 50 323 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+9 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 323 175 343
+1 2 2 "0s" 0 0 0 64 0 0  50 323 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 18 CF4 Input Pressure
+2 10
+"output_pressure"
+""
+1 50 377 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+10 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 377 175 397
+1 2 2 "0s" 0 0 0 64 0 0  50 377 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 15 Output Pressure
+2 11
+"main_flow"
+""
+1 50 410 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+11 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 50 410 175 430
+1 2 2 "0s" 0 0 0 64 0 0  50 410 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 15 Main Input Flow
+14 12
+"status"
+""
+1 190 47 E E E 1 E 1 E N "_WindowText" E N "FwStateOKPhysics" E E
+ E E
+12 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  188 48 366 78
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"CMSGEM_Mx_StepperWS.Value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"CMSGEM_Mx_StepperWS.Value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+EP_textFieldInCB(string dp, int iNewValue)
+{
+  setValue(\"\", \"text\", dpValToString(dp, iNewValue, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {CMSGEM_Mx_StepperWS.Value}
+// DPConfig {:_online.._value}
+// DPType {int}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 13
+"total_flow"
+""
+1 190 80 E E E 1 E 1 E N "_WindowText" E N "FwStateOKPhysics" E E
+ E E
+13 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  188 81 366 111
+3 "0s" 0 0 0 0 0 -1  E "main()
+{
+  dyn_errClass err;
+  
+  string param = makeDynString(\"CMSGEM_Mx_TotalFlowAS.Value\"); 
+
+  dpConnect(\"refresh\",param);   
+  
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+refresh(string param, string val)
+{
+ string color;
+ 
+      dpGet(\"CMSGEM_Mx_TotalFlowAS.Value:_alert_hdl.._act_state_color\", color);
+        this.backCol(color);
+ 
+  string value;
+  value = strformat(\"\\\\left{%6.2}\",6,val);
+  
+  this.text(value); 
+  
+}
+" 0
+ E
+14 14
+"ar_ratio_value"
+""
+1 190 132 E E E 1 E 1 E N "_WindowText" E N "FwStateOKPhysics" E E
+ E E
+14 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  188 133 366 163
+3 "0s" 0 0 0 0 0 -1  E "main()
+{
+  dyn_errClass err;  
+  
+  string param = makeDynString(\"CMSGEM_Mx_L1CompRatioAS.Value\"); 
+  
+  dpConnect(\"refresh\",param);   
+  
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+}
+
+refresh(string param, string val)
+{
+  
+  string color;
+
+      dpGet(\"CMSGEM_Mx_L1CompRatioAS.Value:_alert_hdl.._act_state_color\", color);
+        this.backCol(color);
+ 
+  string value;
+  value = strformat(\"\\\\left{%6.2}\",6,val);
+    this.text(value); 
+         
+        
+      }" 0
+ E
+14 15
+"co2_ratio_value"
+""
+1 190 167 E E E 1 E 1 E N "_WindowText" E N "FwStateOKPhysics" E E
+ E E
+15 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  188 168 366 198
+3 "0s" 0 0 0 0 0 -1  E "main()
+{
+  
+  dyn_errClass err; 
+  
+  string param = makeDynString(\"CMSGEM_Mx_L2CompRatioAS.Value\"); 
+  
+  dpConnect(\"refresh\",param);  
+ 
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\"); 
+}
+
+refresh(string param, string val)
+{
+ string color;
+
+    dpGet(\"CMSGEM_Mx_L2CompRatioAS.Value:_alert_hdl.._act_state_color\", color);
+      this.backCol(color);
+  
+  string value;
+  value = strformat(\"\\\\left{%6.2}\",6,val);
+      this.text(value); 
+  
+}" 0
+ E
+14 16
+"cf4_ratio_value"
+""
+1 190 200 E E E 1 E 1 E N "_WindowText" E N "FwStateOKPhysics" E E
+ E E
+16 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  188 201 366 231
+3 "0s" 0 0 0 0 0 -1  E "main()
+{
+  dyn_errClass err;  
+  
+  dyn_string param = makeDynString(\"CMSGEM_Mx_L3CompRatioAS.Value\",
+                                   \"Gas_Mixture.Value\"); 
+  
+  dpConnect(\"refresh\",param);   
+
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+  
+}
+
+refresh(dyn_string param, dyn_string val)
+{
+  string value;
+  value = strformat(\"\\\\left{%6.2}\",6,val[1]);
+    this.text(value); 
+  
+  if (val[2] == \"FALSE\")
+    this.enabled(0);
+  else
+    this.enabled(1);
+  
+   string color;
+
+   dpGet(\"CMSGEM_Mx_L3CompRatioAS.Value:_alert_hdl.._act_state_color\", color);
+     this.backCol(color);
+  
+  
+  
+}
+
+
+" 0
+ E
+14 17
+"ar_pressure_value"
+""
+1 190 254 E E E 1 E 1 E N "_WindowText" E N "FwStateOKPhysics" E E
+ E E
+17 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  188 255 366 285
+3 "0s" 0 0 0 0 0 -1  E "main()
+{
+  dyn_errClass err;  
+ 
+  string param = makeDynString(\"CMSGEM_Mx_PT1103.Value\"); 
+  
+  dpConnect(\"refresh\",param); 
+
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+   
+}
+
+refresh(string param, string val)
+{
+  string value;
+  value = strformat(\"\\\\left{%5.2}\",5,val);
+   this.text(value); 
+ 
+  string color;
+
+      dpGet(\"CMSGEM_Mx_PT1103.Value:_alert_hdl.._act_state_color\", color);
+        this.backCol(color);
+
+      }
+
+/*Legend
+  value[1]=Line1InputPressure (Ar)
+  value[2]=Error_Ar_Pressure.Max_Flow
+  value[3]=Warning_Ar_Pressure.Max_Flow
+  value[4]=Error_Ar_Pressure.Min_Flow
+  value[5]=Warning_Ar_Pressure.Min_Flow
+*/" 0
+ E
+14 18
+"co2_pressure_value"
+""
+1 190 287 E E E 1 E 1 E N "_WindowText" E N "FwStateOKPhysics" E E
+ E E
+18 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  188 288 366 318
+3 "0s" 0 0 0 0 0 -1  E "main()
+{
+  dyn_errClass err;  
+  
+  string param = makeDynString(\"CMSGEM_Mx_PT1203.Value\"); 
+
+  dpConnect(\"refresh\",param);   
+
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+  
+}
+
+refresh(string param, string val)
+{
+
+   string color;
+      dpGet(\"CMSGEM_Mx_PT1203.Value:_alert_hdl.._act_state_color\", color);
+        this.backCol(color);
+  
+  string value;
+  value = strformat(\"\\\\left{%5.2}\",5,val);
+   this.text(value); 
+  
+}
+
+
+/*Legend
+  value[1]=Line2InputPressure (CO2)
+  value[2]=Error_CO2_Pressure.Max_Flow
+  value[3]=Warning_CO2_Pressure.Max_Flow
+  value[4]=Error_CO2_Pressure.Min_Flow
+  value[5]=Warning_CO2_Pressure.Min_Flow
+*/" 0
+ E
+14 19
+"cf4_pressure_value"
+""
+1 190 320 E E E 1 E 1 E N "_WindowText" E N "FwStateOKPhysics" E E
+ E E
+19 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  188 321 366 351
+3 "0s" 0 0 0 0 0 -1  E "main()
+{
+  dyn_errClass err;  
+  
+  dyn_string param = makeDynString(\"CMSGEM_Mx_PT1303.Value\", 
+                                   \"Gas_Mixture.Value\"); 
+  
+  dpConnect(\"refresh\",param);   
+
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+  
+}
+
+refresh(dyn_string param, dyn_string val)
+{
+  string value;
+  value = strformat(\"\\\\left{%5.2}\",5,val[1]);
+    this.text(value); 
+    
+  if (val[2] == \"FALSE\")
+    this.enabled(0);
+  else
+    this.enabled(1);
+
+  string color;
+      dpGet(\"CMSGEM_Mx_PT1303.Value:_alert_hdl.._act_state_color\", color);
+        this.backCol(color);
+   
+  
+  
+}
+
+
+" 0
+ E
+14 20
+"output_pressure_value"
+""
+1 190 374 E E E 1 E 1 E N "_WindowText" E N "FwStateOKPhysics" E E
+ E E
+20 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  188 375 366 405
+3 "0s" 0 0 0 0 0 -1  E "main()
+{
+  dyn_errClass err; 
+  
+  string param = makeDynString(\"CMSGEM_Mx_PT1009.Value\"); 
+  
+  dpConnect(\"refresh\",param);   
+  
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");   
+}
+
+refresh(string param, string val)
+{
+ 
+  string value;
+  value = strformat(\"\\\\left{%8.2}\",8,val);
+  this.text(value); 
+
+   string color;
+
+   dpGet(\"CMSGEM_Mx_PT1009.Value:_alert_hdl.._act_state_color\", color);
+        this.backCol(color);
+
+
+
+  
+}
+
+
+/*Legend
+  value[1]=OutPressure
+  value[2]=Error_Output_Pressure.Max_Flow
+  value[3]=Warning_Output_Pressure.Max_Flow
+  value[4]=Error_Output_Pressure.Min_Flow
+  value[5]=Warning_Output_Pressure.Min_Flow
+*/" 0
+ E
+14 21
+"main_input_flow_value"
+""
+1 190 407 E E E 1 E 1 E N "_WindowText" E N "FwStateOKPhysics" E E
+ E E
+21 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  188 408 366 438
+3 "0s" 0 0 0 0 0 -1  E "main()
+{
+  dyn_errClass err;  
+  
+  string param = makeDynString(\"CMSGEM_Di_TotFlowAS.Value\"); 
+  
+  dpConnect(\"refresh\",param); 
+
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+ 
+    
+}
+
+refresh(string param, string val)
+{
+  string value;
+  value = strformat(\"\\\\left{%6.2}\",6,val);
+  this.text(value);
+ 
+  string color;
+      dpGet(\"CMSGEM_Di_TotFlowAS.Value:_alert_hdl.._act_state_color\", color);
+        this.backCol(color);
+ 
+ 
+  
+}
+
+" 0
+ E
+2 22
+"PRIMITIVE_TEXT12"
+""
+1 366 137 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+22 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 366 137 380 152
+0 2 2 "0s" 0 0 0 192 0 0  366 137 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 1 %
+2 23
+"PRIMITIVE_TEXT13"
+""
+1 366 170 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+23 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 366 170 380 185
+0 2 2 "0s" 0 0 0 192 0 0  366 170 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 1 %
+2 24
+"PRIMITIVE_TEXT14"
+""
+1 366 203 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+24 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 366 203 380 218
+0 2 2 "0s" 0 0 0 192 0 0  366 203 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 1 %
+2 25
+"PRIMITIVE_TEXT15"
+""
+1 366 257 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+25 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 366 257 387 272
+0 2 2 "0s" 0 0 0 192 0 0  366 257 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 3 bar
+2 26
+"PRIMITIVE_TEXT16"
+""
+1 366 290 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+26 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 366 290 387 305
+0 2 2 "0s" 0 0 0 192 0 0  366 290 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 3 bar
+2 27
+"PRIMITIVE_TEXT17"
+""
+1 366 323 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+27 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 366 323 387 338
+0 2 2 "0s" 0 0 0 192 0 0  366 323 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 3 bar
+2 28
+"PRIMITIVE_TEXT18"
+""
+1 366 377 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+28 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 366 377 387 392
+0 2 2 "0s" 0 0 0 192 0 0  366 377 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 3 bar
+2 29
+"PRIMITIVE_TEXT19"
+""
+1 366 410 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+29 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 366 410 383 425
+0 2 2 "0s" 0 0 0 192 0 0  366 410 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 3 l/h
+13 30
+"PUSH_BUTTON8"
+""
+1 430 410 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+30 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  428 401 552 435
+
+T 
+1
+LANG:1 10 See Trends
+"// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"CMS_GEM_GAS/CMS_GEMfwMixerTrend.pnl\",
+      \"GEMfwMixerTrend\",
+      makeDynString(\"\"));
+}
+
+// SimpleCtrlScript {EP_childPanelOn}
+// Function {ChildPanelOnCentral}
+// File {Gas_Panels/CMS_GEMfwMixerTrend.pnl}
+// Panel {GEMfwMixerTrend}
+// Parent {}
+// Module {}
+// OffsetX {0}
+// OffsetY {0}
+// SimpleCtrlScriptEnd {EP_childPanelOn}
+" 0
+ E E E
+30 31
+"environmental_frame"
+""
+1 560 6 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+31 0 0 0 0 0
+E E E
+1
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 0 1 0 1 E 0.9814814814814815 0 1 20.37037037037034 -5.000000000000002 0 E 560 6 1101 231
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 13 Environmental
+2 32
+"atmo_pressure"
+""
+1 594 49 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+32 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 594 49 719 69
+1 2 2 "0s" 0 0 0 64 0 0  594 49 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 14 SGAtmoPressure
+2 33
+"us_pressure"
+""
+1 594 82 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+33 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 594 82 719 102
+1 2 2 "0s" 0 0 0 64 0 0  594 82 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 21 USServiceAtmoPressure
+2 34
+"uxc_pressure"
+""
+1 594 115 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+34 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 594 115 719 135
+1 2 2 "0s" 0 0 0 64 0 0  594 115 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 11 UXCPressure
+2 35
+"uxc_temperature"
+""
+1 594 148 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+35 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 594 148 719 168
+1 2 2 "0s" 0 0 0 64 0 0  594 148 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 14 UXCTemperature
+2 36
+"uxc_humidity"
+""
+1 594 181 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+36 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 594 181 719 201
+1 2 2 "0s" 0 0 0 64 0 0  594 181 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 11 UXCHumidity
+14 37
+"atmo_pressure_value"
+""
+1 737 46 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+37 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  735 47 913 77
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"CMSAUX_En_PT0101.Value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"CMSAUX_En_PT0101.Value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+  string value;
+  value = strformat(\"\\\\left{%8.2}\",8,fNewValue);
+  
+  setValue(\"\", \"text\", dpValToString(dp, value, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {CMSAUX_En_PT0101.Value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 38
+"us_pressure_value"
+""
+1 737 79 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+38 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  735 80 913 110
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"CMSAUX_En_PT0201.Value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"CMSAUX_En_PT0201.Value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+  string value;
+  value = strformat(\"\\\\left{%8.2}\",8,fNewValue);
+  
+  setValue(\"\", \"text\", dpValToString(dp, value, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {CMSAUX_En_PT0201.Value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 39
+"uxc_pressure_value"
+""
+1 737 112 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+39 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  735 113 913 143
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"CMSAUX_En_PT0301.Value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"CMSAUX_En_PT0301.Value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+  string value;
+  value = strformat(\"\\\\left{%8.2}\",8,fNewValue);
+  
+  setValue(\"\", \"text\", dpValToString(dp, value, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {CMSAUX_En_PT0301.Value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 40
+"uxc_temperature_value"
+""
+1 737 145 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+40 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  735 146 913 176
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"CMSAUX_En_TE0051.Value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"CMSAUX_En_TE0051.Value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+  string value;
+  value = strformat(\"\\\\left{%7.2}\",7,fNewValue);
+  
+  setValue(\"\", \"text\", dpValToString(dp, value, TRUE) );
+}
+
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {CMSAUX_En_TE0051.Value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+14 41
+"uxc_humidity_value"
+""
+1 737 178 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+41 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  735 179 913 209
+3 "0s" 0 0 0 0 0 -1  E "// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_textFieldIn();
+}
+
+EP_textFieldIn()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"CMSAUX_En_HT0051.Value:_online.._value\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_textFieldInCB\",
+            \"CMSAUX_En_HT0051.Value:_online.._value\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_textFieldInCB(string dp, string fNewValue)
+{
+  string value;
+  value = strformat(\"\\\\left{%8.2}\",8,fNewValue);
+  
+  setValue(\"\", \"text\", dpValToString(dp, value, TRUE) );
+}
+// SimpleCtrlScript {EP_textFieldIn}
+// DP {CMSAUX_En_HT0051.Value}
+// DPConfig {:_online.._value}
+// DPType {float}
+// UseDPUnit {TRUE}
+// UseDPFormat {TRUE}
+// SimpleCtrlScriptEnd {EP_textFieldIn}
+" 0
+ E
+2 42
+"PRIMITIVE_TEXT25"
+""
+1 916 49 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+42 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 916 49 948 64
+0 2 2 "0s" 0 0 0 192 0 0  916 49 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 4 mbar
+2 43
+"PRIMITIVE_TEXT26"
+""
+1 916 82 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+43 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 916 82 948 97
+0 2 2 "0s" 0 0 0 192 0 0  916 82 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 4 mbar
+2 44
+"PRIMITIVE_TEXT27"
+""
+1 916 115 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+44 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 916 115 948 130
+0 2 2 "0s" 0 0 0 192 0 0  916 115 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 4 mbar
+2 45
+"PRIMITIVE_TEXT28"
+""
+1 916 148 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+45 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 916 148 932 163
+0 2 2 "0s" 0 0 0 192 0 0  916 148 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 2 °C
+2 46
+"PRIMITIVE_TEXT29"
+""
+1 916 181 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+46 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 916 181 930 196
+0 2 2 "0s" 0 0 0 192 0 0  916 181 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 1 %
+13 47
+"PUSH_BUTTON9"
+""
+1 970 190 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+47 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  968 181 1092 215
+
+T 
+1
+LANG:1 10 See Trends
+"// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"CMS_GEM_GAS/CMS_GEMfwEnvironmentalTrend.pnl\",
+      \"\",
+      makeDynString(\"\"));
+}
+
+// SimpleCtrlScript {EP_childPanelOn}
+// Function {ChildPanelOnCentral}
+// File {Gas_Panels/CMS_GEMfwEnvironmentalTrend.pnl}
+// Panel {}
+// Parent {}
+// Module {}
+// OffsetX {0}
+// OffsetY {0}
+// SimpleCtrlScriptEnd {EP_childPanelOn}
+" 0
+ E E E
+30 48
+"exhaust_frame"
+""
+1 550 226 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+48 0 0 0 0 0
+E E E
+1
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 0 1 0 1 E 1.06 0 1.026785714285714 -13.00000000000003 -8.053571428571331 0 E 550 226 1051 451
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 7 Exhaust
+2 49
+"PRIMITIVE_TEXT30"
+""
+1 592 269.9 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+49 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 592 269.9 717 289.9
+1 2 2 "0s" 0 0 0 64 0 0  592 269.9 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 6 Status
+2 50
+"PRIMITIVE_TEXT31"
+""
+1 592 302.9 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+50 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 592 302.9 717 322.9
+1 2 2 "0s" 0 0 0 64 0 0  592 302.9 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 11 Output Flow
+2 51
+"PRIMITIVE_TEXT32"
+""
+1 592 335.9 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+51 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 592 335.9 717 355.9
+1 2 2 "0s" 0 0 0 64 0 0  592 335.9 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 15 Buffer Pressure
+2 52
+"PRIMITIVE_TEXT33"
+""
+1 592 368.9 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+52 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 592 368.9 717 388.9
+1 2 2 "0s" 0 0 0 64 0 0  592 368.9 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 20 Circulation Pressure
+2 53
+"PRIMITIVE_TEXT34"
+""
+1 592 401.9 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+53 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  1 E 592 401.9 717 421.9
+1 2 2 "0s" 0 0 0 64 0 0  592 401.9 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 16 Circulation Flow
+14 54
+"exhaust_status"
+""
+1 735 266.9 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+54 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  733 268 911 298
+3 "0s" 0 0 0 0 0 -1  E E E
+14 55
+"exhaust_output_flow"
+""
+1 735 299.9 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+55 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  733 301 911 331
+3 "0s" 0 0 0 0 0 -1  E E E
+14 56
+"exhaust_buffer_pressure"
+""
+1 735 332.9 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+56 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  733 334 911 364
+3 "0s" 0 0 0 0 0 -1  E E E
+14 57
+"exhaust_circulation_pressure"
+""
+1 735 365.9 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+57 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  733 367 911 397
+3 "0s" 0 0 0 0 0 -1  E E E
+14 58
+"exhaust_circulation_flow"
+""
+1 735 398.9 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+58 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  733 400 911 430
+3 "0s" 0 0 0 0 0 -1  E E E
+2 60
+"PRIMITIVE_TEXT36"
+""
+1 914 302.9 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+60 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 914 302.9 931 318
+0 2 2 "0s" 0 0 0 192 0 0  914 302.9 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 3 l/h
+2 61
+"PRIMITIVE_TEXT37"
+""
+1 914 335.9 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+61 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 914 335.9 935 351
+0 2 2 "0s" 0 0 0 192 0 0  914 335.9 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 3 bar
+2 62
+"PRIMITIVE_TEXT38"
+""
+1 914 368.9 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+62 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 914 368.9 935 384
+0 2 2 "0s" 0 0 0 192 0 0  914 368.9 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 3 bar
+2 63
+"PRIMITIVE_TEXT39"
+""
+1 914 401.8 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+63 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 914 401.8 954 417
+0 2 2 "0s" 0 0 0 192 0 0  914 401.8 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 5 Nm3/h
+13 64
+"PUSH_BUTTON10"
+""
+1 970 410 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+64 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  968 401 1092 435
+
+T 
+1
+LANG:1 10 See Trends
+E E E E
+13 65
+"close"
+""
+1 970 473.2 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+65 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  968 464 1092 498
+
+T 
+1
+LANG:1 5 Close
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_panelOff();
+}
+
+EP_panelOff()
+{
+  PanelOff();
+}
+
+// SimpleCtrlScript {EP_panelOff}
+// Function {PanelOff}
+// Panel {}
+// Module {}
+// SimpleCtrlScriptEnd {EP_panelOff}
+" 0
+ E E E
+2 66
+"PRIMITIVE_TEXT40"
+""
+1 366 90 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+66 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 366 90 383 105
+0 2 2 "0s" 0 0 0 192 0 0  366 90 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 3 l/h
+0
+LAYER, 1 
+1
+LANG:1 0 
+0
+LAYER, 2 
+1
+LANG:1 0 
+0
+LAYER, 3 
+1
+LANG:1 0 
+0
+LAYER, 4 
+1
+LANG:1 0 
+0
+LAYER, 5 
+1
+LANG:1 0 
+0
+LAYER, 6 
+1
+LANG:1 0 
+0
+LAYER, 7 
+1
+LANG:1 0 
+0
+0

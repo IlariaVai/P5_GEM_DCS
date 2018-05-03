@@ -1,0 +1,73 @@
+#uses "fwDevice/fwDevice.ctl"
+#uses "CMSfwInstallUtils/CMSfwInstallUtils.ctl"
+#uses "fwInstallationUtils.ctl"
+#uses "CMSfwFsmXml/CMSfwFsmXml.ctl"
+#uses "fwFsm.ctl"
+#uses "fwFsmTreeDisplay.ctl"
+#uses "CMS_GEM_CAEN/GEMFSM.ctl"
+#uses "CMSfwDetectorProtection/CMSfwDetectorProtection.ctl"
+#uses "/CMS_GEM_CAEN/fwGEM_DetProt.ctl"
+main(){
+  
+ dyn_string exc;
+
+//Delete Logical View of GEMINI01_LV
+
+dyn_string device = makeDynString();
+
+string pattern = "*GEMINI01_LV*";
+dyn_string dps;
+dyn_string aliases;
+
+dpGetAllAliases(dps,aliases,pattern);
+//DebugTN(dps);
+for(int i=1;i<dynlen(dps);i++){
+  device[fwDevice_DP_ALIAS]=aliases[i];
+  device[fwDevice_DP_NAME]=dps[i];
+  fwDevice_deleteLogical(device,"",exc);
+}
+
+//Delete Old Logical View (SC)
+
+dyn_string device_old = makeDynString();
+
+string pattern_old = "*SC*";
+dyn_string dps_old;
+dyn_string aliases_old;
+
+dpGetAllAliases(dps_old,aliases_old,pattern_old);
+//DebugTN(dps);
+for(int i=1;i<dynlen(dps_old);i++){
+  device_old[fwDevice_DP_ALIAS]=aliases_old[i];
+  device_old[fwDevice_DP_NAME]=dps_old[i];
+  fwDevice_deleteLogical(device_old,"",exc);
+}
+
+
+/////////////////////////////////////
+
+
+
+ string privileges;
+ string file_path;
+ //dyn_string proj_path;
+ fwInstallationUtils_loadConfigurations("CMS_GEM_CAEN",exc);
+ fwInstallationUtils_appendManagers("CMS_GEM_CAEN", exc);
+ file_path=CMSfwFsmXml_findPath  ("/data/CMS_GEM_CAEN/GEMFSM_V9.xml");
+  fwFsmTree_stopTree();
+  CMSfwFsmXml_import(file_path,true);
+  fwFsm_generateAll();
+  fwFsmTree_refreshTree();
+  fwFsm_restartAllDomains(); 
+  privileges="CMS_GEM:Control"+"|"+"CMS_GEM:Debug";
+  fwFsmTree_accessTreeNodeRec("GEM_ENDCAP_Minus",privileges,1);
+  ChangeBMHV();        //Cosmic Beam
+  ChangeBMLV();        //Cosmic Beam
+ //Detector Protection
+  //configureInputCond(); 
+  //configureProtection();	
+ //
+ DebugN("CMS_GEM_CAEN has been installed", exc);
+ fwInstallationUtils_endPostInstall("CMS_GEM_CAEN");
+  
+}

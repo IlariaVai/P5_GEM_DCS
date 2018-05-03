@@ -1,0 +1,237 @@
+V 12
+1
+LANG:1 0 
+PANEL,-1 -1 1210 427 N "_3DFace" 0
+E E E E E 1 -1 -1 0  160 290
+""0  1
+E E 2
+"CBRef" "1"
+"EClose" E
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:1 0 
+25 8
+"gas_settings_table"
+""
+1 59.62666666666665 42 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+6 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 26 Arial,10,-1,5,50,0,0,0,0,0
+0  58 40 1182 324
+"main()
+{
+  dyn_string channels,outputs, displayNames, exceptionInfo;
+
+  channels = dpNames(\"CMSGEM_Di_FE6102Ch*\");
+  outputs = dpNames(\"CMSGEM_Di_FE6106Ch*\");
+  
+  dyn_string lineName;
+  lineName = makeDynString(\"\",\"31S/>32R\",\"30S/>28R\",\"28S/>27R\",\"\",\"\");
+
+  dyn_string chamberName;
+  chamberName = makeDynString(\" \",\"GE-1/1 27-28\", \"GE-1/1 29-30\", \"GE-1/1 01\", \"\", \"\");
+ 
+  
+  for(int i=1; i<=6; i++)
+    fwDevice_getName(channels[i], displayNames[i], exceptionInfo);
+  
+  this.appendLines(dynlen(channels), \"channel\", displayNames,\"line\",lineName, \"chamber\", chamberName);  
+
+  
+  for(int i=1; i<=6; i++)
+  {
+    dpConnect(\"showChannel\", channels[i]+\".Value\", channels[i]+\".Value:_original.._stime\", outputs[i]+\".Value\", outputs[i]+\".Value:_original.._stime\"); 
+  }
+  
+//  int numb = 1;
+//  string name = \"line\";
+//  dyn_dyn_string value1;
+//  value1[1] = makeDynString(\"\");
+//  this.deleteLines(numb, name, value1);  
+    
+}
+
+showChannel(dyn_string dpes, dyn_string values, dyn_string lineName, dyn_string channelName)
+{
+    
+  dyn_string exceptionInfo;
+  
+  string input, output;
+    input = strformat(\"\\\\left{%4.2}\",4,values[1]);
+    output = strformat(\"\\\\left{%4.2}\",4,values[3]);
+  
+  fwDevice_getName(dpSubStr(dpes[1], DPSUB_DP), channelName, exceptionInfo);
+//  this.updateLine(1, \"channel\", channelName, \"input\", values[1], \"timestamp1\", values[2], \"output\", values[3], \"timestamp2\", values[4]);
+  this.updateLine(1, \"channel\", channelName, \"input\", input, \"timestamp1\", values[2], \"output\", output, \"timestamp2\", values[4]);
+   
+ 
+}
+
+//values are passed as string in order to allow digits fixing" 0
+E 1 0 1 7 0 "channel" 19 1 0 "s" 1
+LANG:1 7 Channel
+E
+1
+LANG:1 0 
+
+220 "line" 8 1 0 "s" 1
+LANG:1 4 Line
+E
+1
+LANG:1 0 
+
+100 "chamber" 8 1 0 "s" 1
+LANG:1 8 Chambers
+E
+1
+LANG:1 0 
+
+100 "input" 12 1 0 "s" 1
+LANG:1 6 InFlow
+E
+1
+LANG:1 0 
+
+150 "timestamp1" 17 1 0 "s" 1
+LANG:1 9 Timestamp
+E
+1
+LANG:1 0 
+
+200 "output" 12 1 0 "s" 1
+LANG:1 7 OutFlow
+E
+1
+LANG:1 0 
+
+150 "timestamp2" 17 1 0 "s" 1
+LANG:1 9 Timestamp
+E
+1
+LANG:1 0 
+
+200 
+20 20 10 10
+1
+LANG:1 26 Arial,10,-1,5,50,0,0,0,0,0
+0 0 1 1 1 7
+1 0
+13 9
+"Close_button"
+""
+1 1200 460 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+7 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  1058 340 1182 374
+
+T 
+1
+LANG:1 5 Close
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_panelOff();
+}
+
+EP_panelOff()
+{
+  PanelOff();
+}
+
+// SimpleCtrlScript {EP_panelOff}
+// Function {PanelOff}
+// Panel {}
+// Module {}
+// SimpleCtrlScriptEnd {EP_panelOff}
+" 0
+ E E E
+13 10
+"trends_button"
+""
+1 60 347.15 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+8 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  58 338 182 372
+
+T 
+1
+LANG:1 10 See Trends
+"// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"CMS_GEM_GAS/CMS_GEMfwGasTrend.pnl\",
+      \"CMS_GEMfwGasTrend\",
+      makeDynString(\"\"));
+}
+
+// SimpleCtrlScript {EP_childPanelOn}
+// Function {ChildPanelOnCentral}
+// File {Gas_Panels/CMS_GEMfwGasTrend.pnl}
+// Panel {CMS_GEMfwGasTrend}
+// Parent {}
+// Module {}
+// OffsetX {0}
+// OffsetY {0}
+// SimpleCtrlScriptEnd {EP_childPanelOn}
+" 0
+ E E E
+0
+LAYER, 1 
+1
+LANG:1 0 
+0
+LAYER, 2 
+1
+LANG:1 0 
+0
+LAYER, 3 
+1
+LANG:1 0 
+0
+LAYER, 4 
+1
+LANG:1 0 
+0
+LAYER, 5 
+1
+LANG:1 0 
+0
+LAYER, 6 
+1
+LANG:1 0 
+0
+LAYER, 7 
+1
+LANG:1 0 
+0
+0

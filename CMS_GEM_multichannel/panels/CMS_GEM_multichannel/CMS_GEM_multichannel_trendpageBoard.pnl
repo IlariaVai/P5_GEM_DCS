@@ -1,0 +1,159 @@
+V 13
+2
+LANG:10001 0 
+LANG:1 0 
+PANEL,-1 -1 722 400 N "_3DFace" 0
+E E E E E 1 -1 -1 0  18 14.12500034458935
+""0  1
+E E 3
+"CBRef" "1"
+"EClose" E
+"dpi" "96"
+0 0 0
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:10001 0 
+2 0
+"PRIMITIVE_TEXT1"
+""
+1 20 20.06250017229468 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+0 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+2
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 5 1 2 1 E U  0 E 20 20.06250017229468 142 38
+0 2 2 "0s" 0 0 0 192 0 0  20 20.06250017229468 1
+2
+LANG:10001 35 MS Shell Dlg 2,-1,16,5,75,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,0,0,0,0,0
+0 2
+LANG:10001 12 BOARD Trends
+LANG:1 12 BOARD Trends
+13 1
+"BUTTON_CLOSE"
+""
+1 190 20 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+1 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+0
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0  188 11 272 45
+
+T 
+2
+LANG:10001 5 Close
+LANG:1 5 Close
+"main()
+{
+   PanelOff(); 
+}" 0
+ E E E
+1 83 0 "9" 73
+0
+2 82
+"PRIMITIVE_TEXT124"
+""
+1 1079 160.5 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+2 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+4
+"layoutAlignment" "AlignNone"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"transformable" "0"
+E E 0 5 1 2 1 E 0.908163265306119 0 0.1764705882352941 -408.867346938771 -15.32352941176471 0 E 1079 160.5 1219 330.5
+0 2 2 "0s" 0 0 0 64 0 0  1079 160.5 4
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:10001 15 OpMode=TRUE=GEM
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:10001 17 OpMode=FALSE=Free
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:10001 0 
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0 1
+LANG:10001 0 
+0
+LAYER, 1 
+1
+LANG:10001 0 
+0
+LAYER, 2 
+1
+LANG:10001 0 
+0
+LAYER, 3 
+1
+LANG:10001 0 
+0
+LAYER, 4 
+1
+LANG:10001 0 
+0
+LAYER, 5 
+1
+LANG:10001 0 
+0
+LAYER, 6 
+1
+LANG:10001 0 
+0
+LAYER, 7 
+1
+LANG:10001 0 
+0
+3 0 "trendBoard" -1
+"" ""
+"objects/fwTrending/fwTrendingFaceplate.pnl" 20 80 T 2 1.315280464216635 0 1.308016877637131 -6.305609284332689 -34.64135021097044
+22
+"$ZoomWindowTitle"""
+"$bShowGrid"""
+"$bShowLegend"""
+"$bTrendLog"""
+"$dsCurveColor"""
+"$dsCurveDPE"""
+"$dsCurveLegend"""
+"$dsCurveRange"""
+"$dsCurveScaleVisible"""
+"$dsCurveToolTipText"""
+"$dsCurveVisible"""
+"$dsCurvesType"""
+"$dsUnit"""
+"$fMaxPercentageForLog"""
+"$fMinForLog"""
+"$iMarkerType"""
+"$sBackColor"""
+"$sDpName""board_history"
+"$sForeColor"""
+"$sRefName""trendBoard."
+"$sTimeRange"""
+"$templateParameters""board=CAEN/GEM_CAEN_HV/board12,"
+0

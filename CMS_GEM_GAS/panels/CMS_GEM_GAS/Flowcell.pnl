@@ -1,0 +1,55 @@
+V 12
+1
+LANG:1 0 
+PANEL,-1 -1 1317 852 N "_3DFace" 0
+E E E E E 1 -1 -1 0  142 427
+""0  1
+E E 3
+"CBRef" "1"
+"EClose" E
+"UnifiedDraw" ""
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:1 0 
+1 0 0 "" 8
+0
+1 1 0 "" 9
+2 "visible" 0 0 0
+0
+1 2 0 "" 10
+0
+0
+LAYER, 1 
+1
+LANG:1 0 
+0
+LAYER, 2 
+1
+LANG:1 0 
+0
+LAYER, 3 
+1
+LANG:1 0 
+0
+LAYER, 4 
+1
+LANG:1 0 
+0
+LAYER, 5 
+1
+LANG:1 0 
+0
+LAYER, 6 
+1
+LANG:1 0 
+0
+LAYER, 7 
+1
+LANG:1 0 
+0
+3 0 "PANEL_REF0" -1
+"CMS_GEM_GAS/CMS_GEMfwGasSettings.pnl" 142 427 T 0 1 0 1 128 323
+0
+0

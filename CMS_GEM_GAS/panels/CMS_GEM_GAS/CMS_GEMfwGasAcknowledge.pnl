@@ -1,0 +1,498 @@
+V 12
+1
+LANG:1 0 
+PANEL,-1 -1 747 528 N "_3DFace" 0
+E E E E E 1 -1 -1 0  30 14
+""0  1
+E E 3
+"CBRef" "1"
+"EClose" E
+"UnifiedDraw" ""
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:1 0 
+30 0
+"mixer_frame"
+""
+1 30 14 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+0 0 0 0 0 0
+E E E
+1
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 0 1 0 1 E 0.6825396825396826 0 1 9.523809523809524 0 0 E 30 14 661 161
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,0,0,0,0,0
+0 1
+LANG:1 12 Mixer Alarms
+2 1
+"PRIMITIVE_TEXT1"
+""
+1 40 50 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+1 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 40 50 422 68
+0 2 2 "0s" 0 0 0 192 0 0  40 50 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 51 Do you want to acknowledge alarms related to Mixer?
+13 2
+"mixer_yes_button"
+""
+1 150 114 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+2 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,50,0,0,0,0,0
+0  148 98 322 142
+
+T 
+1
+LANG:1 3 Yes
+"main()
+{
+  
+  dyn_string exceptionInfo;
+  bool answ;
+  fwGeneral_openMessagePanel(\"Do you really want to acknowledge these alarms?\", answ , exceptionInfo, \"Confirm\", false );
+  DebugTN(\"answer\",answ);
+  
+  if (answ)
+  {
+    applyChanges();
+  }
+}
+
+  
+ void applyChanges()
+ { 
+  
+  dyn_string dps = makeDynString(\"CMSGEM_Mx_TotalFlowAS.Value\",
+                                 \"CMSGEM_Mx_L1CompRatioAS.Value\",
+                                 \"CMSGEM_Mx_L2CompRatioAS.Value\",
+                                 \"CMSGEM_Mx_L3CompRatioAS.Value\",
+                                 \"CMSGEM_Mx_PT1103.Value\",
+                                 \"CMSGEM_Mx_PT1203.Value\",
+                                 \"CMSGEM_Mx_PT1303.Value\",
+                                 \"CMSGEM_Mx_PT1009.Value\",
+                                 \"CMSGEM_Di_TotFlowAS.Value\");
+  
+  dyn_string exceptionInfo;  
+  dyn_errClass err;
+  
+     fwAlertConfig_acknowledgeMany(dps, exceptionInfo);
+
+  err = getLastError();
+  if (dynlen(err) > 0)
+    errorDialog(err);
+    
+}" 0
+ E E E
+30 4
+"rack_frame"
+""
+1 30 14 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+4 0 0 0 0 0
+E E E
+1
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 0 1 0 1 E 0.6825396825396826 0 1 9.523809523809524 161.5 0 E 30 14 661 161
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,0,0,0,0,0
+0 1
+LANG:1 11 Rack Alarms
+2 5
+"PRIMITIVE_TEXT2"
+""
+1 40 211.5 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+5 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 40 211.5 424 230
+0 2 2 "0s" 0 0 0 192 0 0  40 211.5 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 51 Do you want to acknowledge alarms related to Racks?
+13 6
+"rack_yes_button"
+""
+1 150 275.5 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+6 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,50,0,0,0,0,0
+0  148 260 322 304
+
+T 
+1
+LANG:1 3 Yes
+"main()
+{
+  
+  dyn_string exceptionInfo;
+  bool answ;
+  fwGeneral_openMessagePanel(\"Do you really want to acknowledge these alarms?\", answ , exceptionInfo, \"Confirm\", false );
+  DebugTN(\"answer\",answ);
+  
+  if (answ)
+  {
+    applyChanges();
+  }
+}
+
+  
+ void applyChanges()
+ { 
+ 
+  dyn_string dps = makeDynString(\"CMSGEM_Di_PT6124.Value\",
+                                 \"CMSGEM_Di_PT6122.Value\",
+                                 \"CMSGEM_Di_PT6125.Value\",
+                                 \"CMSGEM_Di_PT6104.Value\" );
+  
+  dyn_string exceptionInfo;  
+  dyn_errClass err;
+  
+     fwAlertConfig_acknowledgeMany(dps, exceptionInfo);
+
+  err = getLastError();
+  if (dynlen(err) > 0)
+    errorDialog(err);
+    
+}" 0
+ E E E
+30 8
+"flowcells_frame"
+""
+1 30 14 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+8 0 0 0 0 0
+E E E
+1
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 0 1 0 1 E 0.6825396825396826 0 1 9.523809523809524 325.75 0 E 30 14 661 161
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,0,0,0,0,0
+0 1
+LANG:1 16 Flowcells Alarms
+2 9
+"PRIMITIVE_TEXT3"
+""
+1 40 375.75 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+9 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 40 375.75 447 394
+0 2 2 "0s" 0 0 0 192 0 0  40 375.75 1
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 55 Do you want to acknowledge alarms related to Flowcells?
+13 10
+"flowcells_yes_button"
+""
+1 150 439.75 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+10 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,50,0,0,0,0,0
+0  148 424 322 468
+
+T 
+1
+LANG:1 3 Yes
+"main()
+{
+  
+  dyn_string exceptionInfo;
+  bool answ;
+  fwGeneral_openMessagePanel(\"Do you really want to acknowledge these alarms?\", answ , exceptionInfo, \"Confirm\", false );
+  DebugTN(\"answer\",answ);
+  
+  if (answ)
+  {
+    applyChanges();
+  }
+}
+
+  
+ void applyChanges()
+ { 
+   
+  
+  
+  dyn_string dps = makeDynString(\"CMSGEM_Di_FE6102Ch1.Value\",
+                                 \"CMSGEM_Di_FE6102Ch2.Value\",
+                                 \"CMSGEM_Di_FE6102Ch3.Value\",
+                                 \"CMSGEM_Di_FE6102Ch4.Value\",
+                                 \"CMSGEM_Di_FE6102Ch5.Value\",
+                                 \"CMSGEM_Di_FE6102Ch6.Value\",
+                                 \"CMSGEM_Di_FE6106Ch1.Value\",
+                                 \"CMSGEM_Di_FE6106Ch2.Value\",
+                                 \"CMSGEM_Di_FE6106Ch3.Value\",
+                                 \"CMSGEM_Di_FE6106Ch4.Value\",
+                                 \"CMSGEM_Di_FE6106Ch5.Value\",
+                                 \"CMSGEM_Di_FE6106Ch6.Value\",
+                                 \"CMS_GEM_Di_Ch1.Value\",
+                                 \"CMS_GEM_Di_Ch2.Value\",
+                                 \"CMS_GEM_Di_Ch3.Value\",
+                                 \"CMS_GEM_Di_Ch4.Value\",
+                                 \"CMS_GEM_Di_Ch5.Value\",
+                                 \"CMS_GEM_Di_Ch6.Value\" );
+  
+  dyn_string exceptionInfo;  
+  dyn_errClass err;
+  
+     fwAlertConfig_acknowledgeMany(dps, exceptionInfo);
+
+  err = getLastError();
+  if (dynlen(err) > 0)
+    errorDialog(err);
+    
+}" 0
+ E E E
+13 12
+"ack_all_button"
+""
+1 480 160 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+12 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,50,0,0,0,0,0
+0  478 134 722 198
+
+T 
+1
+LANG:1 15 Acknowledge ALL
+"main()
+{
+  
+  dyn_string exceptionInfo;
+  bool answ;
+  fwGeneral_openMessagePanel(\"Do you really want to acknowledge these alarms?\", answ , exceptionInfo, \"Confirm\", false );
+  DebugTN(\"answer\",answ);
+  
+  if (answ)
+  {
+    applyChanges();
+  }
+}
+
+  
+ void applyChanges()
+ { 
+   
+  
+  
+  dyn_string dps = makeDynString(\"CMSGEM_Mx_TotalFlowAS.Value\",
+                                 \"CMSGEM_Mx_L1CompRatioAS.Value\",
+                                 \"CMSGEM_Mx_L2CompRatioAS.Value\",
+                                 \"CMSGEM_Mx_L3CompRatioAS.Value\",
+                                 \"CMSGEM_Mx_PT1103.Value\",
+                                 \"CMSGEM_Mx_PT1203.Value\",
+                                 \"CMSGEM_Mx_PT1303.Value\",
+                                 \"CMSGEM_Mx_PT1009.Value\",
+                                 \"CMSGEM_Di_TotFlowAS.Value\",
+                                 \"CMSGEM_Di_PT6124.Value\",
+                                 \"CMSGEM_Di_PT6122.Value\",
+                                 \"CMSGEM_Di_PT6125.Value\",
+                                 \"CMSGEM_Di_PT6104.Value\",
+                                 \"CMSGEM_Di_FE6102Ch1.Value\",
+                                 \"CMSGEM_Di_FE6102Ch2.Value\",
+                                 \"CMSGEM_Di_FE6102Ch3.Value\",
+                                 \"CMSGEM_Di_FE6102Ch4.Value\",
+                                 \"CMSGEM_Di_FE6102Ch5.Value\",
+                                 \"CMSGEM_Di_FE6102Ch6.Value\",
+                                 \"CMSGEM_Di_FE6106Ch1.Value\",
+                                 \"CMSGEM_Di_FE6106Ch2.Value\",
+                                 \"CMSGEM_Di_FE6106Ch3.Value\",
+                                 \"CMSGEM_Di_FE6106Ch4.Value\",
+                                 \"CMSGEM_Di_FE6106Ch5.Value\",
+                                 \"CMSGEM_Di_FE6106Ch6.Value\",
+                                 \"CMS_GEM_Di_Ch1.Value\",
+                                 \"CMS_GEM_Di_Ch2.Value\",
+                                 \"CMS_GEM_Di_Ch3.Value\",
+                                 \"CMS_GEM_Di_Ch4.Value\",
+                                 \"CMS_GEM_Di_Ch5.Value\",
+                                 \"CMS_GEM_Di_Ch6.Value\");
+  
+  dyn_string exceptionInfo;  
+  dyn_errClass err;
+  
+     fwAlertConfig_acknowledgeMany(dps, exceptionInfo);
+
+  err = getLastError();
+  if (dynlen(err) > 0)
+    errorDialog(err);
+    
+}" 0
+ E E E
+13 13
+"Close_Button"
+""
+1 790 620 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+13 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  585 447 709 481
+
+T 
+1
+LANG:1 5 Close
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_panelOff();
+}
+
+EP_panelOff()
+{
+  PanelOff();
+}
+
+// SimpleCtrlScript {EP_panelOff}
+// Function {PanelOff}
+// Panel {}
+// Module {}
+// SimpleCtrlScriptEnd {EP_panelOff}
+" 0
+ E E E
+13 14
+"Alarm_screen_button"
+""
+1 479.2499999999998 274.8730078740157 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+14 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,12,-1,5,50,0,0,0,0,0
+0  478 260 722 322
+
+T 
+1
+LANG:1 12 Alarm Screen
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"fwAlarmHandling/fwAlarmHandlingDefaultScreen.pnl\",
+      \"Alarm Screen\",
+      makeDynString(\"\"));
+}
+
+// SimpleCtrlScript {EP_childPanelOn}
+// Function {ChildPanelOnCentral}
+// File {fwAlarmHandling/fwAlarmHandlingDefaultScreen.pnl}
+// Panel {Alarm Screen}
+// Parent {}
+// Module {}
+// OffsetX {0}
+// OffsetY {0}
+// SimpleCtrlScriptEnd {EP_childPanelOn}
+" 0
+ E E E
+0
+LAYER, 1 
+1
+LANG:1 0 
+0
+LAYER, 2 
+1
+LANG:1 0 
+0
+LAYER, 3 
+1
+LANG:1 0 
+0
+LAYER, 4 
+1
+LANG:1 0 
+0
+LAYER, 5 
+1
+LANG:1 0 
+0
+LAYER, 6 
+1
+LANG:1 0 
+0
+LAYER, 7 
+1
+LANG:1 0 
+0
+0

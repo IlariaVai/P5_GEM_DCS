@@ -1,0 +1,20 @@
+#uses "CMSfwInstallUtils/CMSfwInstallUtils.ctl"
+#uses "fwInstallationUtils.ctl"
+#uses "CMSfwFsmXml/CMSfwFsmXml.ctl"
+#uses "CMSfwDetectorProtection/CMSfwDetectorProtection.ctl"
+#uses "/CMS_GEM_PrtSys/fwGEM_DetProt.ctl"
+main(){
+  
+ dyn_string exc;
+ 
+ //Detector Protection
+  //configureInputCond(); 
+  configureProtection();	
+	
+ //
+ DebugN("CMS_GEM_PrtSys has been installed", exc);
+ fwInstallationUtils_endPostInstall("CMS_GEM_PrtSys");
+  
+}
+
+

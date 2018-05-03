@@ -1,0 +1,686 @@
+<?xml version="1.0" encoding="us-ascii"?> 
+<elements> 
+<fsmnodes> 
+<fsmnode cu="1" visible="1" control="1" userLabel="GasSystem" customPanel="">
+   <parentNode>FSM</parentNode>
+   <node>GasSystem</node>
+   <device>GasSystem</device>
+   <type>GS</type>
+</fsmnode>
+<fsmnode cu="1" visible="1" control="1" userLabel="Mixer" customPanel="">
+   <parentNode>GasSystem</parentNode>
+   <node>GEMMixer</node>
+   <device>GEMMixer</device>
+   <type>Mixer</type>
+</fsmnode>
+<fsmnode cu="0" visible="1" control="1" userLabel="Mixer Stepper" customPanel="">
+   <parentNode>GEMMixer</parentNode>
+   <node>CMSGEM_Mx_StepperWS</node>
+   <device>CMSGEM_Mx_StepperWS</device>
+   <type>DipSubscriptionsIntMixer</type>
+</fsmnode>
+<fsmnode cu="1" visible="1" control="1" userLabel="Mixture" customPanel="">
+   <parentNode>GEMMixer</parentNode>
+   <node>Mixture</node>
+   <device>Mixture</device>
+   <type>Mixture</type>
+</fsmnode>
+<fsmnode cu="0" visible="1" control="1" userLabel="Argon" customPanel="">
+   <parentNode>Mixture</parentNode>
+   <node>CMSGEM_Mx_L1CompRatioAS</node>
+   <device>CMSGEM_Mx_L1CompRatioAS</device>
+   <type>DipSubscriptionsFloatArgon</type>
+</fsmnode>
+<fsmnode cu="0" visible="1" control="1" userLabel="CO2" customPanel="">
+   <parentNode>Mixture</parentNode>
+   <node>CMSGEM_Mx_L2CompRatioAS</node>
+   <device>CMSGEM_Mx_L2CompRatioAS</device>
+   <type>DipSubscriptionsFloatCO2</type>
+</fsmnode>
+<fsmnode cu="1" visible="1" control="1" userLabel="Distribution" customPanel="">
+   <parentNode>GasSystem</parentNode>
+   <node>Distribution</node>
+   <device>Distribution</device>
+   <type>Distribution</type>
+</fsmnode>
+<fsmnode cu="1" visible="1" control="1" userLabel="Rack61" customPanel="">
+   <parentNode>Distribution</parentNode>
+   <node>Rack61</node>
+   <device>Rack61</device>
+   <type>Rack</type>
+</fsmnode>
+<fsmnode cu="1" visible="1" control="1" userLabel="Channel2" customPanel="">
+   <parentNode>Rack61</parentNode>
+   <node>Channel2</node>
+   <device>Channel2</device>
+   <type>Flowcell</type>
+</fsmnode>
+<fsmnode cu="0" visible="1" control="1" userLabel="Input-Output" customPanel="">
+   <parentNode>Channel2</parentNode>
+   <node>CMS_GEM_Di_Ch2</node>
+   <device>CMS_GEM_Di_Ch2</device>
+   <type>DifferenceChannel</type>
+</fsmnode>
+<fsmnode cu="0" visible="1" control="1" userLabel="Input Flow" customPanel="">
+   <parentNode>Channel2</parentNode>
+   <node>CMSGEM_Di_FE6102Ch2</node>
+   <device>CMSGEM_Di_FE6102Ch2</device>
+   <type>DipSubscriptionsFloatInputFlow</type>
+</fsmnode>
+<fsmnode cu="1" visible="1" control="1" userLabel="Channel3" customPanel="">
+   <parentNode>Rack61</parentNode>
+   <node>Channel3</node>
+   <device>Channel3</device>
+   <type>Flowcell</type>
+</fsmnode>
+<fsmnode cu="0" visible="1" control="1" userLabel="Input-Output" customPanel="">
+   <parentNode>Channel3</parentNode>
+   <node>CMS_GEM_Di_Ch3</node>
+   <device>CMS_GEM_Di_Ch3</device>
+   <type>DifferenceChannel</type>
+</fsmnode>
+<fsmnode cu="0" visible="1" control="1" userLabel="Input Flow" customPanel="">
+   <parentNode>Channel3</parentNode>
+   <node>CMSGEM_Di_FE6102Ch3</node>
+   <device>CMSGEM_Di_FE6102Ch3</device>
+   <type>DipSubscriptionsFloatInputFlow</type>
+</fsmnode>
+<fsmnode cu="1" visible="1" control="1" userLabel="Channel4" customPanel="">
+   <parentNode>Rack61</parentNode>
+   <node>Channel4</node>
+   <device>Channel4</device>
+   <type>Flowcell</type>
+</fsmnode>
+<fsmnode cu="0" visible="1" control="1" userLabel="Input-Output" customPanel="">
+   <parentNode>Channel4</parentNode>
+   <node>CMS_GEM_Di_Ch4</node>
+   <device>CMS_GEM_Di_Ch4</device>
+   <type>DifferenceChannel</type>
+</fsmnode>
+<fsmnode cu="0" visible="1" control="1" userLabel="Input Flow" customPanel="">
+   <parentNode>Channel4</parentNode>
+   <node>CMSGEM_Di_FE6102Ch4</node>
+   <device>CMSGEM_Di_FE6102Ch4</device>
+   <type>DipSubscriptionsFloatInputFlow</type>
+</fsmnode>
+<fsmnode cu="0" visible="1" control="1" userLabel="Rack Stepper" customPanel="">
+   <parentNode>Rack61</parentNode>
+   <node>CMSGEM_Di_Rack61StepWS</node>
+   <device>CMSGEM_Di_Rack61StepWS</device>
+   <type>DipSubscriptionsIntRack</type>
+</fsmnode>
+<fsmnode cu="0" visible="1" control="1" userLabel="Distribution Stepper" customPanel="">
+   <parentNode>Distribution</parentNode>
+   <node>CMSGEM_Di_ModStepWS</node>
+   <device>CMSGEM_Di_ModStepWS</device>
+   <type>DipSubscriptionsIntDistribution</type>
+</fsmnode>
+<fsmnode cu="0" visible="1" control="1" userLabel="Gas System Stepper" customPanel="">
+   <parentNode>GasSystem</parentNode>
+   <node>CMSGEM_Gs_GsStepWS</node>
+   <device>CMSGEM_Gs_GsStepWS</device>
+   <type>DipSubscriptionsIntGS</type>
+</fsmnode>
+</fsmnodes> 
+<deviceTypes>
+	<type>
+		<typeName>DifferenceChannel</typeName>
+		<panel>Difference|DifferenceChannel.pnl</panel>
+		<states_dpe>
+			<state_dpe>float Value</state_dpe>
+			<state_dpe>float Error_InOutFlow.Max_Flow</state_dpe>
+			<state_dpe>float Warning_InOutFlow.Max_Flow</state_dpe>
+		</states_dpe>
+		<actions_dpe>
+		</actions_dpe>
+		<init_script>DifferenceChannel_initialize(string domain, string device)
+{
+}
+</init_script>
+		<state_script>DifferenceChannel_valueChanged( string domain, string device,
+      float Value,
+      float Error_InOutFlow_dot_Max_Flow,
+      float Warning_InOutFlow_dot_Max_Flow, string &amp;fwState )
+{
+
+  DebugTN(&quot;1 Stampa&quot;);  
+  
+  if (Value &lt; Warning_InOutFlow_dot_Max_Flow)
+	{
+		fwState = &quot;OK&quot;;
+	}
+	else if (Value &lt; Error_InOutFlow_dot_Max_Flow)
+	{
+		fwState = &quot;WARNING&quot;;
+	}
+	else 
+	{
+		fwState = &quot;ERROR&quot;;
+	}
+  DebugTN(&quot;2 Stampa&quot;);
+}
+
+</state_script>
+		<action_script>DifferenceChannel_doCommand(string domain, string device, string command)
+{
+}
+</action_script>
+		<states>
+			<state id="OK" color="FwStateOKPhysics">
+			</state>
+			<state id="WARNING" color="FwStateAttention1">
+			</state>
+			<state id="ERROR" color="FwStateAttention3">
+			</state>
+		</states>
+	</type>
+	<type>
+		<typeName>DipSubscriptionsFloatArgon</typeName>
+		<panel>DipSubscriptionsFloat|DipSubscriptionsFloatArgon.pnl</panel>
+		<states_dpe>
+			<state_dpe>float Value</state_dpe>
+			<state_dpe>float Error_Ar_Ratio.Max_Flow</state_dpe>
+			<state_dpe>float Error_Ar_Ratio.Min_Flow</state_dpe>
+			<state_dpe>float Warning_Ar_Ratio.Max_Flow</state_dpe>
+			<state_dpe>float Warning_Ar_Ratio.Min_Flow</state_dpe>
+		</states_dpe>
+		<actions_dpe>
+		</actions_dpe>
+		<init_script>DipSubscriptionsFloatArgon_initialize(string domain, string device)
+{
+}
+</init_script>
+		<state_script>DipSubscriptionsFloatArgon_valueChanged( string domain, string device,
+      float Value,
+      float Error_Ar_Ratio_dot_Max_Flow,
+      float Error_Ar_Ratio_dot_Min_Flow,
+      float Warning_Ar_Ratio_dot_Max_Flow,
+      float Warning_Ar_Ratio_dot_Min_Flow, string &amp;fwState )
+{
+	if (
+	(Value &lt;= Warning_Ar_Ratio_dot_Max_Flow) &amp;&amp;
+	(Value &gt;= Warning_Ar_Ratio_dot_Min_Flow) )
+	{
+		fwState = &quot;OK&quot;;
+	}
+	else if (
+	((Value &gt; Warning_Ar_Ratio_dot_Max_Flow) &amp;&amp;
+	(Value &lt;= Error_Ar_Ratio_dot_Max_Flow)) ||
+	((Value &lt; Warning_Ar_Ratio_dot_Min_Flow) &amp;&amp;
+	(Value &gt;= Error_Ar_Ratio_dot_Min_Flow)) )
+	{
+		fwState = &quot;WARNING&quot;;
+	}
+	else 
+	{
+		fwState = &quot;ERROR&quot;;
+	}
+}
+
+</state_script>
+		<action_script>DipSubscriptionsFloatArgon_doCommand(string domain, string device, string command)
+{
+}
+</action_script>
+		<states>
+			<state id="OK" color="FwStateOKPhysics">
+			</state>
+			<state id="WARNING" color="FwStateAttention1">
+			</state>
+			<state id="ERROR" color="FwStateAttention3">
+			</state>
+		</states>
+	</type>
+	<type>
+		<typeName>DipSubscriptionsFloatCO2</typeName>
+		<panel>DipSubscriptionsFloat|DipSubscriptionsFloatCO2.pnl</panel>
+		<states_dpe>
+			<state_dpe>float Value</state_dpe>
+			<state_dpe>float Error_CO2_Ratio.Max_Flow</state_dpe>
+			<state_dpe>float Error_CO2_Ratio.Min_Flow</state_dpe>
+			<state_dpe>float Warning_CO2_Ratio.Max_Flow</state_dpe>
+			<state_dpe>float Warning_CO2_Ratio.Min_Flow</state_dpe>
+		</states_dpe>
+		<actions_dpe>
+		</actions_dpe>
+		<init_script>DipSubscriptionsFloatCO2_initialize(string domain, string device)
+{
+}
+</init_script>
+		<state_script>DipSubscriptionsFloatCO2_valueChanged( string domain, string device,
+      float Value,
+      float Error_CO2_Ratio_dot_Min_Flow,
+      float Error_CO2_Ratio_dot_Max_Flow,
+      float Warning_CO2_Ratio_dot_Max_Flow,
+      float Warning_CO2_Ratio_dot_Min_Flow, string &amp;fwState )
+{
+	if (
+	(Value &lt;= Warning_CO2_Ratio_dot_Max_Flow) &amp;&amp;
+	(Value &gt;= Warning_CO2_Ratio_dot_Min_Flow) )
+	{
+		fwState = &quot;OK&quot;;
+	}
+	else if (
+	(Value &gt; Warning_CO2_Ratio_dot_Max_Flow) &amp;&amp;
+	(Value &lt;= Error_CO2_Ratio_dot_Max_Flow) ||
+	(Value &lt; Warning_CO2_Ratio_dot_Min_Flow) &amp;&amp;
+	(Value &gt;= Error_CO2_Ratio_dot_Min_Flow) )
+	{
+		fwState = &quot;WARNING&quot;;
+	}
+	else 
+	{
+		fwState = &quot;ERROR&quot;;
+	}
+}
+
+</state_script>
+		<action_script>DipSubscriptionsFloatCO2_doCommand(string domain, string device, string command)
+{
+}
+</action_script>
+		<states>
+			<state id="OK" color="FwStateOKPhysics">
+			</state>
+			<state id="WARNING" color="FwStateAttention1">
+			</state>
+			<state id="ERROR" color="FwStateAttention3">
+			</state>
+		</states>
+	</type>
+	<type>
+		<typeName>DipSubscriptionsFloatInputFlow</typeName>
+		<panel>DipSubscriptionsFloat|DipSubscriptionsFloatInputFlow.pnl</panel>
+		<states_dpe>
+			<state_dpe>float Value</state_dpe>
+			<state_dpe>float Error_InFlow.Max_Flow</state_dpe>
+			<state_dpe>float Error_InFlow.Min_Flow</state_dpe>
+			<state_dpe>float Warning_InFlow.Max_Flow</state_dpe>
+			<state_dpe>float Warning_InFlow.Min_Flow</state_dpe>
+		</states_dpe>
+		<actions_dpe>
+		</actions_dpe>
+		<init_script>DipSubscriptionsFloatInputFlow_initialize(string domain, string device)
+{
+}
+</init_script>
+		<state_script>DipSubscriptionsFloatInputFlow_valueChanged( string domain, string device,
+      float Value,
+      float Error_InFlow_dot_Max_Flow,
+      float Error_InFlow_dot_Min_Flow,
+      float Warning_InFlow_dot_Max_Flow,
+      float Warning_InFlow_dot_Min_Flow, string &amp;fwState )
+{
+
+  DebugTN(&quot;Stampa 1&quot;);  
+  
+
+	if (
+	(Value &lt;= Warning_InFlow_dot_Max_Flow )&amp;&amp;
+	(Value &gt;= Warning_InFlow_dot_Min_Flow ))
+	{
+		fwState = &quot;OK&quot;;
+	}
+	else if (
+	(Value &gt; Warning_InFlow_dot_Max_Flow) &amp;&amp;
+	(Value &lt; Error_InFlow_dot_Max_Flow) ||
+	(Value &lt; Warning_InFlow_dot_Min_Flow) &amp;&amp;
+	(Value &gt; Error_InFlow_dot_Min_Flow ))
+	{
+		fwState = &quot;WARNING&quot;;
+	}
+	else 
+	{
+		fwState = &quot;ERROR&quot;;
+	}
+  
+  DebugTN(&quot;Stampa 2&quot;);  
+  
+}
+
+
+
+
+
+
+</state_script>
+		<action_script>DipSubscriptionsFloatInputFlow_doCommand(string domain, string device, string command)
+{
+}
+</action_script>
+		<states>
+			<state id="OK" color="FwStateOKPhysics">
+			</state>
+			<state id="WARNING" color="FwStateAttention1">
+			</state>
+			<state id="ERROR" color="FwStateAttention3">
+			</state>
+		</states>
+	</type>
+	<type>
+		<typeName>DipSubscriptionsIntDistribution</typeName>
+		<panel>DipSubscriptionsInt|DipSubscriptionsIntDistribution.pnl</panel>
+		<states_dpe>
+			<state_dpe>int Value</state_dpe>
+		</states_dpe>
+		<actions_dpe>
+		</actions_dpe>
+		<init_script>DipSubscriptionsIntDistribution_initialize(string domain, string device)
+{
+}
+</init_script>
+		<state_script>DipSubscriptionsIntDistribution_valueChanged( string domain, string device,
+      int Value, string &amp;fwState )
+{
+	if (Value == 35)
+	{
+		fwState = &quot;RUNNING&quot;;
+	}
+	else if (Value == 1)
+	{
+		fwState = &quot;NOT_RUNNING&quot;;
+	}
+	else 
+	{
+		fwState = &quot;WARNING&quot;;
+	}
+}
+
+</state_script>
+		<action_script>DipSubscriptionsIntDistribution_doCommand(string domain, string device, string command)
+{
+}
+</action_script>
+		<states>
+			<state id="RUNNING" color="FwStateOKPhysics">
+			</state>
+			<state id="NOT_RUNNING" color="FwStateAttention3">
+			</state>
+			<state id="WARNING" color="FwStateAttention1">
+			</state>
+		</states>
+	</type>
+	<type>
+		<typeName>DipSubscriptionsIntGS</typeName>
+		<panel>DipSubscriptionsInt|DipSubscriptionsIntGS.pnl</panel>
+		<states_dpe>
+			<state_dpe>int Value</state_dpe>
+		</states_dpe>
+		<actions_dpe>
+		</actions_dpe>
+		<init_script>DipSubscriptionsIntGS_initialize(string domain, string device)
+{
+}
+</init_script>
+		<state_script>DipSubscriptionsIntGS_valueChanged( string domain, string device,
+      int Value, string &amp;fwState )
+{
+	if (Value == 25)
+	{
+		fwState = &quot;RUNNING&quot;;
+	}
+	else if (Value == 100)
+	{
+		fwState = &quot;NOT_RUNNING&quot;;
+	}
+	else 
+	{
+		fwState = &quot;WARNING&quot;;
+	}
+}
+
+</state_script>
+		<action_script>DipSubscriptionsIntGS_doCommand(string domain, string device, string command)
+{
+}
+</action_script>
+		<states>
+			<state id="RUNNING" color="FwStateOKPhysics">
+			</state>
+			<state id="NOT_RUNNING" color="FwStateAttention3">
+			</state>
+			<state id="WARNING" color="FwStateAttention1">
+			</state>
+		</states>
+	</type>
+	<type>
+		<typeName>DipSubscriptionsIntMixer</typeName>
+		<panel>DipSubscriptionsInt|DipSubscriptionsIntMixer.pnl</panel>
+		<states_dpe>
+			<state_dpe>int Value</state_dpe>
+		</states_dpe>
+		<actions_dpe>
+		</actions_dpe>
+		<init_script>DipSubscriptionsIntMixer_initialize(string domain, string device)
+{
+}
+</init_script>
+		<state_script>DipSubscriptionsIntMixer_valueChanged( string domain, string device,
+      int Value, string &amp;fwState )
+{
+	if (Value == 12)
+	{
+		fwState = &quot;RUNNING&quot;;
+	}
+	else if (Value == 1)
+	{
+		fwState = &quot;NOT_RUNNING&quot;;
+	}
+	else 
+	{
+		fwState = &quot;WARNING&quot;;
+	}
+}
+
+</state_script>
+		<action_script>DipSubscriptionsIntMixer_doCommand(string domain, string device, string command)
+{
+}
+</action_script>
+		<states>
+			<state id="RUNNING" color="FwStateOKPhysics">
+			</state>
+			<state id="NOT_RUNNING" color="FwStateAttention3">
+			</state>
+			<state id="WARNING" color="FwStateAttention1">
+			</state>
+		</states>
+	</type>
+	<type>
+		<typeName>DipSubscriptionsIntRack</typeName>
+		<panel>DipSubscriptionsInt|DipSubscriptionsIntRack.pnl</panel>
+		<states_dpe>
+			<state_dpe>int Value</state_dpe>
+		</states_dpe>
+		<actions_dpe>
+		</actions_dpe>
+		<init_script>DipSubscriptionsIntRack_initialize(string domain, string device)
+{
+}
+</init_script>
+		<state_script>DipSubscriptionsIntRack_valueChanged( string domain, string device,
+      int Value, string &amp;fwState )
+{
+	if (Value == 35)
+	{
+		fwState = &quot;RUNNING&quot;;
+	}
+	else if (Value == 1)
+	{
+		fwState = &quot;NOT_RUNNING&quot;;
+	}
+	else 
+	{
+		fwState = &quot;WARNING&quot;;
+	}
+}
+
+</state_script>
+		<action_script>DipSubscriptionsIntRack_doCommand(string domain, string device, string command)
+{
+}
+</action_script>
+		<states>
+			<state id="RUNNING" color="FwStateOKPhysics">
+			</state>
+			<state id="NOT_RUNNING" color="FwStateAttention3">
+			</state>
+			<state id="WARNING" color="FwStateAttention1">
+			</state>
+		</states>
+	</type>
+	<type>
+		<typeName>FwFSMConfDBDUT</typeName>
+		<panel>FwFSMConfDB|FwFSMConfDBDUT.pnl</panel>
+		<states_dpe>
+			<state_dpe>int status</state_dpe>
+		</states_dpe>
+		<actions_dpe>
+			<action_dpe>int command</action_dpe>
+		</actions_dpe>
+		<init_script>FwFSMConfDBDUT_initialize(string domain, string device) 
+{     
+ fwFSMConfDB_DUTinitialize(domain, device);    
+} 
+
+</init_script>
+		<state_script>FwFSMConfDBDUT_valueChanged( string domain, string device, 
+      int status, string &amp;fwState ) 
+{
+fwFSMConfDB_DUTvalueChanged(domain, device, status, fwState);
+} 
+</state_script>
+		<action_script>FwFSMConfDBDUT_doCommand(string domain, string device, string command)  
+{   
+ fwFSMConfDB_DUTdoCommand(domain, device, command);  
+}  
+ 
+</action_script>
+		<states>
+			<state id="NOT_READY" color="FwStateOKNotPhysics">
+				<action id="LOAD"  params="string sMode = &quot;PHYSICS&quot;
+" visible="1"></action>
+			</state>
+			<state id="READY" color="FwStateOKPhysics">
+				<action id="APPLY_RECIPE"  params="" visible="0"></action>
+				<action id="LOAD"  params="string sMode = &quot;PHYSICS&quot;
+" visible="1"></action>
+				<action id="UNLOAD"  params="" visible="1"></action>
+			</state>
+			<state id="ERROR" color="FwStateAttention3">
+				<action id="RECOVER"  params="" visible="1"></action>
+			</state>
+		</states>
+	</type>
+</deviceTypes>
+<logicalUnitTypes>
+	<type>
+		<typeName>Distribution</typeName>
+		<panel>Distribution.pnl</panel>
+		<states>
+			<state id="RUNNING" color="FwStateOKPhysics">
+				<when>when ( $ANY$FwCHILDREN in_state NOT_RUNNING )  move_to NOT_RUNNING</when>
+				<when>when ( $ANY$FwCHILDREN in_state WARNING )  move_to WARNING</when>
+			</state>
+			<state id="WARNING" color="FwStateAttention1">
+				<when>when ( $ANY$FwCHILDREN in_state NOT_RUNNING )  move_to NOT_RUNNING</when>
+				<when>when ( $ALL$FwCHILDREN in_state RUNNING )  move_to RUNNING</when>
+			</state>
+			<state id="NOT_RUNNING" color="FwStateAttention3">
+				<when>when ( $ALL$FwCHILDREN in_state RUNNING )  move_to RUNNING</when>
+				<when>when ( $ALL$FwCHILDREN not_in_state NOT_RUNNING )  move_to WARNING</when>
+			</state>
+		</states>
+	</type>
+	<type>
+		<typeName>Flowcell</typeName>
+		<panel>Flowcell.pnl</panel>
+		<states>
+			<state id="RUNNING" color="FwStateOKPhysics">
+				<when>when ( $ANY$FwCHILDREN in_state ERROR )  move_to NOT_RUNNING</when>
+				<when>when ( $ANY$FwCHILDREN in_state WARNING )  move_to WARNING</when>
+			</state>
+			<state id="WARNING" color="FwStateAttention1">
+				<when>when ( $ANY$FwCHILDREN in_state ERROR )  move_to NOT_RUNNING</when>
+				<when>when ( $ALL$FwCHILDREN in_state OK )  move_to RUNNING</when>
+			</state>
+			<state id="NOT_RUNNING" color="FwStateAttention3">
+				<when>when ( $ALL$FwCHILDREN in_state OK )  move_to RUNNING</when>
+				<when>when ( $ALL$FwCHILDREN not_in_state ERROR )  move_to WARNING</when>
+			</state>
+		</states>
+	</type>
+	<type>
+		<typeName>GS</typeName>
+		<panel>GS.pnl</panel>
+		<states>
+			<state id="RUNNING" color="FwStateOKPhysics">
+				<when>when ( $ANY$FwCHILDREN in_state NOT_RUNNING )  move_to NOT_RUNNING</when>
+				<when>when ( $ANY$FwCHILDREN in_state WARNING )  move_to WARNING</when>
+			</state>
+			<state id="WARNING" color="FwStateAttention1">
+				<when>when ( $ANY$FwCHILDREN in_state NOT_RUNNING )  move_to NOT_RUNNING</when>
+				<when>when ( $ALL$FwCHILDREN in_state RUNNING )  move_to RUNNING</when>
+			</state>
+			<state id="NOT_RUNNING" color="FwStateAttention3">
+				<when>when ( $ALL$FwCHILDREN in_state RUNNING )  move_to RUNNING</when>
+				<when>when ( $ALL$FwCHILDREN not_in_state NOT_RUNNING )  move_to WARNING</when>
+			</state>
+		</states>
+	</type>
+	<type>
+		<typeName>Mixer</typeName>
+		<panel>Mixer.pnl</panel>
+		<states>
+			<state id="RUNNING" color="FwStateOKPhysics">
+				<when>when ( $ANY$FwCHILDREN in_state NOT_RUNNING )  move_to NOT_RUNNING</when>
+				<when>when ( $ANY$FwCHILDREN in_state WARNING )  move_to WARNING</when>
+			</state>
+			<state id="WARNING" color="FwStateAttention1">
+				<when>when ( $ANY$FwCHILDREN not_in_state NOT_RUNNING )  move_to NOT_RUNNING</when>
+				<when>when ( $ALL$FwCHILDREN in_state RUNNING )  move_to RUNNING</when>
+			</state>
+			<state id="NOT_RUNNING" color="FwStateAttention3">
+				<when>when ( $ALL$FwCHILDREN in_state RUNNING )  move_to RUNNING</when>
+				<when>when ( $ALL$FwCHILDREN not_in_state NOT_RUNNING )  move_to WARNING</when>
+			</state>
+		</states>
+	</type>
+	<type>
+		<typeName>Mixture</typeName>
+		<panel>Mixture.pnl</panel>
+		<states>
+			<state id="RUNNING" color="FwStateOKPhysics">
+				<when>when ( $ANY$FwCHILDREN in_state ERROR )  move_to NOT_RUNNING</when>
+				<when>when ( $ANY$FwCHILDREN in_state WARNING )  move_to WARNING</when>
+			</state>
+			<state id="WARNING" color="FwStateAttention1">
+				<when>when ( $ANY$FwCHILDREN in_state ERROR )  move_to NOT_RUNNING</when>
+				<when>when ( $ALL$FwCHILDREN in_state OK )  move_to RUNNING</when>
+			</state>
+			<state id="NOT_RUNNING" color="FwStateAttention3">
+				<when>when ( $ALL$FwCHILDREN in_state OK )  move_to RUNNING</when>
+				<when>when ( $ALL$FwCHILDREN not_in_state ERROR )  move_to WARNING</when>
+			</state>
+		</states>
+	</type>
+	<type>
+		<typeName>Rack</typeName>
+		<panel>Rack.pnl</panel>
+		<states>
+			<state id="RUNNING" color="FwStateOKPhysics">
+				<when>when ( $ANY$FwCHILDREN in_state NOT_RUNNING )  move_to NOT_RUNNING</when>
+				<when>when ( $ANY$FwCHILDREN in_state WARNING )  move_to WARNING</when>
+			</state>
+			<state id="WARNING" color="FwStateAttention1">
+				<when>when ( $ANY$FwCHILDREN in_state NOT_RUNNING )  move_to NOT_RUNNING</when>
+				<when>when ( $ALL$FwCHILDREN in_state RUNNING )  move_to RUNNING</when>
+			</state>
+			<state id="NOT_RUNNING" color="FwStateAttention3">
+				<when>when ( $ALL$FwCHILDREN in_state RUNNING )  move_to RUNNING</when>
+				<when>when ( $ALL$FwCHILDREN not_in_state NOT_RUNNING )  move_to WARNING</when>
+			</state>
+		</states>
+	</type>
+</logicalUnitTypes>
+</elements> 

@@ -1,0 +1,364 @@
+V 14
+1
+LANG:10001 0 
+PANEL,-1 -1 1120 744 N "_3DFace" 0
+"main()
+{
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FanStatus.StatFan2\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FanStatus.StatFan3\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FanStatus.StatFan4\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FanStatus.StatFan5\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FanStatus.StatFan6\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FanStatus.SpeedFan2\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FanStatus.SpeedFan5\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FanStatus.SpeedFan6\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.PWstatus.ACstatus\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.PWstatus.PrimaryPS\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.PWstatus.Add1\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.PWstatus.Add2\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.PWstatus.Add3\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FrontPanInP.Vsel\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FrontPanInP.Isel\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FrontPanInP.Kill\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FrontPanInP.Interlock\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FrontPanInP.RemoteEnable\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FrontPanInP.LocalEnable\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FrontPanInP.TTL/NIM\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FrontPanOutP.OVC\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FrontPanOutP.UNV\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FrontPanOutP.OVV\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FrontPanOutP.CHON\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FrontPanOutP.FanFailure\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FrontPanOutP.OVT\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.PWstatus.TempHvPwSM\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FanStatus.FanStat\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.PWstatus.HvPwSM\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FrontPanInP.FrontPanIn\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FrontPanOutP.FrontPanOut\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Commands.Kill\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.SymbolicName\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.Slots\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.ModelName\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.SwRelease\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.GenSignCfg\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.ClkFreq\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.HvClkConf\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.Sessions\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Communication.IPAddr\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Communication.IPNetMsk\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Communication.IpGw\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Communication.RS232Par\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Communication.CnetCrNum\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.model\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FanStatus.TempFanStat\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FanStatus.SpeedFan1\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FanStatus.SpeedFan3\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.FanStatus.SpeedFan4\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Communication.ConnStatus\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Communication.EventStatus\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Communication.OPCServerEventMode\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Communication.OPCServerVerifyTime\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Communication.OPCServerLiveInsertion\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.ResFlagCfg\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.Debug.CpuLoad.1min\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.Debug.CpuLoad.5min\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.Debug.CpuLoad.15min\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.Debug.CpuLoad.CpuLoad\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.Debug.CpuLoad.TempCpuLoad\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.Debug.MemoryStatus.Total\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.Debug.MemoryStatus.Free\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.Debug.MemoryStatus.Used\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.Debug.MemoryStatus.Buffers\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.Debug.MemoryStatus.MemoryStatus\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.Debug.MemoryStatus.TempMemoryStatus\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.Debug.CmdQueueStatus\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV.Information.ResFlag\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board02.BdStatus\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board02.Information.Model\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board02.Information.Description\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board02.Information.FmwRelease\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board02.Information.SerNum\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board02.Information.NrOfCh\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board02.HVMax.HVMax\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board02.HVMax.HVMax#EU\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board02.HVMax.HVMax#HighEU\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board02.HVMax.HVMax#LowEU\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board02.Temp.Temp\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board02.Temp.Temp#EU\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board02.Temp.Temp#HighEU\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board02.Temp.Temp#LowEU\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board02.model\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board02.Status.powerFail\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board02.Status.firmwareChecksumError\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board02.Status.hvMaxCalibrationError\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board02.Status.temperatureCalibrationError\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board02.Status.underTemperature\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board02.Status.overTemperature\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board04.BdStatus\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board04.Information.Model\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board04.Information.Description\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board04.Information.FmwRelease\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board04.Information.SerNum\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board04.Information.NrOfCh\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board04.HVMax.HVMax\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board04.HVMax.HVMax#EU\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board04.HVMax.HVMax#HighEU\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board04.HVMax.HVMax#LowEU\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board04.Temp.Temp\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board04.Temp.Temp#EU\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board04.Temp.Temp#HighEU\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board04.Temp.Temp#LowEU\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board04.model\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board04.Status.powerFail\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board04.Status.firmwareChecksumError\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board04.Status.hvMaxCalibrationError\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board04.Status.temperatureCalibrationError\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board04.Status.underTemperature\");
+dpConnect(\"work\",\"CAEN/GEM_CAEN_HV/board04.Status.overTemperature\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FanStatus.StatFan1\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FanStatus.StatFan2\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FanStatus.StatFan3\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FanStatus.StatFan4\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FanStatus.StatFan5\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FanStatus.StatFan6\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FanStatus.SpeedFan2\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FanStatus.SpeedFan5\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FanStatus.SpeedFan6\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.PWstatus.ACstatus\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.PWstatus.PrimaryPS\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.PWstatus.Add1\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.PWstatus.Add2\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.PWstatus.Add3\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FrontPanInP.Vsel\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FrontPanInP.Isel\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FrontPanInP.Kill\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FrontPanInP.Interlock\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FrontPanInP.RemoteEnable\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FrontPanInP.LocalEnable\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FrontPanInP.TTL/NIM\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FrontPanOutP.OVC\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FrontPanOutP.UNV\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FrontPanOutP.OVV\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FrontPanOutP.CHON\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FrontPanOutP.FanFailure\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FrontPanOutP.OVT\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.PWstatus.TempHvPwSM\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FanStatus.FanStat\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.PWstatus.HvPwSM\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FrontPanInP.FrontPanIn\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FrontPanOutP.FrontPanOut\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.SymbolicName\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.Slots\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.ModelName\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.SwRelease\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.GenSignCfg\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.ClkFreq\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.HvClkConf\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.Sessions\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Communication.IPAddr\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Communication.IPNetMsk\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Communication.IpGw\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Communication.RS232Par\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Communication.CnetCrNum\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.model\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FanStatus.TempFanStat\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FanStatus.SpeedFan1\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FanStatus.SpeedFan3\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.FanStatus.SpeedFan4\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Communication.ConnStatus\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Communication.EventStatus\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Communication.OPCServerEventMode\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Communication.OPCServerVerifyTime\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Communication.OPCServerLiveInsertion\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.ResFlagCfg\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.Debug.CpuLoad.1min\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.Debug.CpuLoad.5min\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.Debug.CpuLoad.15min\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.Debug.CpuLoad.CpuLoad\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.Debug.CpuLoad.TempCpuLoad\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.Debug.MemoryStatus.Total\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.Debug.MemoryStatus.Free\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.Debug.MemoryStatus.Used\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.Debug.MemoryStatus.Buffers\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.Debug.MemoryStatus.MemoryStatus\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.Debug.MemoryStatus.TempMemoryStatus\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.Debug.CmdQueueStatus\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV.Information.ResFlag\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00.model\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00.Information.Model\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00.Information.Description\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00.Information.FmwRelease\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00.Information.SerNum\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00.Information.NrOfCh\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00.Actual.48VA1676\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00.Actual.A1676Ilk\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00.Actual.Vsel\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0.model\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard01.model\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard01.Information.Name\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard01.Information.FmwRelease\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard01.Temp.Temp1\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard01.Actual.MainPwS\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard01.Actual.12VPwS\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard01.Actual.48VPwS\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard01.Actual.Sync\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard01.Actual.HVSync\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard01.Actual.RemIlk\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard01.Information.SerNum\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard05.model\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard05.Information.Name\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard05.Information.FmwRelease\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard05.Temp.Temp1\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard05.Actual.MainPwS\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard05.Actual.12VPwS\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard05.Actual.48VPwS\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard05.Actual.Sync\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard05.Actual.HVSync\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard05.Actual.RemIlk\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard05.Information.SerNum\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard09.model\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard09.Information.Name\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard09.Information.FmwRelease\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard09.Temp.Temp1\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard09.Actual.MainPwS\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard09.Actual.12VPwS\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard09.Actual.48VPwS\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard09.Actual.Sync\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard09.Actual.HVSync\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard09.Actual.RemIlk\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard09.Information.SerNum\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard13.model\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard13.Information.Name\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard13.Information.FmwRelease\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard13.Temp.Temp1\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard13.Actual.MainPwS\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard13.Actual.12VPwS\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard13.Actual.48VPwS\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard13.Actual.Sync\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard13.Actual.HVSync\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard13.Actual.RemIlk\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard13.Information.SerNum\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard17.model\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard17.Information.Name\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard17.Information.FmwRelease\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard17.Temp.Temp1\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard17.Actual.MainPwS\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard17.Actual.12VPwS\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard17.Actual.48VPwS\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard17.Actual.Sync\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard17.Actual.HVSync\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard17.Actual.RemIlk\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/easyBoard17.Information.SerNum\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/powerConverter22.model\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/powerConverter22.Information.Name\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/powerConverter22.Information.FmwRelease\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/powerConverter22.Actual.12VPwS\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/powerConverter22.Actual.Sync\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/powerConverter22.Actual.HVSync\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/powerConverter22.Information.SerNum\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/powerConverter22.Actual.Tracking\");
+//dpConnect(\"work\",\"CAEN/GEM_CAEN_LV/branchController00/easyCrate0/powerConverter22.Actual.StatusIn\");
+
+}" 0
+ E E E E 1 -1 -1 0  410.9545481201291 13.24999957159162
+""0  1
+E "void work(string dpe, anytype var)
+{
+  time now = getCurrentTime();
+  string localtime;
+  localtime = formatTime(\"%W; %c\", now, \" ms: %04d\");
+  string item = localtime+\"   \"+dpe+\" = \"+var;
+  SELECTION_LIST1.appendItem(item);
+ 
+}" 0
+ 3
+"CBRef" "1"
+"EClose" E
+"dpi" "96"
+0 0 0
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:10001 0 
+13 0
+"BUTTON_CLOSE"
+""
+1 410 20 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+0 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0  408.9545481201291 11.24999957159162 492.9545481201291 45.24999957159162
+
+T 
+2
+LANG:10001 5 Close
+LANG:1 5 Close
+"main()
+{
+   PanelOff(); 
+}" 0
+ E E E
+17 1
+"SELECTION_LIST1"
+""
+1 30.00000000000001 60 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+1 0 0 0 0 0
+E E E
+0
+1
+LANG:10001 0 
+
+1
+"layoutAlignment" "AlignNone"
+1
+LANG:10001 35 MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0
+0  28.00000000000001 58 1112 692
+0
+
+E
+E
+E
+
+0 0
+0
+LAYER, 1 
+1
+LANG:10001 0 
+0
+LAYER, 2 
+1
+LANG:10001 0 
+0
+LAYER, 3 
+1
+LANG:10001 0 
+0
+LAYER, 4 
+1
+LANG:10001 0 
+0
+LAYER, 5 
+1
+LANG:10001 0 
+0
+LAYER, 6 
+1
+LANG:10001 0 
+0
+LAYER, 7 
+1
+LANG:10001 0 
+0
+0

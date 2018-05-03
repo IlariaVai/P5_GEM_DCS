@@ -1,0 +1,2187 @@
+V 12
+1
+LANG:1 16 CMS_GEM_Main_Gas
+PANEL,-1 -1 1148 629 N "STD_object_background" 0
+" main()
+ {
+  
+  dyn_string exceptionInfo;
+  fwAccessControl_setupPanel( \"ApplyPanelAccessControl\", exceptionInfo);
+ 
+  
+  dyn_string dps;
+
+  dps = makeDynString(\"CMSGEM_Di_FE6102Ch1.Value\",
+                \"CMSGEM_Di_FE6102Ch2.Value\",
+                \"CMSGEM_Di_FE6102Ch3.Value\",
+                \"CMSGEM_Di_FE6102Ch4.Value\",
+                \"CMSGEM_Di_FE6102Ch5.Value\",
+                \"CMSGEM_Di_FE6102Ch6.Value\",
+                \"CMSGEM_Di_FE6106Ch1.Value\",
+                \"CMSGEM_Di_FE6106Ch2.Value\",
+                \"CMSGEM_Di_FE6106Ch3.Value\",
+                \"CMSGEM_Di_FE6106Ch4.Value\",
+                \"CMSGEM_Di_FE6106Ch5.Value\",
+                \"CMSGEM_Di_FE6106Ch6.Value\"
+                );
+  
+  
+    dpConnect(\"makeDifference\",dps);
+  
+
+
+}
+ 
+ makeDifference(dyn_string dps, dyn_float a)
+ {
+  dyn_errClass err;
+  
+    
+  dyn_string dpDifference = makeDynString(\"CMS_GEM_Di_Ch1.Value\",
+                                          \"CMS_GEM_Di_Ch2.Value\",
+                                          \"CMS_GEM_Di_Ch3.Value\",
+                                          \"CMS_GEM_Di_Ch4.Value\",
+                                          \"CMS_GEM_Di_Ch5.Value\",
+                                          \"CMS_GEM_Di_Ch6.Value\");   
+   
+  dyn_float inputs, outputs, differences, values;
+
+    for(int i=1; i<=6; i++)
+    {
+      inputs[i]=a[i];    
+    }  
+    
+    for(int j=7; j<=12; j++)
+    {
+      outputs[j-6]=a[j];    
+    }
+    
+      for(int l=1; l<=6; l++)
+      {
+       values[l]=inputs[l]-outputs[l];
+//       DebugN(\"Difference is = \", values[l]);
+       dpSet(dpDifference[l],values[l]);       
+      }    
+    
+  err = getLastError();
+  if (dynlen(err) > 0)
+  errorDialog(err);
+ 
+      
+  }
+ 
+ void ApplyPanelAccessControl(string s1, string s2)
+{
+bool hasMonitor, hasModify, hasControl, hasDebug;
+
+dyn_string exceptionInfo;
+
+// revoke all previous rights:
+DisableAllInPanel();
+
+// check privileges:
+fwAccessControl_isGranted( \"CMS_GEM:Monitor\", hasMonitor, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Modify\", hasModify, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Control\", hasControl, exceptionInfo);
+fwAccessControl_isGranted( \"CMS_GEM:Debug\", hasDebug, exceptionInfo);
+
+if (dynlen(exceptionInfo)) { fwExceptionHandling_display(exceptionInfo); return;}
+
+// enable/disable panel functionality:
+if (hasModify) {
+   alarm_button.enabled = TRUE;
+   mask_button.enabled = TRUE;
+   acknoledge_alarm_button.enabled = TRUE;
+   Alarm_screen_button.enabled = TRUE;
+  }
+else if (hasControl){
+   alarm_button.enabled = FALSE;
+   mask_button.enabled = FALSE;
+   acknoledge_alarm_button.enabled = TRUE;
+   Alarm_screen_button.enabled = TRUE;
+  }
+}
+
+void DisableAllInPanel()
+{
+ acknoledge_alarm_button.enabled = FALSE;
+ alarm_button.enabled = FALSE;
+ mask_button.enabled = FALSE;
+ Alarm_screen_button.enabled = FALSE;
+  
+// disable all widgets in a panel...
+}
+
+" 0
+ E E E E 1 -1 -1 0  140 30
+""0  1
+E E 2
+"CBRef" "1"
+"EClose" E
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:1 0 
+30 3
+"Services"
+""
+1 390 134 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+3 0 0 0 0 0
+E E E
+1
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 0 1 0 1 E 0.8214285714285714 0 1.220064081085609 -290.3571428571428 -13.4885868654716 0 E 390 134 671 511
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 8 Services
+30 4
+"Connections"
+""
+1 350 164 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+4 0 0 0 0 0
+E E E
+1
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 0 1 0 1 E 1 0 1.066194225721785 -322.0000000000001 -100.6117585301837 0 E 350 164 583 240
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 11 Connections
+30 5
+"Gas_Racks"
+""
+1 600 174 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+5 0 0 0 0 0
+E E E
+1
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 0 1 0 1 E 1.569811320754717 0 0.8417322834645669 -663.8867924528302 -72.4110236220471 0 E 600 174 1131 361
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 9 Gas Racks
+30 6
+"Flowcells"
+""
+1 600 344 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+6 0 0 0 0 0
+E E E
+1
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 0 1 0 1 E 1.569811320754717 0 1.276816875931049 -663.8867924528307 -208.4187061076824 0 E 600 344 1131 641
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 10 Flow Cells
+7 29
+"communication_indicator"
+""
+1 565 215 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+22 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E 1 0 0.8417322834645669 -500.5000000000001 -64.64173228346461 1 E 565 215 15 15
+7 32
+"mixer_indicator"
+""
+1 565 215 E E E 1 E 1 E N {0,0,0} E N "FwStateOKPhysics" E E
+ E E
+25 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+"// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_setBackColor();
+  
+  
+}
+
+EP_setBackColor()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"CMSGEM_Mx_StepperWS.Value:_alert_hdl.._act_state_color\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_setBackColorCB\", 
+            \"CMSGEM_Mx_StepperWS.Value:_alert_hdl.._act_state_color\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_setBackColorCB(string dpSource, string sNewColor)
+{
+  setValue(\"\", \"backCol\", sNewColor);
+}
+" 0
+ E 0 1 1 2 1 E 1 0 0.8417322834645669 -500.5000000000001 27.94881889763779 1 E 565 215 15 15
+7 33
+"exhaust_indicator"
+""
+1 565 215 E E E 1 E 1 E N {0,0,0} E N {255,255,255} E E
+ E E
+26 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E 1 0 0.8417322834645669 -500.5000000000001 72.56062992125983 1 E 565 215 15 15
+2 34
+"mixer_text"
+""
+1 270.9999999999996 203.5204001814522 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+27 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E 1 0 0.8417322834645669 3.999999999999943 32.57834645669293 0 E 86.99999999999997 199.5 119 215
+0 2 2 "0s" 0 0 0 192 0 0  86.99999999999997 199.5 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 5 Mixer
+2 35
+"exhaust_text"
+""
+1 270.9999999999996 203.5406392864111 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+28 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E 1 0 0.8417322834645669 3.999999999999943 32.57834645669293 0 E 86.99999999999997 255.5 132 271
+0 2 2 "0s" 0 0 0 192 0 0  86.99999999999997 255.5 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 7 Exhaust
+2 36
+"coomunication_text"
+""
+1 270.9999999999996 203.4817290344769 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+29 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E 1 0 0.8417322834645669 3.999999999999943 32.57834645669293 0 E 86.99999999999997 92.5 176 108
+0 2 2 "0s" 0 0 0 192 0 0  86.99999999999997 92.5 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 13 Communication
+13 37
+"details_button"
+""
+1 64.49999999999994 291.4110236220473 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+30 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  63 288 227 317
+
+T 
+1
+LANG:1 7 Details
+"// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"CMS_GEM_GAS/CMS_GEMfwGasServices.pnl\",
+      \"CMS_GEMfwGasServices\",
+      makeDynString(\"\"));
+}
+
+// SimpleCtrlScript {EP_childPanelOn}
+// Function {ChildPanelOnCentral}
+// File {projAdmin/Gas_Panels_updated/CMS_GEMfwGasServices.pnl}
+// Panel {CMS_GEMfwGasServices}
+// Parent {}
+// Module {}
+// OffsetX {0}
+// OffsetY {0}
+// SimpleCtrlScriptEnd {EP_childPanelOn}
+" 0
+ E E E
+6 38
+"rack"
+""
+1 790 220 E E E 1 E 1 E N {0,0,0} E N "FwStateOKPhysics" E E
+ E E
+31 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+"// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_setBackColor();
+  
+  
+}
+
+EP_setBackColor()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"CMSGEM_Di_Rack61StepWS.Value:_alert_hdl.._act_state_color\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_setBackColorCB\", 
+            \"CMSGEM_Di_Rack61StepWS.Value:_alert_hdl.._act_state_color\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_setBackColorCB(string dpSource, string sNewColor)
+{
+  setValue(\"\", \"backCol\", sNewColor);
+}
+
+" 0
+ E 0 1 1 2 1 E 1 0 0.8417322834645669 -500.5000000000001 -64.64173228346461 1 E 790 220 860 270
+2 39
+"PRIMITIVE_TEXT6"
+""
+1 496.5312499999997 203.4923907058392 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+32 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E 1 0 0.8417322834645669 3.999999999999943 32.57834645669293 0 E 312.53125 122 328 137
+0 2 2 "0s" 0 0 0 192 0 0  312.53125 122 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 2 61
+6 44
+"RECTANGLE_Ch2"
+""
+1 810 400 E E E 1 E 1 E N {0,0,0} E N "FwStateOKPhysics" E E
+ E E
+37 0 0 0 0 0
+E E "main(bool enter)
+{
+  if(enter == \"TRUE\")  makeVisible();
+  else makeInVisible();
+}
+
+makeVisible()
+{
+  text_ch2.visible(\"TRUE\");
+}
+
+makeInVisible()
+{
+  text_ch2.visible(\"FALSE\");
+}
+
+" 0
+
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+"main()
+{
+  
+  int ans;
+  dyn_string param = makeDynString(\"CMSGEM_Di_FE6102Ch2.Value\",
+                                   \"CMSGEM_Di_FE6106Ch2.Value\",
+                                   \"Error_InFlow.Max_Flow\",
+                                   \"Warning_InFlow.Max_Flow\",
+                                   \"Error_InFlow.Min_Flow\",
+                                   \"Warning_InFlow.Min_Flow\",
+                                   \"Error_InOutFlow.Max_Flow\",
+                                   \"Warning_InOutFlow.Max_Flow\",
+                                   \"CMS_GEM_Di_Ch2.Value\");
+
+  ans = dpConnect(\"refresh\",param);   
+//  DebugN(\"Result of dpConnect\",ans);
+ }
+
+ refresh(dyn_string param, dyn_float value)
+ {
+ 
+  float warning_low, warning_high, alert_low, alert_high, warning_diff, alert_diff, differenza;
+    warning_low=value[6];
+    warning_high=value[4];
+    alert_low=value[5];
+    alert_high=value[3];  
+    warning_diff=value[8];
+    alert_diff=value[7];
+    differenza=value[9];
+    
+   dyn_errClass err;
+   string color;
+  
+  if(differenza > -0.5 && differenza < warning_diff)
+    {  
+      dpGet(\"CMSGEM_Di_FE6102Ch2.Value:_alert_hdl.._act_state_color\", color);
+        this.backCol(color);
+ //       DebugN(\"color Ch2 is = \", color);
+
+    }
+  
+  
+  else{
+
+    dpGet(\"CMS_GEM_Di_Ch2.Value:_alert_hdl.._act_state_color\", color);
+        this.backCol(color);
+   //     DebugN(\"color Ch2 is = \", color);
+
+  
+  }
+
+  err = getLastError();
+  if (dynlen(err) > 0)
+    errorDialog(err);
+  
+  
+}    " 0
+ E 0 1 1 2 1 E 1 0 0.8417322834645669 -317.7500000000001 -40.32539370078742 1 E 810 400 870 620
+6 48
+"RECTANGLE_Ch5"
+""
+1 810 400 E E E 1 E 1 E N {0,0,0} E N "STD_undifined" E E
+ E E
+41 0 0 0 0 0
+E E "main(bool enter)
+{
+  if(enter == \"TRUE\")  makeVisible();
+  else makeInVisible();
+}
+
+makeVisible()
+{
+  text_ch5.visible(\"TRUE\");
+}
+
+makeInVisible()
+{
+  text_ch5.visible(\"FALSE\");
+}
+
+" 0
+
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+"main()
+{
+  
+//   int ans;
+//   dyn_string param = makeDynString(\"CMSGEM_Di_FE6102Ch5.Value\",
+//                                    \"CMSGEM_Di_FE6106Ch5.Value\",
+//                                    \"Error_InFlow.Max_Flow\",
+//                                    \"Warning_InFlow.Max_Flow\",
+//                                    \"Error_InFlow.Min_Flow\",
+//                                    \"Warning_InFlow.Min_Flow\",
+//                                    \"Error_InOutFlow.Max_Flow\",
+//                                    \"Warning_InOutFlow.Max_Flow\",
+//                                    \"CMS_GEM_Di_Ch5.Value\");
+// 
+//   ans = dpConnect(\"refresh\",param);   
+//  DebugN(\"Result of dpConnect\",ans);
+//  }
+// 
+//  refresh(dyn_string param, dyn_float value)
+//  {
+//   DebugN(\"The dp values are\", value);
+//  
+//   float warning_low, warning_high, alert_low, alert_high, warning_diff, alert_diff, differenza;
+//     warning_low=value[6];
+//     warning_high=value[4];
+//     alert_low=value[5];
+//     alert_high=value[3];  
+//     warning_diff=value[8];
+//     alert_diff=value[7];
+//     differenza=value[9];
+//     
+//    dyn_errClass err;
+//    string color;
+//   
+//   if(differenza > -0.5 && differenza < warning_diff)
+//     {  
+// 
+//     dpGet(\"CMSGEM_Di_FE6102Ch5.Value:_alert_hdl.._act_state_color\", color);
+//         this.backCol(color);
+ //       DebugN(\"color Ch5 is = \", color);
+// 
+//     }
+//   
+//   
+//   else{
+// 
+//     dpGet(\"CMS_GEM_Di_Ch5.Value:_alert_hdl.._act_state_color\", color);
+//         this.backCol(color);
+   //     DebugN(\"color Ch5 is = \", color);
+// 
+//   
+//   }
+// 
+//   err = getLastError();
+//   if (dynlen(err) > 0)
+//     errorDialog(err);
+//   
+//   
+ }    " 0
+ E 0 1 1 2 1 E 1 0 0.8417322834645669 -82.50000000000006 -40.04803149606296 1 E 810 400 870 620
+6 49
+"RECTANGLE_Ch6"
+""
+1 810 400 E E E 1 E 1 E N {0,0,0} E N "STD_undifined" E E
+ E E
+42 0 0 0 0 0
+E E "main(bool enter)
+{
+  if(enter == \"TRUE\")  makeVisible();
+  else makeInVisible();
+}
+
+makeVisible()
+{
+  text_ch6.visible(\"TRUE\");
+}
+
+makeInVisible()
+{
+  text_ch6.visible(\"FALSE\");
+}
+
+" 0
+
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+"main()
+{
+  
+//   int ans;
+//   dyn_string param = makeDynString(\"CMSGEM_Di_FE6102Ch6.Value\",
+//                                    \"CMSGEM_Di_FE6106Ch6.Value\",
+//                                    \"Error_InFlow.Max_Flow\",
+//                                    \"Warning_InFlow.Max_Flow\",
+//                                    \"Error_InFlow.Min_Flow\",
+//                                    \"Warning_InFlow.Min_Flow\",
+//                                    \"Error_InOutFlow.Max_Flow\",
+//                                    \"Warning_InOutFlow.Max_Flow\",
+//                                    \"CMS_GEM_Di_Ch6.Value\");
+// 
+//   ans = dpConnect(\"refresh\",param);   
+//  DebugN(\"Result of dpConnect\",ans);
+//  }
+// 
+//  refresh(dyn_string param, dyn_float value)
+//  {
+//  
+//   float warning_low, warning_high, alert_low, alert_high, warning_diff, alert_diff, differenza;
+//     warning_low=value[6];
+//     warning_high=value[4];
+//     alert_low=value[5];
+//     alert_high=value[3];  
+//     warning_diff=value[8];
+//     alert_diff=value[7];
+//     differenza=value[9];
+//     
+//    dyn_errClass err;
+//    string color;
+//   
+//   if(differenza > -0.5 && differenza < warning_diff)
+//     {  
+// 
+//     dpGet(\"CMSGEM_Di_FE6102Ch6.Value:_alert_hdl.._act_state_color\", color);
+//       this.backCol(color);
+//       DebugN(\"color Ch6 is = \", color);
+//  
+//     }
+//   
+//   
+//   else{
+// 
+//     dpGet(\"CMS_GEM_Di_Ch6.Value:_alert_hdl.._act_state_color\", color);
+//         this.backCol(color);
+//        DebugN(\"color Ch6 is = \", color);
+// 
+//   
+//   }
+// 
+//   err = getLastError();
+//   if (dynlen(err) > 0)
+//     errorDialog(err);
+//   
+//   
+ }    " 0
+ E 0 1 1 2 1 E 1 0 0.8417322834645669 -4.000000000000057 -39.87401574803143 1 E 810 400 870 620
+2 50
+"PRIMITIVE_TEXT9"
+""
+1 5212.5 197.6453355636405 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+43 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E 1 0 0.8417322834645669 112.7499999999999 31.64271653543305 0 E 405.5 292.5 414 308
+0 2 2 "0s" 0 0 0 192 0 0  405.5 292.5 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 1 2
+2 51
+"PRIMITIVE_TEXT10"
+""
+1 8677.5 199.3976520071355 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+44 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E 1 0 0.8417322834645669 185.9999999999999 31.92007874015751 0 E 485.5 294.5 494 310
+0 2 2 "0s" 0 0 0 192 0 0  485.5 294.5 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 1 4
+2 52
+"PRIMITIVE_TEXT11"
+""
+1 8757.5 199.3976520071355 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+45 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E 1 0 0.8417322834645669 185.9999999999999 31.92007874015751 0 E 565.5 294.5 574 310
+0 2 2 "0s" 0 0 0 192 0 0  565.5 294.5 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 1 5
+2 53
+"PRIMITIVE_TEXT12"
+""
+1 8980.5 199.3976520071355 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+46 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E 1 0 0.8417322834645669 194.9999999999999 31.92007874015751 0 E 635.5 294.5 644 310
+0 2 2 "0s" 0 0 0 192 0 0  635.5 294.5 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 1 6
+14 54
+"TEXT_FIELD2"
+""
+1 512.25 495.8580708661417 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+47 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0  511 496 535 517
+3 "0s" 0 0 0 0 0 -1  E E E
+14 55
+"TEXT_FIELD3"
+""
+1 669.5 496.1354330708662 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+48 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0  668 496 692 517
+3 "0s" 0 0 0 0 0 -1  E E E
+14 56
+"TEXT_FIELD4"
+""
+1 749.5 496.1354330708662 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+49 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0  748 496 772 517
+3 "0s" 0 0 0 0 0 -1  E E E
+14 57
+"TEXT_FIELD5"
+""
+1 823.5 496.1354330708662 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+50 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0  822 496 846 517
+3 "0s" 0 0 0 0 0 -1  E E E
+14 58
+"TEXT_FIELD6"
+""
+1 512.25 532.0525590551181 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+51 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0  511 533 535 553
+3 "0s" 0 0 0 0 0 -1  E E E
+14 59
+"TEXT_FIELD7"
+""
+1 669.5 532.3299212598427 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+52 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0  668 533 692 553
+3 "0s" 0 0 0 0 0 -1  E E E
+14 60
+"TEXT_FIELD8"
+""
+1 749.5 532.3299212598427 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+53 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0  748 533 772 553
+3 "0s" 0 0 0 0 0 -1  E E E
+14 61
+"TEXT_FIELD9"
+""
+1 823.5 532.3299212598427 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+54 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0  822 533 846 553
+3 "0s" 0 0 0 0 0 -1  E E E
+14 62
+"TEXT_FIELD10"
+""
+1 512.25 568.2470472440945 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+55 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0  511 569 535 590
+3 "0s" 0 0 0 0 0 -1  E E E
+14 63
+"TEXT_FIELD11"
+""
+1 669.5 568.5244094488189 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+56 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0  668 569 692 590
+3 "0s" 0 0 0 0 0 -1  E E E
+14 64
+"TEXT_FIELD12"
+""
+1 749.5 568.5244094488189 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+57 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0  748 569 772 590
+3 "0s" 0 0 0 0 0 -1  E E E
+14 65
+"TEXT_FIELD13"
+""
+1 823.5 568.5244094488189 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+58 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0  822 569 846 590
+3 "0s" 0 0 0 0 0 -1  E E E
+2 66
+"PRIMITIVE_TEXT13"
+""
+1 470.9999999999997 203.6487016503886 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+59 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E 1 0 0.8417322834645669 3.999999999999943 32.57834645669293 0 E 287 554.5 318 570
+0 2 2 "0s" 0 0 0 192 0 0  287 554.5 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 5 Error
+2 67
+"PRIMITIVE_TEXT14"
+""
+1 470.9999999999997 203.6642423916964 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+60 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E 1 0 0.8417322834645669 3.999999999999943 32.57834645669293 0 E 287 597.5 336 613
+0 2 2 "0s" 0 0 0 192 0 0  287 597.5 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 7 Warning
+2 68
+"PRIMITIVE_TEXT15"
+""
+1 470.9999999999997 203.6797831330043 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+61 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E 1 0 0.8417322834645669 3.999999999999943 32.57834645669293 0 E 287 640.5 342 656
+0 2 2 "0s" 0 0 0 192 0 0  287 640.5 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 7 UnAknow
+13 69
+"trends_button"
+""
+1 963.5 569.2920472440944 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+62 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  962 561 1086 590
+
+T 
+1
+LANG:1 10 See Trends
+"// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"CMS_GEM_GAS/CMS_GEMfwGasTrend.pnl\",
+      \"CMS_GEMfwGasTrend\",
+      makeDynString(\"\"));
+}
+
+// SimpleCtrlScript {EP_childPanelOn}
+// Function {ChildPanelOnCentral}
+// File {projAdmin/Gas_Panels_updated/CMS_GEMfwGasTrend.pnl}
+// Panel {CMS_GEMfwGasTrend}
+// Parent {}
+// Module {}
+// OffsetX {0}
+// OffsetY {0}
+// SimpleCtrlScriptEnd {EP_childPanelOn}
+" 0
+ E E E
+13 70
+"settings_button"
+""
+1 963.5 522.9125984251969 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+63 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  962 525 1086 554
+
+T 
+1
+LANG:1 15 Global Settings
+"// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"CMS_GEM_GAS/CMS_GEMfwGasSettings.pnl\",
+      \"CMS_GEMfwGasSettings\",
+      makeDynString(\"\"));
+}
+
+// SimpleCtrlScript {EP_childPanelOn}
+// Function {ChildPanelOnCentral}
+// File {projAdmin/Gas_Panels_updated/CMS_GEMfwGasSettings.pnl}
+// Panel {CMS_GEMfwGasSettings}
+// Parent {}
+// Module {}
+// OffsetX {0}
+// OffsetY {0}
+// SimpleCtrlScriptEnd {EP_childPanelOn}
+" 0
+ E E E
+13 71
+"PUSH_BUTTON8"
+""
+1 963 199.2413385826771 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+64 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  962 190 1086 220
+
+T 
+1
+LANG:1 10 See Trends
+"// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"CMS_GEM_GAS/CMS_GEMfwRackTrend.pnl\",
+      \"/CMS_GEMfwRackTrend\",
+      makeDynString(\"\"));
+}
+
+// SimpleCtrlScript {EP_childPanelOn}
+// Function {ChildPanelOnCentral}
+// File {projAdmin/Gas_Panels_updated/CMS_GEMfwRackTrend.pnl}
+// Panel {/CMS_GEMfwRackTrend}
+// Parent {}
+// Module {}
+// OffsetX {0}
+// OffsetY {0}
+// SimpleCtrlScriptEnd {EP_childPanelOn}
+" 0
+ E E E
+13 72
+"PUSH_BUTTON9"
+""
+1 963 152.8618897637795 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+65 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  962 154 1086 183
+
+T 
+1
+LANG:1 15 Global Settings
+"// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"CMS_GEM_GAS/CMS_GEMfwRackStatus.pnl\",
+      \"CMS_GEMfwRackStatus\",
+      makeDynString(\"\"));
+}
+
+// SimpleCtrlScript {EP_childPanelOn}
+// Function {ChildPanelOnCentral}
+// File {projAdmin/Gas_Panels_updated/CMS_GEMfwRackStatus.pnl}
+// Panel {CMS_GEMfwRackStatus}
+// Parent {}
+// Module {}
+// OffsetX {0}
+// OffsetY {0}
+// SimpleCtrlScriptEnd {EP_childPanelOn}
+" 0
+ E E E
+30 73
+"expert_frame"
+""
+1 550 469 E E E 1 E 1 E N "_WindowText" E N {0,0,0} E E
+ E E
+66 0 0 0 0 0
+E E E
+1
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 0 1 0 1 E 1 0 0.8417322834645669 -500.5000000000001 -64.64173228346461 0 E 550 469 741 781
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 6 Expert
+13 74
+"alarm_button"
+""
+1 64.49999999999994 555.7149606299213 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+67 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  63 548 227 577
+
+T 
+1
+LANG:1 9 Alarm Set
+"// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"CMS_GEM_GAS/CMS_GEMfwGasAlarmSettings.pnl\",
+      \"CMS_GEMfwGasAlarmSettings\",
+      makeDynString(\"\"));
+}
+
+// SimpleCtrlScript {EP_childPanelOn}
+// Function {ChildPanelOnCentral}
+// File {projAdmin/Gas_Panels_updated/CMS_GEMfwGasAlarmSettings.pnl}
+// Panel {CMS_GEMfwGasAlarmSettings}
+// Parent {}
+// Module {}
+// OffsetX {0}
+// OffsetY {0}
+// SimpleCtrlScriptEnd {EP_childPanelOn}
+" 0
+ E E E
+6 77
+"RECTANGLE_Ch1"
+""
+1 810 400 E E E 1 E 1 E N {0,0,0} E N "STD_undifined" E E
+ E E
+70 0 0 0 0 0
+E E "main(bool enter)
+{
+  if(enter == \"TRUE\")  makeVisible();
+  else makeInVisible();
+}
+
+makeVisible()
+{
+  text_ch1.visible(\"TRUE\");
+}
+
+makeInVisible()
+{
+  text_ch1.visible(\"FALSE\");
+}
+
+" 0
+
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+"main()
+{
+  
+//   int ans;
+//   dyn_string param = makeDynString(\"CMSGEM_Di_FE6102Ch1.Value\",
+//                                    \"Warning_InOutFlow.Max_Flow\",
+//                                    \"CMS_GEM_Di_Ch1.Value\");
+// 
+//   ans = dpConnect(\"refresh\",param);   
+//  DebugN(\"Result of dpConnect\",ans);
+//  }
+// 
+//  refresh(dyn_string param, dyn_float value)
+//  {
+//   DebugN(\"The dp values are\", value);
+//  
+//   float warning_diff, differenza;
+//     warning_diff=value[2];
+//     differenza=value[3];
+//     
+//    dyn_errClass err;
+//    string color;
+//   
+//    
+//    
+//   if(differenza > -0.5 && differenza < warning_diff)
+//     {  
+// 
+//       dpGet(\"CMSGEM_Di_FE6102Ch1.Value:_alert_hdl.._act_state_color\", color);
+//       this.backCol(color);
+//        DebugN(\"color Ch1 is = \", color);
+// 
+//     }
+//   
+//   
+//   else{
+//     
+//       dpGet(\"CMS_GEM_Di_Ch1.Value:_alert_hdl.._act_state_color\", color);
+//       this.backCol(color);
+//        DebugN(\"color Ch1 is = \", color);
+// 
+//   
+//   }
+// 
+//   err = getLastError();
+//   if (dynlen(err) > 0)
+//     errorDialog(err);
+//   
+//   
+ }    " 0
+ E 0 1 1 2 1 E 1 0 0.8417322834645669 -404.7500000000001 -40.64192913385831 1 E 810 400 870 620
+2 78
+"PRIMITIVE_TEXT16"
+""
+1 635.7387860425271 -7294.055368249019 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+71 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E 0.8962950138504148 0 1.052631578947371 66.11720914127446 -30.26480522171659 0 E 405.5 292.5 414 308
+0 2 2 "0s" 0 0 0 192 0 0  405.5 292.5 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 1 1
+14 79
+"error_field_ch1"
+""
+1 425.2499999999999 497.5415354330708 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+72 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0  424 498 448 519
+3 "0s" 0 0 0 0 0 -1  E E E
+14 80
+"TEXT_FIELD15"
+""
+1 425.2499999999999 533.7360236220472 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+73 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0  424 535 448 555
+3 "0s" 0 0 0 0 0 -1  E E E
+14 81
+"TEXT_FIELD16"
+""
+1 425.2499999999999 569.9305118110235 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+74 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0  424 571 448 592
+3 "0s" 0 0 0 0 0 -1  E E E
+2 83
+"PRIMITIVE_TEXT17"
+""
+1 8465.5 194.2614904046193 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+76 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E 1 0 0.8417322834645669 182.9999999999999 31.10688976377939 0 E 405.5 292.5 414 308
+0 2 2 "0s" 0 0 0 192 0 0  405.5 292.5 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 1 3
+14 84
+"TEXT_FIELD17"
+""
+1 588.5 495.322244094488 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+77 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0  587 496 611 517
+3 "0s" 0 0 0 0 0 -1  E E E
+14 85
+"TEXT_FIELD18"
+""
+1 588.5 531.5167322834645 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+78 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0  587 533 611 553
+3 "0s" 0 0 0 0 0 -1  E E E
+14 86
+"TEXT_FIELD19"
+""
+1 588.5 567.7112204724408 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+79 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0
+0  587 569 611 590
+3 "0s" 0 0 0 0 0 -1  E E E
+6 47
+"RECTANGLE_Ch4"
+""
+1 810 400 E E E 1 E 1 E N {0,0,0} E N "FwStateOKPhysics" E E
+ E E
+40 0 0 0 0 0
+E E "main(bool enter)
+{
+  if(enter == \"TRUE\")  makeVisible();
+  else makeInVisible();
+}
+
+makeVisible()
+{
+  text_ch4.visible(\"TRUE\");
+}
+
+makeInVisible()
+{
+  text_ch4.visible(\"FALSE\");
+}
+
+" 0
+
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+"main()
+{
+  
+  int ans;
+  dyn_string param = makeDynString(\"CMSGEM_Di_FE6102Ch4.Value\",
+                                   \"CMSGEM_Di_FE6106Ch4.Value\",
+                                   \"Error_InFlow.Max_Flow\",
+                                   \"Warning_InFlow.Max_Flow\",
+                                   \"Error_InFlow.Min_Flow\",
+                                   \"Warning_InFlow.Min_Flow\",
+                                   \"Error_InOutFlow.Max_Flow\",
+                                   \"Warning_InOutFlow.Max_Flow\",
+                                   \"CMS_GEM_Di_Ch4.Value\");
+
+  ans = dpConnect(\"refresh\",param);   
+//  DebugN(\"Result of dpConnect\",ans);
+ }
+
+ refresh(dyn_string param, dyn_float value)
+ {
+ 
+  float warning_low, warning_high, alert_low, alert_high, warning_diff, alert_diff, differenza;
+    warning_low=value[6];
+    warning_high=value[4];
+    alert_low=value[5];
+    alert_high=value[3];  
+    warning_diff=value[8];
+    alert_diff=value[7];
+    differenza=value[9];
+    
+   dyn_errClass err;
+   string color;
+
+   if(differenza > -0.5 && differenza < warning_diff)
+    {  
+      dpGet(\"CMSGEM_Di_FE6102Ch4.Value:_alert_hdl.._act_state_color\", color);
+        this.backCol(color);
+ //       DebugN(\"color Ch4 is = \", color);
+
+    }
+  
+  
+  else{
+
+    dpGet(\"CMS_GEM_Di_Ch4.Value:_alert_hdl.._act_state_color\", color);
+        this.backCol(color);
+   //     DebugN(\"color Ch4 is = \", color);
+
+  
+  }
+
+  err = getLastError();
+  if (dynlen(err) > 0)
+    errorDialog(err);
+  
+  
+}    " 0
+ E 0 1 1 2 1 E 1 0 0.8417322834645669 -161.5000000000001 -40.04803149606296 1 E 810 400 870 620
+6 82
+"RECTANGLE_Ch3"
+""
+1 810 400 E E E 1 E 1 E N {0,0,0} E N "FwStateOKPhysics" E E
+ E E
+75 0 0 0 0 0
+E E "main(bool enter)
+{
+  if(enter == \"TRUE\")  makeVisible();
+  else makeInVisible();
+}
+
+makeVisible()
+{
+  text_ch3.visible(\"TRUE\");
+}
+
+makeInVisible()
+{
+  text_ch3.visible(\"FALSE\");
+}
+
+" 0
+
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+"main()
+{
+  
+  int ans;
+  dyn_string param = makeDynString(\"CMSGEM_Di_FE6102Ch3.Value\",
+                                   \"CMSGEM_Di_FE6106Ch3.Value\",
+                                   \"Error_InFlow.Max_Flow\",
+                                   \"Warning_InFlow.Max_Flow\",
+                                   \"Error_InFlow.Min_Flow\",
+                                   \"Warning_InFlow.Min_Flow\",
+                                   \"Error_InOutFlow.Max_Flow\",
+                                   \"Warning_InOutFlow.Max_Flow\",
+                                   \"CMS_GEM_Di_Ch3.Value\");
+
+  ans = dpConnect(\"refresh\",param);   
+//  DebugN(\"Result of dpConnect\",ans);
+ }
+
+ refresh(dyn_string param, dyn_float value)
+ {
+ 
+  float warning_low, warning_high, alert_low, alert_high, warning_diff, alert_diff, differenza;
+    warning_low=value[6];
+    warning_high=value[4];
+    alert_low=value[5];
+    alert_high=value[3];  
+    warning_diff=value[8];
+    alert_diff=value[7];
+    differenza=value[9];
+    
+   dyn_errClass err;
+   string color;
+  
+  if(differenza > -0.5 && differenza < warning_diff)
+    {  
+      dpGet(\"CMSGEM_Di_FE6102Ch3.Value:_alert_hdl.._act_state_color\", color);
+        this.backCol(color);
+ //       DebugN(\"color Ch3 is = \", color);
+
+    }
+  
+  
+  else{
+      dpGet(\"CMS_GEM_Di_Ch3.Value:_alert_hdl.._act_state_color\", color);
+        this.backCol(color);
+   //     DebugN(\"color Ch3 is = \", color);
+
+  
+  }
+
+  err = getLastError();
+  if (dynlen(err) > 0)
+    errorDialog(err);
+  
+  
+}     " 0
+ E 0 1 1 2 1 E 1 0 0.8417322834645669 -241.5000000000001 -40.86122047244108 1 E 810 400 870 620
+7 87
+"ELLIPSE1"
+""
+1 565 215 E E E 1 E 1 E N {0,0,0} E N "FwStateOKPhysics" E E
+ E E
+80 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+"// SimpleCtrlScriptStart {invalid}
+main()
+{
+  EP_setBackColor();
+}
+
+EP_setBackColor()
+{
+dyn_errClass err;
+
+  if( !dpExists( \"CMSGEM_Gs_GsStepWS.Value:_alert_hdl.._act_state_color\"))
+  {
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+    return;
+  }
+
+  dpConnect(\"EP_setBackColorCB\", 
+            \"CMSGEM_Gs_GsStepWS.Value:_alert_hdl.._act_state_color\");
+  err = getLastError();
+  if (dynlen(err) > 0)
+    setValue(\"\", \"color\", \"_dpdoesnotexist\");
+
+}
+
+
+EP_setBackColorCB(string dpSource, string sNewColor)
+{
+  setValue(\"\", \"backCol\", sNewColor);
+}
+
+// SimpleCtrlScript {EP_setBackColor}
+// DP {CMSGEM_Gs_GsStepWS.Value}
+// DPConfig {:_alert_hdl.._act_state_color}
+// DPType {string}
+// AlertHdl {TRUE}
+// DPEInvalid {}
+// DPEConfigInvalid {}
+// SimpleCtrlScriptEnd {EP_setBackColor}
+" 0
+ E 0 1 1 2 1 E 1 0 0.8417322834645669 -500.0000000000001 -145.9724409448819 1 E 565 215 15 15
+2 88
+"PRIMITIVE_TEXT18"
+""
+1 270.9999999999996 -310.5024822092178 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+81 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E 1 0 0.8417322834645669 3.999999999999943 -49.55255905511814 0 E 86.99999999999997 92.5 195 108
+0 2 2 "0s" 0 0 0 192 0 0  86.99999999999997 92.5 1
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0 1
+LANG:1 17 Gas System Status
+13 94
+"Alarm_screen_button"
+""
+1 64.49999999999989 506.5 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+86 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  63 499 227 528
+
+T 
+1
+LANG:1 12 Alarm Screen
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"fwAlarmHandling/fwAlarmHandlingDefaultScreen.pnl\",
+      \"Alarm Screen\",
+      makeDynString(\"\"));
+}
+
+// SimpleCtrlScript {EP_childPanelOn}
+// Function {ChildPanelOnCentral}
+// File {fwAlarmHandling/fwAlarmHandlingDefaultScreen.pnl}
+// Panel {Alarm Screen}
+// Parent {}
+// Module {}
+// OffsetX {0}
+// OffsetY {0}
+// SimpleCtrlScriptEnd {EP_childPanelOn}
+" 0
+ E E E
+13 95
+"acknoledge_alarm_button"
+""
+1 64 456 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+87 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  63 448 227 477
+
+T 
+1
+LANG:1 17 Acknowledge alarm
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"CMS_GEM_GAS/CMS_GEMfwGasAcknowledge.pnl\",
+      \"Acknowledge Alarm\",
+      makeDynString(\"\"));
+}
+
+// SimpleCtrlScript {EP_childPanelOn}
+// Function {ChildPanelOnCentral}
+// File {CMS_GEM_GAS/CMS_GEMfwGasAcknowledge.pnl}
+// Panel {Acknowledge Alarm}
+// Parent {}
+// Module {}
+// OffsetX {0}
+// OffsetY {0}
+// SimpleCtrlScriptEnd {EP_childPanelOn}
+" 0
+ E E E
+13 96
+"mask_button"
+""
+1 64.75000000000003 400.2797244094487 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+88 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 35 MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0
+0  63 393 227 422
+
+T 
+1
+LANG:1 11 Mask/Unmask
+"// SimpleCtrlScriptStart {valid}
+main()
+{
+  EP_childPanelOn();
+}
+
+EP_childPanelOn()
+{
+  ChildPanelOnCentral(\"CMS_GEM_GAS/CMS_GEMfwMaskUnmask.pnl\",
+      \"Mask/Unmask panel\",
+      makeDynString(\"\"));
+}
+
+// SimpleCtrlScript {EP_childPanelOn}
+// Function {ChildPanelOnCentral}
+// File {CMS_GEM_GAS/CMS_GEMfwMaskUnmask.pnl}
+// Panel {Mask/Unmask panel}
+// Parent {}
+// Module {}
+// OffsetX {0}
+// OffsetY {0}
+// SimpleCtrlScriptEnd {EP_childPanelOn}
+" 0
+ E E E
+29 100
+"text_ch1"
+""
+1 515.4237288135594 287.1285714285715 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+92 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"textFormat" "enum 2"
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  380 440 465 481
+15 PVSS.TextEdit.1
+0
+"main()
+{
+  this.visible(\"FALSE\");  
+  
+  dpConnect(\"showValues\", \"CMSGEM_Di_FE6102Ch1.Value\", \"CMSGEM_Di_FE6106Ch1.Value\");
+  
+
+}
+
+showValues(string input, string input_value, string output, string output_value)
+{  
+  
+  string flux_in, flux_out;
+  flux_in = strformat(\"\\\\left{%3.2}\",5,input_value);
+  flux_out = strformat(\"\\\\left{%3.2}\",5, output_value);
+  
+  DebugN(flux_in, flux_out);
+  
+  
+  dyn_string write;
+    write = makeDynString(\"In = \" + flux_in + \" l/h\" + \" Out = \" + flux_out + \" l/h\");  
+  
+  
+    
+  this.text(write);
+ 
+}" 0
+29 101
+"text_ch2"
+""
+1 473 170 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+93 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  465 440 550 481
+15 PVSS.TextEdit.1
+0
+"main()
+{
+  this.visible(\"FALSE\");  
+  
+  dpConnect(\"showValues\", \"CMSGEM_Di_FE6102Ch2.Value\", \"CMSGEM_Di_FE6106Ch2.Value\");
+  
+
+}
+
+showValues(string input, string input_value, string output, string output_value)
+{  
+  
+  string flux_in, flux_out;
+  flux_in = strformat(\"\\\\left{%3.2}\",5,input_value);
+  flux_out = strformat(\"\\\\left{%3.2}\",5, output_value);
+  
+  DebugN(flux_in, flux_out);
+  
+  
+  dyn_string write;
+    write = makeDynString(\"In = \" + flux_in + \" l/h\" + \" Out = \" + flux_out + \" l/h\");  
+  
+  
+    
+  this.text(write);
+ 
+}" 0
+29 102
+"text_ch3"
+""
+1 474.4999999999999 170.0127952755904 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+94 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  543 440 628 481
+15 PVSS.TextEdit.1
+0
+"main()
+{
+  this.visible(\"FALSE\");  
+  
+  dpConnect(\"showValues\", \"CMSGEM_Di_FE6102Ch3.Value\", \"CMSGEM_Di_FE6106Ch3.Value\");
+  
+
+}
+
+showValues(string input, string input_value, string output, string output_value)
+{  
+  
+  string flux_in, flux_out;
+  flux_in = strformat(\"\\\\left{%3.2}\",5,input_value);
+  flux_out = strformat(\"\\\\left{%3.2}\",5, output_value);
+  
+  DebugN(flux_in, flux_out);
+  
+  
+  dyn_string write;
+    write = makeDynString(\"In = \" + flux_in + \" l/h\" + \" Out = \" + flux_out + \" l/h\");  
+  
+  
+    
+  this.text(write);
+ 
+}" 0
+29 103
+"text_ch4"
+""
+1 474.4999999999999 170.8259842519684 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+95 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  623 441 708 482
+15 PVSS.TextEdit.1
+0
+"main()
+{
+  this.visible(\"FALSE\");  
+  
+  dpConnect(\"showValues\", \"CMSGEM_Di_FE6102Ch4.Value\", \"CMSGEM_Di_FE6106Ch4.Value\");
+  
+
+}
+
+showValues(string input, string input_value, string output, string output_value)
+{  
+  
+  string flux_in, flux_out;
+  flux_in = strformat(\"\\\\left{%3.2}\",5,input_value);
+  flux_out = strformat(\"\\\\left{%3.2}\",5, output_value);
+  
+  DebugN(flux_in, flux_out);
+  
+  
+  dyn_string write;
+    write = makeDynString(\"In = \" + flux_in + \" l/h\" + \" Out = \" + flux_out + \" l/h\");  
+  
+  
+    
+  this.text(write);
+ 
+}" 0
+29 104
+"text_ch5"
+""
+1 474.5 170.8259842519685 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+96 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  703 441 788 482
+15 PVSS.TextEdit.1
+0
+"main()
+{
+  this.visible(\"FALSE\");  
+  
+  dpConnect(\"showValues\", \"CMSGEM_Di_FE6102Ch5.Value\", \"CMSGEM_Di_FE6106Ch5.Value\");
+  
+
+}
+
+showValues(string input, string input_value, string output, string output_value)
+{  
+  
+  string flux_in, flux_out;
+  flux_in = strformat(\"\\\\left{%3.2}\",5,input_value);
+  flux_out = strformat(\"\\\\left{%3.2}\",5, output_value);
+  
+  DebugN(flux_in, flux_out);
+  
+  
+  dyn_string write;
+    write = makeDynString(\"In = \" + flux_in + \" l/h\" + \" Out = \" + flux_out + \" l/h\");  
+  
+  
+    
+  this.text(write);
+ 
+}" 0
+29 105
+"text_ch6"
+""
+1 474.5 170.8259842519685 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+97 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+0
+1
+LANG:1 37 MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+0  781 441 866 482
+15 PVSS.TextEdit.1
+0
+"main()
+{
+  this.visible(\"FALSE\");  
+  
+  dpConnect(\"showValues\", \"CMSGEM_Di_FE6102Ch6.Value\", \"CMSGEM_Di_FE6106Ch6.Value\");
+  
+
+}
+
+showValues(string input, string input_value, string output, string output_value)
+{  
+  
+  string flux_in, flux_out;
+  flux_in = strformat(\"\\\\left{%3.2}\",5,input_value);
+  flux_out = strformat(\"\\\\left{%3.2}\",5, output_value);
+  
+  DebugN(flux_in, flux_out);
+  
+  
+  dyn_string write;
+    write = makeDynString(\"In = \" + flux_in + \" l/h\" + \" Out = \" + flux_out + \" l/h\");  
+  
+  
+    
+  this.text(write);
+ 
+}" 0
+2 109
+"PRIMITIVE_TEXT19"
+""
+1 911.5 315 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+98 0 0 0 0 0
+E E E
+0
+1
+LANG:1 0 
+
+1
+"dashclr"N "_Transparent"
+E E 0 1 1 2 1 E U  0 E 911.5 315 1091.5 445
+0 2 2 "0s" 0 0 0 64 0 0  911.5 315 6
+1
+LANG:1 34 MS Shell Dlg 2,9,-1,5,75,0,0,0,0,0
+0 1
+LANG:1 10 Ch1: EMPTY
+1
+LANG:1 34 MS Shell Dlg 2,9,-1,5,75,0,0,0,0,0
+0 1
+LANG:1 17 Ch2: GEMINI 27-28
+1
+LANG:1 34 MS Shell Dlg 2,9,-1,5,75,0,0,0,0,0
+0 1
+LANG:1 17 Ch3: GEMINI 29-30
+1
+LANG:1 34 MS Shell Dlg 2,9,-1,5,75,0,0,0,0,0
+0 1
+LANG:1 14 Ch4: GEMINI 01
+1
+LANG:1 34 MS Shell Dlg 2,9,-1,5,75,0,0,0,0,0
+0 1
+LANG:1 10 Ch5: EMPTY
+1
+LANG:1 34 MS Shell Dlg 2,9,-1,5,75,0,0,0,0,0
+0 1
+LANG:1 10 Ch6: EMPTY
+0
+LAYER, 1 
+1
+LANG:1 0 
+0
+LAYER, 2 
+1
+LANG:1 0 
+0
+LAYER, 3 
+1
+LANG:1 0 
+0
+LAYER, 4 
+1
+LANG:1 0 
+0
+LAYER, 5 
+1
+LANG:1 0 
+0
+LAYER, 6 
+1
+LANG:1 0 
+0
+LAYER, 7 
+1
+LANG:1 0 
+0
+0

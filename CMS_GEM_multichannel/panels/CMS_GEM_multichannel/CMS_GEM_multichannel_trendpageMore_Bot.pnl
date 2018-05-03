@@ -1,0 +1,474 @@
+V 14
+2
+LANG:10001 0 
+LANG:1 0 
+PANEL,-1 -1 1692 611 N "_3DFace" 0
+E E E E E 1 -1 -1 0  33 63.24999957159162
+""0  1
+E E 3
+"CBRef" "1"
+"EClose" E
+"dpi" "96"
+0 0 0
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:10001 0 
+2 485
+"PRIMITIVE_TEXT1"
+""
+1 20 20 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+17 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+"main()
+{
+  this.text(\"LAYER2 chamber - Trendpage (More)\");
+}" 0
+ E 0 5 1 2 1 E U  0 E 20 20 326 38
+0 2 2 "0s" 0 0 0 192 0 0  20 20 1
+2
+LANG:10001 35 MS Shell Dlg 2,-1,16,5,75,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,12,-1,5,75,0,0,0,0,0
+0 2
+LANG:10001 33 LAYER2 chamber - Trendpage (More)
+LANG:1 33 BOTTOM chamber - Trendpage (More)
+1 1054 1 "9" 73
+0
+13 502
+"BUTTON_CLOSE"
+""
+1 381.7954518798709 20.75000042840838 E E E 1 E 1 E N "_ButtonText" E N "_Button" E E
+ E E
+18 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+1
+"layoutAlignment" "AlignCenter"
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0  381 12 465 46
+
+T 
+2
+LANG:10001 5 Close
+LANG:1 5 Close
+"main()
+{
+   PanelOff(); 
+}" 0
+ E E E
+1 1134 2 "9" 73
+0
+1 1214 3 "9" 73
+0
+1 1294 4 "9" 73
+0
+1 1374 5 "9" 73
+0
+1 1454 6 "9" 73
+0
+2 956
+"PRIMITIVE_TEXT2"
+""
+1 19.25 66.12500034458935 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+19 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 5 1 2 1 E U  0 E 19.25 66.12500034458935 48 83
+0 2 2 "0s" 0 0 0 192 0 0  19.25 66.12500034458935 1
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0 2
+LANG:10001 5 Drift
+LANG:1 5 Drift
+2 958
+"PRIMITIVE_TEXT3"
+""
+1 339.2499999999999 66.12500034458932 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+20 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 5 1 2 1 E U  0 E 339.2499999999999 66.12500034458932 385 83
+0 2 2 "0s" 0 0 0 192 0 0  339.2499999999999 66.12500034458932 1
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0 2
+LANG:10001 5 G1Top
+LANG:1 5 G1Top
+2 960
+"PRIMITIVE_TEXT6"
+""
+1 339.150061255783 331.5922999794154 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+21 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 5 1 2 1 E U  0 E 339.150061255783 331.5922999794154 381 349
+0 2 2 "0s" 0 0 0 192 0 0  339.150061255783 331.5922999794154 1
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0 2
+LANG:10001 5 G2Bot
+LANG:1 5 G2Bot
+2 970
+"PRIMITIVE_TEXT9"
+""
+1 659.7499999999999 66.25000068917868 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+22 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 5 1 2 1 E U  0 E 659.7499999999999 66.25000068917868 701 83
+0 2 2 "0s" 0 0 0 192 0 0  659.7499999999999 66.25000068917868 1
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0 2
+LANG:10001 5 G1Bot
+LANG:1 5 G1Bot
+2 971
+"PRIMITIVE_TEXT10"
+""
+1 17.65006125578299 331.7173003240047 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+23 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 5 1 2 1 E U  0 E 17.65006125578299 331.7173003240047 63 349
+0 2 2 "0s" 0 0 0 192 0 0  17.65006125578299 331.7173003240047 1
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0 2
+LANG:10001 5 G2Top
+LANG:1 5 G2Top
+2 972
+"PRIMITIVE_TEXT11"
+""
+1 659.25 331.1250003445894 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+24 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 5 1 2 1 E U  0 E 659.25 331.1250003445894 705 348
+0 2 2 "0s" 0 0 0 192 0 0  659.25 331.1250003445894 1
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0 2
+LANG:10001 5 G3Top
+LANG:1 5 G3Top
+1 1534 7 "9" 73
+0
+2 1053
+"PRIMITIVE_TEXT12"
+""
+1 980 330 E E E 1 E 1 E N "_WindowText" E N "_Window" E E
+ E E
+26 0 0 0 0 0
+E E E
+0
+2
+LANG:10001 0 
+LANG:1 0 
+
+3
+"layoutAlignment" "AlignCenter"
+"dashclr"N "_Transparent"
+"antiAliased" "0"
+E E 0 5 1 2 1 E U  0 E 980 330 1022 347
+0 2 2 "0s" 0 0 0 192 0 0  980 330 1
+2
+LANG:10001 35 MS Shell Dlg 2,-1,15,5,50,0,0,0,0,0
+LANG:1 35 MS Shell Dlg 2,11,-1,5,50,0,0,0,0,0
+0 2
+LANG:10001 5 G3Bot
+LANG:1 5 G3Bot
+0
+LAYER, 1 
+1
+LANG:10001 0 
+0
+LAYER, 2 
+1
+LANG:10001 0 
+0
+LAYER, 3 
+1
+LANG:10001 0 
+0
+LAYER, 4 
+1
+LANG:10001 0 
+0
+LAYER, 5 
+1
+LANG:10001 0 
+0
+LAYER, 6 
+1
+LANG:10001 0 
+0
+LAYER, 7 
+1
+LANG:10001 0 
+0
+3 1 "trendMore_Bot_Drift" -1
+"layoutAlignment" "AlignCenter"
+"" ""
+"objects/fwTrending/fwTrendingFaceplate.pnl" 10 60 T 11 0.6170212765957445 0 1 12.07978723404267 25.12500034458938
+22
+"$ZoomWindowTitle"""
+"$bShowGrid"""
+"$bShowLegend"""
+"$bTrendLog"""
+"$dsCurveColor"""
+"$dsCurveDPE"""
+"$dsCurveLegend"""
+"$dsCurveRange"""
+"$dsCurveScaleVisible"""
+"$dsCurveToolTipText"""
+"$dsCurveVisible"""
+"$dsCurvesType"""
+"$dsUnit"""
+"$fMaxPercentageForLog"""
+"$fMinForLog"""
+"$iMarkerType"""
+"$sBackColor"""
+"$sDpName""channel_actual_history_more"
+"$sForeColor"""
+"$sRefName""trendMore_Bot_Drift."
+"$sTimeRange"""
+"$templateParameters""channel=CAEN/GEM_CAEN_HV/board12/channel013,"
+3 2 "trendMore_Bot_G1Top" -1
+"layoutAlignment" "AlignCenter"
+"" ""
+"objects/fwTrending/fwTrendingFaceplate.pnl" 360 60 T 12 0.6170745170418385 0 1 115.1031738649382 25.12500034458938
+22
+"$ZoomWindowTitle"""
+"$bShowGrid"""
+"$bShowLegend"""
+"$bTrendLog"""
+"$dsCurveColor"""
+"$dsCurveDPE"""
+"$dsCurveLegend"""
+"$dsCurveRange"""
+"$dsCurveScaleVisible"""
+"$dsCurveToolTipText"""
+"$dsCurveVisible"""
+"$dsCurvesType"""
+"$dsUnit"""
+"$fMaxPercentageForLog"""
+"$fMinForLog"""
+"$iMarkerType"""
+"$sBackColor"""
+"$sDpName""channel_actual_history_more"
+"$sForeColor"""
+"$sRefName""trendMore_Bot_G1Top."
+"$sTimeRange"""
+"$templateParameters""channel=CAEN/GEM_CAEN_HV/board12/channel012,"
+3 3 "trendMore_Bot_G1Bot" -1
+"layoutAlignment" "AlignCenter"
+"" ""
+"objects/fwTrending/fwTrendingFaceplate.pnl" 360 60 T 13 0.6170212765957447 0 1 435.1223404255319 25.12500034458938
+22
+"$ZoomWindowTitle"""
+"$bShowGrid"""
+"$bShowLegend"""
+"$bTrendLog"""
+"$dsCurveColor"""
+"$dsCurveDPE"""
+"$dsCurveLegend"""
+"$dsCurveRange"""
+"$dsCurveScaleVisible"""
+"$dsCurveToolTipText"""
+"$dsCurveVisible"""
+"$dsCurvesType"""
+"$dsUnit"""
+"$fMaxPercentageForLog"""
+"$fMinForLog"""
+"$iMarkerType"""
+"$sBackColor"""
+"$sDpName""channel_actual_history_more"
+"$sForeColor"""
+"$sRefName""trendMore_Bot_G1Bot."
+"$sTimeRange"""
+"$templateParameters""channel=CAEN/GEM_CAEN_HV/board12/channel011,"
+3 4 "trendMore_Bot_G2Top" -1
+"layoutAlignment" "AlignCenter"
+"" ""
+"objects/fwTrending/fwTrendingFaceplate.pnl" 360 60 T 14 0.6170212765957447 0 1 -206.8776595744681 290.1250003445894
+22
+"$ZoomWindowTitle"""
+"$bShowGrid"""
+"$bShowLegend"""
+"$bTrendLog"""
+"$dsCurveColor"""
+"$dsCurveDPE"""
+"$dsCurveLegend"""
+"$dsCurveRange"""
+"$dsCurveScaleVisible"""
+"$dsCurveToolTipText"""
+"$dsCurveVisible"""
+"$dsCurvesType"""
+"$dsUnit"""
+"$fMaxPercentageForLog"""
+"$fMinForLog"""
+"$iMarkerType"""
+"$sBackColor"""
+"$sDpName""channel_actual_history_more"
+"$sForeColor"""
+"$sRefName""trendMore_Bot_G2Top."
+"$sTimeRange"""
+"$templateParameters""channel=CAEN/GEM_CAEN_HV/board12/channel010,"
+3 5 "trendMore_Bot_G2Bot" -1
+"layoutAlignment" "AlignCenter"
+"" ""
+"objects/fwTrending/fwTrendingFaceplate.pnl" 360 60 T 15 0.6170212765957447 0 1 115.1223404255319 290.1250003445894
+22
+"$ZoomWindowTitle"""
+"$bShowGrid"""
+"$bShowLegend"""
+"$bTrendLog"""
+"$dsCurveColor"""
+"$dsCurveDPE"""
+"$dsCurveLegend"""
+"$dsCurveRange"""
+"$dsCurveScaleVisible"""
+"$dsCurveToolTipText"""
+"$dsCurveVisible"""
+"$dsCurvesType"""
+"$dsUnit"""
+"$fMaxPercentageForLog"""
+"$fMinForLog"""
+"$iMarkerType"""
+"$sBackColor"""
+"$sDpName""channel_actual_history_more"
+"$sForeColor"""
+"$sRefName""trendMore_Bot_G2Bot."
+"$sTimeRange"""
+"$templateParameters""channel=CAEN/GEM_CAEN_HV/board12/channel009,"
+3 6 "trendMore_Bot_G3Top" -1
+"layoutAlignment" "AlignCenter"
+"" ""
+"objects/fwTrending/fwTrendingFaceplate.pnl" 360 60 T 16 0.6170212765957447 0 1 435.1223404255319 290.1250003445894
+22
+"$ZoomWindowTitle"""
+"$bShowGrid"""
+"$bShowLegend"""
+"$bTrendLog"""
+"$dsCurveColor"""
+"$dsCurveDPE"""
+"$dsCurveLegend"""
+"$dsCurveRange"""
+"$dsCurveScaleVisible"""
+"$dsCurveToolTipText"""
+"$dsCurveVisible"""
+"$dsCurvesType"""
+"$dsUnit"""
+"$fMaxPercentageForLog"""
+"$fMinForLog"""
+"$iMarkerType"""
+"$sBackColor"""
+"$sDpName""channel_actual_history_more"
+"$sForeColor"""
+"$sRefName""trendMore_Bot_G3Top."
+"$sTimeRange"""
+"$templateParameters""channel=CAEN/GEM_CAEN_HV/board12/channel008,"
+3 7 "trendMore_Bot_G3Bot" -1
+"layoutAlignment" "AlignCenter"
+"" ""
+"objects/fwTrending/fwTrendingFaceplate.pnl" 360 60 T 25 0.6170212765957447 0 1 755.8723404255319 289
+22
+"$ZoomWindowTitle"""
+"$bShowGrid"""
+"$bShowLegend"""
+"$bTrendLog"""
+"$dsCurveColor"""
+"$dsCurveDPE"""
+"$dsCurveLegend"""
+"$dsCurveRange"""
+"$dsCurveScaleVisible"""
+"$dsCurveToolTipText"""
+"$dsCurveVisible"""
+"$dsCurvesType"""
+"$dsUnit"""
+"$fMaxPercentageForLog"""
+"$fMinForLog"""
+"$iMarkerType"""
+"$sBackColor"""
+"$sDpName""channel_actual_history_more"
+"$sForeColor"""
+"$sRefName""trendMore_Bot_G3Bot."
+"$sTimeRange"""
+"$templateParameters""channel=CAEN/GEM_CAEN_HV/board12/channel007,"
+0

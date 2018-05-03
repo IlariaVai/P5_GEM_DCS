@@ -1,0 +1,153 @@
+V 14
+2
+LANG:10001 9 cmsViewer
+LANG:1 9 cmsViewer
+PANEL,-1 -1 1920 1200 N "STD_grey_light" 0
+"main()
+{
+  //fwFsmUi_addUserLogin(1060, -10);
+  fwFsmUi_addClock(700, 20);
+  dyn_string children,exceptions; 
+
+  fwFSMUserCMS_init(false,myModuleName());      
+
+  
+  fwTree_getChildren(\"FSM\", children,exceptions);
+
+  if(dynlen(children)>0)
+   fwFsmUser_nodeView(children[1], children[1],1,1);
+  /*  
+   for(int i=2; i <= dynlen(children);i++){
+    string domain, obj;
+    fwFsmTree_getObjFromTnode(children[i], children[i], domain, obj, 1);
+    if(domain != \"\")
+      fwFsmUserCMS_showInNewTab( children[i], children[i]);
+ 
+	
+  }*/
+  
+
+}" 0
+ E E E E 1 -1 -1 0  60 60
+""0  1
+E "#uses \"CMS_GEM_CAEN/fwFsmUserCMS.ctl\"
+#uses \"CMS_GEM_CAEN/GEM_Rad.ctl\"
+string HVBoardAddress1,HVBoardAddress2;
+string LVBoardAddress1,LVBoardAddress2,LVBoardAddress3,LVBoardAddress4,LVBoardAddress5;
+string LVAddress,LVAddressVFT,LVAddressOHT1,LVAddressOHT2;
+string LVAddressVFB,LVAddressOHB1,LVAddressOHB2;
+dyn_string hvchannels, lvchannels,mao;
+dyn_string TopModule,TopPanel;
+LvChAlarm(int chno)
+{
+  ChildPanelOnCentralModal(\"/CMS_GEM_CAEN/Alarm\", \"ALPN\",makeDynString(\"$ChNo:\"+lvchannels[chno]));
+}
+gemstsHV(dyn_string dpl,dyn_int sval)
+{
+  string tag=\"hvs\";  
+  
+  for(int i=1; i<=dynlen(sval)-4; i++)
+  {
+    //DebugN(\"First HV dp is=\"+dpl[1]);
+    tag=\"hvs\";
+    tag=tag+(i+2);    
+    if(sval[i]==0)
+      setValue(tag,\"backCol\",\"FwStateOKNotPhysics\");
+    if(sval[i]==1)  
+      setValue(tag,\"backCol\",\"FwStateOKPhysics\");
+    if(sval[i]==3)  
+      setValue(tag,\"backCol\",\"FwStateAttention1\");
+    if(sval[i]==5)  
+      setValue(tag,\"backCol\",\"FwStateAttention1\");
+    if(sval[i] > 8)  
+      setValue(tag,\"backCol\",\"FwStateAttention3\");   
+    
+    
+  }
+}
+gemstsLV(dyn_string dpl,dyn_int sval)
+{
+  string tag=\"lvs\";   
+  //DebugN(\"First dp is=\"+dpl[1]);
+  for(int i=1; i<=dynlen(dpl)-2; i++)
+  //DebugN(\"First LV dp is=\"+dpl[1]);  
+  {
+    tag=\"lvs\";
+    tag=tag+(i+6);    
+    if(sval[i]==0)
+      setValue(tag,\"backCol\",\"FwStateOKNotPhysics\");
+    if(sval[i]==1)  
+      setValue(tag,\"backCol\",\"FwStateOKPhysics\");
+    if(sval[i]==3)  
+      setValue(tag,\"backCol\",\"FwStateAttention1\");
+    if(sval[i]==5)  
+      setValue(tag,\"backCol\",\"FwStateAttention1\");
+    if(sval[i] > 8)  
+      setValue(tag,\"backCol\",\"FwStateAttention3\");  
+  }
+}
+gemstsMao(string dpl,dyn_int sval)
+{
+    if(sval[1]==0)
+      setValue(\"stMao\",\"backCol\",\"FwStateOKNotPhysics\");
+    if(sval[1]==1)  
+      setValue(\"stMao\",\"backCol\",\"FwStateOKPhysics\");
+    if(sval[1] > 8)  
+      setValue(\"stMao\",\"backCol\",\"FwStateAttention3\"); 
+  
+}
+
+//*************************************
+" 0
+ 3
+"CBRef" "1"
+"EClose" "main()
+{
+  RadMonClose();
+  PanelOff();
+}" 0
+
+"dpi" "96"
+0 0 0
+""
+DISPLAY_LAYER, 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+LAYER, 0 
+1
+LANG:10001 0 
+1 1 0 "" 0
+0
+0
+LAYER, 1 
+1
+LANG:10001 0 
+0
+LAYER, 2 
+1
+LANG:10001 0 
+0
+LAYER, 3 
+1
+LANG:10001 0 
+0
+LAYER, 4 
+1
+LANG:10001 0 
+0
+LAYER, 5 
+1
+LANG:10001 0 
+0
+LAYER, 6 
+1
+LANG:10001 0 
+0
+LAYER, 7 
+1
+LANG:10001 0 
+0
+3 0 "PANEL_REF0" -1
+"layoutAlignment" "AlignNone"
+"" ""
+"CMS_GEM_CAEN/fwUi_CMS_Tabs.pnl" 570 390 T 10 1.2892131318395 0 1.000417014178482 -733.8514851485149 -390.9128440366972
+0
+0
